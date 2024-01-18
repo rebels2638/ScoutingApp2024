@@ -1,0 +1,25 @@
+name: scouting_app_2024
+description: "Rebel Robotics FRC 2638 Scouting App 2024"
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.2.5 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  get_storage: ^2.1.1
+  theme_provider: ^0.6.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/crescendo/field.png
+    - assets/crescendo/high_note.png
+    - assets/crescendo/note.png
