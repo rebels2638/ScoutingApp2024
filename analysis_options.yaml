@@ -1,0 +1,17 @@
+include: package:flutter_lints/flutter.yaml
+linter:
+  rules:
+      always_declare_return_types: true
+      always_put_control_body_on_new_line: true
+      always_specify_types: true
+      annotate_overrides: true
+      package_api_docs: true
+      prefer_adjacent_string_concatenation: true
+      prefer_conditional_assignment: true
+      prefer_double_quotes: false
+      use_string_buffers: true
+      non_constant_identifier_names: false
+      unnecessary_new: false
+      camel_case_types: false
+      avoid_print: false
+      constant_identifier_names: false
