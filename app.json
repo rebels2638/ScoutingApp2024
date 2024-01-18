@@ -1,0 +1,42 @@
+{
+  "expo": {
+    "name": "Scouting App",
+    "description": "Scouting in 2638 style!",
+    "slug": "Scouting-App",
+    "privacy": "public",
+    "platforms": [
+      "ios",
+      "web"
+    ],
+    "version": "5.0.0",
+    "orientation": "landscape",
+    "icon": "./Assets/appicon.png",
+    "splash": {
+      "image": "./Assets/appicon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#2C2C2C"
+    },
+    "userInterfaceStyle": "light",
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.reidf.2638scout",
+      "buildNumber": "5.0.0"
+    },
+    "android": {
+      "package": "com.reidf.scout2638",
+      "versionCode": 1
+    },
+    "githubUrl": "https://github.com/rebels2638/ScoutingApp2023",
+    "extra": {
+      "eas": {
+        "projectId": "44d2d06c-fd52-44bc-b7c9-ba1c0d834836"
+      }
+    }
+  }
+}
