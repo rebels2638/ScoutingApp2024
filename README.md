@@ -1,5 +1,5 @@
-# Scouting App 2023 Edition
-#### [Demo](https://patheticmustan.github.io/ScoutingAppWebBuildTest/)
+# Scouting App 2024 Edition
+<!-- #### [Demo](https://patheticmustan.github.io/ScoutingAppWebBuildTest/)
 Team 2638's Scouting App for the year 2023 (Charged Up)!
 
 If you have any suggestions or improvements you would like to see in the app, please make an issue in the Github Issues section!
@@ -28,3 +28,5 @@ A guide to setting up your development environment.
 
 ### [Building](./docs/Building.md)
 A guide to how to build the app for web/iOS (still in progress)!!
+
+-->
