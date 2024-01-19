@@ -2,7 +2,7 @@
 <img src="repo/assets/logo.png" width=88 />
 <br/>
 <h1>Rebel Robotics Scouting App</h1>
-<h2><em>CRESCENDO</em> 2024</h2>
+<h3><em>CRESCENDO</em> 2024</h3>
 </div>
 
 
