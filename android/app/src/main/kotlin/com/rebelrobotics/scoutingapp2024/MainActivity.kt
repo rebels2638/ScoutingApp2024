@@ -1,4 +1,4 @@
-package com.example.flutter_application_1
+package com.rebelrobotics.scoutingapp2024
 
 import io.flutter.embedding.android.FlutterActivity
 
