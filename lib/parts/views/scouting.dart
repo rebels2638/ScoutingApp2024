@@ -19,7 +19,7 @@ class ScoutingView extends StatelessWidget
       child: this,
       item: (
         activeIcon: const Icon(Icons.data_thresholding_rounded),
-        icon: const Icon(Icons.data_thresholding_rounded),
+        icon: const Icon(Icons.data_thresholding_outlined),
         label: "Scouting",
         tooltip: "Data collection screen for observing matches"
       )

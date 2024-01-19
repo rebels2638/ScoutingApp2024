@@ -5,6 +5,6 @@ import 'package:scouting_app_2024/parts/appview.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Debug().init();
-  final ThemedAppBundle app = ThemedAppBundle();
+  const ThemedAppBundle app = ThemedAppBundle();
   runApp(app);
 }

@@ -1,10 +1,11 @@
 import "package:flutter/material.dart";
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/blobs/debug.dart';
-import 'package:scouting_app_2024/frc/api.dart';
+import 'package:scouting_app_2024/frc/shared.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
 import 'package:scouting_app_2024/parts/views/views.dart';
 import "package:theme_provider/theme_provider.dart";
+import 'package:url_launcher/url_launcher.dart';
 
 class ThemedAppBundle extends StatelessWidget {
   const ThemedAppBundle({super.key});
@@ -103,31 +104,6 @@ class _AppViewState extends State<_AppView> {
                       onPressed: () /*TODO*/ {},
                       child: const Icon(Icons.upload_rounded)),
                   strut(width: 10),
-                  if (!UserScoutingApi.isInitialized())
-                    FloatingActionButton(
-                        heroTag: null,
-                        onPressed: () /*TODO*/ {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                    title:
-                                        const Text("Scouter Profile"),
-                                    icon: const Icon(
-                                        Icons.person_rounded),
-                                    actions: <Widget>[
-                                      TextButton.icon(
-                                          onPressed: () =>
-                                              Navigator.pop(context),
-                                          icon: const Icon(
-                                              Icons.save_rounded),
-                                          label: const Text("Save"))
-                                    ]);
-                              });
-                        },
-                        child: const Icon(Icons.person_rounded)),
-                  if (!UserScoutingApi.isInitialized())
-                    strut(width: 10),
                   FloatingActionButton(
                       heroTag: null,
                       onPressed: () {
@@ -230,11 +206,20 @@ class _AppViewState extends State<_AppView> {
             title: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-              const Image(
-                image: ExactAssetImage("assets/appicon_header.png"),
-                width: 52,
-                height: 52,
-                isAntiAlias: true,
+              GestureDetector(
+                onTap: () async {
+                  await launchConfirmDialog(context,
+                      message: const Text(
+                          "You are about to visit the Rebel Robotics' website"),
+                      onConfirm: () async => await launchUrl(
+                          Uri.parse(RebelRoboticsShared.website)));
+                },
+                child: const Image(
+                  image: ExactAssetImage("assets/appicon_header.png"),
+                  width: 52,
+                  height: 52,
+                  isAntiAlias: true,
+                ),
               ),
               strut(width: 10),
               const Text("2638 Scouting"),
