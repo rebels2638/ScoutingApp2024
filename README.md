@@ -1,7 +1,8 @@
 <div align="center">
 <img src="repo/assets/logo.png" width=88 />
 <br/>
-<h1>Rebel Robotics Scouting App "2024"</h1>
+<h1>Rebel Robotics Scouting App</h1>
+<h2><em>CRESCENDO</em> 2024</h2>
 </div>
 
 
