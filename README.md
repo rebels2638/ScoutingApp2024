@@ -1,3 +1,2 @@
-# flutter_application_1
+# Rebel Robotics Scouting App 2024
 
-A new Flutter project.
