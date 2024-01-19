@@ -15,7 +15,7 @@ class AboutAppView extends StatelessWidget implements AppPageViewExporter {
               style: TextStyle(
                 fontWeight: FontWeight.w800,
                 fontSize: 21,
-                decoration:TextDecoration.underline,
+                //decoration:TextDecoration.underline,
               ),
           ),
           TextSpan(
@@ -36,7 +36,7 @@ class AboutAppView extends StatelessWidget implements AppPageViewExporter {
               style: TextStyle(
                 fontWeight: FontWeight.w800,
                 fontSize: 17,
-                decoration:TextDecoration.underline,
+                //decoration:TextDecoration.underline,
               )),
           TextSpan(
             text: "Jack Meng\nAiden Pan\nChiming Wang",
@@ -55,7 +55,7 @@ class AboutAppView extends StatelessWidget implements AppPageViewExporter {
               style: TextStyle(
                 fontWeight: FontWeight.w800,
                 fontSize: 17,
-                decoration:TextDecoration.underline,
+                //decoration:TextDecoration.underline,
               )),
           TextSpan(
             text: "Flutter/Dart\nVisual Studio Code\nGithub",
@@ -74,7 +74,7 @@ class AboutAppView extends StatelessWidget implements AppPageViewExporter {
               style: TextStyle(
                 fontWeight: FontWeight.w800,
                 fontSize: 17,
-                decoration:TextDecoration.underline,
+                //decoration:TextDecoration.underline,
               )),
           TextSpan(
             text: "John Motchkavitz\nMatthew Corrigan\nAndrea Zinn\nGeroge Motchkavitz\n",
