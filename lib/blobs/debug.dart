@@ -14,13 +14,15 @@ class Debug {
   void init() {
     _logger.level = Level.ALL;
     if (useStdIO) {
-      _logger.onRecord
-          .listen((LogRecord v) => print(stdIOPrettifier.call(v)));
+      _logger.onRecord.listen((LogRecord v) {
+        print(stdIOPrettifier.call(v));
+        _logStream.add(v);
+      });
     }
   }
 
   void listen(void Function(LogRecord record) listener) =>
-      _logStream.(listener);
+      _logStream.stream.listen(listener);
   void setLogLevel(Level level) => _logger.level = level;
   void fine(dynamic msg) => _logger.fine(msg);
   void warn(dynamic msg) => _logger.warning(msg);

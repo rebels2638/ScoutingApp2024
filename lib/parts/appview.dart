@@ -55,6 +55,23 @@ class _AppViewState extends State<_AppView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButtonLocation:
+            FloatingActionButtonLocation.endFloat,
+        floatingActionButton: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  FloatingActionButton(
+                      heroTag: null,
+                      onPressed: () /*TODO*/ {},
+                      child: const Icon(Icons.upload_rounded)),
+                  strut(width: 10),
+                  FloatingActionButton(
+                      heroTag: null,
+                      onPressed: () /*TODO*/ {},
+                      child: const Icon(Icons.search_rounded))
+                ])),
         bottomNavigationBar: BottomNavigationBar(
           items: _navBarItems,
           onTap: (int i) /*TODO*/ {},
