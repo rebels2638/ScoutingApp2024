@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:theme_provider/theme_provider.dart';
 
