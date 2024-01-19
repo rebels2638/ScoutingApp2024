@@ -16,6 +16,7 @@ class ThemedAppBundle extends StatelessWidget {
                 builder: (BuildContext themeCtxt) => MaterialApp(
                     debugShowCheckedModeBanner: false,
                     theme: ThemeProvider.themeOf(themeCtxt).data,
+                    darkTheme: ThemeProvider.themeOf(themeCtxt).data,
                     home: const _AppView()))));
   }
 }
@@ -30,11 +31,12 @@ class _AppView extends StatefulWidget {
 class _AppViewState extends State<_AppView> {
   /// delegates for all of the bottom nav bar items
   late PageController _pageController;
+  bool _isDark = false;
 
   @override
   void initState() {
     super.initState();
-    ViewsDelegateManager.initViews();
+    ViewsDelegateManager().initViews();
     _pageController = PageController();
   }
 
@@ -55,14 +57,22 @@ class _AppViewState extends State<_AppView> {
                   strut(width: 10),
                   FloatingActionButton(
                       heroTag: null,
-                      onPressed: () /*TODO*/ {},
-                      child: const Icon(Icons.search_rounded))
+                      onPressed: () {
+                        ThemeProvider.controllerOf(context).setTheme(
+                            _isDark
+                                ? "default_light"
+                                : "default_dark");
+                        setState(() => _isDark = !_isDark);
+                      },
+                      child: _isDark
+                          ? const Icon(Icons.nightlight_round)
+                          : const Icon(Icons.wb_sunny_rounded))
                 ])),
         bottomNavigationBar: BottomNavigationBar(
-          items: ViewsDelegateManager.buildAllItems(),
+          items: ViewsDelegateManager().buildAllItems(context),
           onTap: (int i) => _pageController.animateToPage(i,
               duration: const Duration(milliseconds: 200),
-              curve: Curves.easeIn),
+              curve: Curves.easeInBack),
         ),
         appBar: AppBar(
             title: Row(
@@ -80,6 +90,6 @@ class _AppViewState extends State<_AppView> {
         body: PageView(
             allowImplicitScrolling: false,
             controller: _pageController,
-            children: ViewsDelegateManager.acquireAllWidgets()));
+            children: ViewsDelegateManager().acquireAllWidgets()));
   }
 }

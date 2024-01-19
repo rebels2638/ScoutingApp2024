@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2024/parts/views/views.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 final class ViewsDelegateManager {
-  static List<Widget> acquireAllWidgets() {
+  static final ViewsDelegateManager _singleton =
+      ViewsDelegateManager._();
+  factory ViewsDelegateManager() => _singleton;
+  ViewsDelegateManager._();
+
+  List<Widget> acquireAllWidgets() {
     List<Widget> widgets = <Widget>[];
     if (views != null && views!.isNotEmpty) {
       for (AppPageViewExporter e in views!) {
@@ -12,36 +18,50 @@ final class ViewsDelegateManager {
     return widgets;
   }
 
-  static List<BottomNavigationBarItem> buildAllItems() {
+  List<BottomNavigationBarItem> buildAllItems(BuildContext context) {
     List<BottomNavigationBarItem> items = <BottomNavigationBarItem>[];
     if (views != null && views!.isNotEmpty) {
       for (AppPageViewExporter e in views!) {
-        ({
-          Icon icon,
-          String label,
-          String tooltip,
-          Icon activeIcon
-        }) r = e.exportAppPageView().item;
-        items.add(BottomNavigationBarItem(
-            icon: r.icon,
-            activeIcon: r.activeIcon,
-            label: r.label,
-            tooltip: r.tooltip));
+        items.add(
+            buildNavBarItem(context, e.exportAppPageView().item));
       }
     }
     return items;
   }
 
-  static List<AppPageViewExporter>? views;
+  BottomNavigationBarItem buildNavBarItem(
+      BuildContext context,
+      ({
+        Icon icon,
+        String label,
+        String tooltip,
+        Icon activeIcon,
+      }) item) {
+    return BottomNavigationBarItem(
+      icon: Icon(
+        item.icon.icon,
+        color: ThemeProvider.themeOf(context).data.iconTheme.color,
+      ),
+      activeIcon: Icon(
+        item.icon.icon,
+        color: ThemeProvider.themeOf(context).data.iconTheme.color,
+      ),
+      label: item.label,
+      tooltip: item.tooltip,
+    );
+  }
 
-  static void initViews() => views = <AppPageViewExporter>[
+  List<AppPageViewExporter>? views;
+
+  void initViews() => views = <AppPageViewExporter>[
         const PastMatchesView(),
         const ScoutingView(),
+        const AboutAppView(),
         const SettingsView(),
-        const AboutAppView()
+        const ConsoleView()
       ];
 
-  static List<AppPageViewExporter> getViews() {
+  List<AppPageViewExporter> getViews() {
     if (views == null) {
       throw "Failed to find views. You sure it was initialized?";
     }
