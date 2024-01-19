@@ -3,6 +3,7 @@ import 'package:logging/logging.dart';
 import 'package:scouting_app_2024/blobs/debug.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:scouting_app_2024/shared.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class ConsoleView extends StatelessWidget
     implements AppPageViewExporter {
@@ -80,14 +81,39 @@ class _ConsoleComponentState extends State<_ConsoleComponent> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(14)),
                 child: SingleChildScrollView(
-                    child: Text.rich(
-                        TextSpan(children: <TextSpan>[
-                          for (String r in _buffer)
-                            TextSpan(text: "$r\n")
-                        ]),
-                        style: const TextStyle(
-                            fontFamily: "IBM Plex Mono",
-                            fontSize: 14))),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        for (String t in _buffer)
+                          Padding(
+                            padding: // shitty way to do a struct lol
+                                const EdgeInsets.only(bottom: 10),
+                            child: Container(
+                                decoration: BoxDecoration(
+                                  color:
+                                      ThemeProvider.themeOf(context)
+                                          .data
+                                          .colorScheme
+                                          .brightness == Brightness.dark ?  ThemeProvider.themeOf(context)
+                                          .data
+                                          .colorScheme
+                                          .onSurface :  ThemeProvider.themeOf(context)
+                                          .data
+                                          .colorScheme
+                                          .onInverseSurface,
+                                  borderRadius:
+                                      BorderRadius.circular(8),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(t,
+                                      style: const TextStyle(
+                                          fontFamily:
+                                              "IBM Plex Mono")),
+                                )),
+                          )
+                      ]),
+                ),
               ),
             ),
           )
