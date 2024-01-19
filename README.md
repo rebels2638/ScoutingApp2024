@@ -14,3 +14,4 @@
 
 * [`/web/`](./web/) - Please reserve for development purposes only.
 * [`/legals/`](/legals/) - Do not modify unless you know what you are doing. This directory preserves external licenses that cannot be tracked by pub.
+* [`/repo/`](./repo/) - Strictly for the repository's display purposes, should NOT be linked to the base app in any way 
