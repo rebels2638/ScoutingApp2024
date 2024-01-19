@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
-import 'package:scouting_app_2024/blobs/debug.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
-import 'package:scouting_app_2024/shared.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 class ConsoleView extends StatelessWidget
@@ -31,25 +29,17 @@ class ConsoleView extends StatelessWidget
   }
 }
 
-final List<String> _buffer = <String>[];
-
 class _ConsoleComponent extends StatefulWidget {
   @override
-  State<_ConsoleComponent> createState() => _ConsoleComponentState();
+  State<_ConsoleComponent> createState() => ConsoleStateComponent();
 }
 
-class _ConsoleComponentState extends State<_ConsoleComponent> {
-  void _check(LogRecord record) {
-    if (_buffer.length >= Shared.MAX_LOG_LENGTH) {
-      _buffer.clear();
-    }
-    _buffer.add(Debug().stdIOPrettifier.call(record));
-  }
+class ConsoleStateComponent extends State<_ConsoleComponent> {
+  static final List<String> internalConsoleBuffer = <String>[];
 
   @override
   void initState() {
     super.initState();
-    Debug().listen(_check);
   }
 
   @override
@@ -60,7 +50,8 @@ class _ConsoleComponentState extends State<_ConsoleComponent> {
         children: <Widget>[
           Row(children: <Widget>[
             TextButton.icon(
-                onPressed: () => setState(() => _buffer.clear()),
+                onPressed: () =>
+                    setState(() => internalConsoleBuffer.clear()),
                 icon: const Icon(Icons.cleaning_services_rounded),
                 label: const Text("Clear",
                     style: TextStyle(
@@ -82,22 +73,25 @@ class _ConsoleComponentState extends State<_ConsoleComponent> {
                     borderRadius: BorderRadius.circular(14)),
                 child: SingleChildScrollView(
                   child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        for (String t in _buffer)
+                        for (String t in internalConsoleBuffer)
                           Padding(
-                            padding: // shitty way to do a struct lol
+                            padding: // shitty way to do a strut lol
                                 const EdgeInsets.only(bottom: 10),
                             child: Container(
                                 decoration: BoxDecoration(
-                                  color:
-                                      ThemeProvider.themeOf(context)
+                                  color: ThemeProvider.themeOf(
+                                                  context)
+                                              .data
+                                              .colorScheme
+                                              .brightness ==
+                                          Brightness.dark
+                                      ? ThemeProvider.themeOf(context)
                                           .data
                                           .colorScheme
-                                          .brightness == Brightness.dark ?  ThemeProvider.themeOf(context)
-                                          .data
-                                          .colorScheme
-                                          .onSurface :  ThemeProvider.themeOf(context)
+                                          .onSurface
+                                      : ThemeProvider.themeOf(context)
                                           .data
                                           .colorScheme
                                           .onInverseSurface,
@@ -107,7 +101,24 @@ class _ConsoleComponentState extends State<_ConsoleComponent> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(t,
-                                      style: const TextStyle(
+                                      style: TextStyle(
+                                          color: ThemeProvider
+                                                          .themeOf(
+                                                              context)
+                                                      .data
+                                                      .colorScheme
+                                                      .brightness ==
+                                                  Brightness.light
+                                              ? ThemeProvider.themeOf(
+                                                      context)
+                                                  .data
+                                                  .colorScheme
+                                                  .onSurface
+                                              : ThemeProvider.themeOf(
+                                                      context)
+                                                  .data
+                                                  .colorScheme
+                                                  .onInverseSurface,
                                           fontFamily:
                                               "IBM Plex Mono")),
                                 )),
