@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:scouting_app_2024/blobs/blobs.dart';
+import 'package:scouting_app_2024/blobs/debug.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import "package:theme_provider/theme_provider.dart";
@@ -31,13 +32,14 @@ class _AppView extends StatefulWidget {
 class _AppViewState extends State<_AppView> {
   /// delegates for all of the bottom nav bar items
   late PageController _pageController;
-  bool _isDark = false;
+  late TextEditingController _themeSelectorController;
 
   @override
   void initState() {
     super.initState();
     ViewsDelegateManager().initViews();
     _pageController = PageController();
+    _themeSelectorController = TextEditingController();
   }
 
   @override
@@ -57,14 +59,60 @@ class _AppViewState extends State<_AppView> {
                   strut(width: 10),
                   FloatingActionButton(
                       heroTag: null,
-                      onPressed: () {
-                        ThemeProvider.controllerOf(context).setTheme(
-                            _isDark
-                                ? "default_light"
-                                : "default_dark");
-                        setState(() => _isDark = !_isDark);
+                      onPressed: () async {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext ctxt) {
+                              return AlertDialog(
+                                  title: const Text("Theme Select"),
+                                  content: DropdownMenu<
+                                          AvaliableThemes>(
+                                      initialSelection:
+                                          ThemeClassifier.of(context),
+                                      controller:
+                                          _themeSelectorController,
+                                      requestFocusOnTap: true,
+                                      label: const Text("Theme Name"),
+                                      onSelected:
+                                          (AvaliableThemes? theme) =>
+                                              setState(() {
+                                                if (theme != null) {
+                                                  ThemeProvider
+                                                          .controllerOf(
+                                                              context)
+                                                      .setTheme(
+                                                          theme.name);
+                                                  Debug().info(
+                                                      "Switched theme to ${theme.properName}");
+                                                }
+                                              }),
+                                      dropdownMenuEntries: AvaliableThemes
+                                          .values
+                                          .map<DropdownMenuEntry<AvaliableThemes>>(
+                                              (AvaliableThemes e) => DropdownMenuEntry<
+                                                      AvaliableThemes>(
+                                                  value: e,
+                                                  label: e.properName,
+                                                  leadingIcon: e.isDarkMode
+                                                      ? const Icon(
+                                                          Icons.nightlight_round)
+                                                      : const Icon(Icons.wb_sunny_rounded)))
+                                          .toList()),
+                                  actions: <Widget>[
+                                    TextButton.icon(
+                                        onPressed: () =>
+                                            Navigator.of(context)
+                                                .pop(),
+                                        icon: const Icon(
+                                            Icons.check_rounded),
+                                        label: const Text("Ok",
+                                            style: TextStyle(
+                                                fontWeight:
+                                                    FontWeight.bold)))
+                                  ]);
+                            });
                       },
-                      child: _isDark
+                      child: ThemeClassifier.of(context).isDarkMode
                           ? const Icon(Icons.nightlight_round)
                           : const Icon(Icons.wb_sunny_rounded))
                 ])),
