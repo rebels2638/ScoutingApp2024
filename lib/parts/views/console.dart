@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 
-class ScoutingView extends StatelessWidget
+class ConsoleView extends StatelessWidget
     implements AppPageViewExporter {
-  const ScoutingView({super.key});
+  const ConsoleView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text("Todo: Scouting"));
+    return const Center(child: Text("Todo: Past Matches"));
   }
 
   @override
@@ -18,10 +18,10 @@ class ScoutingView extends StatelessWidget
     return (
       child: this,
       item: (
-        activeIcon: const Icon(Icons.data_thresholding_rounded),
-        icon: const Icon(Icons.data_thresholding_rounded),
-        label: "Scouting",
-        tooltip: "Data collection screen for observing matches"
+        activeIcon: const Icon(Icons.dataset_rounded),
+        icon: const Icon(Icons.dataset_outlined),
+        label: "About",
+        tooltip: "About 2638 Scouting Application"
       )
     );
   }

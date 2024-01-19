@@ -13,18 +13,13 @@ class SettingsView extends StatelessWidget
   @override
   ({
     Widget child,
-    ({
-      IconData activeIcon,
-      IconData icon,
-      String label,
-      String tooltip
-    }) item
+    ({Icon activeIcon, Icon icon, String label, String tooltip}) item
   }) exportAppPageView() {
     return (
       child: this,
       item: (
-        activeIcon: Icons.settings_applications_rounded,
-        icon: Icons.settings_applications_outlined,
+        activeIcon: const Icon(Icons.settings_applications_rounded),
+        icon: const Icon(Icons.settings_applications_outlined),
         label: "Settings",
         tooltip: "Configure preferences for the application"
       )
