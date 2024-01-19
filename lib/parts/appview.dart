@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/blobs/debug.dart';
+import 'package:scouting_app_2024/frc/api.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
 import 'package:scouting_app_2024/parts/views/views.dart';
 import "package:theme_provider/theme_provider.dart";
@@ -102,6 +103,31 @@ class _AppViewState extends State<_AppView> {
                       onPressed: () /*TODO*/ {},
                       child: const Icon(Icons.upload_rounded)),
                   strut(width: 10),
+                  if (!UserScoutingApi.isInitialized())
+                    FloatingActionButton(
+                        heroTag: null,
+                        onPressed: () /*TODO*/ {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                    title:
+                                        const Text("Scouter Profile"),
+                                    icon: const Icon(
+                                        Icons.person_rounded),
+                                    actions: <Widget>[
+                                      TextButton.icon(
+                                          onPressed: () =>
+                                              Navigator.pop(context),
+                                          icon: const Icon(
+                                              Icons.save_rounded),
+                                          label: const Text("Save"))
+                                    ]);
+                              });
+                        },
+                        child: const Icon(Icons.person_rounded)),
+                  if (!UserScoutingApi.isInitialized())
+                    strut(width: 10),
                   FloatingActionButton(
                       heroTag: null,
                       onPressed: () {

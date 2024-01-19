@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:scouting_app_2024/blobs/debug.dart';
@@ -50,9 +48,6 @@ class _ConsoleComponentState extends State<_ConsoleComponent> {
   @override
   void initState() {
     super.initState();
-    Timer.periodic(
-        const Duration(milliseconds: Shared.PERIODIC_LOGGING_REFRESH),
-        (Timer _) => setState(() {}));
     Debug().listen(_check);
   }
 
