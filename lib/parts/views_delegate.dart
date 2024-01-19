@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:scouting_app_2024/parts/views/views.dart';
-import 'package:theme_provider/theme_provider.dart';
 
+/* this shit dont work!!! plssssss i hate compile time constanting
 final class ViewsDelegateManager {
   static final ViewsDelegateManager _singleton =
       ViewsDelegateManager._();
@@ -68,7 +67,7 @@ final class ViewsDelegateManager {
     return views!;
   }
 }
-
+*/
 abstract class AppPageViewExporter {
   /// Gets the information built for this page
   ///

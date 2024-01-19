@@ -1,28 +1,24 @@
-import 'dart:async';
-
 import 'package:logging/logging.dart';
 
 class Debug {
-  static final StreamController<LogRecord> _logStream =
-      StreamController<LogRecord>.broadcast();
-  static final Logger _logger = Logger("RebelRobotic2024");
-  static bool useStdIO = true;
-  static String Function(LogRecord record) stdIOPrettifier =
+  Debug._();
+  factory Debug() => _singleton;
+  static final Debug _singleton = Debug._();
+  final Logger _logger = Logger("RebelRobotic2024");
+  bool useStdIO = true;
+  String Function(LogRecord record) stdIOPrettifier =
       (LogRecord record) =>
           "${record.time} | ${record.level}\t>>\t${record.message}";
 
   void init() {
-    _logger.level = Level.ALL;
     if (useStdIO) {
-      _logger.onRecord.listen((LogRecord v) {
-        print(stdIOPrettifier.call(v));
-        _logStream.add(v);
-      });
+      listen((LogRecord record) => print(
+          "${record.time} | ${record.level} >> ${record.message}"));
     }
   }
 
   void listen(void Function(LogRecord record) listener) =>
-      _logStream.stream.listen(listener);
+      _logger.onRecord.asBroadcastStream().listen(listener);
   void setLogLevel(Level level) => _logger.level = level;
   void fine(dynamic msg) => _logger.fine(msg);
   void warn(dynamic msg) => _logger.warning(msg);

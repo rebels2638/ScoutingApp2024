@@ -1,10 +1,10 @@
 name: scouting_app_2024
 description: "Rebel Robotics FRC 2638 Scouting App 2024"
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.2.5 <4.0.0'
+  sdk: ">=3.2.5 <4.0.0"
 
 dependencies:
   flutter:
@@ -62,4 +62,16 @@ flutter:
           weight: 100
         - asset: assets/fonts/IBMPlexSans-ThinItalic.ttf
           weight: 100
+          style: italic
+    - family: IBM Plex Mono
+      fonts:
+        - asset: assets/fonts/mono/IBMPlexMono-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/mono/IBMPlexMono-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/mono/IBMPlexMono-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/mono/IBMPlexMono-Italic.ttf
+          weight: 400
           style: italic

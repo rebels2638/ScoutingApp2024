@@ -7,7 +7,7 @@ class AboutAppView extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text("Todo: Past Matches"));
+    return const Center(child: Text("Todo: About App"));
   }
 
   @override
