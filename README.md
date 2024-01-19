@@ -1,5 +1,5 @@
 <div align="center">
-<img src="assets/appicon_header.png" />
+<img src="repo/assets/logo.png" width=88 />
 <br/>
 <h1>Rebel Robotics Scouting App "2024"</h1>
 </div>
