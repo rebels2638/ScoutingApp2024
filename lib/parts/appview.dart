@@ -34,6 +34,7 @@ class _AppView extends StatefulWidget {
 class _AppViewState extends State<_AppView> {
   /// delegates for all of the bottom nav bar items
   late TextEditingController _themeSelectorController;
+  int _bottomNavBarIndexer = 0;
 
   @override
   void initState() {
@@ -161,6 +162,7 @@ class _AppViewState extends State<_AppView> {
                           : const Icon(Icons.wb_sunny_rounded))
                 ])),
         bottomNavigationBar: NavigationBar(
+          selectedIndex: _bottomNavBarIndexer,
           destinations: <NavigationDestination>[
             // plsplsplspls make sure this matches with the following PageView's children ordering D:
             NavigationDestination(
@@ -195,6 +197,7 @@ class _AppViewState extends State<_AppView> {
             widget.pageController.animateToPage(i,
                 duration: const Duration(milliseconds: 200),
                 curve: Curves.ease);
+            setState(() => _bottomNavBarIndexer = i);
           },
         ),
         appBar: AppBar(
