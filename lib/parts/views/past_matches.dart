@@ -13,18 +13,13 @@ class PastMatchesView extends StatelessWidget
   @override
   ({
     Widget child,
-    ({
-      IconData activeIcon,
-      IconData icon,
-      String label,
-      String tooltip
-    }) item
+    ({Icon activeIcon, Icon icon, String label, String tooltip}) item
   }) exportAppPageView() {
     return (
       child: this,
       item: (
-        activeIcon: Icons.fact_check_rounded,
-        icon: Icons.fact_check_outlined,
+        activeIcon: const Icon(Icons.fact_check_rounded),
+        icon: const Icon(Icons.fact_check_outlined),
         label: "Past Matches",
         tooltip: "View data collected from past matches"
       )
