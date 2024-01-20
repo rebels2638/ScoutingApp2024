@@ -7,7 +7,8 @@
 
 
 > [!WARNING]
-> App is a **Work In Progres**
+> App is a **Work In Progress**
+> 
 > Come back later...
 
 ## Building Remarks
