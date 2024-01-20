@@ -40,14 +40,33 @@ class AboutAppView extends StatelessWidget
                     ),
                   ),
                   TextSpan(
-                      text: "App Development Team (Flutter/Dart)\n",
+                      text: "Development Team\n",
                       style: TextStyle(
                         fontWeight: FontWeight.w800,
                         fontSize: 17,
                         //decoration:TextDecoration.underline,
                       )),
                   TextSpan(
-                    text: "Jack Meng\nAiden Pan\nChiming Wang",
+                    text: "Jack Meng\nChiming Wang",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  TextSpan(
+                    text: "\n\n\n",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  TextSpan(
+                      text: "Helpers\n",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 17,
+                        //decoration:TextDecoration.underline,
+                      )),
+                  TextSpan(
+                    text: "Aiden Pan\nAarav Minocha",
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                     ),
