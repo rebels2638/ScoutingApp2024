@@ -11,6 +11,23 @@
 > 
 > Come back later...
 
+## Team
+
+**Lead Developer** 
+    
+* Jack Meng (exoad)
+
+**Developers** 
+
+* Chiming Wang (2bf)
+
+**Helpers** 
+
+* Aiden Pan
+* Aarav Minocha
+
+****
+
 ## Building Remarks
 
 * [`/web/`](./web/) - Please reserve for development purposes only.
