@@ -178,15 +178,15 @@ class _AppViewState extends State<_AppView> {
                 selectedIcon: pastMatchesView.item.activeIcon,
                 tooltip: pastMatchesView.item.tooltip),
             NavigationDestination(
-                icon: aboutAppView.item.icon,
-                label: aboutAppView.item.label,
-                selectedIcon: aboutAppView.item.activeIcon,
-                tooltip: aboutAppView.item.tooltip),
-            NavigationDestination(
                 icon: settingsView.item.icon,
                 label: settingsView.item.label,
                 selectedIcon: settingsView.item.activeIcon,
                 tooltip: settingsView.item.tooltip),
+            NavigationDestination(
+                icon: aboutAppView.item.icon,
+                label: aboutAppView.item.label,
+                selectedIcon: aboutAppView.item.activeIcon,
+                tooltip: aboutAppView.item.tooltip),
             NavigationDestination(
                 icon: consoleView.item.icon,
                 label: consoleView.item.label,
@@ -233,8 +233,8 @@ class _AppViewState extends State<_AppView> {
               children: <Widget>[
                 scoutingView.child,
                 pastMatchesView.child,
-                aboutAppView.child,
                 settingsView.child,
+                aboutAppView.child,
                 consoleView.child
               ]),
         ));
