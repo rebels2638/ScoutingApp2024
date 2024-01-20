@@ -2,13 +2,49 @@
 <img src="repo/assets/logo.png" width=88 />
 <br/>
 <h1>Rebel Robotics Scouting App</h1>
+    <img alt="img" src="https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white" />
 <h3><em>CRESCENDO</em> 2024</h3>
 </div>
 
+Scouting App for the 2024 year built using the **Flutter Framework**.
 
+## Building
+
+**Prerequisite**
+* Make sure you have the Flutter SDK downloaded, you can find how to install it for your platform [here](https://docs.flutter.dev/get-started/install)
+* If you want to test the App in a web browser, you must have either **Microsoft Edge**, **Google Chrome**, or **Apple Safari** installed
+* If you want to test the App in a mobile environment, make sure you have set up either **Android Studio** or **XCode** for development on those platforms.
+
+1. Clone this repository either through GitHub or using `git clone https://github.com/rebels2638/ScoutingApp2024.git`
+2. `cd ScoutingApp2024`
+3. `flutter pub get`
 > [!WARNING]
-> App is a **Work In Progres**
-> Come back later...
+> If Flutter prompts you with an upgrade notification, please run the respective upgrade command: `flutter upgrade`
+4. Run `flutter build web --web-renderer html` to build for web.
+
+If you would like to build for a different platform like iOS, please make sure you meet the prerequisites for that platform. For example, to test on iOS, you need XCode on an Apple device. For more information, check https://docs.flutter.dev/platform-integration
+
+## Testing
+
+First, follow the steps in [Building](#building), then just run `flutter run web --web-renderer html` to run in debug mode.
+
+If you want to run in *Release Mode*, run `flutter run --release web --web-renderer html`.
+
+
+## Our Team
+
+**Lead Developer** 
+    
+* Jack Meng (exoad)
+
+**Developers** 
+
+* Chiming Wang (2bf)
+
+**Helpers** 
+
+* Aiden Pan
+* Aarav Minocha
 
 ## Building Remarks
 
