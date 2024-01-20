@@ -100,76 +100,93 @@ class ScoutingView extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     // MOCKUP, NOT FINAL
-    return CustomScrollView(slivers: <Widget>[
-      SliverToBoxAdapter(
-        child: Flex(
-          direction: Axis.horizontal,
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
+    return Scaffold(
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            strut(width: 20),
-            Flexible(
-              flex: 2,
-              child: _section(context,
-                  header: (
-                    icon: Icons.numbers_rounded,
-                    title: "Match Details"
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      _txtfield(
-                          prompt: "Match Number",
-                          hint: "#",
-                          inputType: TextInputType.number),
-                      strut(height: 10),
-                      PartitionedBlob<MatchType>(
-                          preferredHeight: 140,
-                          preferredWidth: 350,
-                          onPressed: (_) {},
-                          crossAxisCount: 3,
-                          values: MatchType.values),
-                    ],
-                  )),
-            ),
-            strut(width: 14),
-            Flexible(
-              flex: 2,
-              child: _section(context,
-                  header: (
-                    icon: Icons.numbers_rounded,
-                    title: "Team Details"
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      _txtfield(
-                          prompt: "Team Number",
-                          hint: "#",
-                          inputType: TextInputType.number),
-                      strut(height: 10),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+            SizedBox(
+              height: MediaQuery.of(context)
+                  .size
+                  .height, // Full height of the screen
+              child: GridView.count(
+                crossAxisCount:
+                    2, // Set the number of columns as per your requirement
+                mainAxisSpacing: 10.0,
+                crossAxisSpacing: 10.0,
+                childAspectRatio:
+                    1.5, // Adjust the aspect ratio as needed
+                children: <Widget>[
+                  _section(context,
+                      header: (
+                        icon: Icons.numbers_rounded,
+                        title: "Match Details"
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          const Text("Starting Position",
-                              style: TextStyle(fontSize: 16)),
-                          strut(height: 6),
-                          PartitionedBlob<MatchStartingPosition>(
-                            preferredHeight: 100,
-                            preferredWidth: 250,
-                            crossAxisCount: 3,
-                            values: MatchStartingPosition.values,
-                            onPressed: (_) {},
+                          _txtfield(
+                              prompt: "Match Number",
+                              hint: "#",
+                              inputType: TextInputType.number),
+                          strut(width: 20),
+                          Column(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.start,
+                              children: <Widget>[
+                                const Text("Match Type",
+                                    style: TextStyle(fontSize: 16)),
+                                PartitionedBlob<MatchType>(
+                                    preferredHeight: 140,
+                                    preferredWidth: 350,
+                                    onPressed:
+                                        (MatchType type) /*TODO*/ {},
+                                    crossAxisCount: 3,
+                                    values: MatchType.values)
+                              ]),
+                        ],
+                      )),
+                  _section(context,
+                      header: (
+                        icon: Icons.numbers_rounded,
+                        title: "Team Details"
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          _txtfield(
+                              prompt: "Team Number",
+                              hint: "#",
+                              inputType: TextInputType.number),
+                          strut(width: 20),
+                          Column(
+                            mainAxisAlignment:
+                                MainAxisAlignment.start,
+                            children: <Widget>[
+                              const Text("Starting Position",
+                                  style: TextStyle(fontSize: 16)),
+                              strut(height: 6),
+                              PartitionedBlob<MatchStartingPosition>(
+                                preferredHeight: 140,
+                                preferredWidth: 350,
+                                crossAxisCount: 3,
+                                values: MatchStartingPosition.values,
+                                onPressed: (MatchStartingPosition
+                                    position) /*TODO*/ {},
+                              ),
+                            ],
                           ),
                         ],
-                      ),
-                    ],
-                  )),
+                      )),
+                ],
+              ),
             ),
           ],
         ),
       ),
-    ]);
+    );
   }
 
   @override
