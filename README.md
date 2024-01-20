@@ -8,6 +8,8 @@
 
 Scouting App for the 2024 year built using the **Flutter Framework**.
 
+**You check can out an unstable web build [here](https://rebels2638.github.io/ScoutingApp2024/)!**
+
 ## Building
 
 **Prerequisite**
