@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-//light peach
+// peach
 const ColorScheme lightColorScheme2 = ColorScheme(
   brightness: Brightness.light,
   primary: Color(0xFF9B4055),
@@ -35,7 +35,7 @@ const ColorScheme lightColorScheme2 = ColorScheme(
   scrim: Color(0xFF000000),
 );
 
-//dark peach
+// plum
 const ColorScheme darkColorScheme2 = ColorScheme(
   brightness: Brightness.dark,
   primary: Color(0xFFFFB2BE),
@@ -70,7 +70,7 @@ const ColorScheme darkColorScheme2 = ColorScheme(
   scrim: Color(0xFF000000),
 );
 
-//light teal
+// mint
 const ColorScheme lightColorScheme = ColorScheme(
   brightness: Brightness.light,
   primary: Color(0xFF006C4E),
@@ -105,7 +105,7 @@ const ColorScheme lightColorScheme = ColorScheme(
   scrim: Color(0xFF000000),
 );
 
-//dark teal
+// forest
 const ColorScheme darkColorScheme = ColorScheme(
   brightness: Brightness.dark,
   primary: Color(0xFF00E1A7),

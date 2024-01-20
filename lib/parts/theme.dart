@@ -15,10 +15,10 @@ class ThemeClassifier {
 }
 
 enum AvaliableThemes {
-  light_teal("Light Teal", false),
-  dark_teal("Dark Teal"),
-  light_peach("Light Peach", false),
-  dark_peach("Dark Peach");
+  mint("Mint", false),
+  forest("Forest"),
+  peach("Peach", false),
+  plum("Plum");
 
   final String properName;
   final bool isDarkMode;
@@ -29,29 +29,29 @@ enum AvaliableThemes {
 final class ThemeBlob {
   static List<AppTheme> export() => <AppTheme>[
         AppTheme(
-            id: AvaliableThemes.light_teal.name,
-            description: "Light Teal Theme",
+            id: AvaliableThemes.mint.name,
+            description: "Mint Theme",
             data: ThemeData(
                 useMaterial3: true,
                 fontFamily: "IBM Plex Sans",
                 colorScheme: lightColorScheme)),
         AppTheme(
-            id: AvaliableThemes.dark_teal.name,
-            description: "Dark Teal Theme",
+            id: AvaliableThemes.forest.name,
+            description: "Forst Theme",
             data: ThemeData(
                 useMaterial3: true,
                 fontFamily: "IBM Plex Sans",
                 colorScheme: darkColorScheme)),
         AppTheme(
-            id: AvaliableThemes.light_peach.name,
-            description: "Light Peach Theme",
+            id: AvaliableThemes.peach.name,
+            description: "Peach Theme",
             data: ThemeData(
                 useMaterial3: true,
                 fontFamily: "IBM Plex Sans",
                 colorScheme: lightColorScheme2)),
         AppTheme(
-            id: AvaliableThemes.dark_peach.name,
-            description: "Dark Peach Theme",
+            id: AvaliableThemes.plum.name,
+            description: "Plum Theme",
             data: ThemeData(
                 useMaterial3: true,
                 fontFamily: "IBM Plex Sans",
