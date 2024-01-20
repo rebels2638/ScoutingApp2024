@@ -2,5 +2,6 @@
       "lldb.displayFormat": "auto",
       "lldb.showDisassembly": "auto",
       "lldb.dereferencePointers": true,
-      "lldb.consoleMode": "commands"
+      "lldb.consoleMode": "commands",
+      "cmake.sourceDirectory": "C:/Users/error/Code/scouting_app_2024/windows"
 }
