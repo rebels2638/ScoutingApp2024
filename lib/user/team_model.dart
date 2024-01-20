@@ -1,4 +1,15 @@
-enum TeamAlliance { blue, red }
+import 'package:flutter/material.dart';
+
+enum TeamAlliance {
+  blue(0xFF2463B0),
+  red(0xe92a2f);
+
+  final int color;
+
+  const TeamAlliance(this.color);
+
+  Color toColor() => Color(color);
+}
 
 class TeamModelBlock {
   TeamAlliance alliance;

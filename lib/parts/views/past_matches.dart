@@ -20,7 +20,7 @@ class PastMatchesView extends StatelessWidget
       item: (
         activeIcon: const Icon(Icons.fact_check_rounded),
         icon: const Icon(Icons.fact_check_outlined),
-        label: "Past Matches",
+        label: "History",
         tooltip: "View data collected from past matches"
       )
     );
