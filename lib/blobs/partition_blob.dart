@@ -1,4 +1,4 @@
-import "package:scouting_app_2024/blobs/debug.dart";
+import 'package:scouting_app_2024/debug.dart';
 import "package:scouting_app_2024/blobs/locale_blob.dart";
 import "package:theme_provider/theme_provider.dart";
 import "package:flutter/material.dart";

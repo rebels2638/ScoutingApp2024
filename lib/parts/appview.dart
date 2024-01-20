@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:scouting_app_2024/blobs/blobs.dart';
-import 'package:scouting_app_2024/blobs/debug.dart';
+import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/user/shared.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
 import 'package:scouting_app_2024/parts/views/views.dart';
