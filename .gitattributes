@@ -1,1 +1,1 @@
-deploy/* linguist-vendored
+deploy/web/** linguist-vendored
