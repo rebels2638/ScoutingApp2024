@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//light peach
 const ColorScheme lightColorScheme2 = ColorScheme(
   brightness: Brightness.light,
   primary: Color(0xFF9B4055),
@@ -34,6 +35,7 @@ const ColorScheme lightColorScheme2 = ColorScheme(
   scrim: Color(0xFF000000),
 );
 
+//dark peach
 const ColorScheme darkColorScheme2 = ColorScheme(
   brightness: Brightness.dark,
   primary: Color(0xFFFFB2BE),
@@ -59,7 +61,7 @@ const ColorScheme darkColorScheme2 = ColorScheme(
   surfaceVariant: Color(0xFF524345),
   onSurfaceVariant: Color(0xFFD6C2C4),
   outline: Color(0xFF9F8C8E),
-  onInverseSurface: Color(0xFF201A1B),
+  onInverseSurface: Color.fromARGB(255, 92, 55, 62),
   inverseSurface: Color(0xFFECE0E0),
   inversePrimary: Color(0xFF9B4055),
   shadow: Color(0xFF000000),
@@ -68,6 +70,7 @@ const ColorScheme darkColorScheme2 = ColorScheme(
   scrim: Color(0xFF000000),
 );
 
+//light teal
 const ColorScheme lightColorScheme = ColorScheme(
   brightness: Brightness.light,
   primary: Color(0xFF006C4E),
@@ -102,6 +105,7 @@ const ColorScheme lightColorScheme = ColorScheme(
   scrim: Color(0xFF000000),
 );
 
+//dark teal
 const ColorScheme darkColorScheme = ColorScheme(
   brightness: Brightness.dark,
   primary: Color(0xFF00E1A7),
@@ -127,7 +131,7 @@ const ColorScheme darkColorScheme = ColorScheme(
   surfaceVariant: Color(0xFF404944),
   onSurfaceVariant: Color(0xFFBFC9C2),
   outline: Color(0xFF89938D),
-  onInverseSurface: Color(0xFF002114),
+  onInverseSurface: Color.fromARGB(255, 36, 94, 70),
   inverseSurface: Color(0xFF8BF8C4),
   inversePrimary: Color(0xFF006C4E),
   shadow: Color(0xFF000000),
