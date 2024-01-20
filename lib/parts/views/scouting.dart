@@ -3,6 +3,7 @@ import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:scouting_app_2024/user/team_model.dart';
 import 'package:theme_provider/theme_provider.dart';
+import 'package:scouting_app_2024/blobs/partition_blob.dart';
 
 typedef SectionId = ({String title, IconData icon});
 
