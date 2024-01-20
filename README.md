@@ -18,8 +18,8 @@ Scouting App for the 2024 year built using the **Flutter Framework**.
 * If you want to test the App in a mobile environment, make sure you have set up either **Android Studio** or **XCode** for development on those platforms.
 
 1. Clone this repository either through GitHub or using `git clone https://github.com/rebels2638/ScoutingApp2024.git`
-2. `cd ScoutingApp2024`
-3. `flutter pub get`
+2. Open directory in terminal/CLI: `cd ScoutingApp2024`
+3. Download libraries/dependencies: `flutter pub get`
 > [!WARNING]
 > If Flutter prompts you with an upgrade notification, please run the respective upgrade command: `flutter upgrade`
 4. Run `flutter build web --web-renderer html` to build for web.
