@@ -15,10 +15,13 @@ class ThemeClassifier {
 }
 
 enum AvaliableThemes {
+  default_light("Default Light", false),
+  default_dark("Default Dark"),
   mint("Mint", false),
   forest("Forest"),
   peach("Peach", false),
   plum("Plum");
+  
 
   final String properName;
   final bool isDarkMode;
@@ -28,6 +31,20 @@ enum AvaliableThemes {
 
 final class ThemeBlob {
   static List<AppTheme> export() => <AppTheme>[
+        AppTheme(
+            id: AvaliableThemes.default_light.name,
+            description: "Default Light Theme",
+            data: ThemeData(
+                useMaterial3: true,
+                fontFamily: "IBM Plex Sans",
+                colorScheme: lightColorScheme3)),
+        AppTheme(
+            id: AvaliableThemes.default_dark.name,
+            description: "Default Dark Theme",
+            data: ThemeData(
+                useMaterial3: true,
+                fontFamily: "IBM Plex Sans",
+                colorScheme: darkColorScheme3)),
         AppTheme(
             id: AvaliableThemes.mint.name,
             description: "Mint Theme",
@@ -55,6 +72,7 @@ final class ThemeBlob {
             data: ThemeData(
                 useMaterial3: true,
                 fontFamily: "IBM Plex Sans",
-                colorScheme: darkColorScheme2))
+                colorScheme: darkColorScheme2)),
+        
       ];
 }
