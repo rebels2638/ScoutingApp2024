@@ -3,7 +3,7 @@
 #include <windows.h>
 
 #include "flutter_window.h"
-#include "native/rebelRobotics.h"
+#include "../../native/rebelRobotics.h"
 #include "utils.h"
 
 int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,

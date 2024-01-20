@@ -6,7 +6,7 @@
 #endif
 
 #include "flutter/generated_plugin_registrant.h"
-#include "native/rebelRobotics.h"
+#include "../native/rebelRobotics.h"
 
 struct _MyApplication {
   GtkApplication parent_instance;
