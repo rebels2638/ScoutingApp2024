@@ -37,11 +37,11 @@ If you want to run in *Release Mode*, run `flutter run --release web --web-rende
 
 **Lead Developer** 
     
-* Jack Meng (exoad)
+* Jack Meng ([exoad](https://github.com/exoad))
 
 **Developers** 
 
-* Chiming Wang (2bf)
+* Chiming Wang ([2bf](https://github.com/2bf))
 
 **Helpers** 
 
