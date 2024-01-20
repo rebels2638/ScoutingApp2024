@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:theme_provider/theme_provider.dart';
 
@@ -63,6 +64,13 @@ class ConsoleStateComponent extends State<_ConsoleComponent> {
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontFamily: "IBM Plex Mono"))),
+            TextButton.icon(
+                onPressed: () => launchConfirmDialog(context,
+                    message: const Text("Debug Show CONFIRM_DIALOG"),
+                    onConfirm: () {}),
+                icon: const Icon(Icons.check_box_rounded),
+                label: const Text("CONFIRM_DIALOG",
+                    style: TextStyle(fontWeight: FontWeight.bold)))
           ]),
           Expanded(
             child: Padding(

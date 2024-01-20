@@ -227,7 +227,6 @@ class _AppViewState extends State<_AppView> {
         body: Padding(
           padding: const EdgeInsets.all(10.0),
           child: PageView(
-              reverse: true,
               scrollDirection: Axis.horizontal,
               allowImplicitScrolling: true,
               controller: widget.pageController,
