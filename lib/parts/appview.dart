@@ -207,13 +207,11 @@ class _AppViewState extends State<_AppView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
               GestureDetector(
-                onTap: () async {
-                  await launchConfirmDialog(context,
-                      message: const Text(
-                          "You are about to visit the Rebel Robotics' website"),
-                      onConfirm: () async => await launchUrl(
-                          Uri.parse(RebelRoboticsShared.website)));
-                },
+                onTap: () async => await launchConfirmDialog(context,
+                    message: const Text(
+                        "You are about to visit the Rebel Robotics' website"),
+                    onConfirm: () async => await launchUrl(
+                        Uri.parse(RebelRoboticsShared.website))),
                 child: const Image(
                   image: ExactAssetImage("assets/appicon_header.png"),
                   width: 52,
@@ -225,8 +223,12 @@ class _AppViewState extends State<_AppView> {
               const Text("2638 Scouting"),
               strut(width: 10),
               GestureDetector(
-                  onTap: () async => await launchUrl(
-                      Uri.parse(RebelRoboticsShared.website)),
+                  onTap: () async => await launchConfirmDialog(
+                      context,
+                      message: const Text(
+                          "You are about to visit the FRC Game Overview website"),
+                      onConfirm: () async => await launchUrl(
+                          Uri.parse(FIRSTCrescendoShared.website))),
                   child: const Image(
                       height: 20,
                       image: ExactAssetImage(

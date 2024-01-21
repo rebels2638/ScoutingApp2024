@@ -19,5 +19,5 @@ void main() {
       "Took ${DateTime.now().millisecondsSinceEpoch - now.millisecondsSinceEpoch} ms to launch the app...");
   UserTelemetry().reset();
   Debug().info(
-      "UserTelemetry Mode: ${UserTelemetry.device().getKeys().runtimeType}");
+      "UserTelemetry Receiver Type: ${UserTelemetry.device().getKeys().runtimeType}");
 }
