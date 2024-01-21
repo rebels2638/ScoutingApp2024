@@ -4,5 +4,5 @@ class RebelRoboticsShared {
 
 class FIRSTCrescendoShared {
   static const String website =
-      "https://firstfrc.blob.core.windows.net/frc2024/Manual/2024GameManual.pdf";
+      "https://www.firstinspires.org/resource-library/frc/competition-manual-qa-system";
 }

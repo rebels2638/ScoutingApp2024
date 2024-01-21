@@ -1,6 +1,10 @@
-import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:scouting_app_2024/parts/theme.dart';
 
+part "user_telemetry.g.dart";
+
+/// User Telemetry storage is based on MVC patterning
 class UserTelemetry {
   static GetStorage device() =>
       GetStorage("RebelRobotics2638UserPreferenceTelemetryUnit");
@@ -8,17 +12,34 @@ class UserTelemetry {
   factory UserTelemetry() => _singleton;
   UserTelemetry._();
 
-  void resetIfNew() {
-    if (device().getKeys() == null) {
-      reset();
-    }
-  }
+  static late UserPrefModel currentModel;
 
-  void reset() async {
-    Get.find<UserTelemetry>().timestampsShowsMs.val = true;
-    await UserTelemetry.device().save();
-  }
+  bool isEmpty() =>
+      device().getKeys().length == 0 ||
+      device().getValues().length ==
+          0; // i feel like this is really bad
 
-  final ReadWriteValue<bool> timestampsShowsMs =
-      true.val("timestampsShowsMs", getBox: device);
+  void init() {}
+
+  /// resets the model, but does not perform a save
+  void reset() => currentModel = UserPrefModel.defaultModel;
+
+  Future<void> save() async => await device().save();
+}
+
+// we dont really store this as json, i just want to have the easy to use mapping feature lmao
+@JsonSerializable(ignoreUnannotated: true, checked: true)
+class UserPrefModel {
+  static final UserPrefModel defaultModel =
+      UserPrefModel(selectedTheme: AvaliableThemes.default_dark);
+
+  @JsonKey(required: true, defaultValue: AvaliableThemes.default_dark)
+  AvaliableThemes selectedTheme;
+
+  UserPrefModel({required this.selectedTheme});
+
+  factory UserPrefModel.fromJson(Map<String, dynamic> json) =>
+      _$UserPrefModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserPrefModelToJson(this);
 }

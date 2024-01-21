@@ -1,6 +1,18 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logging/logging.dart';
 import 'package:scouting_app_2024/blobs/locale_blob.dart';
 import 'package:scouting_app_2024/parts/views/console.dart';
+
+class DebugObserver extends BlocObserver {
+  const DebugObserver();
+
+  @override
+  void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {
+    super.onChange(bloc, change);
+    Debug().info(
+        "STATE_BASE: ${bloc.runtimeType} -> $change for ${change.currentState.runtimeType}");
+  }
+}
 
 class Debug {
   Debug._();

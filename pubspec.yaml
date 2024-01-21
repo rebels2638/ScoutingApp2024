@@ -7,6 +7,8 @@ environment:
   sdk: ">=3.2.5 <4.0.0"
 
 dependencies:
+  bloc: ^8.1.2
+  build_runner: ^2.4.8
   equatable: ^2.0.5
   flutter:
     sdk: flutter
@@ -15,6 +17,8 @@ dependencies:
   get: ^4.6.6
   get_storage: ^2.1.1
   ionicons: ^0.2.2
+  json_annotation: ^4.8.1
+  json_serializable: ^6.7.1
   logging: ^1.2.0
   responsive_grid_list: ^1.4.0
   theme_provider: ^0.6.0
