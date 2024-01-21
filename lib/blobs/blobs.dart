@@ -1,11 +1,23 @@
 import "package:flutter/material.dart";
 import 'package:scouting_app_2024/debug.dart';
 
-
 /// creates a strut, aka a sizedbox
 @pragma("vm:prefer-inline")
 Widget strut({double? width, double? height}) =>
     SizedBox(width: width, height: height);
+    
+@pragma("vm:prefer-inline")
+List<Widget> strutAll(List<Widget> children,
+    {double? width, double? height}) {
+  List<Widget> result = <Widget>[];
+  for (int i = 0; i < children.length; i++) {
+    result.add(children[i]);
+    if (i < children.length - 1) {
+      result.add(SizedBox(width: width, height: height));
+    }
+  }
+  return result;
+}
 
 /// generic confirmation dialog
 @pragma("vm:prefer-inline")
@@ -46,4 +58,3 @@ Future<void> launchConfirmDialog(BuildContext context,
                 )
               ]));
 }
-

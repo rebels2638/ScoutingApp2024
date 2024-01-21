@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 enum TeamAlliance {
   blue(0xFF2463B0),
-  red(0xe92a2f);
+  red(0xFFE92A2f);
 
   final int color;
 

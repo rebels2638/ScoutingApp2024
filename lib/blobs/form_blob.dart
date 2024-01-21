@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:theme_provider/theme_provider.dart';
 
@@ -91,6 +92,60 @@ class _BetterGridDelegate extends SliverGridDelegate {
 
 typedef SectionId = ({String title, IconData icon});
 
+const double _prompt_label_strut_width = 10;
+
+@pragma("vm:prefer-inline")
+Widget form_grid_2(
+        {required int crossAxisCount,
+        required double mainAxisSpacing,
+        required double crossAxisSpacing,
+        QuiltedGridRepeatPattern repeatPattern =
+            QuiltedGridRepeatPattern.mirrored,
+        required List<QuiltedGridTile> pattern,
+        required List<Widget> children}) =>
+    GridView.builder(
+        shrinkWrap: true,
+        physics: const BouncingScrollPhysics(),
+        itemCount: children.length,
+        gridDelegate: SliverQuiltedGridDelegate(
+            mainAxisSpacing: mainAxisSpacing,
+            crossAxisSpacing: crossAxisSpacing,
+            crossAxisCount: crossAxisCount,
+            pattern: pattern),
+        itemBuilder: (BuildContext context, int index) =>
+            children[index]);
+
+@pragma("vm:prefer-inline")
+Widget form_label(String text,
+        {TextStyle? style,
+        required Widget child,
+        bool expandLabel = true,
+        Icon? icon}) =>
+    Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          if (icon != null) icon,
+          if (icon != null) strut(width: 6),
+          if (expandLabel)
+            Expanded(
+                child: Text(text,
+                    style: style ??
+                        const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16)))
+          else
+            Text(text,
+                style: style ??
+                    const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16)),
+          strut(width: _prompt_label_strut_width),
+          child
+        ]);
+
+@pragma("vm:prefer-inline")
+Widget form_txt(String label, [TextStyle? style]) =>
+    Text(label, style: style);
+
 @pragma("vm:prefer-inline")
 Widget form_grid_1(
         {int? itemCount,
@@ -140,9 +195,12 @@ Widget form_grid_sec(BuildContext context,
 
 @pragma("vm:prefer-inline")
 Widget form_sec(BuildContext context,
-        {required SectionId header, required Widget child}) =>
+        {required SectionId header,
+        required Widget child,
+        Gradient? gradient}) =>
     Container(
         decoration: BoxDecoration(
+            gradient: gradient,
             color: ThemeProvider.themeOf(context)
                 .data
                 .colorScheme
@@ -173,47 +231,102 @@ Widget form_seg_btn_1<T>(
             segments,
         required T initialSelection,
         required void Function(T res) onSelect}) =>
-    SegmentedButton<T>(
+    _SegSingleBtn<T>(
+      segments: segments,
+      onSelect: onSelect,
+      initialSelection: initialSelection,
+    );
+
+class _SegSingleBtn<T> extends StatefulWidget {
+  final List<({T value, String label, Icon? icon})> segments;
+  final T initialSelection;
+  final void Function(T res) onSelect;
+
+  const _SegSingleBtn(
+      {super.key,
+      required this.onSelect,
+      required this.segments,
+      required this.initialSelection});
+
+  @override
+  State<_SegSingleBtn<T>> createState() => _SegSingleBtnState<T>();
+}
+
+class _SegSingleBtnState<T> extends State<_SegSingleBtn<T>> {
+  late T _selection;
+
+  @override
+  void initState() {
+    super.initState();
+    _selection = widget.initialSelection;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SegmentedButton<T>(
         segments: <ButtonSegment<T>>[
-          for (({T value, String label, Icon? icon}) e in segments)
+          for (({T value, String label, Icon? icon}) e
+              in widget.segments)
             ButtonSegment<T>(
                 value: e.value, label: Text(e.label), icon: e.icon)
         ],
         selected: <T>{
-          initialSelection
+          _selection,
         },
-        onSelectionChanged: (Set<T> values) =>
-            onSelect.call(values.first));
+        onSelectionChanged: (Set<T> values) {
+          setState(() => _selection = values.first);
+          widget.onSelect.call(values.first);
+        });
+  }
+}
+
+@pragma("vm:prefer-inline")
+Widget form_col(List<Widget> children,
+        {MainAxisAlignment mainAxisAlignment =
+            MainAxisAlignment.start,
+        MainAxisSize mainAxisSize = MainAxisSize.max,
+        CrossAxisAlignment crossAxisAlignment =
+            CrossAxisAlignment.center}) =>
+    Column(
+        mainAxisAlignment: mainAxisAlignment,
+        mainAxisSize: mainAxisSize,
+        crossAxisAlignment: crossAxisAlignment,
+        children: strutAll(children, height: 10));
+
+@pragma("vm:prefer-inline")
+Widget form_row(List<Widget> children,
+        {MainAxisAlignment mainAxisAlignment =
+            MainAxisAlignment.start,
+        MainAxisSize mainAxisSize = MainAxisSize.max,
+        CrossAxisAlignment crossAxisAlignment =
+            CrossAxisAlignment.center}) =>
+    Row(
+        mainAxisAlignment: mainAxisAlignment,
+        mainAxisSize: mainAxisSize,
+        crossAxisAlignment: crossAxisAlignment,
+        children: strutAll(children, width: 10));
 
 @pragma("vm:prefer-inline")
 Widget form_txtin({
-  required String prompt,
   String? hint,
   String? label,
   Icon? prefixIcon,
   Icon? suffixIcon,
-  double width = 100,
+  double dim = 100,
   void Function(String)? onChanged,
   TextInputType? inputType,
 }) =>
-    Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(prompt, style: const TextStyle(fontSize: 16)),
-        strut(height: 6),
-        SizedBox(
-          width: width,
-          child: TextFormField(
-            onChanged: (String e) => onChanged?.call(e),
-            keyboardType: inputType,
-            decoration: InputDecoration(
-              prefixIcon: prefixIcon,
-              suffix: suffixIcon,
-              labelText: label,
-              hintText: hint,
-              border: const OutlineInputBorder(gapPadding: 0),
-            ),
-          ),
+    SizedBox(
+      width: dim,
+      child: TextFormField(
+        onChanged: (String e) => onChanged?.call(e),
+        keyboardType: inputType,
+        decoration: InputDecoration(
+          prefixIcon: prefixIcon,
+          suffix: suffixIcon,
+          labelText: label,
+          hintText: hint,
+          border: const OutlineInputBorder(gapPadding: 0),
         ),
-      ],
+      ),
     );
