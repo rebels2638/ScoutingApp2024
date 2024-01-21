@@ -1,4 +1,5 @@
 import 'package:logging/logging.dart';
+import 'package:scouting_app_2024/blobs/locale_blob.dart';
 import 'package:scouting_app_2024/parts/views/console.dart';
 
 class Debug {
@@ -7,9 +8,9 @@ class Debug {
   static final Debug _singleton = Debug._();
   final Logger _logger = Logger("RebelRobotic2024");
   bool useStdIO = true;
-  String Function(LogRecord record) stdIOPrettifier =
-      (LogRecord record) =>
-          "${record.time} | ${record.level}\t>>\t${record.message}";
+  String Function(LogRecord record) stdIOPrettifier = (LogRecord
+          record) =>
+      "${record.time} | ${stringClampFromRight(record.level.name, 4)}\t>>\t${record.message}";
 
   void init() {
     if (useStdIO) {

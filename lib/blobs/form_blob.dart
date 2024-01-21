@@ -113,7 +113,7 @@ Widget form_label(String text,
         {TextStyle? style,
         required Widget child,
         bool expandLabel = true,
-        Icon? icon}) =>
+        Widget? icon}) =>
     Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[

@@ -222,7 +222,7 @@ class _AppViewState extends State<_AppView> {
                 ),
               ),
               strut(width: 10),
-              const Text("2638 Scouting"),
+              const Text("2638 Scouting")
             ])),
         body: Padding(
           padding: const EdgeInsets.all(10.0),
