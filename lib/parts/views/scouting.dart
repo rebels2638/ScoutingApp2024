@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:scouting_app_2024/blobs/form_blob.dart';
 import 'package:scouting_app_2024/blobs/locale_blob.dart';
 import 'package:scouting_app_2024/parts/team.dart';
@@ -44,14 +43,9 @@ class _ScoutingViewState extends State<ScoutingView>
           crossAxisCount: 2,
           mainAxisSpacing: 16,
           crossAxisSpacing: 16,
-          pattern: <QuiltedGridTile>[
-            const QuiltedGridTile(1, 1),
-            const QuiltedGridTile(1, 1),
-            const QuiltedGridTile(1, 1),
-            const QuiltedGridTile(1, 1),
-          ],
           children: <Widget>[
             form_sec(context,
+                backgroundColor: Colors.transparent,
                 header: (
                   icon: Icons.account_tree_rounded,
                   title: "Match Information"
@@ -82,6 +76,7 @@ class _ScoutingViewState extends State<ScoutingView>
                           onSelect: (MatchType e) /*TODO*/ {}))
                 ])),
             form_sec(context,
+                backgroundColor: Colors.transparent,
                 header: (
                   icon: Icons.people_outline_rounded,
                   title: "Team Information"

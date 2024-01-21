@@ -21,7 +21,7 @@ enum AvaliableThemes {
   forest("Forest"),
   peach("Peach", false),
   plum("Plum");
-  
+
 
   final String properName;
   final bool isDarkMode;
@@ -73,6 +73,6 @@ final class ThemeBlob {
                 useMaterial3: true,
                 fontFamily: "IBM Plex Sans",
                 colorScheme: darkColorScheme2)),
-        
+
       ];
 }

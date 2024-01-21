@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:responsive_grid_list/responsive_grid_list.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:theme_provider/theme_provider.dart';
 
@@ -99,21 +99,14 @@ Widget form_grid_2(
         {required int crossAxisCount,
         required double mainAxisSpacing,
         required double crossAxisSpacing,
-        QuiltedGridRepeatPattern repeatPattern =
-            QuiltedGridRepeatPattern.mirrored,
-        required List<QuiltedGridTile> pattern,
+        double minimumItemWidth = 500,
         required List<Widget> children}) =>
-    GridView.builder(
-        shrinkWrap: true,
-        physics: const BouncingScrollPhysics(),
-        itemCount: children.length,
-        gridDelegate: SliverQuiltedGridDelegate(
-            mainAxisSpacing: mainAxisSpacing,
-            crossAxisSpacing: crossAxisSpacing,
-            crossAxisCount: crossAxisCount,
-            pattern: pattern),
-        itemBuilder: (BuildContext context, int index) =>
-            children[index]);
+    ResponsiveGridList(
+        maxItemsPerRow: crossAxisCount,
+        verticalGridSpacing: crossAxisSpacing,
+        horizontalGridSpacing: mainAxisSpacing,
+        minItemWidth: minimumItemWidth,
+        children: children);
 
 @pragma("vm:prefer-inline")
 Widget form_label(String text,
@@ -132,12 +125,15 @@ Widget form_label(String text,
                     style: style ??
                         const TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 16)))
+                            fontSize: 16,
+                            overflow: TextOverflow.ellipsis)))
           else
             Text(text,
                 style: style ??
                     const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 16)),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        overflow: TextOverflow.ellipsis)),
           strut(width: _prompt_label_strut_width),
           child
         ]);
@@ -197,14 +193,16 @@ Widget form_grid_sec(BuildContext context,
 Widget form_sec(BuildContext context,
         {required SectionId header,
         required Widget child,
+        Color? backgroundColor,
         Gradient? gradient}) =>
     Container(
         decoration: BoxDecoration(
             gradient: gradient,
-            color: ThemeProvider.themeOf(context)
-                .data
-                .colorScheme
-                .onInverseSurface,
+            color: backgroundColor ??
+                ThemeProvider.themeOf(context)
+                    .data
+                    .colorScheme
+                    .onInverseSurface,
             borderRadius: BorderRadius.circular(14)),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -264,19 +262,24 @@ class _SegSingleBtnState<T> extends State<_SegSingleBtn<T>> {
   @override
   Widget build(BuildContext context) {
     return SegmentedButton<T>(
-        segments: <ButtonSegment<T>>[
-          for (({T value, String label, Icon? icon}) e
-              in widget.segments)
-            ButtonSegment<T>(
-                value: e.value, label: Text(e.label), icon: e.icon)
-        ],
-        selected: <T>{
-          _selection,
-        },
-        onSelectionChanged: (Set<T> values) {
-          setState(() => _selection = values.first);
-          widget.onSelect.call(values.first);
-        });
+      segments: <ButtonSegment<T>>[
+        for (({T value, String label, Icon? icon}) e
+            in widget.segments)
+          ButtonSegment<T>(
+              value: e.value,
+              label: Text(e.label,
+                  style: const TextStyle(
+                      overflow: TextOverflow.ellipsis)),
+              icon: e.icon)
+      ],
+      selected: <T>{
+        _selection,
+      },
+      onSelectionChanged: (Set<T> values) {
+        setState(() => _selection = values.first);
+        widget.onSelect.call(values.first);
+      },
+    );
   }
 }
 
@@ -316,8 +319,7 @@ Widget form_txtin({
   void Function(String)? onChanged,
   TextInputType? inputType,
 }) =>
-    SizedBox(
-      width: dim,
+    Flexible(
       child: TextFormField(
         onChanged: (String e) => onChanged?.call(e),
         keyboardType: inputType,
