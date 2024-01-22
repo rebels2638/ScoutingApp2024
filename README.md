@@ -13,7 +13,7 @@ Scouting App for the 2024 year built using the **Flutter Framework**.
 
 **Snapshots**
 
-[![build web](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder.yml/badge.svg)](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder.yml) [![build linux](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder2.yml/badge.svg)](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder2.yml) [![build windows](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder3.yml/badge.svg)](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder3.yml)
+[![build web](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder.yml/badge.svg)](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder.yml) [![build linux](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder2.yml/badge.svg?branch=master)](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder2.yml) [![build windows](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder3.yml/badge.svg)](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder3.yml)
 
 Head over to the <a href="https://github.com/rebels2638/ScoutingApp/actions"><kbd>**Actions**</kbd></a> tab and download from any of the target platforms on there. 
 
