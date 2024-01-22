@@ -54,7 +54,7 @@ final class ThemeBlob {
                 colorScheme: lightColorScheme)),
         AppTheme(
             id: AvaliableThemes.forest.name,
-            description: "Forst Theme",
+            description: "Forest Theme",
             data: ThemeData(
                 useMaterial3: true,
                 fontFamily: "IBM Plex Sans",
