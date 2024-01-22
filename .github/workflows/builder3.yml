@@ -1,0 +1,39 @@
+name: build windows
+on:
+  workflow_dispatch:
+    inputs:
+      comments:
+        description: "Comments"
+        required: false
+        default: "Nothing"
+        type: string
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+jobs:
+  build_info:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Worker Comments: $BUILD_CMTS"
+        env:
+          BUILD_CMTS: ${{ inputs.comments }}
+  build_windows:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "setup flutter"
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.x'
+          channel: 'stable'
+      - uses: actions/checkout@v3
+      - run: flutter --version
+      - run: flutter config --enable-windows-desktop
+      - run: flutter pub get
+      - run: flutter build windows
+      - run: zip -r windows_build.zip ./build/windows
+      - uses: actions/upload-artifact@v3
+        with:
+          name: windows_build
+          path: ./build/windows
