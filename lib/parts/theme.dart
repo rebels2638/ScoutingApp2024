@@ -32,19 +32,20 @@ enum AvaliableThemes {
 final class ThemeBlob {
   static List<AppTheme> export() => <AppTheme>[
         AppTheme(
-            id: AvaliableThemes.default_light.name,
-            description: "Default Light Theme",
-            data: ThemeData(
-                useMaterial3: true,
-                fontFamily: "IBM Plex Sans",
-                colorScheme: lightColorScheme3)),
-        AppTheme(
             id: AvaliableThemes.default_dark.name,
             description: "Default Dark Theme",
             data: ThemeData(
                 useMaterial3: true,
                 fontFamily: "IBM Plex Sans",
                 colorScheme: darkColorScheme3)),
+        AppTheme(
+            id: AvaliableThemes.default_light.name,
+            description: "Default Light Theme",
+            data: ThemeData(
+                useMaterial3: true,
+                fontFamily: "IBM Plex Sans",
+                colorScheme: lightColorScheme3)),
+        
         AppTheme(
             id: AvaliableThemes.mint.name,
             description: "Mint Theme",

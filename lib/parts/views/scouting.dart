@@ -192,7 +192,31 @@ class _ScoutingViewState extends State<ScoutingView>
                         icon: Icons.smart_toy_rounded,
                         title: "Autonomous"
                       ),
-                      child: const SizedBox())
+                      child: form_col(<Widget>[
+                        form_label("Taxis?",
+                            icon:
+                                const Icon(Icons.location_on_rounded),
+                            child: form_seg_btn_1(
+                                segments: TaxiTrueFalse.values
+                                    .map<
+                                            ({
+                                              Icon? icon,
+                                              String label,
+                                              TaxiTrueFalse value
+                                            })>(
+                                        (TaxiTrueFalse e) => (
+                                              label: formalizeWord(
+                                                  e.name),
+                                              icon: const Icon(Icons
+                                                  .location_on_rounded),
+                                              value: e
+                                            ))
+                                    .toList(),
+                                initialSelection:
+                                    TaxiTrueFalse.yes,
+                                onSelect: (TaxiTrueFalse
+                                    e) /*TODO*/ {}))
+                      ])),
                 ]),
           ),
         ],
