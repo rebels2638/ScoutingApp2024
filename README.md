@@ -4,10 +4,10 @@
 <h1>Rebel Robotics Scouting App</h1>
     <img alt="img" src="https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white" />
 <h3><em>CRESCENDO</em> 2024</h3>
-</div>
 
 Scouting App for the 2024 year built using the **Flutter Framework**.
 
+</div>
 
 ## Snapshot Releases
 
