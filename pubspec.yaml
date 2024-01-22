@@ -21,6 +21,7 @@ dependencies:
   json_serializable: ^6.7.1
   logging: ^1.2.0
   responsive_grid_list: ^1.4.0
+  shared_preferences: ^2.2.2
   theme_provider: ^0.6.0
   url_launcher: ^6.2.3
   uuid: ^4.3.3
