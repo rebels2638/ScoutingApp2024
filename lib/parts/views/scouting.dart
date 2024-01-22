@@ -213,7 +213,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                             ))
                                     .toList(),
                                 initialSelection:
-                                    TaxiTrueFalse.yes,
+                                    TaxiTrueFalse.no,
                                 onSelect: (TaxiTrueFalse
                                     e) /*TODO*/ {}))
                       ])),
