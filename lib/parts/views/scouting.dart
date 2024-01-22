@@ -195,7 +195,7 @@ class _ScoutingViewState extends State<ScoutingView>
                       child: form_col(<Widget>[
                         form_label("Taxis?",
                             icon:
-                                const Icon(Icons.location_on_rounded),
+                                const Icon(Icons.local_taxi_rounded),
                             child: form_seg_btn_1(
                                 segments: TaxiTrueFalse.values
                                     .map<
@@ -208,7 +208,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                               label: formalizeWord(
                                                   e.name),
                                               icon: const Icon(Icons
-                                                  .location_on_rounded),
+                                                  .local_taxi_rounded),
                                               value: e
                                             ))
                                     .toList(),
