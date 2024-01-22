@@ -7,8 +7,7 @@ import 'package:scouting_app_2024/user/team_model.dart';
 
 typedef SectionId = ({String title, IconData icon});
 
-class ScoutingView extends StatefulWidget
-    implements AppPageViewExporter {
+class ScoutingView extends StatefulWidget implements AppPageViewExporter {
   const ScoutingView({super.key});
 
   @override
@@ -123,25 +122,21 @@ class _ScoutingViewState extends State<ScoutingView>
                           "Number",
                           icon: const Icon(Icons.numbers_rounded),
                           child: form_txtin(
-                              dim: 300,
-                              inputType: TextInputType.number),
+                              dim: 300, inputType: TextInputType.number),
                         ),
                         form_label("Type",
-                            icon: const Icon(
-                                Icons.account_tree_rounded),
+                            icon: const Icon(Icons.account_tree_rounded),
                             child: form_seg_btn_1(
                                 segments: MatchType.values
                                     .map<({Icon? icon, String label, MatchType value})>(
                                         (MatchType e) => (
-                                              label: formalizeWord(
-                                                  e.name),
-                                              icon: const Icon(Icons
-                                                  .account_tree_rounded),
+                                              label: formalizeWord(e.name),
+                                              icon: const Icon(
+                                                  Icons.account_tree_rounded),
                                               value: e
                                             ))
                                     .toList(),
-                                initialSelection:
-                                    MatchType.qualification,
+                                initialSelection: MatchType.qualification,
                                 onSelect: (MatchType e) /*TODO*/ {}))
                       ])),
                   form_sec(context,
@@ -154,37 +149,28 @@ class _ScoutingViewState extends State<ScoutingView>
                       child: form_col(<Widget>[
                         form_label("Number",
                             child: form_txtin(
-                                dim: 300,
-                                inputType: TextInputType.number),
+                                dim: 300, inputType: TextInputType.number),
                             icon: const Icon(Icons.numbers_rounded)),
                         form_label("Alliance",
                             icon: const Icon(Icons.flag_rounded),
                             child: TeamAllianceSwitch(
-                                onChanged: (TeamAlliance
-                                    alliance) /*TODO*/ {})),
+                                onChanged:
+                                    (TeamAlliance alliance) /*TODO*/ {})),
                         form_label("Starting Position",
-                            icon:
-                                const Icon(Icons.location_on_rounded),
+                            icon: const Icon(Icons.location_on_rounded),
                             child: form_seg_btn_1(
                                 segments: MatchStartingPosition.values
-                                    .map<
-                                            ({
-                                              Icon? icon,
-                                              String label,
-                                              MatchStartingPosition value
-                                            })>(
+                                    .map<({Icon? icon, String label, MatchStartingPosition value})>(
                                         (MatchStartingPosition e) => (
-                                              label: formalizeWord(
-                                                  e.name),
-                                              icon: const Icon(Icons
-                                                  .location_on_rounded),
+                                              label: formalizeWord(e.name),
+                                              icon: const Icon(
+                                                  Icons.location_on_rounded),
                                               value: e
                                             ))
                                     .toList(),
-                                initialSelection:
-                                    MatchStartingPosition.middle,
-                                onSelect: (MatchStartingPosition
-                                    e) /*TODO*/ {}))
+                                initialSelection: MatchStartingPosition.middle,
+                                onSelect:
+                                    (MatchStartingPosition e) /*TODO*/ {})),
                       ])),
                   form_sec(context,
                       backgroundColor: Colors.transparent,
@@ -193,29 +179,34 @@ class _ScoutingViewState extends State<ScoutingView>
                         title: "Autonomous"
                       ),
                       child: form_col(<Widget>[
-                        form_label("Taxis?",
-                            icon:
-                                const Icon(Icons.local_taxi_rounded),
+                        form_label("Note preloaded before game?",
+                            icon: const Icon(Icons.trip_origin),
                             child: form_seg_btn_1(
-                                segments: TaxiTrueFalse.values
-                                    .map<
-                                            ({
-                                              Icon? icon,
-                                              String label,
-                                              TaxiTrueFalse value
-                                            })>(
-                                        (TaxiTrueFalse e) => (
-                                              label: formalizeWord(
-                                                  e.name),
-                                              icon: const Icon(Icons
-                                                  .local_taxi_rounded),
+                                segments: NotePreloaded.values
+                                    .map<({Icon? icon, String label, NotePreloaded value})>(
+                                        (NotePreloaded e) => (
+                                              label: formalizeWord(e.name),
+                                              icon: const Icon(
+                                                  Icons.trip_origin),
                                               value: e
                                             ))
                                     .toList(),
-                                initialSelection:
-                                    TaxiTrueFalse.no,
-                                onSelect: (TaxiTrueFalse
-                                    e) /*TODO*/ {}))
+                                initialSelection: NotePreloaded.yes,
+                                onSelect: (NotePreloaded e) /*TODO*/ {})),
+                        form_label("Taxis?",
+                            icon: const Icon(Icons.local_taxi_rounded),
+                            child: form_seg_btn_1(
+                                segments: TaxiTrueFalse.values
+                                    .map<({Icon? icon, String label, TaxiTrueFalse value})>(
+                                        (TaxiTrueFalse e) => (
+                                              label: formalizeWord(e.name),
+                                              icon: const Icon(
+                                                  Icons.local_taxi_rounded),
+                                              value: e
+                                            ))
+                                    .toList(),
+                                initialSelection: TaxiTrueFalse.no,
+                                onSelect: (TaxiTrueFalse e) /*TODO*/ {})),
                       ])),
                 ]),
           ),

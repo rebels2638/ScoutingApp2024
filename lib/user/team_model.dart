@@ -38,6 +38,9 @@ enum MatchStartingPosition { left, middle, right }
 
 enum TaxiTrueFalse { yes, no }
 
+enum NotePreloaded { yes, no }
+
+
 class TeamMatchData {
   int matchID;
   MatchType matchType;

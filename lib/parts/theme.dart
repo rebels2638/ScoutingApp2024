@@ -15,8 +15,8 @@ class ThemeClassifier {
 }
 
 enum AvaliableThemes {
-  default_light("Default Light", false),
   default_dark("Default Dark"),
+  default_light("Default Light", false),
   mint("Mint", false),
   forest("Forest"),
   peach("Peach", false),
