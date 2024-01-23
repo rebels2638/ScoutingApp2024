@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/blobs/form_blob.dart';
 import 'package:scouting_app_2024/blobs/locale_blob.dart';
+import 'package:scouting_app_2024/extern/color.dart';
 import 'package:scouting_app_2024/parts/team.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:scouting_app_2024/user/team_model.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 typedef SectionId = ({String title, IconData icon});
 
@@ -106,13 +109,12 @@ class _ScoutingViewState extends State<ScoutingView>
   Widget build(BuildContext context) {
     // MOCKUP, NOT FINAL
     super.build(context);
-    // DateTime timeNow = DateTime
-    //    .now(); // TODO: this has to be linked up to the backend for it to work
+    DateTime timeNow = DateTime
+        .now(); // TODO: this has to be linked up to the backend for it to work
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Column(
         children: <Widget>[
-          /*
           Flexible(
             flex: 0,
             child: Container(
@@ -171,7 +173,6 @@ class _ScoutingViewState extends State<ScoutingView>
             ),
           ),
           strut(height: 20),
-          */
           Flexible(
             child: form_grid_2(
                 crossAxisCount: 2,
