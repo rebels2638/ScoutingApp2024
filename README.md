@@ -31,7 +31,7 @@ Head over to the <a href="https://github.com/rebels2638/ScoutingApp/actions"><kb
 3. Download libraries/dependencies: `flutter pub get` (you can also run the ```mac-flutter-start.sh```/```windows-flutter-start.bat``` scripts.)``)
 > [!WARNING]
 > If Flutter prompts you with an upgrade notification, please run the respective upgrade command: `flutter upgrade`
-4. Run `flutter build web --web-renderer html` to build for web.
+4. Run `flutter build web --web-renderer html` or `flutter run -d chrome --web-renderer html` to build for web.
 
 If you would like to build for a different platform like iOS, please make sure you meet the prerequisites for that platform. For example, to test on iOS, you need XCode on an Apple device. For more information, check https://docs.flutter.dev/platform-integration
 
