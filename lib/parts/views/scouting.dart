@@ -30,6 +30,7 @@ class ScoutingView extends StatefulWidget implements AppPageViewExporter {
   }
 }
 
+
 class _ScoutingViewState extends State<ScoutingView>
     with AutomaticKeepAliveClientMixin<ScoutingView> {
   @override
@@ -183,11 +184,16 @@ class _ScoutingViewState extends State<ScoutingView>
                             icon: const Icon(Icons.trip_origin),
                             child: form_seg_btn_1(
                                 segments: NotePreloaded.values
-                                    .map<({Icon? icon, String label, NotePreloaded value})>(
+                                    .map<
+                                            ({
+                                              Icon? icon,
+                                              String label,
+                                              NotePreloaded value
+                                            })>(
                                         (NotePreloaded e) => (
                                               label: formalizeWord(e.name),
-                                              icon: const Icon(
-                                                  Icons.trip_origin),
+                                              icon:
+                                                  const Icon(Icons.trip_origin),
                                               value: e
                                             ))
                                     .toList(),
@@ -207,6 +213,15 @@ class _ScoutingViewState extends State<ScoutingView>
                                     .toList(),
                                 initialSelection: TaxiTrueFalse.no,
                                 onSelect: (TaxiTrueFalse e) /*TODO*/ {})),
+                      ])),
+                  form_sec(context,
+                      backgroundColor: Colors.transparent,
+                      header: (
+                        icon: Icons.accessibility,
+                        title: "Tele-op"
+                      ),
+                      child: form_col(<Widget>[
+                        /* TODO */
                       ])),
                 ]),
           ),
