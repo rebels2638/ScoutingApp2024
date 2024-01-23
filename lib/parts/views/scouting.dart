@@ -341,14 +341,6 @@ class _ScoutingViewState extends State<ScoutingView>
                         title: "Tele-op"
                       ),
                       child: form_col(<Widget>[
-                        form_label("Missed",
-                            icon: const Icon(Icons.call_missed),
-                            child: PlusMinus(
-                              initialValue: 0,
-                              onValueChanged: (int value) {
-                                // print("Value changed: $value");
-                              },
-                            )),
                         form_label("Plays Defense",
                             icon: const Icon(Icons.shield),
                             child: form_seg_btn_1(
@@ -386,6 +378,31 @@ class _ScoutingViewState extends State<ScoutingView>
                                 initialSelection: WasDefended.no,
                                 onSelect:
                                     (WasDefended e) /*TODO*/ {})),
+                                    form_label("Scored in Speaker",
+                            icon: const Icon(Icons.volume_up),
+                            child: PlusMinus(
+                              initialValue: 0,
+                              onValueChanged: (int value) {
+                                // print("Value changed: $value");
+                              },
+                            )),
+                        form_label("Scored in AMP",
+                            icon: const Icon(Icons.music_note),
+                            child: PlusMinus(
+                              initialValue: 0,
+                              onValueChanged: (int value) {
+                                // print("Value changed: $value");
+                              },
+                            )),
+                        form_label("Missed",
+                            icon: const Icon(Icons.call_missed),
+                            child: PlusMinus(
+                              initialValue: 0,
+                              onValueChanged: (int value) {
+                                // print("Value changed: $value");
+                              },
+                            )),
+                        
                         form_label("Comments",
                             icon: const Icon(Icons.comment),
                             child: form_txtin(
