@@ -37,9 +37,9 @@ If you would like to build for a different platform like iOS, please make sure y
 
 ## Testing
 
-First, follow the steps in [Building](#building), then just run `flutter run web --web-renderer html` to run in debug mode.
+First, follow the steps in [Building](#building), then just run `flutter run -d [chrome/edge] --web-renderer html` to run in debug mode.
 
-If you want to run in *Release Mode*, run `flutter run --release web --web-renderer html`.
+If you want to run in *Release Mode*, run `flutter run --release -d [chrome/edge] --web-renderer html`.
 
 
 ## Our Team
