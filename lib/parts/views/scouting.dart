@@ -7,7 +7,8 @@ import 'package:scouting_app_2024/user/team_model.dart';
 
 typedef SectionId = ({String title, IconData icon});
 
-class ScoutingView extends StatefulWidget implements AppPageViewExporter {
+class ScoutingView extends StatefulWidget
+    implements AppPageViewExporter {
   const ScoutingView({super.key});
 
   @override
@@ -31,12 +32,12 @@ class ScoutingView extends StatefulWidget implements AppPageViewExporter {
 }
 
 class PlusMinus extends StatefulWidget {
-  // Optional: Add any parameters the widget might need
   final int initialValue;
-  final Function(int)? onValueChanged; // callback to return value
+  final void Function(int)?
+      onValueChanged; // callback to return value
 
-  // Constructor
-  const PlusMinus({super.key, this.initialValue = 0, this.onValueChanged});
+  const PlusMinus(
+      {super.key, this.initialValue = 0, this.onValueChanged});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -45,24 +46,11 @@ class PlusMinus extends StatefulWidget {
 
 class _PlusMinusState extends State<PlusMinus> {
   late int _val;
-  final int maxValue = 999;
 
   @override
   void initState() {
     super.initState();
     _val = widget.initialValue;
-  }
-
-  void _updateValue(int newVal) {
-    if (newVal >= 0 && newVal <= maxValue) {
-      // Check for both minimum and maximum limits
-      setState(() {
-        _val = newVal;
-      });
-      if (widget.onValueChanged != null) {
-        widget.onValueChanged!(_val);
-      }
-    }
   }
 
   @override
@@ -73,24 +61,39 @@ class _PlusMinusState extends State<PlusMinus> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         OutlinedButton(
-          onPressed: () => _updateValue(_val - 1),
+          onPressed: () {
+            int newVal = _val - 1;
+            if (newVal >= 0) {
+              setState(() => _val = newVal);
+              widget.onValueChanged?.call(_val);
+            }
+          },
           style: OutlinedButton.styleFrom(
             padding: const EdgeInsets.all(16),
             side: BorderSide(color: primaryColor, width: 2),
           ),
-          child: const Text("-"),
+          child: const Text("-",
+              style: TextStyle(fontWeight: FontWeight.w800)),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Text(_val.toString(), style: const TextStyle(fontSize: 20)),
+          child: Text(_val.toString(),
+              style: const TextStyle(fontSize: 20)),
         ),
         OutlinedButton(
-          onPressed: () => _updateValue(_val + 1),
+          onPressed: () {
+            int newVal = _val + 1;
+            if (newVal <= 99) {
+              setState(() => _val = newVal);
+              widget.onValueChanged?.call(_val);
+            }
+          },
           style: OutlinedButton.styleFrom(
             padding: const EdgeInsets.all(16),
             side: BorderSide(color: primaryColor, width: 2),
           ),
-          child: const Text("+"),
+          child: const Text("+",
+              style: TextStyle(fontWeight: FontWeight.w800)),
         ),
       ],
     );
@@ -189,21 +192,25 @@ class _ScoutingViewState extends State<ScoutingView>
                           "Number",
                           icon: const Icon(Icons.numbers_rounded),
                           child: form_txtin(
-                              dim: 300, inputType: TextInputType.number),
+                              dim: 300,
+                              inputType: TextInputType.number),
                         ),
                         form_label("Type",
-                            icon: const Icon(Icons.account_tree_rounded),
+                            icon: const Icon(
+                                Icons.account_tree_rounded),
                             child: form_seg_btn_1(
                                 segments: MatchType.values
                                     .map<({Icon? icon, String label, MatchType value})>(
                                         (MatchType e) => (
-                                              label: formalizeWord(e.name),
-                                              icon: const Icon(
-                                                  Icons.account_tree_rounded),
+                                              label: formalizeWord(
+                                                  e.name),
+                                              icon: const Icon(Icons
+                                                  .account_tree_rounded),
                                               value: e
                                             ))
                                     .toList(),
-                                initialSelection: MatchType.qualification,
+                                initialSelection:
+                                    MatchType.qualification,
                                 onSelect: (MatchType e) /*TODO*/ {}))
                       ])),
                   form_sec(context,
@@ -216,28 +223,37 @@ class _ScoutingViewState extends State<ScoutingView>
                       child: form_col(<Widget>[
                         form_label("Number",
                             child: form_txtin(
-                                dim: 300, inputType: TextInputType.number),
+                                dim: 300,
+                                inputType: TextInputType.number),
                             icon: const Icon(Icons.numbers_rounded)),
                         form_label("Alliance",
                             icon: const Icon(Icons.flag_rounded),
                             child: TeamAllianceSwitch(
-                                onChanged:
-                                    (TeamAlliance alliance) /*TODO*/ {})),
+                                onChanged: (TeamAlliance
+                                    alliance) /*TODO*/ {})),
                         form_label("Starting Position",
-                            icon: const Icon(Icons.location_on_rounded),
+                            icon:
+                                const Icon(Icons.location_on_rounded),
                             child: form_seg_btn_1(
                                 segments: MatchStartingPosition.values
-                                    .map<({Icon? icon, String label, MatchStartingPosition value})>(
+                                    .map<
+                                            ({
+                                              Icon? icon,
+                                              String label,
+                                              MatchStartingPosition value
+                                            })>(
                                         (MatchStartingPosition e) => (
-                                              label: formalizeWord(e.name),
-                                              icon: const Icon(
-                                                  Icons.location_on_rounded),
+                                              label: formalizeWord(
+                                                  e.name),
+                                              icon: const Icon(Icons
+                                                  .location_on_rounded),
                                               value: e
                                             ))
                                     .toList(),
-                                initialSelection: MatchStartingPosition.middle,
-                                onSelect:
-                                    (MatchStartingPosition e) /*TODO*/ {})),
+                                initialSelection:
+                                    MatchStartingPosition.middle,
+                                onSelect: (MatchStartingPosition
+                                    e) /*TODO*/ {})),
                       ])),
                   form_sec(context,
                       backgroundColor: Colors.transparent,
@@ -250,35 +266,35 @@ class _ScoutingViewState extends State<ScoutingView>
                             icon: const Icon(Icons.trip_origin),
                             child: form_seg_btn_1(
                                 segments: NotePreloaded.values
-                                    .map<
-                                            ({
-                                              Icon? icon,
-                                              String label,
-                                              NotePreloaded value
-                                            })>(
+                                    .map<({Icon? icon, String label, NotePreloaded value})>(
                                         (NotePreloaded e) => (
-                                              label: formalizeWord(e.name),
-                                              icon:
-                                                  const Icon(Icons.trip_origin),
+                                              label: formalizeWord(
+                                                  e.name),
+                                              icon: const Icon(
+                                                  Icons.trip_origin),
                                               value: e
                                             ))
                                     .toList(),
                                 initialSelection: NotePreloaded.yes,
-                                onSelect: (NotePreloaded e) /*TODO*/ {})),
+                                onSelect:
+                                    (NotePreloaded e) /*TODO*/ {})),
                         form_label("Taxis?",
-                            icon: const Icon(Icons.local_taxi_rounded),
+                            icon:
+                                const Icon(Icons.local_taxi_rounded),
                             child: form_seg_btn_1(
                                 segments: TaxiTrueFalse.values
                                     .map<({Icon? icon, String label, TaxiTrueFalse value})>(
                                         (TaxiTrueFalse e) => (
-                                              label: formalizeWord(e.name),
-                                              icon: const Icon(
-                                                  Icons.local_taxi_rounded),
+                                              label: formalizeWord(
+                                                  e.name),
+                                              icon: const Icon(Icons
+                                                  .local_taxi_rounded),
                                               value: e
                                             ))
                                     .toList(),
                                 initialSelection: TaxiTrueFalse.no,
-                                onSelect: (TaxiTrueFalse e) /*TODO*/ {})),
+                                onSelect:
+                                    (TaxiTrueFalse e) /*TODO*/ {})),
                         form_label("Scored in Speaker",
                             icon: const Icon(Icons.volume_up),
                             child: PlusMinus(
@@ -306,19 +322,22 @@ class _ScoutingViewState extends State<ScoutingView>
                         form_label("Comments",
                             icon: const Icon(Icons.comment),
                             child: form_txtin(
-                                hint: "Enter your comments here",
-                                label: "Comments",
-                                prefixIcon: const Icon(Icons.edit),
-                                dim: 300, // Adjust the width as needed
-                                onChanged: (String value) {
-                                    // TODO
-                                },
-                                inputType: TextInputType.multiline,
+                              hint: "Enter your comments here",
+                              label: "Comments",
+                              prefixIcon: const Icon(Icons.edit),
+                              dim: 300, // Adjust the width as needed
+                              onChanged: (String value) {
+                                // TODO
+                              },
+                              inputType: TextInputType.multiline,
                             )),
                       ])),
                   form_sec(context,
                       backgroundColor: Colors.transparent,
-                      header: (icon: Icons.accessibility, title: "Tele-op"),
+                      header: (
+                        icon: Icons.accessibility,
+                        title: "Tele-op"
+                      ),
                       child: form_col(<Widget>[
                         form_label("Missed",
                             icon: const Icon(Icons.call_missed),
@@ -339,39 +358,43 @@ class _ScoutingViewState extends State<ScoutingView>
                                               PlaysDefense value
                                             })>(
                                         (PlaysDefense e) => (
-                                              label: formalizeWord(e.name),
-                                              icon:
-                                                  const Icon(Icons.shield),
+                                              label: formalizeWord(
+                                                  e.name),
+                                              icon: const Icon(
+                                                  Icons.shield),
                                               value: e
                                             ))
                                     .toList(),
                                 initialSelection: PlaysDefense.no,
-                                onSelect: (PlaysDefense e) /*TODO*/ {})),
+                                onSelect:
+                                    (PlaysDefense e) /*TODO*/ {})),
                         form_label("Was Defended?",
                             icon: const Icon(Icons.verified_user),
                             child: form_seg_btn_1(
                                 segments: WasDefended.values
                                     .map<({Icon? icon, String label, WasDefended value})>(
                                         (WasDefended e) => (
-                                              label: formalizeWord(e.name),
-                                              icon: const Icon(
-                                                  Icons.verified_user),
+                                              label: formalizeWord(
+                                                  e.name),
+                                              icon: const Icon(Icons
+                                                  .verified_user),
                                               value: e
                                             ))
                                     .toList(),
                                 initialSelection: WasDefended.no,
-                                onSelect: (WasDefended e) /*TODO*/ {})),
+                                onSelect:
+                                    (WasDefended e) /*TODO*/ {})),
                         form_label("Comments",
                             icon: const Icon(Icons.comment),
                             child: form_txtin(
-                                hint: "Enter your comments here",
-                                label: "Comments",
-                                prefixIcon: const Icon(Icons.edit),
-                                dim: 300, // Adjust the width as needed
-                                onChanged: (String value) {
-                                    // TODO
-                                },
-                                inputType: TextInputType.multiline,
+                              hint: "Enter your comments here",
+                              label: "Comments",
+                              prefixIcon: const Icon(Icons.edit),
+                              dim: 300, // Adjust the width as needed
+                              onChanged: (String value) {
+                                // TODO
+                              },
+                              inputType: TextInputType.multiline,
                             )),
                       ])),
                 ]),
