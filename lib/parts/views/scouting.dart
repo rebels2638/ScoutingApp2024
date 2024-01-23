@@ -295,11 +295,39 @@ class _ScoutingViewState extends State<ScoutingView>
                                 // print("Value changed: $value");
                               },
                             )),
+                        form_label("Missed",
+                            icon: const Icon(Icons.call_missed),
+                            child: PlusMinus(
+                              initialValue: 0,
+                              onValueChanged: (int value) {
+                                // print("Value changed: $value");
+                              },
+                            )),
+                        form_label("Comments",
+                            icon: const Icon(Icons.comment),
+                            child: form_txtin(
+                                hint: "Enter your comments here",
+                                label: "Comments",
+                                prefixIcon: const Icon(Icons.edit),
+                                dim: 300, // Adjust the width as needed
+                                onChanged: (String value) {
+                                    // TODO
+                                },
+                                inputType: TextInputType.multiline,
+                            )),
                       ])),
                   form_sec(context,
                       backgroundColor: Colors.transparent,
                       header: (icon: Icons.accessibility, title: "Tele-op"),
                       child: form_col(<Widget>[
+                        form_label("Missed",
+                            icon: const Icon(Icons.call_missed),
+                            child: PlusMinus(
+                              initialValue: 0,
+                              onValueChanged: (int value) {
+                                // print("Value changed: $value");
+                              },
+                            )),
                         form_label("Plays Defense",
                             icon: const Icon(Icons.shield),
                             child: form_seg_btn_1(
@@ -319,13 +347,31 @@ class _ScoutingViewState extends State<ScoutingView>
                                     .toList(),
                                 initialSelection: PlaysDefense.no,
                                 onSelect: (PlaysDefense e) /*TODO*/ {})),
-                        form_label("TeleOp Missed",
-                            icon: const Icon(Icons.call_missed),
-                            child: PlusMinus(
-                              initialValue: 0,
-                              onValueChanged: (int value) {
-                                // print("Value changed: $value");
-                              },
+                        form_label("Was Defended?",
+                            icon: const Icon(Icons.verified_user),
+                            child: form_seg_btn_1(
+                                segments: WasDefended.values
+                                    .map<({Icon? icon, String label, WasDefended value})>(
+                                        (WasDefended e) => (
+                                              label: formalizeWord(e.name),
+                                              icon: const Icon(
+                                                  Icons.verified_user),
+                                              value: e
+                                            ))
+                                    .toList(),
+                                initialSelection: WasDefended.no,
+                                onSelect: (WasDefended e) /*TODO*/ {})),
+                        form_label("Comments",
+                            icon: const Icon(Icons.comment),
+                            child: form_txtin(
+                                hint: "Enter your comments here",
+                                label: "Comments",
+                                prefixIcon: const Icon(Icons.edit),
+                                dim: 300, // Adjust the width as needed
+                                onChanged: (String value) {
+                                    // TODO
+                                },
+                                inputType: TextInputType.multiline,
                             )),
                       ])),
                 ]),

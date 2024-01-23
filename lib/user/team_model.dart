@@ -42,6 +42,8 @@ enum NotePreloaded { yes, no }
 
 enum PlaysDefense { yes, no }
 
+enum WasDefended { yes, no }
+
 class TeamMatchData {
   int matchID;
   MatchType matchType;
