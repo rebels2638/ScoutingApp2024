@@ -127,6 +127,7 @@ class ConsoleStateComponent extends State<_ConsoleComponent> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(t,
                                       style: TextStyle(
+                                          fontWeight: FontWeight.w500,
                                           color: ThemeProvider
                                                           .themeOf(
                                                               context)

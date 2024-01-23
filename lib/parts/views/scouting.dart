@@ -279,7 +279,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                     .toList(),
                                 initialSelection: TaxiTrueFalse.no,
                                 onSelect: (TaxiTrueFalse e) /*TODO*/ {})),
-                        form_label("# notes scored in speaker",
+                        form_label("Scored in Speaker",
                             icon: const Icon(Icons.volume_up),
                             child: PlusMinus(
                               initialValue: 0,
@@ -287,7 +287,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                 // print("Value changed: $value");
                               },
                             )),
-                        form_label("# notes scored in amp",
+                        form_label("Scored in AMP",
                             icon: const Icon(Icons.music_note),
                             child: PlusMinus(
                               initialValue: 0,
