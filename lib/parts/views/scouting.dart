@@ -30,6 +30,72 @@ class ScoutingView extends StatefulWidget implements AppPageViewExporter {
   }
 }
 
+class PlusMinus extends StatefulWidget {
+  // Optional: Add any parameters the widget might need
+  final int initialValue;
+  final Function(int)? onValueChanged; // callback to return value
+
+  // Constructor
+  const PlusMinus({super.key, this.initialValue = 0, this.onValueChanged});
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _PlusMinusState createState() => _PlusMinusState();
+}
+
+class _PlusMinusState extends State<PlusMinus> {
+  late int _val;
+  final int maxValue = 999;
+
+  @override
+  void initState() {
+    super.initState();
+    _val = widget.initialValue;
+  }
+
+  void _updateValue(int newVal) {
+    if (newVal >= 0 && newVal <= maxValue) {
+      // Check for both minimum and maximum limits
+      setState(() {
+        _val = newVal;
+      });
+      if (widget.onValueChanged != null) {
+        widget.onValueChanged!(_val);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Color primaryColor = Theme.of(context).primaryColor;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        OutlinedButton(
+          onPressed: () => _updateValue(_val - 1),
+          style: OutlinedButton.styleFrom(
+            padding: const EdgeInsets.all(16),
+            side: BorderSide(color: primaryColor, width: 2),
+          ),
+          child: const Text("-"),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Text(_val.toString(), style: const TextStyle(fontSize: 20)),
+        ),
+        OutlinedButton(
+          onPressed: () => _updateValue(_val + 1),
+          style: OutlinedButton.styleFrom(
+            padding: const EdgeInsets.all(16),
+            side: BorderSide(color: primaryColor, width: 2),
+          ),
+          child: const Text("+"),
+        ),
+      ],
+    );
+  }
+}
 
 class _ScoutingViewState extends State<ScoutingView>
     with AutomaticKeepAliveClientMixin<ScoutingView> {
@@ -213,13 +279,26 @@ class _ScoutingViewState extends State<ScoutingView>
                                     .toList(),
                                 initialSelection: TaxiTrueFalse.no,
                                 onSelect: (TaxiTrueFalse e) /*TODO*/ {})),
+                        form_label("# notes scored in speaker",
+                            icon: const Icon(Icons.volume_up),
+                            child: PlusMinus(
+                              initialValue: 0,
+                              onValueChanged: (int value) {
+                                // print("Value changed: $value");
+                              },
+                            )),
+                        form_label("# notes scored in amp",
+                            icon: const Icon(Icons.music_note),
+                            child: PlusMinus(
+                              initialValue: 0,
+                              onValueChanged: (int value) {
+                                // print("Value changed: $value");
+                              },
+                            )),
                       ])),
                   form_sec(context,
                       backgroundColor: Colors.transparent,
-                      header: (
-                        icon: Icons.accessibility,
-                        title: "Tele-op"
-                      ),
+                      header: (icon: Icons.accessibility, title: "Tele-op"),
                       child: form_col(<Widget>[
                         /* TODO */
                       ])),
