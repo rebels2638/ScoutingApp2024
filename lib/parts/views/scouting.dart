@@ -300,7 +300,33 @@ class _ScoutingViewState extends State<ScoutingView>
                       backgroundColor: Colors.transparent,
                       header: (icon: Icons.accessibility, title: "Tele-op"),
                       child: form_col(<Widget>[
-                        /* TODO */
+                        form_label("Plays Defense",
+                            icon: const Icon(Icons.shield),
+                            child: form_seg_btn_1(
+                                segments: PlaysDefense.values
+                                    .map<
+                                            ({
+                                              Icon? icon,
+                                              String label,
+                                              PlaysDefense value
+                                            })>(
+                                        (PlaysDefense e) => (
+                                              label: formalizeWord(e.name),
+                                              icon:
+                                                  const Icon(Icons.shield),
+                                              value: e
+                                            ))
+                                    .toList(),
+                                initialSelection: PlaysDefense.no,
+                                onSelect: (PlaysDefense e) /*TODO*/ {})),
+                        form_label("TeleOp Missed",
+                            icon: const Icon(Icons.call_missed),
+                            child: PlusMinus(
+                              initialValue: 0,
+                              onValueChanged: (int value) {
+                                // print("Value changed: $value");
+                              },
+                            )),
                       ])),
                 ]),
           ),

@@ -40,6 +40,7 @@ enum TaxiTrueFalse { yes, no }
 
 enum NotePreloaded { yes, no }
 
+enum PlaysDefense { yes, no }
 
 class TeamMatchData {
   int matchID;
