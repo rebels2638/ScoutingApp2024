@@ -44,6 +44,12 @@ enum PlaysDefense { yes, no }
 
 enum WasDefended { yes, no }
 
+enum EndStatus { none, parked, onstage, failed}
+
+enum Breakdown { yes, no }
+
+enum Harmony { yes, no }
+
 class TeamMatchData {
   int matchID;
   MatchType matchType;

@@ -416,6 +416,97 @@ class _ScoutingViewState extends State<ScoutingView>
                               inputType: TextInputType.multiline,
                             )),
                       ])),
+                  form_sec(context,
+                      backgroundColor: Colors.transparent,
+                      header: (
+                        icon: Icons.accessibility,
+                        title: "Endgame"
+                      ),
+                      child: form_col(<Widget>[
+                        form_label("Status",
+                            icon: const Icon(Icons.shield),
+                            child: form_seg_btn_1(
+                                segments: EndStatus.values
+                                    .map<
+                                            ({
+                                              Icon? icon,
+                                              String label,
+                                              EndStatus value
+                                            })>(
+                                        (EndStatus e) => (
+                                              label: formalizeWord(
+                                                  e.name),
+                                              icon: const Icon(
+                                                  Icons.shield),
+                                              value: e
+                                            ))
+                                    .toList(),
+                                initialSelection: EndStatus.none,
+                                onSelect:
+                                    (EndStatus e) /*TODO*/ {})),
+                        form_label("Harmony (Used same chain)",
+                            icon: const Icon(Icons.people),
+                            child: form_seg_btn_1(
+                                segments: Harmony.values
+                                    .map<
+                                            ({
+                                              Icon? icon,
+                                              String label,
+                                              Harmony value
+                                            })>(
+                                        (Harmony e) => (
+                                              label: formalizeWord(
+                                                  e.name),
+                                              icon: const Icon(
+                                                  Icons.people),
+                                              value: e
+                                            ))
+                                    .toList(),
+                                initialSelection: Harmony.no,
+                                onSelect:
+                                    (Harmony e) /*TODO*/ {})),
+                        form_label("Comments",
+                            icon: const Icon(Icons.comment),
+                            child: form_txtin(
+                              hint: "Enter your comments here",
+                              label: "Comments",
+                              prefixIcon: const Icon(Icons.edit),
+                              dim: 300, 
+                              onChanged: (String value) {
+                                // TODO
+                              },
+                              inputType: TextInputType.multiline,
+                            )),
+                      ])),
+                  form_sec(context,
+                      backgroundColor: Colors.transparent,
+                      header: (
+                        icon: Icons.accessibility,
+                        title: "Other"
+                      ),
+                      child: form_col(<Widget>[
+                        form_label("Breakdown",
+                            icon: const Icon(Icons.handyman),
+                            child: form_seg_btn_1(
+                                segments: Breakdown.values
+                                    .map<
+                                            ({
+                                              Icon? icon,
+                                              String label,
+                                              Breakdown value
+                                            })>(
+                                        (Breakdown e) => (
+                                              label: formalizeWord(
+                                                  e.name),
+                                              icon: const Icon(
+                                                  Icons.handyman),
+                                              value: e
+                                            ))
+                                    .toList(),
+                                initialSelection: Breakdown.no,
+                                onSelect:
+                                    (Breakdown e) /*TODO*/ {})),
+                      ])),
                 ]),
           ),
         ],
