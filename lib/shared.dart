@@ -2,6 +2,8 @@ class Shared {
   static const int MAX_LOG_LENGTH = 1024;
   static const int PERIODIC_LOGGING_REFRESH =
       1500; // every 1,5 seconds
+
+  static const String FONT_FAMILY_SANS = "IBM Plex Sans";
 }
 
 const int REBEL_ROBOTICS_APP_VERSION = 20240120;

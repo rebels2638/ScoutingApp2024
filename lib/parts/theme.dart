@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2024/parts/color_schemes.g.dart';
+import 'package:scouting_app_2024/shared.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 class ThemeClassifier {
@@ -35,42 +36,42 @@ final class ThemeBlob {
             description: "Default Dark",
             data: ThemeData(
                 useMaterial3: true,
-                fontFamily: "IBM Plex Sans",
+                fontFamily: Shared.FONT_FAMILY_SANS,
                 colorScheme: darkColorScheme3)),
         AppTheme(
             id: AvaliableThemes.default_light.name,
             description: "Default Light",
             data: ThemeData(
                 useMaterial3: true,
-                fontFamily: "IBM Plex Sans",
+                fontFamily: Shared.FONT_FAMILY_SANS,
                 colorScheme: lightColorScheme3)),
         AppTheme(
             id: AvaliableThemes.mint.name,
             description: "Mint",
             data: ThemeData(
                 useMaterial3: true,
-                fontFamily: "IBM Plex Sans",
+                fontFamily: Shared.FONT_FAMILY_SANS,
                 colorScheme: lightColorScheme)),
         AppTheme(
             id: AvaliableThemes.forest.name,
             description: "Forest",
             data: ThemeData(
                 useMaterial3: true,
-                fontFamily: "IBM Plex Sans",
+                fontFamily: Shared.FONT_FAMILY_SANS,
                 colorScheme: darkColorScheme)),
         AppTheme(
             id: AvaliableThemes.peach.name,
             description: "Peach",
             data: ThemeData(
                 useMaterial3: true,
-                fontFamily: "IBM Plex Sans",
+                fontFamily: Shared.FONT_FAMILY_SANS,
                 colorScheme: lightColorScheme2)),
         AppTheme(
             id: AvaliableThemes.plum.name,
             description: "Plum",
             data: ThemeData(
                 useMaterial3: true,
-                fontFamily: "IBM Plex Sans",
+                fontFamily: Shared.FONT_FAMILY_SANS,
                 colorScheme: darkColorScheme2)),
       ];
 }
