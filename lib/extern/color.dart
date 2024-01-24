@@ -8,6 +8,18 @@ typedef ColorFloatStrip = ({
 });
 
 extension UsefulColor on Color {
+  Color grayScale() {
+    ColorFloatStrip stripped = strip();
+    int val = ((0.299 * stripped.red +
+                0.587 * stripped.green +
+                0.114 * stripped.blue) *
+            255)
+        .toInt()
+        .clamp(0, 255);
+    return Color.fromARGB(
+        (stripped.alpha * 255).toInt(), val, val, val);
+  }
+
   ColorFloatStrip strip() => (
         red: red / 255.toDouble(),
         green: green / 255.toDouble(),

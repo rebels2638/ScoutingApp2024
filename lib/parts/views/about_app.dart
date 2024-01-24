@@ -14,12 +14,12 @@ class AboutAppView extends StatelessWidget
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            const Center(
+            const Center( // lets gooo its const
                 child: Text.rich(TextSpan(
                     //text: "asdawfsuiunnnnnnnnnnnnnnnnnnnn\n",
                     children: <TextSpan>[
                   TextSpan(
-                    text: "2638 Scout\n",
+                    text: "2638 Scouting App\n",
                     style: TextStyle(
                       fontWeight: FontWeight.w800,
                       fontSize: 21,

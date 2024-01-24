@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/blobs/form_blob.dart';
+import 'package:scouting_app_2024/blobs/inc_dec_blob.dart';
 import 'package:scouting_app_2024/blobs/locale_blob.dart';
 import 'package:scouting_app_2024/extern/color.dart';
 import 'package:scouting_app_2024/parts/team.dart';
@@ -32,75 +33,6 @@ class ScoutingView extends StatefulWidget
         label: "Scouting",
         tooltip: "Data collection screen for observing matches"
       )
-    );
-  }
-}
-
-class PlusMinus extends StatefulWidget {
-  final int initialValue;
-  final void Function(int)?
-      onValueChanged; // callback to return value
-
-  const PlusMinus(
-      {super.key, this.initialValue = 0, this.onValueChanged});
-
-  @override
-  // ignore: library_private_types_in_public_api
-  _PlusMinusState createState() => _PlusMinusState();
-}
-
-class _PlusMinusState extends State<PlusMinus> {
-  late int _val;
-
-  @override
-  void initState() {
-    super.initState();
-    _val = widget.initialValue;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    Color primaryColor = Theme.of(context).primaryColor;
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        OutlinedButton(
-          onPressed: () {
-            int newVal = _val - 1;
-            if (newVal >= 0) {
-              setState(() => _val = newVal);
-              widget.onValueChanged?.call(_val);
-            }
-          },
-          style: OutlinedButton.styleFrom(
-            padding: const EdgeInsets.all(16),
-            side: BorderSide(color: primaryColor, width: 2),
-          ),
-          child: const Text("-",
-              style: TextStyle(fontWeight: FontWeight.w800)),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Text(_val.toString(),
-              style: const TextStyle(fontSize: 20)),
-        ),
-        OutlinedButton(
-          onPressed: () {
-            int newVal = _val + 1;
-            if (newVal <= 99) {
-              setState(() => _val = newVal);
-              widget.onValueChanged?.call(_val);
-            }
-          },
-          style: OutlinedButton.styleFrom(
-            padding: const EdgeInsets.all(16),
-            side: BorderSide(color: primaryColor, width: 2),
-          ),
-          child: const Text("+",
-              style: TextStyle(fontWeight: FontWeight.w800)),
-        ),
-      ],
     );
   }
 }
