@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:scouting_app_2024/utils.dart';
-
-int _colorClamp(int i) => clampInt(i, max: 255, min: 0);
 
 typedef ColorFloatStrip = ({
   double red,
@@ -35,25 +32,25 @@ extension UsefulColor on Color {
 
   Color addRed(int value) {
     int fin = red + value;
-    fin = _colorClamp(fin);
+    fin = fin.clamp(0, 255);
     return withRed(fin);
   }
 
   Color addBlue(int value) {
     int fin = blue + value;
-    fin = _colorClamp(fin);
+    fin = fin.clamp(0, 255);
     return withBlue(fin);
   }
 
   Color addGreen(int value) {
     int fin = green + value;
-    fin = _colorClamp(fin);
+    fin = fin.clamp(0, 255);
     return withGreen(fin);
   }
 
   Color addAlpha(int value) {
     int fin = alpha + value;
-    fin = _colorClamp(fin);
+    fin = fin.clamp(0, 255);
     return withAlpha(fin);
   }
 

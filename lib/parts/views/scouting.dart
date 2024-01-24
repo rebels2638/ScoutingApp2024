@@ -7,6 +7,7 @@ import 'package:scouting_app_2024/parts/team.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:scouting_app_2024/extern/datetime.dart';
 import 'package:scouting_app_2024/user/team_model.dart';
+import 'package:scouting_app_2024/utils.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 typedef SectionId = ({String title, IconData icon});
@@ -267,8 +268,13 @@ class _ScoutingViewState extends State<ScoutingView>
                         form_label("Note preloaded before game?",
                             icon: const Icon(Icons.trip_origin),
                             child: form_seg_btn_1(
-                                segments: [true, false]
-                                    .map<({Icon? icon, String label, bool value})>(
+                                segments: GenericUtils.boolOptions()
+                                    .map<
+                                            ({
+                                              Icon? icon,
+                                              String label,
+                                              bool value
+                                            })>(
                                         (bool e) => (
                                               label: e ? 'Yes' : 'No',
                                               icon: const Icon(
@@ -277,13 +283,12 @@ class _ScoutingViewState extends State<ScoutingView>
                                             ))
                                     .toList(),
                                 initialSelection: true,
-                                onSelect:
-                                    (bool e) /*TODO*/ {})),
+                                onSelect: (bool e) /*TODO*/ {})),
                         form_label("Taxis?",
                             icon:
                                 const Icon(Icons.local_taxi_rounded),
                             child: form_seg_btn_1(
-                                segments: [true, false]
+                                segments: <bool>[true, false]
                                     .map<({Icon? icon, String label, bool value})>(
                                         (bool e) => (
                                               label: e ? 'Yes' : 'No',
@@ -293,31 +298,24 @@ class _ScoutingViewState extends State<ScoutingView>
                                             ))
                                     .toList(),
                                 initialSelection: false,
-                                onSelect:
-                                    (bool e) /*TODO*/ {})),
+                                onSelect: (bool e) /*TODO*/ {})),
                         form_label("Scored in Speaker",
                             icon: const Icon(Icons.volume_up),
                             child: PlusMinus(
                               initialValue: 0,
-                              onValueChanged: (int value) {
-                                // print("Value changed: $value");
-                              },
+                              onValueChanged: (int value) /*TODO*/ {},
                             )),
                         form_label("Scored in AMP",
                             icon: const Icon(Icons.music_note),
                             child: PlusMinus(
                               initialValue: 0,
-                              onValueChanged: (int value) {
-                                // print("Value changed: $value");
-                              },
+                              onValueChanged: (int value) /*TODO*/ {},
                             )),
                         form_label("Missed",
                             icon: const Icon(Icons.call_missed),
                             child: PlusMinus(
                               initialValue: 0,
-                              onValueChanged: (int value) {
-                                // print("Value changed: $value");
-                              },
+                              onValueChanged: (int value) /*TODO*/ {},
                             )),
                         form_label("Comments",
                             icon: const Icon(Icons.comment),
@@ -325,10 +323,8 @@ class _ScoutingViewState extends State<ScoutingView>
                               hint: "Enter your comments here",
                               label: "Comments",
                               prefixIcon: const Icon(Icons.edit),
-                              dim: 300, // Adjust the width as needed
-                              onChanged: (String value) {
-                                // TODO
-                              },
+                              dim: 300,
+                              onChanged: (String value) /*TODO*/ {},
                               inputType: TextInputType.multiline,
                             )),
                       ])),
@@ -342,7 +338,7 @@ class _ScoutingViewState extends State<ScoutingView>
                         form_label("Plays Defense",
                             icon: const Icon(Icons.shield),
                             child: form_seg_btn_1(
-                                segments: [true, false]
+                                segments: GenericUtils.boolOptions()
                                     .map<
                                             ({
                                               Icon? icon,
@@ -357,12 +353,11 @@ class _ScoutingViewState extends State<ScoutingView>
                                             ))
                                     .toList(),
                                 initialSelection: false,
-                                onSelect:
-                                    (bool e) /*TODO*/ {})),
+                                onSelect: (bool e) /*TODO*/ {})),
                         form_label("Was Defended?",
                             icon: const Icon(Icons.verified_user),
                             child: form_seg_btn_1(
-                                segments: [true, false]
+                                segments: GenericUtils.boolOptions()
                                     .map<({Icon? icon, String label, bool value})>(
                                         (bool e) => (
                                               label: e ? 'Yes' : 'No',
@@ -372,43 +367,33 @@ class _ScoutingViewState extends State<ScoutingView>
                                             ))
                                     .toList(),
                                 initialSelection: false,
-                                onSelect:
-                                    (bool e) /*TODO*/ {})),
-                                    form_label("Scored in Speaker",
+                                onSelect: (bool e) /*TODO*/ {})),
+                        form_label("Scored in Speaker",
                             icon: const Icon(Icons.volume_up),
                             child: PlusMinus(
                               initialValue: 0,
-                              onValueChanged: (int value) {
-                                // print("Value changed: $value");
-                              },
+                              onValueChanged: (int value) /*TODO*/ {},
                             )),
                         form_label("Scored in AMP",
                             icon: const Icon(Icons.music_note),
                             child: PlusMinus(
                               initialValue: 0,
-                              onValueChanged: (int value) {
-                                // print("Value changed: $value");
-                              },
+                              onValueChanged: (int value) /*TODO*/ {},
                             )),
                         form_label("Missed",
                             icon: const Icon(Icons.call_missed),
                             child: PlusMinus(
                               initialValue: 0,
-                              onValueChanged: (int value) {
-                                // print("Value changed: $value");
-                              },
+                              onValueChanged: (int value) /*TODO*/ {},
                             )),
-                        
                         form_label("Comments",
                             icon: const Icon(Icons.comment),
                             child: form_txtin(
                               hint: "Enter your comments here",
                               label: "Comments",
                               prefixIcon: const Icon(Icons.edit),
-                              dim: 300, // Adjust the width as needed
-                              onChanged: (String value) {
-                                // TODO
-                              },
+                              dim: 300,
+                              onChanged: (String value) /*TODO*/ {},
                               inputType: TextInputType.multiline,
                             )),
                       ])),
@@ -438,12 +423,11 @@ class _ScoutingViewState extends State<ScoutingView>
                                             ))
                                     .toList(),
                                 initialSelection: EndStatus.none,
-                                onSelect:
-                                    (EndStatus e) /*TODO*/ {})),
+                                onSelect: (EndStatus e) /*TODO*/ {})),
                         form_label("Harmony (Used same chain)",
                             icon: const Icon(Icons.people),
                             child: form_seg_btn_1(
-                                segments: [true, false]
+                                segments: GenericUtils.boolOptions()
                                     .map<
                                             ({
                                               Icon? icon,
@@ -458,18 +442,15 @@ class _ScoutingViewState extends State<ScoutingView>
                                             ))
                                     .toList(),
                                 initialSelection: false,
-                                onSelect:
-                                    (bool e) /*TODO*/ {})),
+                                onSelect: (bool e) /*TODO*/ {})),
                         form_label("Comments",
                             icon: const Icon(Icons.comment),
                             child: form_txtin(
                               hint: "Enter your comments here",
                               label: "Comments",
                               prefixIcon: const Icon(Icons.edit),
-                              dim: 300, 
-                              onChanged: (String value) {
-                                // TODO
-                              },
+                              dim: 300,
+                              onChanged: (String value) /*TODO*/ {},
                               inputType: TextInputType.multiline,
                             )),
                       ])),
@@ -483,7 +464,7 @@ class _ScoutingViewState extends State<ScoutingView>
                         form_label("Breakdown",
                             icon: const Icon(Icons.handyman),
                             child: form_seg_btn_1(
-                                segments: [true, false]
+                                segments: GenericUtils.boolOptions()
                                     .map<
                                             ({
                                               Icon? icon,
@@ -498,8 +479,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                             ))
                                     .toList(),
                                 initialSelection: false,
-                                onSelect:
-                                    (bool e) /*TODO*/ {})),
+                                onSelect: (bool e) /*TODO*/ {})),
                       ])),
                 ]),
           ),
