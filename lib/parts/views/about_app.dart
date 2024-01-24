@@ -47,7 +47,7 @@ class AboutAppView extends StatelessWidget
                         //decoration:TextDecoration.underline,
                       )),
                   TextSpan(
-                    text: "Jack Meng\nChiming Wang",
+                    text: "Jack Meng\nChiming Wang\nRichard Xu",
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                     ),

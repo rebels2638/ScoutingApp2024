@@ -22,7 +22,6 @@ enum AvaliableThemes {
   peach("Peach", false),
   plum("Plum");
 
-
   final String properName;
   final bool isDarkMode;
 
@@ -33,47 +32,45 @@ final class ThemeBlob {
   static List<AppTheme> export() => <AppTheme>[
         AppTheme(
             id: AvaliableThemes.default_dark.name,
-            description: "Default Dark Theme",
+            description: "Default Dark",
             data: ThemeData(
                 useMaterial3: true,
                 fontFamily: "IBM Plex Sans",
                 colorScheme: darkColorScheme3)),
         AppTheme(
             id: AvaliableThemes.default_light.name,
-            description: "Default Light Theme",
+            description: "Default Light",
             data: ThemeData(
                 useMaterial3: true,
                 fontFamily: "IBM Plex Sans",
                 colorScheme: lightColorScheme3)),
-        
         AppTheme(
             id: AvaliableThemes.mint.name,
-            description: "Mint Theme",
+            description: "Mint",
             data: ThemeData(
                 useMaterial3: true,
                 fontFamily: "IBM Plex Sans",
                 colorScheme: lightColorScheme)),
         AppTheme(
             id: AvaliableThemes.forest.name,
-            description: "Forest Theme",
+            description: "Forest",
             data: ThemeData(
                 useMaterial3: true,
                 fontFamily: "IBM Plex Sans",
                 colorScheme: darkColorScheme)),
         AppTheme(
             id: AvaliableThemes.peach.name,
-            description: "Peach Theme",
+            description: "Peach",
             data: ThemeData(
                 useMaterial3: true,
                 fontFamily: "IBM Plex Sans",
                 colorScheme: lightColorScheme2)),
         AppTheme(
             id: AvaliableThemes.plum.name,
-            description: "Plum Theme",
+            description: "Plum",
             data: ThemeData(
                 useMaterial3: true,
                 fontFamily: "IBM Plex Sans",
                 colorScheme: darkColorScheme2)),
-
       ];
 }
