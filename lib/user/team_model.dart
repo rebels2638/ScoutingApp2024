@@ -36,19 +36,7 @@ enum MatchType { practice, qualification, playoff }
 
 enum MatchStartingPosition { left, middle, right }
 
-enum TaxiTrueFalse { yes, no }
-
-enum NotePreloaded { yes, no }
-
-enum PlaysDefense { yes, no }
-
-enum WasDefended { yes, no }
-
 enum EndStatus { none, parked, onstage, failed}
-
-enum Breakdown { yes, no }
-
-enum Harmony { yes, no }
 
 class TeamMatchData {
   int matchID;

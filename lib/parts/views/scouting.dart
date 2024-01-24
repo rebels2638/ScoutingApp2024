@@ -267,36 +267,34 @@ class _ScoutingViewState extends State<ScoutingView>
                         form_label("Note preloaded before game?",
                             icon: const Icon(Icons.trip_origin),
                             child: form_seg_btn_1(
-                                segments: NotePreloaded.values
-                                    .map<({Icon? icon, String label, NotePreloaded value})>(
-                                        (NotePreloaded e) => (
-                                              label: formalizeWord(
-                                                  e.name),
+                                segments: [true, false]
+                                    .map<({Icon? icon, String label, bool value})>(
+                                        (bool e) => (
+                                              label: e ? 'Yes' : 'No',
                                               icon: const Icon(
                                                   Icons.trip_origin),
                                               value: e
                                             ))
                                     .toList(),
-                                initialSelection: NotePreloaded.yes,
+                                initialSelection: true,
                                 onSelect:
-                                    (NotePreloaded e) /*TODO*/ {})),
+                                    (bool e) /*TODO*/ {})),
                         form_label("Taxis?",
                             icon:
                                 const Icon(Icons.local_taxi_rounded),
                             child: form_seg_btn_1(
-                                segments: TaxiTrueFalse.values
-                                    .map<({Icon? icon, String label, TaxiTrueFalse value})>(
-                                        (TaxiTrueFalse e) => (
-                                              label: formalizeWord(
-                                                  e.name),
+                                segments: [true, false]
+                                    .map<({Icon? icon, String label, bool value})>(
+                                        (bool e) => (
+                                              label: e ? 'Yes' : 'No',
                                               icon: const Icon(Icons
                                                   .local_taxi_rounded),
                                               value: e
                                             ))
                                     .toList(),
-                                initialSelection: TaxiTrueFalse.no,
+                                initialSelection: false,
                                 onSelect:
-                                    (TaxiTrueFalse e) /*TODO*/ {})),
+                                    (bool e) /*TODO*/ {})),
                         form_label("Scored in Speaker",
                             icon: const Icon(Icons.volume_up),
                             child: PlusMinus(
@@ -344,40 +342,38 @@ class _ScoutingViewState extends State<ScoutingView>
                         form_label("Plays Defense",
                             icon: const Icon(Icons.shield),
                             child: form_seg_btn_1(
-                                segments: PlaysDefense.values
+                                segments: [true, false]
                                     .map<
                                             ({
                                               Icon? icon,
                                               String label,
-                                              PlaysDefense value
+                                              bool value
                                             })>(
-                                        (PlaysDefense e) => (
-                                              label: formalizeWord(
-                                                  e.name),
+                                        (bool e) => (
+                                              label: e ? 'Yes' : 'No',
                                               icon: const Icon(
                                                   Icons.shield),
                                               value: e
                                             ))
                                     .toList(),
-                                initialSelection: PlaysDefense.no,
+                                initialSelection: false,
                                 onSelect:
-                                    (PlaysDefense e) /*TODO*/ {})),
+                                    (bool e) /*TODO*/ {})),
                         form_label("Was Defended?",
                             icon: const Icon(Icons.verified_user),
                             child: form_seg_btn_1(
-                                segments: WasDefended.values
-                                    .map<({Icon? icon, String label, WasDefended value})>(
-                                        (WasDefended e) => (
-                                              label: formalizeWord(
-                                                  e.name),
+                                segments: [true, false]
+                                    .map<({Icon? icon, String label, bool value})>(
+                                        (bool e) => (
+                                              label: e ? 'Yes' : 'No',
                                               icon: const Icon(Icons
                                                   .verified_user),
                                               value: e
                                             ))
                                     .toList(),
-                                initialSelection: WasDefended.no,
+                                initialSelection: false,
                                 onSelect:
-                                    (WasDefended e) /*TODO*/ {})),
+                                    (bool e) /*TODO*/ {})),
                                     form_label("Scored in Speaker",
                             icon: const Icon(Icons.volume_up),
                             child: PlusMinus(
@@ -447,24 +443,23 @@ class _ScoutingViewState extends State<ScoutingView>
                         form_label("Harmony (Used same chain)",
                             icon: const Icon(Icons.people),
                             child: form_seg_btn_1(
-                                segments: Harmony.values
+                                segments: [true, false]
                                     .map<
                                             ({
                                               Icon? icon,
                                               String label,
-                                              Harmony value
+                                              bool value
                                             })>(
-                                        (Harmony e) => (
-                                              label: formalizeWord(
-                                                  e.name),
+                                        (bool e) => (
+                                              label: e ? 'Yes' : 'No',
                                               icon: const Icon(
                                                   Icons.people),
                                               value: e
                                             ))
                                     .toList(),
-                                initialSelection: Harmony.no,
+                                initialSelection: false,
                                 onSelect:
-                                    (Harmony e) /*TODO*/ {})),
+                                    (bool e) /*TODO*/ {})),
                         form_label("Comments",
                             icon: const Icon(Icons.comment),
                             child: form_txtin(
@@ -488,24 +483,23 @@ class _ScoutingViewState extends State<ScoutingView>
                         form_label("Breakdown",
                             icon: const Icon(Icons.handyman),
                             child: form_seg_btn_1(
-                                segments: Breakdown.values
+                                segments: [true, false]
                                     .map<
                                             ({
                                               Icon? icon,
                                               String label,
-                                              Breakdown value
+                                              bool value
                                             })>(
-                                        (Breakdown e) => (
-                                              label: formalizeWord(
-                                                  e.name),
+                                        (bool e) => (
+                                              label: e ? 'Yes' : 'No',
                                               icon: const Icon(
                                                   Icons.handyman),
                                               value: e
                                             ))
                                     .toList(),
-                                initialSelection: Breakdown.no,
+                                initialSelection: false,
                                 onSelect:
-                                    (Breakdown e) /*TODO*/ {})),
+                                    (bool e) /*TODO*/ {})),
                       ])),
                 ]),
           ),
