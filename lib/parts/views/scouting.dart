@@ -143,7 +143,7 @@ class _ScoutingViewState extends State<ScoutingView>
                     ThemeProvider.themeOf(context)
                         .data
                         .colorScheme
-                        .inverseSurface
+                        .secondary
                   ])),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -159,7 +159,7 @@ class _ScoutingViewState extends State<ScoutingView>
                               color: ThemeProvider.themeOf(context)
                                   .data
                                   .colorScheme
-                                  .inverseSurface
+                                  .secondary
                                   .biContrastingColor())),
                       TextSpan(
                           text:
@@ -168,7 +168,7 @@ class _ScoutingViewState extends State<ScoutingView>
                               color: ThemeProvider.themeOf(context)
                                   .data
                                   .colorScheme
-                                  .inverseSurface
+                                  .secondary
                                   .biContrastingColor()))
                     ]))),
               ),

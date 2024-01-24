@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/blobs/locale_blob.dart';
+import 'package:scouting_app_2024/parts/bits/perf_overlay.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:theme_provider/theme_provider.dart';
 
@@ -88,6 +90,14 @@ class ConsoleStateComponent extends State<_ConsoleComponent> {
                 icon:
                     const Icon(Icons.security_update_warning_rounded),
                 label: const Text("THROW_NOW",
+                    style: TextStyle(fontWeight: FontWeight.bold))),
+            TextButton.icon(
+                onPressed: Provider.of<PerformanceOverlayModal>(
+                        context,
+                        listen: false /*dont touch this */)
+                    .toggle,
+                icon: const Icon(Icons.grain_rounded),
+                label: const Text("Performance Overlay",
                     style: TextStyle(fontWeight: FontWeight.bold)))
           ]),
           Expanded(

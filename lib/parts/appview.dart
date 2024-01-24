@@ -1,6 +1,8 @@
 import "package:flutter/material.dart";
+import 'package:provider/provider.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/debug.dart';
+import 'package:scouting_app_2024/parts/bits/perf_overlay.dart';
 import 'package:scouting_app_2024/user/shared.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
 import 'package:scouting_app_2024/parts/views/views.dart';
@@ -16,11 +18,30 @@ class ThemedAppBundle extends StatelessWidget {
         themes: ThemeBlob.export(),
         child: ThemeConsumer(
             child: Builder(
-                builder: (BuildContext themeCtxt) => MaterialApp(
-                    debugShowCheckedModeBanner: false,
-                    theme: ThemeProvider.themeOf(themeCtxt).data,
-                    darkTheme: ThemeProvider.themeOf(themeCtxt).data,
-                    home: _AppView()))));
+                builder: (BuildContext themeCtxt) =>
+                    ChangeNotifierProvider<PerformanceOverlayModal>(
+                      // this is kinda scuffed but easier to understand for others
+                      create: (BuildContext context) =>
+                          PerformanceOverlayModal(),
+                      child: const IntermediateMaterialApp(),
+                    ))));
+  }
+}
+
+class IntermediateMaterialApp extends StatelessWidget {
+  const IntermediateMaterialApp({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        showPerformanceOverlay:
+            Provider.of<PerformanceOverlayModal>(context).show,
+        debugShowCheckedModeBanner: false,
+        theme: ThemeProvider.themeOf(context).data,
+        darkTheme: ThemeProvider.themeOf(context).data,
+        home: _AppView());
   }
 }
 
