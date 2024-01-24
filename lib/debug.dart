@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logging/logging.dart';
 import 'package:scouting_app_2024/blobs/locale_blob.dart';
 import 'package:scouting_app_2024/parts/views/console.dart';
+import 'package:scouting_app_2024/shared.dart';
 
 class DebugObserver extends BlocObserver {
   const DebugObserver();
@@ -31,9 +32,14 @@ class Debug {
     }
     // this makes sure we capture all of the data before the app runs or any states that are not yet initted.
     // thus make sure to call init before the app itself starts!!
-    listen((LogRecord record) => ConsoleStateComponent
-        .internalConsoleBuffer
-        .add(stdIOPrettifier.call(record)));
+    listen((LogRecord record) {
+      if (ConsoleStateComponent.internalConsoleBuffer.length >=
+          Shared.MAX_LOG_LENGTH) {
+        ConsoleStateComponent.internalConsoleBuffer.clear();
+      }
+      ConsoleStateComponent.internalConsoleBuffer
+          .add(stdIOPrettifier.call(record));
+    });
   }
 
   void listen(void Function(LogRecord record) listener) =>
