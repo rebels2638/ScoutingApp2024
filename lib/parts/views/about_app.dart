@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
+import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -14,7 +15,8 @@ class AboutAppView extends StatelessWidget
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            const Center( // lets gooo its const
+            const Center(
+                // lets gooo its const
                 child: Text.rich(TextSpan(
                     //text: "asdawfsuiunnnnnnnnnnnnnnnnnnnn\n",
                     children: <TextSpan>[
@@ -123,7 +125,8 @@ class AboutAppView extends StatelessWidget
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   TextButton.icon(
-                      onPressed: () => launchConfirmDialog(context,
+                      onPressed: () async => await launchConfirmDialog(
+                          context,
                           message: const Text(
                               "You are about to visit this app's source code on Github."),
                           onConfirm: () async => await launchUrl(
@@ -143,6 +146,99 @@ class AboutAppView extends StatelessWidget
                               REBEL_ROBOTICS_APP_VERSION.toString(),
                           applicationName: REBEL_ROBOTICS_APP_NAME),
                       label: const Text("Open Source licenses"),
+                      icon: const Icon(Icons.library_books_rounded)),
+                ]),
+            strut(height: 26),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  TextButton.icon(
+                      onPressed: () async =>
+                          await launchConfirmDialog(context,
+                              title: "Font \"IBM Plex\"",
+                              showOkLabel: false,
+                              icon: const Icon(
+                                  Icons.library_books_rounded),
+                              denyLabel: "Ok",
+                              message: FutureBuilder<String>(
+                                  future: DefaultAssetBundle.of(
+                                          context)
+                                      .loadString(
+                                          "assets/legals/OFL.txt"),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<String>
+                                          byteData) {
+                                    if (byteData.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const Center(
+                                          child:
+                                              CircularProgressIndicator());
+                                    }
+                                    if (byteData.hasError ||
+                                        !byteData.hasData) {
+                                      return Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment
+                                                  .center,
+                                          children: <Widget>[
+                                            const Icon(Icons
+                                                .warning_rounded),
+                                            strut(width: 10),
+                                            const Text(
+                                                "There was an error retrieving...")
+                                          ]);
+                                    }
+                                    return SingleChildScrollView(
+                                        child: Text(byteData.data!));
+                                  }),
+                              onConfirm: () => Debug().info(
+                                  "Popped FONT_LICENSE View Screen")),
+                      label: const Text("Font license"),
+                      icon: const Icon(Icons.font_download_rounded)),
+                  TextButton.icon(
+                      onPressed: () async => await launchConfirmDialog(
+                          context,
+                          title: "BSD-4 License",
+                          showOkLabel: false,
+                          icon:
+                              const Icon(Icons.library_books_rounded),
+                          denyLabel: "Ok",
+                          message: FutureBuilder<String>(
+                              future: DefaultAssetBundle.of(context)
+                                  .loadString(
+                                      "assets/legals/BSD-4.txt"),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<String> byteData) {
+                                if (byteData.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const Center(
+                                      child:
+                                          CircularProgressIndicator());
+                                }
+                                if (byteData.hasError ||
+                                    !byteData.hasData) {
+                                  return Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        const Icon(
+                                            Icons.warning_rounded),
+                                        strut(width: 10),
+                                        const Text(
+                                            "There was an error retrieving...")
+                                      ]);
+                                }
+                                return SingleChildScrollView(
+                                    child: Text(byteData.data!));
+                              }),
+                          onConfirm: () => Debug().info(
+                              "Popped SOFTWARE_LICENSE View Screen")),
+                      label: const Text("Software license"),
                       icon: const Icon(Icons.library_books_rounded))
                 ])
           ],

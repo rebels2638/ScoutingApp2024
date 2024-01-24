@@ -42,6 +42,8 @@ flutter:
     - assets/icons/pace_FILL0_wght400_GRAD0_opsz24.svg
     - assets/icons/firstinspires-icon.svg
     - assets/crescendo/crescendo_header.png
+    - assets/legals/OFL.txt
+    - assets/legals/BSD-4.txt
   fonts:
     - family: IBM Plex Sans
       fonts:

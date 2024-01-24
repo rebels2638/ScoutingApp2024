@@ -44,6 +44,11 @@ List<Widget> strutAll(List<Widget> children,
 @pragma("vm:prefer-inline")
 Future<void> launchConfirmDialog(BuildContext context,
     {required Widget message,
+    Icon? icon,
+    String title = "Are you sure?",
+    bool showOkLabel = true,
+    String okLabel = "Yes",
+    String denyLabel = "No",
     required void Function() onConfirm,
     void Function()? onDeny}) async {
   Debug().info(
@@ -51,25 +56,28 @@ Future<void> launchConfirmDialog(BuildContext context,
   await showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-              icon: const Icon(Icons.warning_amber_rounded),
-              title: const Text("Are you sure?"),
+              icon: icon ?? const Icon(Icons.warning_amber_rounded),
+              title: Text(title),
               content: message,
               actions: <Widget>[
-                TextButton.icon(
-                  icon: const Icon(Icons.check_rounded),
-                  label: const Text("Yes",
-                      style: TextStyle(fontWeight: FontWeight.w700)),
-                  onPressed: () {
-                    onConfirm.call();
-                    Navigator.of(context).pop();
-                    Debug().info(
-                        "CONFIRM_DIALOG ${message.hashCode} ended with CONFIRM");
-                  },
-                ),
+                if (showOkLabel)
+                  TextButton.icon(
+                    icon: const Icon(Icons.check_rounded),
+                    label: Text(okLabel,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w700)),
+                    onPressed: () {
+                      onConfirm.call();
+                      Navigator.of(context).pop();
+                      Debug().info(
+                          "CONFIRM_DIALOG ${message.hashCode} ended with CONFIRM");
+                    },
+                  ),
                 TextButton.icon(
                   icon: const Icon(Icons.not_interested_rounded),
-                  label: const Text("No",
-                      style: TextStyle(fontWeight: FontWeight.w700)),
+                  label: Text(denyLabel,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w700)),
                   onPressed: () {
                     onDeny?.call();
                     Navigator.of(context).pop();

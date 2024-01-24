@@ -259,7 +259,8 @@ class _AppViewState extends State<_AppView> {
           padding: const EdgeInsets.all(10.0),
           child: PageView(
               scrollDirection: Axis.horizontal,
-              allowImplicitScrolling: true,
+              allowImplicitScrolling:
+                  false, // prevent users from accidentally swiping
               controller: widget.pageController,
               children: <Widget>[
                 scoutingView.child,
