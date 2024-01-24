@@ -7,6 +7,16 @@
 
 Scouting App for the 2024 year built using the **Flutter Framework**.
 
+<details>
+    <summary>
+        <h3>Preview</h3>
+    </summary>
+    <img src="./repo/assets/Screenshot.png" />
+
+> **Please note this is a development screenshot!**
+
+</details>
+
 </div>
 
 ## Snapshot Releases
@@ -28,7 +38,7 @@ Head over to the <a href="https://github.com/rebels2638/ScoutingApp/actions"><kb
 
 1. Clone this repository either through GitHub or using `git clone https://github.com/rebels2638/ScoutingApp2024.git`
 2. Open directory in terminal/CLI: `cd ScoutingApp2024`
-3. Download libraries/dependencies: `flutter pub get` (you can also run the ```mac-flutter-start.sh```/```windows-flutter-start.bat``` scripts.)``)
+3. Download libraries/dependencies: `flutter pub get` (you can also run `mac-flutter-start.sh` or `windows-flutter-start.bat`)
 > [!WARNING]
 > If Flutter prompts you with an upgrade notification, please run the respective upgrade command: `flutter upgrade`
 4. Run `flutter build web --web-renderer html` to build for web.
@@ -51,6 +61,7 @@ If you want to run in *Release Mode*, run `flutter run --release -d [chrome/edge
 **Developers** 
 
 * Chiming Wang ([2bf](https://github.com/2bf))
+* Richard Xu ([Richard28277](https://github.com/Richard28277))
 
 **Helpers** 
 
