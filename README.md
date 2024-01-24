@@ -61,6 +61,7 @@ If you want to run in *Release Mode*, run `flutter run --release -d [chrome/edge
 **Developers** 
 
 * Chiming Wang ([2bf](https://github.com/2bf))
+* Richard Xu ([Richard28277](https://github.com/Richard28277))
 
 **Helpers** 
 
