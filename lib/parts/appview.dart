@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
@@ -113,6 +115,18 @@ class _AppViewState extends State<_AppView> {
         String tooltip
       }) item
     }) consoleView = const ConsoleView().exportAppPageView();
+    ({
+      Widget child,
+      ({
+        Icon activeIcon,
+        Icon icon,
+        String label,
+        String tooltip
+      }) item
+    })? dataHostView;
+    if (Platform.isWindows) {
+      dataHostView = const DataHostingView().exportAppPageView();
+    }
     return Scaffold(
         floatingActionButtonLocation:
             FloatingActionButtonLocation.endFloat,
@@ -193,6 +207,12 @@ class _AppViewState extends State<_AppView> {
           selectedIndex: _bottomNavBarIndexer,
           destinations: <NavigationDestination>[
             // plsplsplspls make sure this matches with the following PageView's children ordering D:
+            if (dataHostView != null)
+              NavigationDestination(
+                  icon: dataHostView.item.icon,
+                  label: dataHostView.item.label,
+                  selectedIcon: dataHostView.item.activeIcon,
+                  tooltip: dataHostView.item.tooltip),
             NavigationDestination(
                 icon: scoutingView.item.icon,
                 label: scoutingView.item.label,
@@ -268,6 +288,7 @@ class _AppViewState extends State<_AppView> {
                   false, // prevent users from accidentally swiping
               controller: widget.pageController,
               children: <Widget>[
+                if (dataHostView != null) dataHostView.child,
                 scoutingView.child,
                 pastMatchesView.child,
                 settingsView.child,

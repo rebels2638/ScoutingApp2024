@@ -44,6 +44,7 @@ flutter:
     - assets/crescendo/crescendo_header.png
     - assets/legals/OFL.txt
     - assets/legals/BSD-4.txt
+    - assets/2324_teampic.jpg
   fonts:
     - family: IBM Plex Sans
       fonts:

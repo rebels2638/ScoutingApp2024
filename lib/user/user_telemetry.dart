@@ -26,17 +26,22 @@ class UserTelemetry {
 
   UserPrefModel get currentModel => _currentModel;
 
-  void init() {
-    SharedPreferences.getInstance()
-        .then((SharedPreferences e) => _prefs = e);
-    Timer.periodic(const Duration(seconds: 10), (Timer timer) async {
-      Debug().info(
-          "USER_TELEMETRY Saving UserTelemetry Model now. Values: ${_currentModel.toJson()}");
-      await save();
-      Debug().info(
-          "UserTelemetry Received the following content: ${_prefs.getString(userDBName)}");
-    });
-  }
+  void init() =>
+      SharedPreferences.getInstance().then((SharedPreferences e) {
+        _prefs = e;
+        if (isEmpty()) {
+          reset();
+        }
+        Timer.periodic(const Duration(seconds: 10),
+            (Timer timer) async {
+          // this is kinda bad since we dont check if the objects are the same and if it already persists in storage lmao, its just wasting cpu time saving for no reason, whatever
+          Debug().info(
+              "USER_TELEMETRY Saving UserTelemetry Model now. Values: ${_currentModel.toJson()}");
+          await save();
+          Debug().info(
+              "UserTelemetry Received the following content: ${_prefs.getString(userDBName)}");
+        });
+      });
 
   /// resets the model, but does not perform a save
   void reset() => _currentModel = UserPrefModel.defaultModel;

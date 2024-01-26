@@ -16,7 +16,6 @@ void main() {
     FlutterError.presentError.call(details);
     Debug().warn(details.summary);
   };
-  
   Debug().init();
   UserTelemetry().reset();
   UserTelemetry().init();
