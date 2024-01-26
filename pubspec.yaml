@@ -45,6 +45,7 @@ flutter:
     - assets/legals/OFL.txt
     - assets/legals/BSD-4.txt
     - assets/2324_teampic.jpg
+    - assets/2324_teampic_blurred.jpg
   fonts:
     - family: IBM Plex Sans
       fonts:
