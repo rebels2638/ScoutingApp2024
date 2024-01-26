@@ -375,6 +375,25 @@ class _ScoutingViewState extends State<ScoutingView>
                                     .toList(),
                                 initialSelection: false,
                                 onSelect: (bool e) /*TODO*/ {})),
+                        form_label("Scored in Trap",
+                            icon: const Icon(Icons.swipe_down_alt),
+                            child: form_seg_btn_1(
+                                segments: GenericUtils.boolOptions()
+                                    .map<
+                                            ({
+                                              Icon? icon,
+                                              String label,
+                                              bool value
+                                            })>(
+                                        (bool e) => (
+                                              label: e ? "Yes" : "No",
+                                              icon: const Icon(
+                                                  Icons.swipe_down_alt),
+                                              value: e
+                                            ))
+                                    .toList(),
+                                initialSelection: false,
+                                onSelect: (bool e) /*TODO*/ {})),
                         form_label("Comments",
                             icon: const Icon(Icons.comment),
                             child: form_txtin(
