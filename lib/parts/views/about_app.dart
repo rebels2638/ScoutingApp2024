@@ -61,7 +61,7 @@ class _AboutAppViewState extends State<AboutAppView> {
                         fit: BoxFit.cover,
                         width: MediaQuery.of(context).size.width),
                     ColoredBox(
-                        color: Colors.black.withOpacity(0.142)),
+                        color: Colors.black.withOpacity(0.4)),
                   ],
                 ),
               ),
