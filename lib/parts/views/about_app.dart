@@ -41,7 +41,7 @@ class _AboutAppViewState extends State<AboutAppView> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: <Widget>[
+    return Stack(fit: StackFit.expand, children: <Widget>[
       Padding(
         padding: const EdgeInsets.only(top: 10),
         child: Transform.translate(
@@ -53,34 +53,44 @@ class _AboutAppViewState extends State<AboutAppView> {
               sigmaX: 8,
               sigmaY: 8,
               child: Center(
-                child: Image.asset("assets/2324_teampic.jpg",
-                    alignment: Alignment.center,
-                    fit: BoxFit.cover,
-                    width: MediaQuery.of(context).size.width),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: <Widget>[
+                    Image.asset("assets/2324_teampic.jpg",
+                        alignment: Alignment.center,
+                        fit: BoxFit.cover,
+                        width: MediaQuery.of(context).size.width),
+                    ColoredBox(
+                        color: Colors.black.withOpacity(0.142)),
+                  ],
+                ),
               ),
             ),
           ),
         ),
       ),
-      strut(height: 20),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Container(
-              decoration: BoxDecoration(boxShadow: <BoxShadow>[
-                BoxShadow(
-                    blurStyle: BlurStyle.outer,
-                    color: Colors.black.withOpacity(0.8),
-                    blurRadius: 8,
-                    spreadRadius: 10)
-              ]),
-              child: Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: Image.asset("assets/2324_teampic.jpg",
-                    width: 500, height: 400),
+          Flexible(
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                          blurStyle: BlurStyle.outer,
+                          color: Colors.black.withOpacity(0.8),
+                          blurRadius: 8,
+                          spreadRadius: 10)
+                    ]),
+                child: Padding(
+                  padding: const EdgeInsets.all(6),
+                  child: Image.asset("assets/2324_teampic.jpg",
+                      width: 500, height: 400),
+                ),
               ),
             ),
           ),
@@ -211,113 +221,108 @@ class _AboutAppViewState extends State<AboutAppView> {
                 ),
               ),
             ]))),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextButton.icon(
-                  onPressed: () async => await launchConfirmDialog(
-                      context,
-                      message: const Text(
-                          "You are about to visit this app's source code on Github."),
-                      onConfirm: () async => await launchUrl(
-                          Uri.parse(
-                              REBEL_ROBOTICS_APP_GITHUB_REPO_URL))),
-                  label: const Text("Source Code"),
-                  icon: const Icon(Icons.data_object_rounded)),
-              TextButton.icon(
-                  onPressed: () => showLicensePage(
-                      context: context,
-                      applicationIcon: const Image(
-                          image: ExactAssetImage(
-                              "assets/appicon_header.png")),
-                      applicationLegalese:
-                          REBEL_ROBOTICS_APP_LEGALESE,
-                      applicationVersion:
-                          REBEL_ROBOTICS_APP_VERSION.toString(),
-                      applicationName: REBEL_ROBOTICS_APP_NAME),
-                  label: const Text("Open Source licenses"),
-                  icon: const Icon(Icons.library_books_rounded)),
-            ]),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextButton.icon(
-                  onPressed: () async => await launchConfirmDialog(
-                      context,
-                      title: "Font \"IBM Plex\"",
-                      showOkLabel: false,
-                      icon: const Icon(Icons.library_books_rounded),
-                      denyLabel: "Ok",
-                      message: FutureBuilder<String>(
-                          future: DefaultAssetBundle.of(context)
-                              .loadString("assets/legals/OFL.txt"),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<String> byteData) {
-                            if (byteData.connectionState ==
-                                ConnectionState.waiting) {
-                              return const Center(
-                                  child: CircularProgressIndicator());
-                            }
-                            if (byteData.hasError ||
-                                !byteData.hasData) {
-                              return Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.center,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    const Icon(Icons.warning_rounded),
-                                    strut(width: 10),
-                                    const Text(
-                                        "There was an error retrieving...")
-                                  ]);
-                            }
-                            return SingleChildScrollView(
-                                child: Text(byteData.data!));
-                          }),
-                      onConfirm: () => Debug()
-                          .info("Popped FONT_LICENSE View Screen")),
-                  label: const Text("Font license"),
-                  icon: const Icon(Icons.font_download_rounded)),
-              TextButton.icon(
-                  onPressed: () async => await launchConfirmDialog(
-                      context,
-                      title: "BSD-4 License",
-                      showOkLabel: false,
-                      icon: const Icon(Icons.library_books_rounded),
-                      denyLabel: "Ok",
-                      message: FutureBuilder<String>(
-                          future: DefaultAssetBundle.of(context)
-                              .loadString("assets/legals/BSD-4.txt"),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<String> byteData) {
-                            if (byteData.connectionState ==
-                                ConnectionState.waiting) {
-                              return const Center(
-                                  child: CircularProgressIndicator());
-                            }
-                            if (byteData.hasError ||
-                                !byteData.hasData) {
-                              return Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.center,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    const Icon(Icons.warning_rounded),
-                                    strut(width: 10),
-                                    const Text(
-                                        "There was an error retrieving...")
-                                  ]);
-                            }
-                            return SingleChildScrollView(
-                                child: Text(byteData.data!));
-                          }),
-                      onConfirm: () => Debug().info(
-                          "Popped SOFTWARE_LICENSE View Screen")),
-                  label: const Text("Software license"),
-                  icon: const Icon(Icons.library_books_rounded))
-            ])
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: strutAll(<Widget>[
+            TextButton.icon(
+                onPressed: () async => await launchConfirmDialog(
+                    context,
+                    message: const Text(
+                        "You are about to visit this app's source code on Github."),
+                    onConfirm: () async => await launchUrl(Uri.parse(
+                        REBEL_ROBOTICS_APP_GITHUB_REPO_URL))),
+                label: const Text("Source Code"),
+                icon: const Icon(Icons.data_object_rounded)),
+            TextButton.icon(
+                onPressed: () => showLicensePage(
+                    context: context,
+                    applicationIcon: const Image(
+                        image: ExactAssetImage(
+                            "assets/appicon_header.png")),
+                    applicationLegalese: REBEL_ROBOTICS_APP_LEGALESE,
+                    applicationVersion:
+                        REBEL_ROBOTICS_APP_VERSION.toString(),
+                    applicationName: REBEL_ROBOTICS_APP_NAME),
+                label: const Text("Open Source licenses"),
+                icon: const Icon(Icons.library_books_rounded)),
+            TextButton.icon(
+                onPressed: () async => await launchConfirmDialog(
+                    context,
+                    title: "Font \"IBM Plex\"",
+                    showOkLabel: false,
+                    icon: const Icon(Icons.library_books_rounded),
+                    denyLabel: "Ok",
+                    message: FutureBuilder<String>(
+                        future: DefaultAssetBundle.of(context)
+                            .loadString("assets/legals/OFL.txt"),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<String> byteData) {
+                          if (byteData.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          }
+                          if (byteData.hasError ||
+                              !byteData.hasData) {
+                            return Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.center,
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  const Icon(Icons.warning_rounded),
+                                  strut(width: 10),
+                                  const Text(
+                                      "There was an error retrieving...")
+                                ]);
+                          }
+                          return SingleChildScrollView(
+                              child: Text(byteData.data!));
+                        }),
+                    onConfirm: () => Debug()
+                        .info("Popped FONT_LICENSE View Screen")),
+                label: const Text("Font license"),
+                icon: const Icon(Icons.font_download_rounded)),
+            TextButton.icon(
+                onPressed: () async => await launchConfirmDialog(
+                    context,
+                    title: "BSD-4 License",
+                    showOkLabel: false,
+                    icon: const Icon(Icons.library_books_rounded),
+                    denyLabel: "Ok",
+                    message: FutureBuilder<String>(
+                        future: DefaultAssetBundle.of(context)
+                            .loadString("assets/legals/BSD-4.txt"),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<String> byteData) {
+                          if (byteData.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          }
+                          if (byteData.hasError ||
+                              !byteData.hasData) {
+                            return Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.center,
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  const Icon(Icons.warning_rounded),
+                                  strut(width: 10),
+                                  const Text(
+                                      "There was an error retrieving...")
+                                ]);
+                          }
+                          return SingleChildScrollView(
+                              child: Text(byteData.data!));
+                        }),
+                    onConfirm: () => Debug()
+                        .info("Popped SOFTWARE_LICENSE View Screen")),
+                label: const Text("Software license"),
+                icon: const Icon(Icons.library_books_rounded))
+          ], height: 16),
+        )
       ],
       height: 26,
     );
