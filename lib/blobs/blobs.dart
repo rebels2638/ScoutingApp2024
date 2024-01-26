@@ -34,7 +34,7 @@ List<Widget> strutAll(List<Widget> children,
   for (int i = 0; i < children.length; i++) {
     result.add(children[i]);
     if (i < children.length - 1) {
-      result.add(SizedBox(width: width, height: height));
+      result.add(strut(width: width, height: height));
     }
   }
   return result;

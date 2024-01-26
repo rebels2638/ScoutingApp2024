@@ -16,6 +16,7 @@ void main() {
     FlutterError.presentError.call(details);
     Debug().warn(details.summary);
   };
+  
   Debug().init();
   UserTelemetry().reset();
   UserTelemetry().init();
@@ -24,6 +25,4 @@ void main() {
   runApp(app);
   Debug().info(
       "Took ${DateTime.now().millisecondsSinceEpoch - now.millisecondsSinceEpoch} ms to launch the app...");
-  Debug().info(
-      "UserTelemetry Receiver Type: ${UserTelemetry.device.getKeys().runtimeType} with keys.length=${UserTelemetry.device.getKeys().length} and values.length=${UserTelemetry.device.getValues().length}");
 }

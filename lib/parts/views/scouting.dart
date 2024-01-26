@@ -1,15 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:scouting_app_2024/blobs/blobs.dart';
-import 'package:scouting_app_2024/blobs/form_blob.dart';
-import 'package:scouting_app_2024/blobs/inc_dec_blob.dart';
-import 'package:scouting_app_2024/blobs/locale_blob.dart';
-import 'package:scouting_app_2024/extern/color.dart';
-import 'package:scouting_app_2024/parts/team.dart';
-import 'package:scouting_app_2024/parts/views_delegate.dart';
-import 'package:scouting_app_2024/extern/datetime.dart';
-import 'package:scouting_app_2024/user/team_model.dart';
-import 'package:scouting_app_2024/utils.dart';
-import 'package:theme_provider/theme_provider.dart';
+import "package:flutter/material.dart";
+import "package:scouting_app_2024/blobs/blobs.dart";
+import "package:scouting_app_2024/blobs/form_blob.dart";
+import "package:scouting_app_2024/blobs/inc_dec_blob.dart";
+import "package:scouting_app_2024/blobs/locale_blob.dart";
+import "package:scouting_app_2024/extern/color.dart";
+import "package:scouting_app_2024/parts/team.dart";
+import "package:scouting_app_2024/parts/views_delegate.dart";
+import "package:scouting_app_2024/extern/datetime.dart";
+import "package:scouting_app_2024/user/team_model.dart";
+import "package:scouting_app_2024/utils.dart";
+import "package:theme_provider/theme_provider.dart";
 
 typedef SectionId = ({String title, IconData icon});
 
@@ -208,7 +208,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                               bool value
                                             })>(
                                         (bool e) => (
-                                              label: e ? 'Yes' : 'No',
+                                              label: e ? "Yes" : "No",
                                               icon: const Icon(
                                                   Icons.trip_origin),
                                               value: e
@@ -223,7 +223,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                 segments: <bool>[true, false]
                                     .map<({Icon? icon, String label, bool value})>(
                                         (bool e) => (
-                                              label: e ? 'Yes' : 'No',
+                                              label: e ? "Yes" : "No",
                                               icon: const Icon(Icons
                                                   .local_taxi_rounded),
                                               value: e
@@ -267,7 +267,7 @@ class _ScoutingViewState extends State<ScoutingView>
                         title: "Tele-op"
                       ),
                       child: form_col(<Widget>[
-                        form_label("Plays Defense",
+                        form_label("Plays Defense?",
                             icon: const Icon(Icons.shield),
                             child: form_seg_btn_1(
                                 segments: GenericUtils.boolOptions()
@@ -278,7 +278,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                               bool value
                                             })>(
                                         (bool e) => (
-                                              label: e ? 'Yes' : 'No',
+                                              label: e ? "Yes" : "No",
                                               icon: const Icon(
                                                   Icons.shield),
                                               value: e
@@ -292,7 +292,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                 segments: GenericUtils.boolOptions()
                                     .map<({Icon? icon, String label, bool value})>(
                                         (bool e) => (
-                                              label: e ? 'Yes' : 'No',
+                                              label: e ? "Yes" : "No",
                                               icon: const Icon(Icons
                                                   .verified_user),
                                               value: e
@@ -367,7 +367,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                               bool value
                                             })>(
                                         (bool e) => (
-                                              label: e ? 'Yes' : 'No',
+                                              label: e ? "Yes" : "No",
                                               icon: const Icon(
                                                   Icons.people),
                                               value: e
@@ -404,7 +404,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                               bool value
                                             })>(
                                         (bool e) => (
-                                              label: e ? 'Yes' : 'No',
+                                              label: e ? "Yes" : "No",
                                               icon: const Icon(
                                                   Icons.handyman),
                                               value: e

@@ -6,6 +6,7 @@ import 'package:scouting_app_2024/parts/bits/perf_overlay.dart';
 import 'package:scouting_app_2024/user/shared.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
 import 'package:scouting_app_2024/parts/views/views.dart';
+import 'package:scouting_app_2024/user/user_telemetry.dart';
 import "package:theme_provider/theme_provider.dart";
 import 'package:url_launcher/url_launcher.dart';
 
@@ -145,6 +146,10 @@ class _AppViewState extends State<_AppView> {
                                           (AvaliableThemes? theme) =>
                                               setState(() {
                                                 if (theme != null) {
+                                                  UserTelemetry()
+                                                          .currentModel
+                                                          .selectedTheme =
+                                                      theme;
                                                   ThemeProvider
                                                           .controllerOf(
                                                               context)

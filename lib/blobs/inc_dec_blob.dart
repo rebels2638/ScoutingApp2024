@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/extern/color.dart';
 import 'package:theme_provider/theme_provider.dart';
 
@@ -28,68 +29,96 @@ class _PlusMinusState extends State<PlusMinus> {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        OutlinedButton(
-          onPressed: () {
-            int newVal = _val - 1;
-            if (newVal >= 0) {
-              setState(() => _val = newVal);
-              widget.onValueChanged?.call(_val);
-            }
-          },
-          style: OutlinedButton.styleFrom(
-            padding: const EdgeInsets.all(16),
-            side: BorderSide(
-                color: _val == 0
-                    ? ThemeProvider.themeOf(context)
-                        .data
-                        .colorScheme
-                        .primary
-                        .grayScale()
-                    : ThemeProvider.themeOf(context)
+      children: strutAll(<Widget>[
+        if (_val > 0)
+          Tooltip(
+            message: "Reset value to 0",
+            child: OutlinedButton(
+              onPressed: () {
+                setState(() => _val = 0);
+                widget.onValueChanged?.call(_val);
+              },
+              style: OutlinedButton.styleFrom(
+                padding: const EdgeInsets.all(16),
+                side: BorderSide(
+                    color: ThemeProvider.themeOf(context)
                         .data
                         .colorScheme
                         .primary,
-                width: 2),
-          ),
-          child: _val == 0
-              ? Text("-",
+                    width: 2),
+              ),
+              child: Text("0",
                   style: TextStyle(
                       fontWeight: FontWeight.w800,
                       color: ThemeProvider.themeOf(context)
                           .data
                           .colorScheme
-                          .primary
-                          .grayScale()))
-              : const Text("-",
-                  style: TextStyle(fontWeight: FontWeight.w800)),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Text(_val.toString(),
-              style: const TextStyle(fontSize: 20)),
-        ),
-        OutlinedButton(
-          onPressed: () {
-            int newVal = _val + 1;
-            if (newVal <= 99) {
-              setState(() => _val = newVal);
-              widget.onValueChanged?.call(_val);
-            }
-          },
-          style: OutlinedButton.styleFrom(
-            padding: const EdgeInsets.all(16),
-            side: BorderSide(
-                color: ThemeProvider.themeOf(context)
-                    .data
-                    .colorScheme
-                    .primary,
-                width: 2),
+                          .primary)),
+            ),
           ),
-          child: const Text("+",
-              style: TextStyle(fontWeight: FontWeight.w800)),
+        Tooltip(
+          message: "Decrement value by 1",
+          child: OutlinedButton(
+            onPressed: () {
+              int newVal = _val - 1;
+              if (newVal >= 0) {
+                setState(() => _val = newVal);
+                widget.onValueChanged?.call(_val);
+              }
+            },
+            style: OutlinedButton.styleFrom(
+              padding: const EdgeInsets.all(16),
+              side: BorderSide(
+                  color: _val == 0
+                      ? ThemeProvider.themeOf(context)
+                          .data
+                          .colorScheme
+                          .primary
+                          .grayScale()
+                      : ThemeProvider.themeOf(context)
+                          .data
+                          .colorScheme
+                          .primary,
+                  width: 2),
+            ),
+            child: _val == 0
+                ? Text("-",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w800,
+                        color: ThemeProvider.themeOf(context)
+                            .data
+                            .colorScheme
+                            .primary
+                            .grayScale()))
+                : const Text("-",
+                    style: TextStyle(fontWeight: FontWeight.w800)),
+          ),
         ),
-      ],
+        Text(_val.toString(), style: const TextStyle(fontSize: 20)),
+        Tooltip(
+          message: "Increment value by 1",
+          child: OutlinedButton(
+            onPressed: () {
+              int newVal = _val + 1;
+              if (newVal <= 99) {
+                setState(() => _val = newVal);
+                widget.onValueChanged?.call(_val);
+              }
+            },
+            style: OutlinedButton.styleFrom(
+              padding: const EdgeInsets.all(16),
+              side: BorderSide(
+                  color: ThemeProvider.themeOf(context)
+                      .data
+                      .colorScheme
+                      .primary,
+                  width: 2),
+            ),
+            child: const Text("+",
+                style: TextStyle(fontWeight: FontWeight.w800)),
+          ),
+        ),
+      ], width: 8),
     );
   }
 }

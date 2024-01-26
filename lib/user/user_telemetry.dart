@@ -1,15 +1,17 @@
 import 'dart:async';
-import 'package:get_storage/get_storage.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part "user_telemetry.g.dart";
 
 /// User Telemetry storage is based on MVC patterning
 class UserTelemetry {
-  static GetStorage device =
-      GetStorage("RebelRobotics2638UserPreferenceTelemetryUnit");
+  static SharedPreferences getPrefs() => UserTelemetry()._prefs;
+
+  late final SharedPreferences _prefs;
+  static const String userDBName = "Rebels2638AppUserTelemetry";
   static final UserTelemetry _singleton = UserTelemetry._();
   factory UserTelemetry() => _singleton;
   UserTelemetry._();
@@ -17,17 +19,22 @@ class UserTelemetry {
   static late UserPrefModel _currentModel;
 
   bool isEmpty() =>
-      device.getKeys().length == 0 ||
-      device.getValues().length ==
-          0; // i feel like this is really bad
+      _prefs.getString(userDBName) == null ||
+      _prefs
+          .getString(userDBName)!
+          .isEmpty; // i feel like this is really bad
+
+  UserPrefModel get currentModel => _currentModel;
 
   void init() {
+    SharedPreferences.getInstance()
+        .then((SharedPreferences e) => _prefs = e);
     Timer.periodic(const Duration(seconds: 10), (Timer timer) async {
       Debug().info(
           "USER_TELEMETRY Saving UserTelemetry Model now. Values: ${_currentModel.toJson()}");
       await save();
       Debug().info(
-          "UserTelemetry Receiver Type: ${UserTelemetry.device.getKeys().runtimeType} with keys.length=${UserTelemetry.device.getKeys().length} and values.length=${UserTelemetry.device.getValues().length}");
+          "UserTelemetry Received the following content: ${_prefs.getString(userDBName)}");
     });
   }
 
@@ -39,10 +46,8 @@ class UserTelemetry {
         in _currentModel.toJson().entries) {
       Debug()
           .info("USER_TELEMETRY Writing ${entry.key}=${entry.value}");
-      await device.write(entry.key, entry.value.toString());
+      await _prefs.setString(userDBName, entry.value.toString());
     }
-    // is this even necessary??? idek lets leave it here so we absolutely sure
-    await device.save();
   }
 }
 
