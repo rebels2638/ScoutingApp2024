@@ -13,6 +13,6 @@ class LockedInScoutingModal extends ChangeNotifier {
     notifyListeners();
   }
 
-  static bool isLockedIn(BuildContext context) =>
-      Provider.of<LockedInScoutingModal>(context)._lockedIn;
+  static bool isCasual(BuildContext context) =>
+      !Provider.of<LockedInScoutingModal>(context)._lockedIn;
 }

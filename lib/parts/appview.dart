@@ -135,13 +135,15 @@ class _AppViewState extends State<_AppView> {
     }
     return Scaffold(
         floatingActionButtonLocation:
-            FloatingActionButtonLocation.endFloat,
+            LockedInScoutingModal.isCasual(context)
+                ? FloatingActionButtonLocation.endFloat
+                : FloatingActionButtonLocation.endContained,
         floatingActionButton: Padding(
             padding: const EdgeInsets.all(8),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  if (LockedInScoutingModal.isLockedIn(context))
+                  if (LockedInScoutingModal.isCasual(context))
                     AnimatedContainer(
                       duration: const Duration(milliseconds: 800),
                       child: FloatingActionButton(
@@ -210,17 +212,21 @@ class _AppViewState extends State<_AppView> {
                               ? const Icon(Icons.nightlight_round)
                               : const Icon(Icons.wb_sunny_rounded)),
                     ),
-                  if (LockedInScoutingModal.isLockedIn(context))
+                  if (LockedInScoutingModal.isCasual(context))
                     strut(width: 10),
-                  FloatingActionButton(
-                      heroTag: null,
-                      onPressed:
-                          Provider.of<LockedInScoutingModal>(context)
-                              .toggle,
-                      child: LockedInScoutingModal.isLockedIn(context)
-                          ? const Icon(CommunityMaterialIcons
-                              .lock_open_variant)
-                          : const Icon(CommunityMaterialIcons.lock)),
+                  Tooltip(
+                    message: "Lock-In Mode",
+                    child: FloatingActionButton(
+                        heroTag: null,
+                        onPressed: Provider.of<LockedInScoutingModal>(
+                                context)
+                            .toggle,
+                        child: LockedInScoutingModal.isCasual(context)
+                            ? const Icon(CommunityMaterialIcons
+                                .lock_open_variant)
+                            : const Icon(
+                                CommunityMaterialIcons.lock)),
+                  ),
                 ])),
         bottomNavigationBar: NavigationBar(
           selectedIndex: _bottomNavBarIndexer,
@@ -242,19 +248,19 @@ class _AppViewState extends State<_AppView> {
                 label: pastMatchesView.item.label,
                 selectedIcon: pastMatchesView.item.activeIcon,
                 tooltip: pastMatchesView.item.tooltip),
-            if (LockedInScoutingModal.isLockedIn(context))
+            if (LockedInScoutingModal.isCasual(context))
               NavigationDestination(
                   icon: settingsView.item.icon,
                   label: settingsView.item.label,
                   selectedIcon: settingsView.item.activeIcon,
                   tooltip: settingsView.item.tooltip),
-            if (LockedInScoutingModal.isLockedIn(context))
+            if (LockedInScoutingModal.isCasual(context))
               NavigationDestination(
                   icon: aboutAppView.item.icon,
                   label: aboutAppView.item.label,
                   selectedIcon: aboutAppView.item.activeIcon,
                   tooltip: aboutAppView.item.tooltip),
-            if (LockedInScoutingModal.isLockedIn(context))
+            if (LockedInScoutingModal.isCasual(context))
               NavigationDestination(
                   icon: consoleView.item.icon,
                   label: consoleView.item.label,
@@ -270,7 +276,7 @@ class _AppViewState extends State<_AppView> {
             setState(() => _bottomNavBarIndexer = i);
           },
         ),
-        appBar: LockedInScoutingModal.isLockedIn(context)
+        appBar: LockedInScoutingModal.isCasual(context)
             ? AppBar(
                 title: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -319,11 +325,11 @@ class _AppViewState extends State<_AppView> {
                 if (dataHostView != null) dataHostView.child,
                 scoutingView.child,
                 pastMatchesView.child,
-                if (LockedInScoutingModal.isLockedIn(context))
+                if (LockedInScoutingModal.isCasual(context))
                   settingsView.child,
-                if (LockedInScoutingModal.isLockedIn(context))
+                if (LockedInScoutingModal.isCasual(context))
                   aboutAppView.child,
-                if (LockedInScoutingModal.isLockedIn(context))
+                if (LockedInScoutingModal.isCasual(context))
                   consoleView.child
               ]),
         ));

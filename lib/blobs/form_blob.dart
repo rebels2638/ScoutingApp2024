@@ -117,24 +117,28 @@ Widget form_label(String text,
     Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          if (icon != null) icon,
-          if (icon != null) strut(width: 6),
-          if (expandLabel)
-            Expanded(
-                child: Text(text,
-                    style: style ??
-                        const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            overflow: TextOverflow.ellipsis)))
-          else
-            Text(text,
-                style: style ??
-                    const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        overflow: TextOverflow.ellipsis)),
-          strut(width: _prompt_label_strut_width),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                if (icon != null) icon,
+                if (icon != null) strut(width: 6),
+                if (expandLabel)
+                  Expanded(
+                      child: Text(text,
+                          style: style ??
+                              const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  overflow: TextOverflow.ellipsis)))
+                else
+                  Text(text,
+                      style: style ??
+                          const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              overflow: TextOverflow.ellipsis)),
+                strut(width: _prompt_label_strut_width),
+              ]),
           child
         ]);
 
