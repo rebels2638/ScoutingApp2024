@@ -23,9 +23,9 @@ Scouting App for the 2024 year built using the **Flutter Framework**.
 
 **Snapshots**
 
-[![build web](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder.yml/badge.svg)](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder.yml) [![build linux](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder2.yml/badge.svg?branch=master)](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder2.yml) [![build windows](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder3.yml/badge.svg)](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder3.yml)
+ [![build linux](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder2.yml/badge.svg?branch=master)](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder2.yml) [![build windows](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder3.yml/badge.svg)](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder3.yml)
 
-Head over to the <a href="https://github.com/rebels2638/ScoutingApp/actions"><kbd>**Actions**</kbd></a> tab and download from any of the target platforms on there. 
+Head over to the <a href="https://github.com/rebels2638/ScoutingApp/actions"><kbd>**Actions**</kbd></a> tab and download from any of the target platforms on there.
 
 
 
@@ -54,16 +54,16 @@ If you want to run in *Release Mode*, run `flutter run --release -d [chrome/edge
 
 ## Our Team
 
-**Lead Developer** 
-    
+**Lead Developer**
+
 * Jack Meng ([exoad](https://github.com/exoad))
 
-**Developers** 
+**Developers**
 
 * Chiming Wang ([2bf](https://github.com/2bf))
 * Richard Xu ([Richard28277](https://github.com/Richard28277))
 
-**Helpers** 
+**Helpers**
 
 * Aiden Pan
 * Aarav Minocha
