@@ -33,24 +33,25 @@ Head over to the <a href="https://github.com/rebels2638/ScoutingApp/actions"><kb
 
 **Prerequisite**
 * Make sure you have the Flutter SDK downloaded, you can find how to install it for your platform [here](https://docs.flutter.dev/get-started/install)
-* If you want to test the App in a web browser, you must have either **Microsoft Edge**, **Google Chrome**, or **Apple Safari** installed
 * If you want to test the App in a mobile environment, make sure you have set up either **Android Studio** or **XCode** for development on those platforms.
+
+> [!WARNING]
+> Building for web is not supported
 
 1. Clone this repository either through GitHub or using `git clone https://github.com/rebels2638/ScoutingApp2024.git`
 2. Open directory in terminal/CLI: `cd ScoutingApp2024`
 3. Download libraries/dependencies: `flutter pub get` (you can also run `mac-flutter-start.sh` or `windows-flutter-start.bat`)
 > [!WARNING]
 > If Flutter prompts you with an upgrade notification, please run the respective upgrade command: `flutter upgrade`
-4. Run `flutter build web --web-renderer html` to build for web.
+4. Run `flutter build [platform]` to build for the desired platform (e.g. `windows`).
 
 If you would like to build for a different platform like iOS, please make sure you meet the prerequisites for that platform. For example, to test on iOS, you need XCode on an Apple device. For more information, check https://docs.flutter.dev/platform-integration
 
 ## Testing
 
-First, follow the steps in [Building](#building), then just run `flutter run -d [chrome/edge] --web-renderer html` to run in debug mode.
+First, follow the steps in [Building](#building), then just run `flutter run -d [device]`.
 
-If you want to run in *Release Mode*, run `flutter run --release -d [chrome/edge] --web-renderer html`.
-
+`[device]` may vary depending on where you are going to run it. For example running it directly on a Windows Environment is just `flutter run -d windows`
 
 ## Our Team
 
