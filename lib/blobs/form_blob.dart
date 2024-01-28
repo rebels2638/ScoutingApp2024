@@ -112,7 +112,7 @@ Widget form_grid_2(
 Widget form_label(String text,
         {TextStyle? style,
         required Widget child,
-        bool expandLabel = true,
+        bool expandLabel = false,
         Widget? icon}) =>
     Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -229,19 +229,22 @@ Widget form_seg_btn_1<T>(
             segments,
         required T initialSelection,
         required void Function(T res) onSelect}) =>
-    _SegSingleBtn<T>(
+    Flexible(
+        child: _SegSingleBtn<T>(
       segments: segments,
       onSelect: onSelect,
       initialSelection: initialSelection,
-    );
+    ));
 
 class _SegSingleBtn<T> extends StatefulWidget {
   final List<({T value, String label, Icon? icon})> segments;
   final T initialSelection;
   final void Function(T res) onSelect;
+  final ButtonStyle? style;
 
   const _SegSingleBtn(
       {super.key,
+      this.style,
       required this.onSelect,
       required this.segments,
       required this.initialSelection});
@@ -275,6 +278,7 @@ class _SegSingleBtnState<T> extends State<_SegSingleBtn<T>> {
       selected: <T>{
         _selection,
       },
+      style: widget.style,
       onSelectionChanged: (Set<T> values) {
         setState(() => _selection = values.first);
         widget.onSelect.call(values.first);
@@ -294,7 +298,7 @@ Widget form_col(List<Widget> children,
         mainAxisAlignment: mainAxisAlignment,
         mainAxisSize: mainAxisSize,
         crossAxisAlignment: crossAxisAlignment,
-        children: strutAll(children, height: 10));
+        children: strutAll(children, height: 18));
 
 @pragma("vm:prefer-inline")
 Widget form_row(List<Widget> children,
