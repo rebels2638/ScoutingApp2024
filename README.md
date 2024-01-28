@@ -40,7 +40,7 @@ Head over to the <a href="https://github.com/rebels2638/ScoutingApp/actions"><kb
 
 1. Clone this repository either through GitHub or using `git clone https://github.com/rebels2638/ScoutingApp2024.git`
 2. Open directory in terminal/CLI: `cd ScoutingApp2024`
-3. Download libraries/dependencies: `flutter pub get` (you can also run `mac-flutter-start.sh` or `windows-flutter-start.bat`)
+3. Download libraries/dependencies: `flutter pub get` (you can also run [`scripts/mac-flutter-start.sh`](./scripts/mac-flutter-start.sh) or [`scripts/windows-flutter-start.bat`](./scripts/windows-flutter-start.bat))
 > [!WARNING]
 > If Flutter prompts you with an upgrade notification, please run the respective upgrade command: `flutter upgrade`
 4. Run `flutter build [platform]` to build for the desired platform (e.g. `windows`).
