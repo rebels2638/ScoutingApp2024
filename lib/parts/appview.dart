@@ -1,9 +1,12 @@
 import 'dart:io';
 
+import 'package:community_material_icon/community_material_icon.dart';
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/debug.dart';
+import 'package:scouting_app_2024/parts/bits/lock_in.dart';
 import 'package:scouting_app_2024/parts/bits/perf_overlay.dart';
 import 'package:scouting_app_2024/user/shared.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
@@ -21,13 +24,16 @@ class ThemedAppBundle extends StatelessWidget {
         themes: ThemeBlob.export(),
         child: ThemeConsumer(
             child: Builder(
-                builder: (BuildContext themeCtxt) =>
-                    ChangeNotifierProvider<PerformanceOverlayModal>(
-                      // this is kinda scuffed but easier to understand for others
-                      create: (BuildContext context) =>
-                          PerformanceOverlayModal(),
-                      child: const IntermediateMaterialApp(),
-                    ))));
+                builder: (BuildContext
+                        themeCtxt) => /*lol this is very scuffed XD i hope you can forgive me*/
+                    MultiProvider(providers: <SingleChildWidget>[
+                      ChangeNotifierProvider<PerformanceOverlayModal>(
+                          create: (BuildContext _) =>
+                              PerformanceOverlayModal()),
+                      ChangeNotifierProvider<LockedInScoutingModal>(
+                          create: (BuildContext _) =>
+                              LockedInScoutingModal())
+                    ], child: const IntermediateMaterialApp()))));
   }
 }
 
@@ -135,29 +141,29 @@ class _AppViewState extends State<_AppView> {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  FloatingActionButton(
-                      heroTag: null,
-                      onPressed: () /*TODO*/ {},
-                      child: const Icon(Icons.upload_rounded)),
-                  strut(width: 10),
-                  FloatingActionButton(
-                      heroTag: null,
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext ctxt) {
-                              return AlertDialog(
-                                  title: const Text("Theme Select"),
-                                  content: DropdownMenu<
-                                          AvaliableThemes>(
-                                      initialSelection:
-                                          ThemeClassifier.of(context),
-                                      controller:
-                                          _themeSelectorController,
-                                      requestFocusOnTap: true,
-                                      label: const Text("Theme Name"),
-                                      onSelected:
-                                          (AvaliableThemes? theme) =>
+                  if (LockedInScoutingModal.isLockedIn(context))
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 800),
+                      child: FloatingActionButton(
+                          heroTag: null,
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext ctxt) {
+                                  return AlertDialog(
+                                      title:
+                                          const Text("Theme Select"),
+                                      content: DropdownMenu<
+                                              AvaliableThemes>(
+                                          initialSelection:
+                                              ThemeClassifier.of(
+                                                  context),
+                                          controller:
+                                              _themeSelectorController,
+                                          requestFocusOnTap: true,
+                                          label: const Text(
+                                              "Theme Name"),
+                                          onSelected: (AvaliableThemes? theme) =>
                                               setState(() {
                                                 if (theme != null) {
                                                   UserTelemetry()
@@ -173,35 +179,48 @@ class _AppViewState extends State<_AppView> {
                                                       "Switched theme to ${theme.properName}");
                                                 }
                                               }),
-                                      dropdownMenuEntries: AvaliableThemes
-                                          .values
-                                          .map<DropdownMenuEntry<AvaliableThemes>>(
-                                              (AvaliableThemes e) => DropdownMenuEntry<
-                                                      AvaliableThemes>(
+                                          dropdownMenuEntries: AvaliableThemes
+                                              .values
+                                              .map<DropdownMenuEntry<AvaliableThemes>>((AvaliableThemes e) => DropdownMenuEntry<AvaliableThemes>(
                                                   value: e,
                                                   label: e.properName,
-                                                  leadingIcon: e.isDarkMode
+                                                  leadingIcon: e
+                                                          .isDarkMode
                                                       ? const Icon(
                                                           Icons.nightlight_round)
                                                       : const Icon(Icons.wb_sunny_rounded)))
-                                          .toList()),
-                                  actions: <Widget>[
-                                    TextButton.icon(
-                                        onPressed: () =>
-                                            Navigator.of(context)
-                                                .pop(),
-                                        icon: const Icon(
-                                            Icons.check_rounded),
-                                        label: const Text("Ok",
-                                            style: TextStyle(
-                                                fontWeight:
-                                                    FontWeight.bold)))
-                                  ]);
-                            });
-                      },
-                      child: ThemeClassifier.of(context).isDarkMode
-                          ? const Icon(Icons.nightlight_round)
-                          : const Icon(Icons.wb_sunny_rounded))
+                                              .toList()),
+                                      actions: <Widget>[
+                                        TextButton.icon(
+                                            onPressed: () =>
+                                                Navigator.of(context)
+                                                    .pop(),
+                                            icon: const Icon(
+                                                Icons.check_rounded),
+                                            label: const Text("Ok",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight
+                                                            .bold)))
+                                      ]);
+                                });
+                          },
+                          child: ThemeClassifier.of(context)
+                                  .isDarkMode
+                              ? const Icon(Icons.nightlight_round)
+                              : const Icon(Icons.wb_sunny_rounded)),
+                    ),
+                  if (LockedInScoutingModal.isLockedIn(context))
+                    strut(width: 10),
+                  FloatingActionButton(
+                      heroTag: null,
+                      onPressed:
+                          Provider.of<LockedInScoutingModal>(context)
+                              .toggle,
+                      child: LockedInScoutingModal.isLockedIn(context)
+                          ? const Icon(CommunityMaterialIcons
+                              .lock_open_variant)
+                          : const Icon(CommunityMaterialIcons.lock)),
                 ])),
         bottomNavigationBar: NavigationBar(
           selectedIndex: _bottomNavBarIndexer,
@@ -223,21 +242,24 @@ class _AppViewState extends State<_AppView> {
                 label: pastMatchesView.item.label,
                 selectedIcon: pastMatchesView.item.activeIcon,
                 tooltip: pastMatchesView.item.tooltip),
-            NavigationDestination(
-                icon: settingsView.item.icon,
-                label: settingsView.item.label,
-                selectedIcon: settingsView.item.activeIcon,
-                tooltip: settingsView.item.tooltip),
-            NavigationDestination(
-                icon: aboutAppView.item.icon,
-                label: aboutAppView.item.label,
-                selectedIcon: aboutAppView.item.activeIcon,
-                tooltip: aboutAppView.item.tooltip),
-            NavigationDestination(
-                icon: consoleView.item.icon,
-                label: consoleView.item.label,
-                selectedIcon: consoleView.item.activeIcon,
-                tooltip: consoleView.item.tooltip)
+            if (LockedInScoutingModal.isLockedIn(context))
+              NavigationDestination(
+                  icon: settingsView.item.icon,
+                  label: settingsView.item.label,
+                  selectedIcon: settingsView.item.activeIcon,
+                  tooltip: settingsView.item.tooltip),
+            if (LockedInScoutingModal.isLockedIn(context))
+              NavigationDestination(
+                  icon: aboutAppView.item.icon,
+                  label: aboutAppView.item.label,
+                  selectedIcon: aboutAppView.item.activeIcon,
+                  tooltip: aboutAppView.item.tooltip),
+            if (LockedInScoutingModal.isLockedIn(context))
+              NavigationDestination(
+                  icon: consoleView.item.icon,
+                  label: consoleView.item.label,
+                  selectedIcon: consoleView.item.activeIcon,
+                  tooltip: consoleView.item.tooltip)
           ],
           onDestinationSelected: (int i) {
             Debug().info(
@@ -248,38 +270,44 @@ class _AppViewState extends State<_AppView> {
             setState(() => _bottomNavBarIndexer = i);
           },
         ),
-        appBar: AppBar(
-            title: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-              GestureDetector(
-                onTap: () async => await launchConfirmDialog(context,
-                    message: const Text(
-                        "You are about to visit the Rebel Robotics' website"),
-                    onConfirm: () async => await launchUrl(
-                        Uri.parse(RebelRoboticsShared.website))),
-                child: const Image(
-                  image: ExactAssetImage("assets/appicon_header.png"),
-                  width: 52,
-                  height: 52,
-                  isAntiAlias: true,
-                ),
-              ),
-              strut(width: 10),
-              const Text("2638 Scouting"),
-              strut(width: 10),
-              GestureDetector(
-                  onTap: () async => await launchConfirmDialog(
-                      context,
-                      message: const Text(
-                          "You are about to visit the FRC Game Overview website"),
-                      onConfirm: () async => await launchUrl(
-                          Uri.parse(FIRSTCrescendoShared.website))),
-                  child: const Image(
-                      height: 20,
-                      image: ExactAssetImage(
-                          "assets/crescendo/crescendo_header.png")))
-            ])),
+        appBar: LockedInScoutingModal.isLockedIn(context)
+            ? AppBar(
+                title: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                    GestureDetector(
+                      onTap: () async => await launchConfirmDialog(
+                          context,
+                          message: const Text(
+                              "You are about to visit the Rebel Robotics' website"),
+                          onConfirm: () async => await launchUrl(
+                              Uri.parse(
+                                  RebelRoboticsShared.website))),
+                      child: const Image(
+                        image: ExactAssetImage(
+                            "assets/appicon_header.png"),
+                        width: 52,
+                        height: 52,
+                        isAntiAlias: true,
+                      ),
+                    ),
+                    strut(width: 10),
+                    const Text("2638 Scouting"),
+                    strut(width: 10),
+                    GestureDetector(
+                        onTap: () async => await launchConfirmDialog(
+                            context,
+                            message: const Text(
+                                "You are about to visit the FRC Game Overview website"),
+                            onConfirm: () async => await launchUrl(
+                                Uri.parse(
+                                    FIRSTCrescendoShared.website))),
+                        child: const Image(
+                            height: 20,
+                            image: ExactAssetImage(
+                                "assets/crescendo/crescendo_header.png")))
+                  ]))
+            : null /*lmao */,
         body: Padding(
           padding: const EdgeInsets.all(10.0),
           child: PageView(
@@ -291,9 +319,12 @@ class _AppViewState extends State<_AppView> {
                 if (dataHostView != null) dataHostView.child,
                 scoutingView.child,
                 pastMatchesView.child,
-                settingsView.child,
-                aboutAppView.child,
-                consoleView.child
+                if (LockedInScoutingModal.isLockedIn(context))
+                  settingsView.child,
+                if (LockedInScoutingModal.isLockedIn(context))
+                  aboutAppView.child,
+                if (LockedInScoutingModal.isLockedIn(context))
+                  consoleView.child
               ]),
         ));
   }
