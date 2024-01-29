@@ -197,17 +197,21 @@ class _ScoutingViewState extends State<ScoutingView>
                             icon: const Icon(Icons.trip_origin),
                             child: form_seg_btn_1(
                                 segments: AutoPickup.values
-                                    .map<({Icon? icon, String label, AutoPickup value})>(
+                                    .map<
+                                            ({
+                                              Icon? icon,
+                                              String label,
+                                              AutoPickup value
+                                            })>(
                                         (AutoPickup e) => (
                                               label: formalizeWord(e.name),
-                                              icon: const Icon(
-                                                  Icons.trip_origin),
+                                              icon:
+                                                  const Icon(Icons.trip_origin),
                                               value: e
                                             ))
                                     .toList(),
                                 initialSelection: AutoPickup.none,
-                                onSelect:
-                                    (AutoPickup e) /*TODO*/ {})),
+                                onSelect: (AutoPickup e) /*TODO*/ {})),
                         form_label("Taxis?", //movement point
                             icon: const Icon(Icons.local_taxi_rounded),
                             child: form_seg_btn_1(
@@ -412,24 +416,6 @@ class _ScoutingViewState extends State<ScoutingView>
                       backgroundColor: Colors.transparent,
                       header: (icon: Icons.accessibility, title: "Other"),
                       child: form_col(<Widget>[
-                        form_label("Breakdown",
-                            icon: const Icon(Icons.handyman),
-                            child: form_seg_btn_1(
-                                segments: GenericUtils.boolOptions()
-                                    .map<
-                                            ({
-                                              Icon? icon,
-                                              String label,
-                                              bool value
-                                            })>(
-                                        (bool e) => (
-                                              label: e ? "Yes" : "No",
-                                              icon: const Icon(Icons.handyman),
-                                              value: e
-                                            ))
-                                    .toList(),
-                                initialSelection: false,
-                                onSelect: (bool e) /*TODO*/ {})),
                         form_label("Coopertition",
                             icon: const Icon(Icons.groups),
                             child: form_seg_btn_1(
@@ -443,6 +429,24 @@ class _ScoutingViewState extends State<ScoutingView>
                                         (bool e) => (
                                               label: e ? "Yes" : "No",
                                               icon: const Icon(Icons.groups),
+                                              value: e
+                                            ))
+                                    .toList(),
+                                initialSelection: false,
+                                onSelect: (bool e) /*TODO*/ {})),
+                        form_label("Breakdown",
+                            icon: const Icon(Icons.handyman),
+                            child: form_seg_btn_1(
+                                segments: GenericUtils.boolOptions()
+                                    .map<
+                                            ({
+                                              Icon? icon,
+                                              String label,
+                                              bool value
+                                            })>(
+                                        (bool e) => (
+                                              label: e ? "Yes" : "No",
+                                              icon: const Icon(Icons.handyman),
                                               value: e
                                             ))
                                     .toList(),
