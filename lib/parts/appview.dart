@@ -292,7 +292,7 @@ class _AppViewState extends State<_AppView> {
                 ])),
         bottomNavigationBar: NavigationBar(
           selectedIndex:
-              _bottomNavBarIndexer.clamp(0, bottomItems.length - 1),
+              _bottomNavBarIndexer.clamp(0, bottomItems.length - 1), // lol this probably wont happen
           destinations: bottomItems,
           onDestinationSelected: (int i) {
             Debug().info(

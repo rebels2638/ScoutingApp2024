@@ -9,11 +9,14 @@ class GameInfoView extends StatelessWidget
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Image.asset("assets/crescendo/field.png")
-            ]));
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image.asset("assets/crescendo/field.png")
+              ]),
+        ));
   }
 
   @override
