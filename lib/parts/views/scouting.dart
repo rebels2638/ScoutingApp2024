@@ -354,7 +354,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                               value: e
                                             ))
                                     .toList(),
-                                initialSelection: EndStatus.none,
+                                initialSelection: EndStatus.parked,
                                 onSelect: (EndStatus e) /*TODO*/ {})),
                         form_label("Harmony (Used same chain)",
                             icon: const Icon(Icons.people),

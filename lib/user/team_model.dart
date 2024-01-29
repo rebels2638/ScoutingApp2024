@@ -36,7 +36,7 @@ enum MatchType { practice, qualification, playoff }
 
 enum MatchStartingPosition { left, middle, right }
 
-enum EndStatus { none, parked, onstage, failed}
+enum EndStatus { parked, onstage, failed}
 
 class TeamMatchData {
   int matchID;
