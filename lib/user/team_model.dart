@@ -40,6 +40,10 @@ enum EndStatus { parked, onstage, failed}
 
 enum AutoPickup { left, middle, right, none}
 
+enum Harmony { yes, no, failed }
+
+enum TrapScored { yes, no, missed }
+
 class TeamMatchData {
   int matchID;
   MatchType matchType;

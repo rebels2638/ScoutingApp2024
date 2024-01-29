@@ -350,7 +350,7 @@ class _ScoutingViewState extends State<ScoutingView>
                       ])),
                   form_sec(context,
                       backgroundColor: Colors.transparent,
-                      header: (icon: Icons.accessibility, title: "Endgame"),
+                      header: (icon: Icons.accessibility, title: "  "),
                       child: form_col(<Widget>[
                         form_label("Status",
                             icon: const Icon(Icons.shield),
@@ -373,40 +373,39 @@ class _ScoutingViewState extends State<ScoutingView>
                         form_label("Harmony (Used same chain)",
                             icon: const Icon(Icons.people),
                             child: form_seg_btn_1(
-                                segments: GenericUtils.boolOptions()
+                                segments: Harmony.values
                                     .map<
                                             ({
                                               Icon? icon,
                                               String label,
-                                              bool value
+                                              Harmony value
                                             })>(
-                                        (bool e) => (
-                                              label: e ? "Yes" : "No",
+                                        (Harmony e) => (
+                                              label: formalizeWord(e.name),
                                               icon: const Icon(Icons.people),
                                               value: e
                                             ))
                                     .toList(),
-                                initialSelection: false,
-                                onSelect: (bool e) /*TODO*/ {})),
+                                initialSelection: Harmony.no,
+                                onSelect: (Harmony e) /*TODO*/ {})),
                         form_label("Scored in Trap",
-                            icon: const Icon(Icons.swipe_down_alt),
+                            icon: const Icon(Icons.trip_origin),
                             child: form_seg_btn_1(
-                                segments: GenericUtils.boolOptions()
+                                segments: TrapScored.values
                                     .map<
                                             ({
                                               Icon? icon,
                                               String label,
-                                              bool value
+                                              TrapScored value
                                             })>(
-                                        (bool e) => (
-                                              label: e ? "Yes" : "No",
-                                              icon: const Icon(
-                                                  Icons.swipe_down_alt),
+                                        (TrapScored e) => (
+                                              label: formalizeWord(e.name),
+                                              icon: const Icon(Icons.trip_origin),
                                               value: e
                                             ))
                                     .toList(),
-                                initialSelection: false,
-                                onSelect: (bool e) /*TODO*/ {})),
+                                initialSelection: TrapScored.no,
+                                onSelect: (TrapScored e) /*TODO*/ {})),
                         form_label("Comments",
                             icon: const Icon(Icons.comment),
                             child: form_txtin(
