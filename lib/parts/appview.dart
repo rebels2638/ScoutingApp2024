@@ -258,9 +258,16 @@ class _AppViewState extends State<_AppView> {
                     message: "Lock-In Mode",
                     child: FloatingActionButton(
                         heroTag: null,
-                        onPressed: Provider.of<LockedInScoutingModal>(
-                          context,
-                        ).toggle,
+                        onPressed: () {
+                          Provider.of<LockedInScoutingModal>(context,
+                                  listen: false)
+                              .toggle();
+                          setState(() => _bottomNavBarIndexer = 1);
+                          widget.pageController.animateToPage(_bottomNavBarIndexer,
+                              duration:
+                                  const Duration(milliseconds: 500),
+                              curve: Curves.ease);
+                        },
                         child: LockedInScoutingModal.isCasual(context)
                             ? const Icon(CommunityMaterialIcons
                                 .lock_open_variant)
@@ -275,11 +282,6 @@ class _AppViewState extends State<_AppView> {
           onDestinationSelected: (int i) {
             Debug().info(
                 "BottomNavBar -> PageView move to $i and was at ${widget.pageController.page} for builder length: ${bottomItems.length}");
-            if (LockedInScoutingModal.isCasual(context) &&
-                (i - 1)
-                    .outside(min: 0, max: bottomItems.length - 1)) {
-              i = 0;
-            }
             widget.pageController.animateToPage(i,
                 duration: const Duration(milliseconds: 200),
                 curve: Curves.ease);
