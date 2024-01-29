@@ -193,7 +193,22 @@ class _ScoutingViewState extends State<ScoutingView>
                                     .toList(),
                                 initialSelection: true,
                                 onSelect: (bool e) /*TODO*/ {})),
-                        form_label("Taxis?",
+                        form_label("Picked up Note?",
+                            icon: const Icon(Icons.trip_origin),
+                            child: form_seg_btn_1(
+                                segments: AutoPickup.values
+                                    .map<({Icon? icon, String label, AutoPickup value})>(
+                                        (AutoPickup e) => (
+                                              label: formalizeWord(e.name),
+                                              icon: const Icon(
+                                                  Icons.trip_origin),
+                                              value: e
+                                            ))
+                                    .toList(),
+                                initialSelection: AutoPickup.none,
+                                onSelect:
+                                    (AutoPickup e) /*TODO*/ {})),
+                        form_label("Taxis?", //movement point
                             icon: const Icon(Icons.local_taxi_rounded),
                             child: form_seg_btn_1(
                                 segments: <bool>[true, false]
@@ -325,30 +340,8 @@ class _ScoutingViewState extends State<ScoutingView>
                       ])),
                   form_sec(context,
                       backgroundColor: Colors.transparent,
-                      header: (
-                        icon: Icons.accessibility,
-                        title: "Endgame"
-                      ),
+                      header: (icon: Icons.accessibility, title: "Endgame"),
                       child: form_col(<Widget>[
-                        form_label("Climb?",
-                            icon: const Icon(Icons.hiking),
-                            child: form_seg_btn_1(
-                                segments: GenericUtils.boolOptions()
-                                    .map<
-                                            ({
-                                              Icon? icon,
-                                              String label,
-                                              bool value
-                                            })>(
-                                        (bool e) => (
-                                              label: e ? "Yes" : "No",
-                                              icon: const Icon(
-                                                  Icons.hiking),
-                                              value: e
-                                            ))
-                                    .toList(),
-                                initialSelection: false,
-                                onSelect: (bool e) /*TODO*/ {})),
                         form_label("Status",
                             icon: const Icon(Icons.shield),
                             child: form_seg_btn_1(
@@ -365,7 +358,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                               value: e
                                             ))
                                     .toList(),
-                                initialSelection: EndStatus.parked,
+                                initialSelection: EndStatus.none,
                                 onSelect: (EndStatus e) /*TODO*/ {})),
                         form_label("Harmony (Used same chain)",
                             icon: const Icon(Icons.people),
