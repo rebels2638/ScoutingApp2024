@@ -335,7 +335,27 @@ class _ScoutingViewState extends State<ScoutingView>
                         icon: Icons.accessibility,
                         title: "Endgame"
                       ),
+                      
                       child: form_col(<Widget>[
+                        form_label("Climb?",
+                            icon: const Icon(Icons.hiking),
+                            child: form_seg_btn_1(
+                                segments: GenericUtils.boolOptions()
+                                    .map<
+                                            ({
+                                              Icon? icon,
+                                              String label,
+                                              bool value
+                                            })>(
+                                        (bool e) => (
+                                              label: e ? "Yes" : "No",
+                                              icon: const Icon(
+                                                  Icons.hiking),
+                                              value: e
+                                            ))
+                                    .toList(),
+                                initialSelection: false,
+                                onSelect: (bool e) /*TODO*/ {})),
                         form_label("Status",
                             icon: const Icon(Icons.shield),
                             child: form_seg_btn_1(
