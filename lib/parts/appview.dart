@@ -8,6 +8,7 @@ import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/bits/lock_in.dart';
 import 'package:scouting_app_2024/parts/bits/perf_overlay.dart';
+import 'package:scouting_app_2024/parts/views/gameinfo.dart';
 import 'package:scouting_app_2024/user/shared.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
 import 'package:scouting_app_2024/parts/views/views.dart';
@@ -132,6 +133,15 @@ class _AppViewState extends State<_AppView> {
         String tooltip
       }) item
     })? dataHostView;
+    ({
+      Widget child,
+      ({
+        Icon activeIcon,
+        Icon icon,
+        String label,
+        String tooltip
+      }) item
+    }) gameInfoView = const GameInfoView().exportAppPageView();
     if (Platform.isWindows) {
       dataHostView = const DataHostingView().exportAppPageView();
     }
@@ -153,6 +163,11 @@ class _AppViewState extends State<_AppView> {
           label: pastMatchesView.item.label,
           selectedIcon: pastMatchesView.item.activeIcon,
           tooltip: pastMatchesView.item.tooltip),
+      NavigationDestination(
+          icon: gameInfoView.item.icon,
+          label: gameInfoView.item.label,
+          selectedIcon: gameInfoView.item.activeIcon,
+          tooltip: gameInfoView.item.tooltip),
       if (LockedInScoutingModal.isCasual(context))
         NavigationDestination(
             icon: settingsView.item.icon,
@@ -262,7 +277,8 @@ class _AppViewState extends State<_AppView> {
                                   listen: false)
                               .toggle();
                           setState(() => _bottomNavBarIndexer = 1);
-                          widget.pageController.animateToPage(_bottomNavBarIndexer,
+                          widget.pageController.animateToPage(
+                              _bottomNavBarIndexer,
                               duration:
                                   const Duration(milliseconds: 500),
                               curve: Curves.ease);
@@ -339,6 +355,7 @@ class _AppViewState extends State<_AppView> {
                 if (dataHostView != null) dataHostView.child,
                 scoutingView.child,
                 pastMatchesView.child,
+                gameInfoView.child,
                 if (LockedInScoutingModal.isCasual(context))
                   settingsView.child,
                 if (LockedInScoutingModal.isCasual(context))
