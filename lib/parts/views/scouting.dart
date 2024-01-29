@@ -114,7 +114,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             icon: const Icon(Icons.people_rounded),
                             child: form_txtin(dim: 300)),
                         form_label(
-                          "Number",
+                          "Number ",
                           icon: const Icon(Icons.numbers_rounded),
                           child: form_txtin(
                               dim: 300, inputType: TextInputType.number),
@@ -340,6 +340,12 @@ class _ScoutingViewState extends State<ScoutingView>
                               dim: 300,
                               onChanged: (String value) /*TODO*/ {},
                               inputType: TextInputType.multiline,
+                            )),
+                        form_label("Driver rating",
+                            icon: const Icon(Icons.call_missed),
+                            child: PlusMinusRating(
+                              initialValue: 0,
+                              onValueChanged: (int value) /*TODO*/ {},
                             )),
                       ])),
                   form_sec(context,
