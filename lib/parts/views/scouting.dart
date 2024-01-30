@@ -341,7 +341,7 @@ class _ScoutingViewState extends State<ScoutingView>
                               onChanged: (String value) /*TODO*/ {},
                               inputType: TextInputType.multiline,
                             )),
-                        form_label("Driver rating",
+                        form_label("Driver rating (Optional - leave at 0 for no input)",
                             icon: const Icon(Icons.call_missed),
                             child: PlusMinusRating(
                               initialValue: 0,
