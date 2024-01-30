@@ -1,5 +1,6 @@
+//import 'dart:html';
 import 'dart:io';
-
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:community_material_icon/community_material_icon.dart';
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
@@ -8,6 +9,7 @@ import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/bits/lock_in.dart';
 import 'package:scouting_app_2024/parts/bits/perf_overlay.dart';
+import 'package:scouting_app_2024/parts/views/game_map.dart';
 import 'package:scouting_app_2024/user/shared.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
 import 'package:scouting_app_2024/parts/views/views.dart';
@@ -120,7 +122,16 @@ class _AppViewState extends State<_AppView> {
         String label,
         String tooltip
       }) item
-    }) consoleView = const ConsoleView().exportAppPageView();
+    }) gameMapView = const GameMapView().exportAppPageView();
+    ({
+      Widget child,
+      ({
+        Icon activeIcon,
+        Icon icon,
+        String label,
+        String tooltip
+      }) item
+    })consoleView = const ConsoleView().exportAppPageView();
     ({
       Widget child,
       ({
@@ -130,7 +141,10 @@ class _AppViewState extends State<_AppView> {
         String tooltip
       }) item
     })? dataHostView;
-    if (Platform.isWindows) {
+    //if (Platform.isWindows) {
+      //dataHostView = const DataHostingView().exportAppPageView();
+    //}
+    if (!kIsWeb && Platform.isWindows) { // Check if it's not web and then check for Windows
       dataHostView = const DataHostingView().exportAppPageView();
     }
     return Scaffold(
@@ -262,6 +276,12 @@ class _AppViewState extends State<_AppView> {
                   tooltip: aboutAppView.item.tooltip),
             if (LockedInScoutingModal.isCasual(context))
               NavigationDestination(
+                  icon: gameMapView.item.icon,
+                  label: gameMapView.item.label,
+                  selectedIcon: gameMapView.item.activeIcon,
+                  tooltip: gameMapView.item.tooltip),
+            if (LockedInScoutingModal.isCasual(context))
+              NavigationDestination(
                   icon: consoleView.item.icon,
                   label: consoleView.item.label,
                   selectedIcon: consoleView.item.activeIcon,
@@ -329,6 +349,8 @@ class _AppViewState extends State<_AppView> {
                   settingsView.child,
                 if (LockedInScoutingModal.isCasual(context))
                   aboutAppView.child,
+                if (LockedInScoutingModal.isCasual(context))
+                  gameMapView.child,
                 if (LockedInScoutingModal.isCasual(context))
                   consoleView.child
               ]),
