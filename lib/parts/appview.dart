@@ -1,6 +1,4 @@
-//import 'dart:html';
 import 'dart:io';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:community_material_icon/community_material_icon.dart';
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
@@ -164,7 +162,7 @@ class _AppViewState extends State<_AppView> {
           label: pastMatchesView.item.label,
           selectedIcon: pastMatchesView.item.activeIcon,
           tooltip: pastMatchesView.item.tooltip),
-    
+
       if (LockedInScoutingModal.isCasual(context))
         NavigationDestination(
             icon: settingsView.item.icon,
