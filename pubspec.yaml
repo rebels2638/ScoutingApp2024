@@ -36,6 +36,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/crescendo/labelled_map.png
     - assets/crescendo/field.png
     - assets/crescendo/high_note.png
     - assets/crescendo/note.png
@@ -47,6 +48,7 @@ flutter:
     - assets/legals/BSD-4.txt
     - assets/2324_teampic.jpg
     - assets/2324_teampic_blurred.jpg
+    
   fonts:
     - family: IBM Plex Sans
       fonts:
