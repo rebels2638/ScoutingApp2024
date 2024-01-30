@@ -1,7 +1,4 @@
 extension UsefulInt on int {
-  int clamp({required int max, required int min}) => this > max
-      ? max
-      : this < min
-          ? min
-          : this;
+  bool outside({required int max, required int min}) =>
+      this > max || this < min;
 }

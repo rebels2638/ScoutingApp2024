@@ -9,7 +9,6 @@ import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/bits/lock_in.dart';
 import 'package:scouting_app_2024/parts/bits/perf_overlay.dart';
-import 'package:scouting_app_2024/parts/views/game_map.dart';
 import 'package:scouting_app_2024/user/shared.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
 import 'package:scouting_app_2024/parts/views/views.dart';
@@ -47,12 +46,14 @@ class IntermediateMaterialApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        showPerformanceOverlay:
-            Provider.of<PerformanceOverlayModal>(context).show,
-        debugShowCheckedModeBanner: false,
-        theme: ThemeProvider.themeOf(context).data,
-        darkTheme: ThemeProvider.themeOf(context).data,
-        home: _AppView());
+      showPerformanceOverlay:
+          Provider.of<PerformanceOverlayModal>(context, listen: false)
+              .show,
+      debugShowCheckedModeBanner: false,
+      theme: ThemeProvider.themeOf(context).data,
+      darkTheme: ThemeProvider.themeOf(context).data,
+      home: _AppView(),
+    );
   }
 }
 
@@ -141,12 +142,51 @@ class _AppViewState extends State<_AppView> {
         String tooltip
       }) item
     })? dataHostView;
-    //if (Platform.isWindows) {
-      //dataHostView = const DataHostingView().exportAppPageView();
-    //}
-    if (!kIsWeb && Platform.isWindows) { // Check if it's not web and then check for Windows
+    if (Platform.isWindows) {
       dataHostView = const DataHostingView().exportAppPageView();
     }
+    List<NavigationDestination> bottomItems = <NavigationDestination>[
+      // plsplsplspls make sure this matches with the following PageView's children ordering D:
+      if (dataHostView != null)
+        NavigationDestination(
+            icon: dataHostView.item.icon,
+            label: dataHostView.item.label,
+            selectedIcon: dataHostView.item.activeIcon,
+            tooltip: dataHostView.item.tooltip),
+      NavigationDestination(
+          icon: scoutingView.item.icon,
+          label: scoutingView.item.label,
+          selectedIcon: scoutingView.item.activeIcon,
+          tooltip: scoutingView.item.tooltip),
+      NavigationDestination(
+          icon: pastMatchesView.item.icon,
+          label: pastMatchesView.item.label,
+          selectedIcon: pastMatchesView.item.activeIcon,
+          tooltip: pastMatchesView.item.tooltip),
+      NavigationDestination(
+          icon: gameInfoView.item.icon,
+          label: gameInfoView.item.label,
+          selectedIcon: gameInfoView.item.activeIcon,
+          tooltip: gameInfoView.item.tooltip),
+      if (LockedInScoutingModal.isCasual(context))
+        NavigationDestination(
+            icon: settingsView.item.icon,
+            label: settingsView.item.label,
+            selectedIcon: settingsView.item.activeIcon,
+            tooltip: settingsView.item.tooltip),
+      if (LockedInScoutingModal.isCasual(context))
+        NavigationDestination(
+            icon: aboutAppView.item.icon,
+            label: aboutAppView.item.label,
+            selectedIcon: aboutAppView.item.activeIcon,
+            tooltip: aboutAppView.item.tooltip),
+      if (LockedInScoutingModal.isCasual(context))
+        NavigationDestination(
+            icon: consoleView.item.icon,
+            label: consoleView.item.label,
+            selectedIcon: consoleView.item.activeIcon,
+            tooltip: consoleView.item.tooltip)
+    ];
     return Scaffold(
         floatingActionButtonLocation:
             LockedInScoutingModal.isCasual(context)
@@ -232,9 +272,17 @@ class _AppViewState extends State<_AppView> {
                     message: "Lock-In Mode",
                     child: FloatingActionButton(
                         heroTag: null,
-                        onPressed: Provider.of<LockedInScoutingModal>(
-                                context)
-                            .toggle,
+                        onPressed: () {
+                          Provider.of<LockedInScoutingModal>(context,
+                                  listen: false)
+                              .toggle();
+                          setState(() => _bottomNavBarIndexer = 1);
+                          widget.pageController.animateToPage(
+                              _bottomNavBarIndexer,
+                              duration:
+                                  const Duration(milliseconds: 500),
+                              curve: Curves.ease);
+                        },
                         child: LockedInScoutingModal.isCasual(context)
                             ? const Icon(CommunityMaterialIcons
                                 .lock_open_variant)
@@ -276,12 +324,6 @@ class _AppViewState extends State<_AppView> {
                   tooltip: aboutAppView.item.tooltip),
             if (LockedInScoutingModal.isCasual(context))
               NavigationDestination(
-                  icon: gameMapView.item.icon,
-                  label: gameMapView.item.label,
-                  selectedIcon: gameMapView.item.activeIcon,
-                  tooltip: gameMapView.item.tooltip),
-            if (LockedInScoutingModal.isCasual(context))
-              NavigationDestination(
                   icon: consoleView.item.icon,
                   label: consoleView.item.label,
                   selectedIcon: consoleView.item.activeIcon,
@@ -289,7 +331,7 @@ class _AppViewState extends State<_AppView> {
           ],
           onDestinationSelected: (int i) {
             Debug().info(
-                "BottomNavBar -> PageView move to $i and was at ${widget.pageController.page}");
+                "BottomNavBar -> PageView move to $i and was at ${widget.pageController.page} for builder length: ${bottomItems.length}");
             widget.pageController.animateToPage(i,
                 duration: const Duration(milliseconds: 200),
                 curve: Curves.ease);
@@ -309,12 +351,15 @@ class _AppViewState extends State<_AppView> {
                           onConfirm: () async => await launchUrl(
                               Uri.parse(
                                   RebelRoboticsShared.website))),
-                      child: const Image(
-                        image: ExactAssetImage(
-                            "assets/appicon_header.png"),
-                        width: 52,
-                        height: 52,
-                        isAntiAlias: true,
+                      child: const Hero(
+                        tag: "RebelsLogo",
+                        child: Image(
+                          image: ExactAssetImage(
+                              "assets/appicon_header.png"),
+                          width: 52,
+                          height: 52,
+                          isAntiAlias: true,
+                        ),
                       ),
                     ),
                     strut(width: 10),
@@ -345,6 +390,7 @@ class _AppViewState extends State<_AppView> {
                 if (dataHostView != null) dataHostView.child,
                 scoutingView.child,
                 pastMatchesView.child,
+                gameInfoView.child,
                 if (LockedInScoutingModal.isCasual(context))
                   settingsView.child,
                 if (LockedInScoutingModal.isCasual(context))
