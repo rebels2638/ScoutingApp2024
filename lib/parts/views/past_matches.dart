@@ -16,8 +16,8 @@ class PastMatchesView extends StatefulWidget
     return (
       child: this,
       item: (
-        activeIcon: const Icon(Icons.fact_check_rounded),
-        icon: const Icon(Icons.fact_check_outlined),
+        activeIcon: const Icon(Icons.history),
+        icon: const Icon(Icons.history),
         label: "History",
         tooltip: "View data collected from past matches"
       )
@@ -58,84 +58,121 @@ class _PastMatchesViewState extends State<PastMatchesView> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar( // A top menu for 'all' actions
-        title: const Text('CRESCENDO 2024'), 
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.delete_forever),
-            onPressed: () {
-              // TODO: deletes all matches, popup to confirm 
-            },
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              const Row(
+                children: [
+                  Icon(Icons.calendar_month),
+                  SizedBox(width: 8.0),
+                  Text("Past Matches", style: TextStyle(fontSize: 20.0)),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  IconButton(
+                    icon: const Icon(Icons.delete_forever),
+                    onPressed: () {
+                      // TODO: deletes all matches, popup to confirm 
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.download),
+                    onPressed: () {
+                      // TODO: exports all matches?
+                    },
+                  ),
+                ],
+              ),
+            ],
           ),
-          IconButton(
-            icon: Icon(Icons.download),
-            onPressed: () {
-              // TODO: exports all matches?
-            },
-          ),
-        ],
-      ),
-      body: form_sec(
-        context,
-        backgroundColor: Colors.transparent,
-        header: (icon: Icons.calendar_month, title: "Past Matches"),
-        child: matches.isEmpty
-          ? const Center(child: Text('No past matches available!'))
-          : ListView.builder(
-              itemCount: matches.length,
-              shrinkWrap: true, 
-              itemBuilder: (BuildContext context, int index) {
-                return MatchTile(
-                  match: matches[index],
-                  onDelete: removeMatch,
-                );
-              },
-            ),
-      ),
-    );
-  }
+        ),
+        Expanded(
+          child: matches.isEmpty
+            ? const Center(child: Text('No past matches available!'))
+            : ListView.builder(
+                itemCount: matches.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return MatchTile(
+                    match: matches[index],
+                    onDelete: removeMatch,
+                  );
+                },
+              ),
+        ),
+      ],
+    ),
+  );
+}
+
+
 }
 
 class MatchTile extends StatelessWidget {
   final TeamMatchData match;
   final Function(int) onDelete;
 
-  const MatchTile({Key? key, required this.match, required this.onDelete}) : super(key: key);
+  const MatchTile({super.key, required this.match, required this.onDelete});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: form_col(<Widget>[
-        form_label(
-          '${formalizeWord(match.matchType.name)} #${match.matchID}: (Team X)',
-          child: Expanded(
+      child: form_sec(context,
+        backgroundColor: Colors.transparent,
+        header: (
+          icon: Icons.emoji_events,
+          title: "${formalizeWord(match.matchType.name)} #${match.matchID}: (Team X)"
+        ),
+        child: form_col(<Widget>[
+          form_label(
+            'Transfer Options',
+            child: Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  ElevatedButton(
+                    onPressed: () {
+                      // TODO: send via bluetooth 
+                    },
+                    child: const Text('Beam via Bluetooth'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      // TODO: generate QR code and display
+                    },
+                    child: const Text('Generate QR Code'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => onDelete(match.matchID),
+                    child: const Text('Delete'),
+                  ),
+                ],
+              ),
+            ),
+            icon: const Icon(Icons.cell_tower),
+          ),
+          const SizedBox(
+            height: 15, 
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                ElevatedButton(
-                  onPressed: () {
-                    // TODO: send via bluetooth 
-                  },
-                  child: const Text('Beam via Bluetooth'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // TODO: generate QR code and display
-                  },
-                  child: const Text('Generate QR Code'),
-                ),
-                ElevatedButton(
-                  onPressed: () => onDelete(match.matchID),
-                  child: const Text('Delete'),
-                ),
+                Text('Placeholder Text #1'),
+                Text('Placeholder Text #2'),
+                Text('Placeholder Text #3'),
+                Text('Placeholder Text #4'),
               ],
             ),
           ),
-          icon: Icon(Icons.stadium),
-        ),
-      ]),
+        ]),
+      ),
     );
   }
 }
+
