@@ -1,5 +1,6 @@
+//import 'dart:html';
 import 'dart:io';
-
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:community_material_icon/community_material_icon.dart';
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
@@ -8,7 +9,7 @@ import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/bits/lock_in.dart';
 import 'package:scouting_app_2024/parts/bits/perf_overlay.dart';
-import 'package:scouting_app_2024/parts/views/gameinfo.dart';
+import 'package:scouting_app_2024/parts/views/game_map.dart';
 import 'package:scouting_app_2024/user/shared.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
 import 'package:scouting_app_2024/parts/views/views.dart';
@@ -123,7 +124,16 @@ class _AppViewState extends State<_AppView> {
         String label,
         String tooltip
       }) item
-    }) consoleView = const ConsoleView().exportAppPageView();
+    }) gameMapView = const GameMapView().exportAppPageView();
+    ({
+      Widget child,
+      ({
+        Icon activeIcon,
+        Icon icon,
+        String label,
+        String tooltip
+      }) item
+    })consoleView = const ConsoleView().exportAppPageView();
     ({
       Widget child,
       ({
@@ -133,15 +143,6 @@ class _AppViewState extends State<_AppView> {
         String tooltip
       }) item
     })? dataHostView;
-    ({
-      Widget child,
-      ({
-        Icon activeIcon,
-        Icon icon,
-        String label,
-        String tooltip
-      }) item
-    }) gameInfoView = const GameInfoView().exportAppPageView();
     if (Platform.isWindows) {
       dataHostView = const DataHostingView().exportAppPageView();
     }
@@ -163,11 +164,7 @@ class _AppViewState extends State<_AppView> {
           label: pastMatchesView.item.label,
           selectedIcon: pastMatchesView.item.activeIcon,
           tooltip: pastMatchesView.item.tooltip),
-      NavigationDestination(
-          icon: gameInfoView.item.icon,
-          label: gameInfoView.item.label,
-          selectedIcon: gameInfoView.item.activeIcon,
-          tooltip: gameInfoView.item.tooltip),
+    
       if (LockedInScoutingModal.isCasual(context))
         NavigationDestination(
             icon: settingsView.item.icon,
@@ -180,6 +177,12 @@ class _AppViewState extends State<_AppView> {
             label: aboutAppView.item.label,
             selectedIcon: aboutAppView.item.activeIcon,
             tooltip: aboutAppView.item.tooltip),
+      if (LockedInScoutingModal.isCasual(context))
+        NavigationDestination(
+            icon: gameMapView.item.icon,
+            label: gameMapView.item.label,
+            selectedIcon: gameMapView.item.activeIcon,
+            tooltip: gameMapView.item.tooltip),
       if (LockedInScoutingModal.isCasual(context))
         NavigationDestination(
             icon: consoleView.item.icon,
@@ -291,9 +294,50 @@ class _AppViewState extends State<_AppView> {
                   ),
                 ])),
         bottomNavigationBar: NavigationBar(
-          selectedIndex:
-              _bottomNavBarIndexer.clamp(0, bottomItems.length - 1), // lol this probably wont happen
-          destinations: bottomItems,
+          selectedIndex: _bottomNavBarIndexer,
+          destinations: <NavigationDestination>[
+            // plsplsplspls make sure this matches with the following PageView's children ordering D:
+            if (dataHostView != null)
+              NavigationDestination(
+                  icon: dataHostView.item.icon,
+                  label: dataHostView.item.label,
+                  selectedIcon: dataHostView.item.activeIcon,
+                  tooltip: dataHostView.item.tooltip),
+            NavigationDestination(
+                icon: scoutingView.item.icon,
+                label: scoutingView.item.label,
+                selectedIcon: scoutingView.item.activeIcon,
+                tooltip: scoutingView.item.tooltip),
+            NavigationDestination(
+                icon: pastMatchesView.item.icon,
+                label: pastMatchesView.item.label,
+                selectedIcon: pastMatchesView.item.activeIcon,
+                tooltip: pastMatchesView.item.tooltip),
+            if (LockedInScoutingModal.isCasual(context))
+              NavigationDestination(
+                  icon: settingsView.item.icon,
+                  label: settingsView.item.label,
+                  selectedIcon: settingsView.item.activeIcon,
+                  tooltip: settingsView.item.tooltip),
+            if (LockedInScoutingModal.isCasual(context))
+              NavigationDestination(
+                  icon: aboutAppView.item.icon,
+                  label: aboutAppView.item.label,
+                  selectedIcon: aboutAppView.item.activeIcon,
+                  tooltip: aboutAppView.item.tooltip),
+            if (LockedInScoutingModal.isCasual(context))
+              NavigationDestination(
+                  icon: gameMapView.item.icon,
+                  label: gameMapView.item.label,
+                  selectedIcon: gameMapView.item.activeIcon,
+                  tooltip: gameMapView.item.tooltip),
+            if (LockedInScoutingModal.isCasual(context))
+              NavigationDestination(
+                  icon: consoleView.item.icon,
+                  label: consoleView.item.label,
+                  selectedIcon: consoleView.item.activeIcon,
+                  tooltip: consoleView.item.tooltip)
+          ],
           onDestinationSelected: (int i) {
             Debug().info(
                 "BottomNavBar -> PageView move to $i and was at ${widget.pageController.page} for builder length: ${bottomItems.length}");
@@ -355,11 +399,12 @@ class _AppViewState extends State<_AppView> {
                 if (dataHostView != null) dataHostView.child,
                 scoutingView.child,
                 pastMatchesView.child,
-                gameInfoView.child,
                 if (LockedInScoutingModal.isCasual(context))
                   settingsView.child,
                 if (LockedInScoutingModal.isCasual(context))
                   aboutAppView.child,
+                if (LockedInScoutingModal.isCasual(context))
+                  gameMapView.child,
                 if (LockedInScoutingModal.isCasual(context))
                   consoleView.child
               ]),
