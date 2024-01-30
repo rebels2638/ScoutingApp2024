@@ -9,6 +9,7 @@ import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/bits/lock_in.dart';
 import 'package:scouting_app_2024/parts/bits/perf_overlay.dart';
+import 'package:scouting_app_2024/parts/views/game_map.dart';
 import 'package:scouting_app_2024/user/shared.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
 import 'package:scouting_app_2024/parts/views/views.dart';
@@ -163,11 +164,7 @@ class _AppViewState extends State<_AppView> {
           label: pastMatchesView.item.label,
           selectedIcon: pastMatchesView.item.activeIcon,
           tooltip: pastMatchesView.item.tooltip),
-      NavigationDestination(
-          icon: gameInfoView.item.icon,
-          label: gameInfoView.item.label,
-          selectedIcon: gameInfoView.item.activeIcon,
-          tooltip: gameInfoView.item.tooltip),
+    
       if (LockedInScoutingModal.isCasual(context))
         NavigationDestination(
             icon: settingsView.item.icon,
@@ -180,6 +177,12 @@ class _AppViewState extends State<_AppView> {
             label: aboutAppView.item.label,
             selectedIcon: aboutAppView.item.activeIcon,
             tooltip: aboutAppView.item.tooltip),
+      if (LockedInScoutingModal.isCasual(context))
+        NavigationDestination(
+            icon: gameMapView.item.icon,
+            label: gameMapView.item.label,
+            selectedIcon: gameMapView.item.activeIcon,
+            tooltip: gameMapView.item.tooltip),
       if (LockedInScoutingModal.isCasual(context))
         NavigationDestination(
             icon: consoleView.item.icon,
@@ -324,6 +327,12 @@ class _AppViewState extends State<_AppView> {
                   tooltip: aboutAppView.item.tooltip),
             if (LockedInScoutingModal.isCasual(context))
               NavigationDestination(
+                  icon: gameMapView.item.icon,
+                  label: gameMapView.item.label,
+                  selectedIcon: gameMapView.item.activeIcon,
+                  tooltip: gameMapView.item.tooltip),
+            if (LockedInScoutingModal.isCasual(context))
+              NavigationDestination(
                   icon: consoleView.item.icon,
                   label: consoleView.item.label,
                   selectedIcon: consoleView.item.activeIcon,
@@ -390,7 +399,6 @@ class _AppViewState extends State<_AppView> {
                 if (dataHostView != null) dataHostView.child,
                 scoutingView.child,
                 pastMatchesView.child,
-                gameInfoView.child,
                 if (LockedInScoutingModal.isCasual(context))
                   settingsView.child,
                 if (LockedInScoutingModal.isCasual(context))
