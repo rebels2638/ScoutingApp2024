@@ -260,7 +260,6 @@ class _ScoutingViewState extends State<ScoutingView>
                             child: form_txtin(
                               hint: "Enter your comments here",
                               label: "Comments",
-                              prefixIcon: const Icon(Icons.edit),
                               dim: 300,
                               onChanged: (String value) /*TODO*/ {},
                               inputType: TextInputType.multiline,
@@ -336,7 +335,6 @@ class _ScoutingViewState extends State<ScoutingView>
                             child: form_txtin(
                               hint: "Enter your comments here",
                               label: "Comments",
-                              prefixIcon: const Icon(Icons.edit),
                               dim: 300,
                               onChanged: (String value) /*TODO*/ {},
                               inputType: TextInputType.multiline,
@@ -411,7 +409,6 @@ class _ScoutingViewState extends State<ScoutingView>
                             child: form_txtin(
                               hint: "Enter your comments here",
                               label: "Comments",
-                              prefixIcon: const Icon(Icons.edit),
                               dim: 300,
                               onChanged: (String value) /*TODO*/ {},
                               inputType: TextInputType.multiline,
