@@ -29,7 +29,7 @@ class PastMatchesView extends StatefulWidget
 }
 
 class _PastMatchesViewState extends State<PastMatchesView> {
-  List<TeamMatchData> matches = [];
+  List<TeamMatchData> matches = <TeamMatchData>[];
 
   @override
   void initState() {
@@ -53,66 +53,64 @@ class _PastMatchesViewState extends State<PastMatchesView> {
 
   void removeMatch(int matchID) {
     setState(() {
-      matches.removeWhere((m) => m.matchID == matchID);
+      matches.removeWhere((TeamMatchData m) => m.matchID == matchID);
     });
   }
 
   @override
-Widget build(BuildContext context) {
-  return Scaffold(
-    body: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              const Row(
-                children: [
-                  Icon(Icons.calendar_month),
-                  SizedBox(width: 8.0),
-                  Text("Past Matches", style: TextStyle(fontSize: 20.0)),
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  IconButton(
-                    icon: const Icon(Icons.delete_forever),
-                    onPressed: () {
-                      // TODO: deletes all matches, popup to confirm 
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.download),
-                    onPressed: () {
-                      // TODO: exports all matches?
-                    },
-                  ),
-                ],
-              ),
-            ],
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                const Row(
+                  children: [
+                    Icon(Icons.calendar_month),
+                    SizedBox(width: 8.0),
+                    Text("Past Matches", style: TextStyle(fontSize: 20.0)),
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    IconButton(
+                      icon: const Icon(Icons.delete_forever),
+                      onPressed: () {
+                        // TODO: deletes all matches, popup to confirm 
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.download),
+                      onPressed: () {
+                        // TODO: exports all matches?
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-        Expanded(
-          child: matches.isEmpty
-            ? const Center(child: Text('No past matches available!'))
-            : ListView.builder(
-                itemCount: matches.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return MatchTile(
-                    match: matches[index],
-                    onDelete: removeMatch,
-                  );
-                },
-              ),
-        ),
-      ],
-    ),
-  );
-}
-
-
+          Expanded(
+            child: matches.isEmpty
+              ? const Center(child: Text('No past matches available!'))
+              : ListView.builder(
+                  itemCount: matches.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return MatchTile(
+                      match: matches[index],
+                      onDelete: removeMatch,
+                    );
+                  },
+                ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class MatchTile extends StatelessWidget {
