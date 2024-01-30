@@ -34,7 +34,7 @@ jobs:
       - run: flutter config --enable-linux-desktop
       - run: flutter pub get
       - run: flutter build linux
-      - run: tar -r linux_build.zip ./build/linux
+      - run: zip -r linux_build.zip ./build/linux
       - uses: actions/upload-artifact@v3
         with:
           name: linux_build
