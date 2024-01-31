@@ -67,7 +67,7 @@ First, follow the steps in [Building](#building), then just run `flutter run -d 
 **Helpers**
 
 * Aiden Pan
-* Aarav Minocha
+* Aarav Minocha [(aaravmin](https://github.com/aaravmin)]
 
 ## Building Remarks
 
