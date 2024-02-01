@@ -67,11 +67,10 @@ class _TeamAllianceSwitchState extends State<TeamAllianceSwitch> {
                       ? TeamAlliance.blue.toColor().withAlpha(0x80)
                       : TeamAlliance.red.toColor().withAlpha(0x80)),
               thumbColor: MaterialStateProperty.resolveWith<Color?>(
-                  (Set<MaterialState> states) {
-                return states.contains(MaterialState.selected)
-                    ? TeamAlliance.blue.toColor()
-                    : TeamAlliance.red.toColor();
-              }),
+                  (Set<MaterialState> states) =>
+                      states.contains(MaterialState.selected)
+                          ? TeamAlliance.blue.toColor()
+                          : TeamAlliance.red.toColor()),
               overlayColor: MaterialStateProperty.resolveWith<Color?>(
                   (Set<MaterialState> states) => states
                           .contains(MaterialState.selected)

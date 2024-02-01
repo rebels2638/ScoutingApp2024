@@ -2,18 +2,28 @@ import "package:flutter/material.dart";
 import 'package:flutter_svg_icons/flutter_svg_icons.dart';
 import 'package:scouting_app_2024/debug.dart';
 
+enum SwitchIconPosition {
+  /// the icon will be placed on the thumb
+  onSwitch,
+
+  /// the icon will be placed around the switch using a row
+  aroundSwitch
+}
+
 class BasicToggleSwitch extends StatefulWidget {
   final void Function(bool res) onChanged;
   final bool initialValue;
   final Icon? offIcon;
   final Icon? onIcon;
+  final SwitchIconPosition position;
 
   const BasicToggleSwitch(
       {super.key,
       required this.onChanged,
       this.initialValue = false,
-      this.offIcon,
-      this.onIcon});
+      this.position = SwitchIconPosition.onSwitch,
+      this.offIcon = const Icon(Icons.close_rounded),
+      this.onIcon = const Icon(Icons.check_rounded)});
 
   @override
   State<BasicToggleSwitch> createState() => _BasicToggleSwitchState();
@@ -21,36 +31,48 @@ class BasicToggleSwitch extends StatefulWidget {
 
 class _BasicToggleSwitchState extends State<BasicToggleSwitch> {
   late bool _toggleState;
-  late bool _drawIcons;
 
   @override
   void initState() {
     super.initState();
-    _drawIcons = (widget.offIcon == null && widget.onIcon == null) ||
-        (widget.offIcon != null || widget.onIcon != null);
-    assert(_drawIcons, "Both icons must either be null or supplied!");
     _toggleState = widget.initialValue;
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget baseSwitch = Switch(
-        value: _toggleState,
-        onChanged: (bool result) {
-          setState(() => _toggleState = !_toggleState);
-          widget.onChanged.call(result);
-        });
-    return _drawIcons &&
-            widget.onIcon != null &&
-            widget.offIcon != null
+    return widget.onIcon != null &&
+            widget.offIcon != null &&
+            widget.position == SwitchIconPosition.aroundSwitch
         ? Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: strutAll(<Widget>[
               widget.offIcon!,
-              baseSwitch,
+              Switch(
+                  value: _toggleState,
+                  onChanged: (bool result) {
+                    setState(() => _toggleState = !_toggleState);
+                    widget.onChanged.call(result);
+                  }),
               widget.onIcon!,
             ], width: 8))
-        : baseSwitch;
+        : widget.position == SwitchIconPosition.onSwitch
+            ? Switch(
+                thumbIcon: MaterialStateProperty.resolveWith(
+                    (Set<MaterialState> states) =>
+                        states.contains(MaterialState.selected)
+                            ? widget.onIcon
+                            : widget.offIcon),
+                value: _toggleState,
+                onChanged: (bool result) {
+                  setState(() => _toggleState = !_toggleState);
+                  widget.onChanged.call(result);
+                })
+            : Switch(
+                value: _toggleState,
+                onChanged: (bool result) {
+                  setState(() => _toggleState = !_toggleState);
+                  widget.onChanged.call(result);
+                });
   }
 }
 
