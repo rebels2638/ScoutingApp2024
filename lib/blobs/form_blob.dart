@@ -228,6 +228,13 @@ Widget form_sec(BuildContext context,
         ));
 
 @pragma("vm:prefer-inline")
+Widget form_switch_1<T>(
+        {required void Function(bool res) onChanged,
+        bool initialValue = false}) =>
+    BasicToggleSwitch(
+        onChanged: onChanged, initialValue: initialValue);
+
+@pragma("vm:prefer-inline")
 Widget form_seg_btn_1<T>(
         {required List<({T value, String label, Icon? icon})>
             segments,

@@ -2,6 +2,58 @@ import "package:flutter/material.dart";
 import 'package:flutter_svg_icons/flutter_svg_icons.dart';
 import 'package:scouting_app_2024/debug.dart';
 
+class BasicToggleSwitch extends StatefulWidget {
+  final void Function(bool res) onChanged;
+  final bool initialValue;
+  final Icon? offIcon;
+  final Icon? onIcon;
+
+  const BasicToggleSwitch(
+      {super.key,
+      required this.onChanged,
+      this.initialValue = false,
+      this.offIcon,
+      this.onIcon});
+
+  @override
+  State<BasicToggleSwitch> createState() => _BasicToggleSwitchState();
+}
+
+class _BasicToggleSwitchState extends State<BasicToggleSwitch> {
+  late bool _toggleState;
+  late bool _drawIcons;
+
+  @override
+  void initState() {
+    super.initState();
+    _drawIcons = (widget.offIcon == null && widget.onIcon == null) ||
+        (widget.offIcon != null || widget.onIcon != null);
+    assert(_drawIcons, "Both icons must either be null or supplied!");
+    _toggleState = widget.initialValue;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Widget baseSwitch = Switch(
+        value: _toggleState,
+        onChanged: (bool result) {
+          setState(() => _toggleState = !_toggleState);
+          widget.onChanged.call(result);
+        });
+    return _drawIcons &&
+            widget.onIcon != null &&
+            widget.offIcon != null
+        ? Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: strutAll(<Widget>[
+              widget.offIcon!,
+              baseSwitch,
+              widget.onIcon!,
+            ], width: 8))
+        : baseSwitch;
+  }
+}
+
 /// creates a strut, aka a sizedbox
 @pragma("vm:prefer-inline")
 Widget strut({double? width, double? height}) =>

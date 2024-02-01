@@ -13,7 +13,8 @@ import "package:theme_provider/theme_provider.dart";
 
 typedef SectionId = ({String title, IconData icon});
 
-class ScoutingView extends StatefulWidget implements AppPageViewExporter {
+class ScoutingView extends StatefulWidget
+    implements AppPageViewExporter {
   const ScoutingView({super.key});
 
   @override
@@ -63,9 +64,18 @@ class _ScoutingViewState extends State<ScoutingView>
                         .data
                         .colorScheme
                         .inversePrimary,
-                    ThemeProvider.themeOf(context).data.colorScheme.background,
-                    ThemeProvider.themeOf(context).data.colorScheme.background,
-                    ThemeProvider.themeOf(context).data.colorScheme.secondary
+                    ThemeProvider.themeOf(context)
+                        .data
+                        .colorScheme
+                        .background,
+                    ThemeProvider.themeOf(context)
+                        .data
+                        .colorScheme
+                        .background,
+                    ThemeProvider.themeOf(context)
+                        .data
+                        .colorScheme
+                        .secondary
                   ])),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -117,21 +127,29 @@ class _ScoutingViewState extends State<ScoutingView>
                           "Number ",
                           icon: const Icon(Icons.numbers_rounded),
                           child: form_txtin(
-                              dim: 300, inputType: TextInputType.number),
+                              dim: 300,
+                              inputType: TextInputType.number),
                         ),
                         form_label("Type",
-                            icon: const Icon(Icons.account_tree_rounded),
+                            icon: const Icon(
+                                Icons.account_tree_rounded),
                             child: form_seg_btn_1(
                                 segments: MatchType.values
-                                    .map<({Icon? icon, String label, MatchType value})>(
+                                    .map<
+                                            ({
+                                              Icon? icon,
+                                              String label,
+                                              MatchType value
+                                            })>(
                                         (MatchType e) => (
-                                              label: formalizeWord(e.name),
-                                              icon: const Icon(
-                                                  Icons.account_tree_rounded),
+                                              label: formalizeWord(
+                                                  e.name),
+                                              icon: null,
                                               value: e
                                             ))
                                     .toList(),
-                                initialSelection: MatchType.qualification,
+                                initialSelection:
+                                    MatchType.qualification,
                                 onSelect: (MatchType e) /*TODO*/ {}))
                       ])),
                   form_sec(context,
@@ -144,28 +162,36 @@ class _ScoutingViewState extends State<ScoutingView>
                       child: form_col(<Widget>[
                         form_label("Number",
                             child: form_txtin(
-                                dim: 300, inputType: TextInputType.number),
+                                dim: 300,
+                                inputType: TextInputType.number),
                             icon: const Icon(Icons.numbers_rounded)),
                         form_label("Alliance",
                             icon: const Icon(Icons.flag_rounded),
                             child: TeamAllianceSwitch(
-                                onChanged:
-                                    (TeamAlliance alliance) /*TODO*/ {})),
+                                onChanged: (TeamAlliance
+                                    alliance) /*TODO*/ {})),
                         form_label("Starting Position",
-                            icon: const Icon(Icons.location_on_rounded),
+                            icon:
+                                const Icon(Icons.location_on_rounded),
                             child: form_seg_btn_1(
                                 segments: MatchStartingPosition.values
-                                    .map<({Icon? icon, String label, MatchStartingPosition value})>(
+                                    .map<
+                                            ({
+                                              Icon? icon,
+                                              String label,
+                                              MatchStartingPosition value
+                                            })>(
                                         (MatchStartingPosition e) => (
-                                              label: formalizeWord(e.name),
-                                              icon: const Icon(
-                                                  Icons.location_on_rounded),
+                                              label: formalizeWord(
+                                                  e.name),
+                                              icon: null,
                                               value: e
                                             ))
                                     .toList(),
-                                initialSelection: MatchStartingPosition.middle,
-                                onSelect:
-                                    (MatchStartingPosition e) /*TODO*/ {})),
+                                initialSelection:
+                                    MatchStartingPosition.middle,
+                                onSelect: (MatchStartingPosition
+                                    e) /*TODO*/ {})),
                       ])),
                   form_sec(context,
                       backgroundColor: Colors.transparent,
@@ -186,8 +212,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                             })>(
                                         (bool e) => (
                                               label: e ? "Yes" : "No",
-                                              icon:
-                                                  const Icon(Icons.trip_origin),
+                                              icon: null,
                                               value: e
                                             ))
                                     .toList(),
@@ -204,16 +229,18 @@ class _ScoutingViewState extends State<ScoutingView>
                                               AutoPickup value
                                             })>(
                                         (AutoPickup e) => (
-                                              label: formalizeWord(e.name),
-                                              icon:
-                                                  const Icon(Icons.trip_origin),
+                                              label: formalizeWord(
+                                                  e.name),
+                                              icon: null,
                                               value: e
                                             ))
                                     .toList(),
                                 initialSelection: AutoPickup.none,
-                                onSelect: (AutoPickup e) /*TODO*/ {})),
+                                onSelect:
+                                    (AutoPickup e) /*TODO*/ {})),
                         form_label("Taxis?", //movement point
-                            icon: const Icon(Icons.local_taxi_rounded),
+                            icon:
+                                const Icon(Icons.local_taxi_rounded),
                             child: form_seg_btn_1(
                                 segments: <bool>[true, false]
                                     .map<
@@ -224,8 +251,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                             })>(
                                         (bool e) => (
                                               label: e ? "Yes" : "No",
-                                              icon: const Icon(
-                                                  Icons.local_taxi_rounded),
+                                              icon: null,
                                               value: e
                                             ))
                                     .toList(),
@@ -267,7 +293,10 @@ class _ScoutingViewState extends State<ScoutingView>
                       ])),
                   form_sec(context,
                       backgroundColor: Colors.transparent,
-                      header: (icon: Icons.accessibility, title: "Tele-op"),
+                      header: (
+                        icon: Icons.accessibility,
+                        title: "Tele-op"
+                      ),
                       child: form_col(<Widget>[
                         form_label("Plays Defense?",
                             icon: const Icon(Icons.shield),
@@ -281,7 +310,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                             })>(
                                         (bool e) => (
                                               label: e ? "Yes" : "No",
-                                              icon: const Icon(Icons.shield),
+                                              icon: null,
                                               value: e
                                             ))
                                     .toList(),
@@ -292,17 +321,16 @@ class _ScoutingViewState extends State<ScoutingView>
                             child: form_seg_btn_1(
                                 segments: GenericUtils.boolOptions()
                                     .map<
-                                        ({
-                                          Icon? icon,
-                                          String label,
-                                          bool value
-                                        })>((bool
-                                            e) =>
-                                        (
-                                          label: e ? "Yes" : "No",
-                                          icon: const Icon(Icons.verified_user),
-                                          value: e
-                                        ))
+                                            ({
+                                              Icon? icon,
+                                              String label,
+                                              bool value
+                                            })>(
+                                        (bool e) => (
+                                              label: e ? "Yes" : "No",
+                                              icon: null,
+                                              value: e
+                                            ))
                                     .toList(),
                                 initialSelection: false,
                                 onSelect: (bool e) /*TODO*/ {})),
@@ -339,7 +367,8 @@ class _ScoutingViewState extends State<ScoutingView>
                               onChanged: (String value) /*TODO*/ {},
                               inputType: TextInputType.multiline,
                             )),
-                        form_label("Driver rating (Optional - leave at 0 for no input)",
+                        form_label(
+                            "Driver rating (Optional - leave at 0 for no input)",
                             icon: const Icon(Icons.call_missed),
                             child: PlusMinusRating(
                               initialValue: 0,
@@ -348,7 +377,10 @@ class _ScoutingViewState extends State<ScoutingView>
                       ])),
                   form_sec(context,
                       backgroundColor: Colors.transparent,
-                      header: (icon: Icons.accessibility, title: "  "),
+                      header: (
+                        icon: Icons.accessibility,
+                        title: "  "
+                      ),
                       child: form_col(<Widget>[
                         form_label("Status",
                             icon: const Icon(Icons.shield),
@@ -361,8 +393,9 @@ class _ScoutingViewState extends State<ScoutingView>
                                               EndStatus value
                                             })>(
                                         (EndStatus e) => (
-                                              label: formalizeWord(e.name),
-                                              icon: const Icon(Icons.shield),
+                                              label: formalizeWord(
+                                                  e.name),
+                                              icon: null,
                                               value: e
                                             ))
                                     .toList(),
@@ -379,8 +412,9 @@ class _ScoutingViewState extends State<ScoutingView>
                                               Harmony value
                                             })>(
                                         (Harmony e) => (
-                                              label: formalizeWord(e.name),
-                                              icon: const Icon(Icons.people),
+                                              label: formalizeWord(
+                                                  e.name),
+                                              icon: null,
                                               value: e
                                             ))
                                     .toList(),
@@ -397,13 +431,15 @@ class _ScoutingViewState extends State<ScoutingView>
                                               TrapScored value
                                             })>(
                                         (TrapScored e) => (
-                                              label: formalizeWord(e.name),
-                                              icon: const Icon(Icons.trip_origin),
+                                              label: formalizeWord(
+                                                  e.name),
+                                              icon: null,
                                               value: e
                                             ))
                                     .toList(),
                                 initialSelection: TrapScored.no,
-                                onSelect: (TrapScored e) /*TODO*/ {})),
+                                onSelect:
+                                    (TrapScored e) /*TODO*/ {})),
                         form_label("Comments",
                             icon: const Icon(Icons.comment),
                             child: form_txtin(
@@ -416,26 +452,15 @@ class _ScoutingViewState extends State<ScoutingView>
                       ])),
                   form_sec(context,
                       backgroundColor: Colors.transparent,
-                      header: (icon: Icons.accessibility, title: "Other"),
+                      header: (
+                        icon: Icons.accessibility,
+                        title: "Other"
+                      ),
                       child: form_col(<Widget>[
                         form_label("Coopertition",
                             icon: const Icon(Icons.groups),
-                            child: form_seg_btn_1(
-                                segments: GenericUtils.boolOptions()
-                                    .map<
-                                            ({
-                                              Icon? icon,
-                                              String label,
-                                              bool value
-                                            })>(
-                                        (bool e) => (
-                                              label: e ? "Yes" : "No",
-                                              icon: const Icon(Icons.groups),
-                                              value: e
-                                            ))
-                                    .toList(),
-                                initialSelection: false,
-                                onSelect: (bool e) /*TODO*/ {})),
+                            child: form_switch_1(
+                                onChanged: (bool res) /*TODO*/ {})),
                         form_label("Breakdown",
                             icon: const Icon(Icons.handyman),
                             child: form_seg_btn_1(
@@ -448,7 +473,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                             })>(
                                         (bool e) => (
                                               label: e ? "Yes" : "No",
-                                              icon: const Icon(Icons.handyman),
+                                              icon: null,
                                               value: e
                                             ))
                                     .toList(),
