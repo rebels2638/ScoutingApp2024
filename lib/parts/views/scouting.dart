@@ -361,6 +361,14 @@ class _ScoutingViewState extends State<ScoutingView>
                       backgroundColor: Colors.transparent,
                       header: (icon: Icons.accessibility, title: "Endgame"),
                       child: form_col(<Widget>[
+                        form_label("On chain",
+                            icon: const Icon(Icons.link),
+                            child: BasicToggleSwitch(
+                                initialValue: false,
+                                onChanged: (bool e) /*TODO*/ {
+                                  Debug().info("[ENDGAME] On chain: $e");
+                                })),
+                        /*
                         form_label("Status",
                             icon: const Icon(Icons.shield),
                             child: form_seg_btn_1(
@@ -381,6 +389,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                 onSelect: (EndStatus e) /*TODO*/ {
                                   Debug().info("[ENDGAME] Status: ${e.name}");
                                 })),
+                                */
                         form_label("Harmony (Used same chain)",
                             icon: const Icon(Icons.people),
                             child: form_seg_btn_1(
