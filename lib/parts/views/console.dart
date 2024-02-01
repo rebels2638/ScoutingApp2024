@@ -86,7 +86,6 @@ class ConsoleStateComponent extends State<_ConsoleComponent> {
                 icon: const Icon(Icons.check_box_rounded),
                 label: const Text("CONFIRM_DIALOG",
                     style: TextStyle(fontWeight: FontWeight.bold))),
-            const Row(children: <Widget>[StopwatchBlob()]),
             TextButton.icon(
                 onPressed: () => throw "Debug Error box.",
                 icon:
