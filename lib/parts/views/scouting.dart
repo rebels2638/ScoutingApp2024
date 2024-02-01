@@ -8,6 +8,7 @@ import "package:scouting_app_2024/parts/team.dart";
 import "package:scouting_app_2024/parts/views_delegate.dart";
 import "package:scouting_app_2024/extern/datetime.dart";
 import "package:scouting_app_2024/user/team_model.dart";
+import "package:scouting_app_2024/utils.dart";
 import "package:theme_provider/theme_provider.dart";
 import 'package:scouting_app_2024/debug.dart';
 
@@ -153,7 +154,9 @@ class _ScoutingViewState extends State<ScoutingView>
                             icon: const Icon(Icons.flag_rounded),
                             child: TeamAllianceSwitch(
                                 onChanged:
-                                    (TeamAlliance alliance) /*TODO*/ {})),
+                                    (TeamAlliance alliance) /*TODO*/ {
+                                      Debug().info("[TEAM] Alliance: ${alliance.name}");
+                                    })),
                         form_label("Starting Position",
                             icon: const Icon(Icons.location_on_rounded),
                             child: form_seg_btn_1(
@@ -169,7 +172,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                 initialSelection: MatchStartingPosition.middle,
                                 onSelect: (MatchStartingPosition e) /*TODO*/ {
                                   Debug().info(
-                                      "Switched starting position to ${e.name}");
+                                      "[TEAM] Switched starting position to ${e.name}");
                                 })),
                       ])),
                   form_sec(context,
@@ -348,7 +351,10 @@ class _ScoutingViewState extends State<ScoutingView>
                             icon: const Icon(Icons.call_missed),
                             child: PlusMinusRating(
                               initialValue: 0,
-                              onValueChanged: (int value) /*TODO*/ {},
+                              onValueChanged: (int value) /*TODO*/ {
+                                Debug().info(
+                                    "Plays defense: ${value > 0 ? "$value" : "Reset to 0"}");
+                              },
                             )),
                       ])),
                   form_sec(context,
@@ -372,7 +378,9 @@ class _ScoutingViewState extends State<ScoutingView>
                                             ))
                                     .toList(),
                                 initialSelection: EndStatus.parked,
-                                onSelect: (EndStatus e) /*TODO*/ {})),
+                                onSelect: (EndStatus e) /*TODO*/ {
+                                  Debug().info("[ENDGAME] Status: ${e.name}");
+                                })),
                         form_label("Harmony (Used same chain)",
                             icon: const Icon(Icons.people),
                             child: form_seg_btn_1(
@@ -390,7 +398,9 @@ class _ScoutingViewState extends State<ScoutingView>
                                             ))
                                     .toList(),
                                 initialSelection: Harmony.no,
-                                onSelect: (Harmony e) /*TODO*/ {})),
+                                onSelect: (Harmony e) /*TODO*/ {
+                                  Debug().info("[ENDGAME] Harmony: ${e.name}");
+                                })),
                         form_label("Scored in Trap",
                             icon: const Icon(Icons.trip_origin),
                             child: form_seg_btn_1(
@@ -409,7 +419,9 @@ class _ScoutingViewState extends State<ScoutingView>
                                             ))
                                     .toList(),
                                 initialSelection: TrapScored.no,
-                                onSelect: (TrapScored e) /*TODO*/ {})),
+                                onSelect: (TrapScored e) /*TODO*/ {
+                                  Debug().info("[ENDGAME] Scored in trap: ${e.name}");
+                                })),
                         form_label("Comments",
                             icon: const Icon(Icons.comment),
                             child: form_txtin(
