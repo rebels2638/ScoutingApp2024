@@ -180,27 +180,12 @@ class _ScoutingViewState extends State<ScoutingView>
                         title: "Autonomous"
                       ),
                       child: form_col(<Widget>[
-                        form_label("Note preloaded before game?",
+                        form_label("Note preloaded?",
                             icon: const Icon(Icons.trip_origin),
-                            child: form_seg_btn_1(
-                                segments: GenericUtils.boolOptions()
-                                    .map<
-                                            ({
-                                              Icon? icon,
-                                              String label,
-                                              bool value
-                                            })>(
-                                        (bool e) => (
-                                              label: e ? "Yes" : "No",
-                                              icon:
-                                                  const Icon(Icons.trip_origin),
-                                              value: e
-                                            ))
-                                    .toList(),
-                                initialSelection: true,
-                                onSelect: (bool e) /*TODO*/ {
-                                  Debug().info(
-                                      "[AUTO] Note preloaded: ${e ? "Yes" : "No"}");
+                            child: BasicToggleSwitch(
+                                initialValue: false,
+                                onChanged: (bool e) /*TODO*/ {
+                                  Debug().info("[AUTO] Note preloaded: $e");
                                 })),
                         form_label("Picked up Note?",
                             icon: const Icon(Icons.trip_origin),
@@ -221,54 +206,49 @@ class _ScoutingViewState extends State<ScoutingView>
                                     .toList(),
                                 initialSelection: AutoPickup.no,
                                 onSelect: (AutoPickup e) /*TODO*/ {
-                                  Debug().info(
-                                      "[AUTO] Picked up note: ${e.name}");
+                                  Debug()
+                                      .info("[AUTO] Picked up note: ${e.name}");
                                 })),
-                        form_label("Taxis?", //movement point
+                        form_label("Taxis?",
                             icon: const Icon(Icons.local_taxi_rounded),
-                            child: form_seg_btn_1(
-                                segments: <bool>[true, false]
-                                    .map<
-                                            ({
-                                              Icon? icon,
-                                              String label,
-                                              bool value
-                                            })>(
-                                        (bool e) => (
-                                              label: e ? "Yes" : "No",
-                                              icon: const Icon(
-                                                  Icons.local_taxi_rounded),
-                                              value: e
-                                            ))
-                                    .toList(),
-                                initialSelection: false,
-                                onSelect: (bool e) /*TODO*/ {
-                                  Debug().info(
-                                      "[AUTO] Taxis: ${e ? "Yes" : "No"}");
+                            child: BasicToggleSwitch(
+                                initialValue: false,
+                                onChanged: (bool e) /*TODO*/ {
+                                  Debug().info("[AUTO] Taxis: $e");
                                 })),
                         form_label("Scored in Speaker",
                             icon: const Icon(Icons.volume_up),
                             child: PlusMinus(
                               initialValue: 0,
-                              onValueChanged: (int value) /*TODO*/ {},
+                              onValueChanged: (int value) /*TODO*/ {
+                                Debug()
+                                    .info("[AUTO] Scored in Speaker: $value");
+                              },
                             )),
                         form_label("Missed Speaker Shots",
                             icon: const Icon(Icons.call_missed),
                             child: PlusMinus(
                               initialValue: 0,
-                              onValueChanged: (int value) /*TODO*/ {},
+                              onValueChanged: (int value) /*TODO*/ {
+                                Debug().info(
+                                    "[AUTO] Missed Speaker Shots: $value");
+                              },
                             )),
                         form_label("Scored in AMP",
                             icon: const Icon(Icons.music_note),
                             child: PlusMinus(
                               initialValue: 0,
-                              onValueChanged: (int value) /*TODO*/ {},
+                              onValueChanged: (int value) /*TODO*/ {
+                                Debug().info("[AUTO] Scored in AMP: $value");
+                              },
                             )),
                         form_label("Missed AMP Shots",
                             icon: const Icon(Icons.call_missed),
                             child: PlusMinus(
                               initialValue: 0,
-                              onValueChanged: (int value) /*TODO*/ {},
+                              onValueChanged: (int value) /*TODO*/ {
+                                Debug().info("[AUTO] Missed AMP Shots: $value");
+                              },
                             )),
                         form_label("Comments",
                             icon: const Icon(Icons.comment),
@@ -284,6 +264,14 @@ class _ScoutingViewState extends State<ScoutingView>
                       backgroundColor: Colors.transparent,
                       header: (icon: Icons.accessibility, title: "Tele-op"),
                       child: form_col(<Widget>[
+                        form_label("Plays Defense",
+                            icon: const Icon(Icons.shield),
+                            child: BasicToggleSwitch(
+                                initialValue: false,
+                                onChanged: (bool e) /*TODO*/ {
+                                  Debug().info("[TELE-OP] Plays defense: $e");
+                                })),
+                        /*
                         form_label("Plays Defense?",
                             icon: const Icon(Icons.shield),
                             child: form_seg_btn_1(
@@ -305,51 +293,48 @@ class _ScoutingViewState extends State<ScoutingView>
                                   Debug().info(
                                       "Plays defense: ${e ? "Yes" : "No"}");
                                 })),
+                                */
                         form_label("Was Defended?",
                             icon: const Icon(Icons.verified_user),
-                            child: form_seg_btn_1(
-                                segments: GenericUtils.boolOptions()
-                                    .map<
-                                        ({
-                                          Icon? icon,
-                                          String label,
-                                          bool value
-                                        })>((bool
-                                            e) =>
-                                        (
-                                          label: e ? "Yes" : "No",
-                                          icon: const Icon(Icons.verified_user),
-                                          value: e
-                                        ))
-                                    .toList(),
-                                initialSelection: false,
-                                onSelect: (bool e) /*TODO*/ {
-                                  Debug().info(
-                                      "Was defended: ${e ? "Yes" : "No"}");
+                            child: BasicToggleSwitch(
+                                initialValue: false,
+                                onChanged: (bool e) /*TODO*/ {
+                                  Debug().info("[TELE-OP] Was Defended: $e");
                                 })),
                         form_label("Scored in Speaker",
                             icon: const Icon(Icons.volume_up),
                             child: PlusMinus(
                               initialValue: 0,
-                              onValueChanged: (int value) /*TODO*/ {},
+                              onValueChanged: (int value) /*TODO*/ {
+                                Debug().info(
+                                    "[TELE-OP] Scored in Speaker: $value");
+                              },
                             )),
                         form_label("Missed Speaker Shots",
                             icon: const Icon(Icons.call_missed),
                             child: PlusMinus(
                               initialValue: 0,
-                              onValueChanged: (int value) /*TODO*/ {},
+                              onValueChanged: (int value) /*TODO*/ {
+                                Debug().info(
+                                    "[TELE-OP] Missed Speaker Shots: $value");
+                              },
                             )),
                         form_label("Scored in AMP",
                             icon: const Icon(Icons.music_note),
                             child: PlusMinus(
                               initialValue: 0,
-                              onValueChanged: (int value) /*TODO*/ {},
+                              onValueChanged: (int value) /*TODO*/ {
+                                Debug().info("[TELE-OP] Scored in AMP: $value");
+                              },
                             )),
                         form_label("Missed AMP Shots",
                             icon: const Icon(Icons.call_missed),
                             child: PlusMinus(
                               initialValue: 0,
-                              onValueChanged: (int value) /*TODO*/ {},
+                              onValueChanged: (int value) /*TODO*/ {
+                                Debug()
+                                    .info("[TELE-OP] Missed AMP Shots: $value");
+                              },
                             )),
                         form_label("Comments",
                             icon: const Icon(Icons.comment),
@@ -369,7 +354,7 @@ class _ScoutingViewState extends State<ScoutingView>
                       ])),
                   form_sec(context,
                       backgroundColor: Colors.transparent,
-                      header: (icon: Icons.accessibility, title: "  "),
+                      header: (icon: Icons.accessibility, title: "Endgame"),
                       child: form_col(<Widget>[
                         form_label("Status",
                             icon: const Icon(Icons.shield),
@@ -442,40 +427,18 @@ class _ScoutingViewState extends State<ScoutingView>
                       child: form_col(<Widget>[
                         form_label("Coopertition",
                             icon: const Icon(Icons.groups),
-                            child: form_seg_btn_1(
-                                segments: GenericUtils.boolOptions()
-                                    .map<
-                                            ({
-                                              Icon? icon,
-                                              String label,
-                                              bool value
-                                            })>(
-                                        (bool e) => (
-                                              label: e ? "Yes" : "No",
-                                              icon: const Icon(Icons.groups),
-                                              value: e
-                                            ))
-                                    .toList(),
-                                initialSelection: false,
-                                onSelect: (bool e) /*TODO*/ {})),
+                            child: BasicToggleSwitch(
+                                initialValue: false,
+                                onChanged: (bool e) /*TODO*/ {
+                                  Debug().info("[OTHER] Coopertition: $e");
+                                })),
                         form_label("Breakdown",
                             icon: const Icon(Icons.handyman),
-                            child: form_seg_btn_1(
-                                segments: GenericUtils.boolOptions()
-                                    .map<
-                                            ({
-                                              Icon? icon,
-                                              String label,
-                                              bool value
-                                            })>(
-                                        (bool e) => (
-                                              label: e ? "Yes" : "No",
-                                              icon: const Icon(Icons.handyman),
-                                              value: e
-                                            ))
-                                    .toList(),
-                                initialSelection: false,
-                                onSelect: (bool e) /*TODO*/ {})),
+                            child: BasicToggleSwitch(
+                                initialValue: false,
+                                onChanged: (bool e) /*TODO*/ {
+                                  Debug().info("[OTHER] Breakdown: $e");
+                                })),
                       ])),
                 ]),
           ),
