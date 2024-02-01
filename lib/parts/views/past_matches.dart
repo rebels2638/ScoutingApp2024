@@ -125,7 +125,9 @@ class MatchTile extends StatelessWidget {
       child: form_sec(context,
         backgroundColor: Colors.transparent,
         header: (
-          icon: Icons.emoji_events,
+          icon: (match.matchType == MatchType.practice) 
+          ? Icons.flag_circle
+          : Icons.emoji_events,
           title: "${formalizeWord(match.matchType.name)} #${match.matchID}: (Team X)"
         ),
         child: form_col(<Widget>[
@@ -161,10 +163,9 @@ class MatchTile extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text('Placeholder Text #1'),
-                Text('Placeholder Text #2'),
-                Text('Placeholder Text #3'),
-                Text('Placeholder Text #4'),
+                Text('Placeholder Text 1'),
+                Text('Placeholder Text 2'),
+                Text('Placeholder Text 3')
               ],
             ),
           ),
