@@ -391,27 +391,30 @@ class _AppViewState extends State<_AppView> {
             : null /*lmao */,
         body: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: PageView(
-              onPageChanged: (int pageNow) =>
-                  setState(() => _bottomNavBarIndexer = pageNow),
-              scrollDirection: Axis.horizontal,
-              allowImplicitScrolling:
-                  false, // prevent users from accidentally swiping
-              controller: widget.pageController,
-              children: <Widget>[
-                if (dataHostView != null) dataHostView.child,
-                scoutingView.child,
-                pastMatchesView.child,
-                if (LockedInScoutingModal.isCasual(context))
-                  settingsView.child,
-                if (LockedInScoutingModal.isCasual(context))
-                  aboutAppView.child,
-                if (LockedInScoutingModal.isCasual(context))
-                  gameMapView.child,
-                if (LockedInScoutingModal.isCasual(context) &&
-                    ShowConsoleModal.isShowingConsole(context))
-                  consoleView.child
-              ]),
+          child: RepaintBoundary(
+            child: PageView(
+              // this keeps the bottom nav bar index and the page view index in sync. this is kind of unoptimized in the sense of setState
+                onPageChanged: (int pageNow) =>
+                    setState(() => _bottomNavBarIndexer = pageNow),
+                scrollDirection: Axis.horizontal,
+                allowImplicitScrolling:
+                    false, // prevent users from accidentally swiping
+                controller: widget.pageController,
+                children: <Widget>[
+                  if (dataHostView != null) dataHostView.child,
+                  scoutingView.child,
+                  pastMatchesView.child,
+                  if (LockedInScoutingModal.isCasual(context))
+                    settingsView.child,
+                  if (LockedInScoutingModal.isCasual(context))
+                    aboutAppView.child,
+                  if (LockedInScoutingModal.isCasual(context))
+                    gameMapView.child,
+                  if (LockedInScoutingModal.isCasual(context) &&
+                      ShowConsoleModal.isShowingConsole(context))
+                    consoleView.child
+                ]),
+          ),
         ));
   }
 }
