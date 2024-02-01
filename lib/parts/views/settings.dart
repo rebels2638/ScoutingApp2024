@@ -10,7 +10,7 @@ class SettingsView extends StatelessWidget
 
   @pragma("vm:prefer-inline")
   static Widget _labelIt(
-          {Icon? icon,
+          {IconData? icon,
           required String label,
           String? hint,
           required Widget child}) =>
@@ -20,7 +20,7 @@ class SettingsView extends StatelessWidget
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Row(children: <Widget>[
-                if (icon != null) icon,
+                if (icon != null) Icon(icon, size: 48),
                 strut(width: 22),
                 if (hint == null)
                   Text(label,
@@ -53,7 +53,7 @@ class SettingsView extends StatelessWidget
           mainAxisAlignment: MainAxisAlignment.start,
           children: strutAll(<Widget>[
             _labelIt(
-                icon: const Icon(Icons.terminal_rounded, size: 32),
+                icon: Icons.terminal_rounded,
                 label: "Show Development Console",
                 hint: "A page for debug and development purposes",
                 child: BasicToggleSwitch(

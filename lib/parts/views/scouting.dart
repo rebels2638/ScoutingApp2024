@@ -8,7 +8,6 @@ import "package:scouting_app_2024/parts/team.dart";
 import "package:scouting_app_2024/parts/views_delegate.dart";
 import "package:scouting_app_2024/extern/datetime.dart";
 import "package:scouting_app_2024/user/team_model.dart";
-import "package:scouting_app_2024/utils.dart";
 import "package:theme_provider/theme_provider.dart";
 import 'package:scouting_app_2024/debug.dart';
 

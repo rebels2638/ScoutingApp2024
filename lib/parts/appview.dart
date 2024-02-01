@@ -392,6 +392,8 @@ class _AppViewState extends State<_AppView> {
         body: Padding(
           padding: const EdgeInsets.all(10.0),
           child: PageView(
+              onPageChanged: (int pageNow) =>
+                  setState(() => _bottomNavBarIndexer = pageNow),
               scrollDirection: Axis.horizontal,
               allowImplicitScrolling:
                   false, // prevent users from accidentally swiping
