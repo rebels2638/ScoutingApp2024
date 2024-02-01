@@ -7,6 +7,7 @@ import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/bits/lock_in.dart';
 import 'package:scouting_app_2024/parts/bits/perf_overlay.dart';
+import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/user/shared.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
 import 'package:scouting_app_2024/parts/views/views.dart';
@@ -26,6 +27,9 @@ class ThemedAppBundle extends StatelessWidget {
                 builder: (BuildContext
                         themeCtxt) => /*lol this is very scuffed XD i hope you can forgive me*/
                     MultiProvider(providers: <SingleChildWidget>[
+                      ChangeNotifierProvider<ShowConsoleModal>(
+                          create: (BuildContext _) =>
+                              ShowConsoleModal()),
                       ChangeNotifierProvider<PerformanceOverlayModal>(
                           create: (BuildContext _) =>
                               PerformanceOverlayModal()),
@@ -130,7 +134,7 @@ class _AppViewState extends State<_AppView> {
         String label,
         String tooltip
       }) item
-    })consoleView = const ConsoleView().exportAppPageView();
+    }) consoleView = const ConsoleView().exportAppPageView();
     ({
       Widget child,
       ({
@@ -161,7 +165,6 @@ class _AppViewState extends State<_AppView> {
           label: pastMatchesView.item.label,
           selectedIcon: pastMatchesView.item.activeIcon,
           tooltip: pastMatchesView.item.tooltip),
-
       if (LockedInScoutingModal.isCasual(context))
         NavigationDestination(
             icon: settingsView.item.icon,
@@ -328,7 +331,8 @@ class _AppViewState extends State<_AppView> {
                   label: gameMapView.item.label,
                   selectedIcon: gameMapView.item.activeIcon,
                   tooltip: gameMapView.item.tooltip),
-            if (LockedInScoutingModal.isCasual(context))
+            if (LockedInScoutingModal.isCasual(context) &&
+                ShowConsoleModal.isShowingConsole(context))
               NavigationDestination(
                   icon: consoleView.item.icon,
                   label: consoleView.item.label,
@@ -402,7 +406,8 @@ class _AppViewState extends State<_AppView> {
                   aboutAppView.child,
                 if (LockedInScoutingModal.isCasual(context))
                   gameMapView.child,
-                if (LockedInScoutingModal.isCasual(context))
+                if (LockedInScoutingModal.isCasual(context) &&
+                    ShowConsoleModal.isShowingConsole(context))
                   consoleView.child
               ]),
         ));
