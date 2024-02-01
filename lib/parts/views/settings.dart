@@ -57,6 +57,10 @@ class SettingsView extends StatelessWidget
                 label: "Show Development Console",
                 hint: "A page for debug and development purposes",
                 child: BasicToggleSwitch(
+                    initialValue: Provider.of<ShowConsoleModal>(
+                            context,
+                            listen: false)
+                        .showingConsole, // i feel like we could somehow combine it with the preceding Provider.of because both are going to traverse the tree anyways
                     onChanged: (bool val) =>
                         Provider.of<ShowConsoleModal>(context,
                                 listen: false)
