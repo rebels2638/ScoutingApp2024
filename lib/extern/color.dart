@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scouting_app_2024/debug.dart';
 
 typedef ColorFloatStrip = ({
   double red,
@@ -30,11 +31,13 @@ extension UsefulColor on Color {
   Color biContrastingColor(
       {Color dark = Colors.black, Color light = Colors.white}) {
     ColorFloatStrip stripped = strip();
+    double calcV = (0.299 * stripped.red +
+        0.587 * stripped.green +
+        0.223 * stripped.blue);
+    double weight = 0.450;
+    Debug().info("BC_Color calcV=$calcV for weight $weight");
     // thx to this stackoverflow answer for the weights: https://stackoverflow.com/a/3943023
-    return (0.299 * stripped.red +
-                0.587 * stripped.green +
-                0.114 * stripped.blue) >
-            0.200 // custom threshold
+    return calcV > weight // custom threshold
         ? dark
         : light;
   }

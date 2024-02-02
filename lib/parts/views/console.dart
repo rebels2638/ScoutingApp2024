@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/blobs/locale_blob.dart';
-import 'package:scouting_app_2024/blobs/stopwatch_blob.dart';
 import 'package:scouting_app_2024/parts/bits/perf_overlay.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:theme_provider/theme_provider.dart';
@@ -86,7 +85,6 @@ class ConsoleStateComponent extends State<_ConsoleComponent> {
                 icon: const Icon(Icons.check_box_rounded),
                 label: const Text("CONFIRM_DIALOG",
                     style: TextStyle(fontWeight: FontWeight.bold))),
-            const Row(children: <Widget>[StopwatchBlob()]),
             TextButton.icon(
                 onPressed: () => throw "Debug Error box.",
                 icon:

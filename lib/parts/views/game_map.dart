@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 
-class GameMapView extends StatelessWidget implements AppPageViewExporter {
+class GameMapView extends StatelessWidget
+    implements AppPageViewExporter {
   const GameMapView({super.key});
 
   @override
@@ -10,13 +11,20 @@ class GameMapView extends StatelessWidget implements AppPageViewExporter {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Image.asset(
-            'assets/crescendo/labelled_map.png', 
-            height: 200,
-            fit: BoxFit.cover,
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12)),
+                child: Image.asset(
+                  'assets/crescendo/labelled_map.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
           ),
-          SizedBox(height: 20),
-          // Buttons
+          const SizedBox(height: 20),
           _buildButton(context, 'Starting Zone'),
           _buildButton(context, 'Speaker'),
           _buildButton(context, 'Source Area'),
@@ -32,7 +40,6 @@ class GameMapView extends StatelessWidget implements AppPageViewExporter {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: ElevatedButton(
         onPressed: () {
-          
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('$title button pressed')),
           );

@@ -36,9 +36,9 @@ enum MatchType { practice, qualification, playoff }
 
 enum MatchStartingPosition { left, middle, right }
 
-enum EndStatus { parked, onstage, failed}
+enum EndStatus { parked, onstage, failed }
 
-enum AutoPickup { left, middle, right, none}
+enum AutoPickup { l, m, r, no }
 
 enum Harmony { yes, no, failed }
 
