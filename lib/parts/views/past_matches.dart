@@ -158,24 +158,27 @@ class MatchTile extends StatelessWidget {
                   ElevatedButton(
                     child: const Text('Generate QR Code'),
                     onPressed: () async => await launchConfirmDialog(
-                      icon: const Icon(Icons.library_books_rounded),
+                      showOkLabel: false,
+                      denyLabel: "Close",
+                      icon: const Icon(Icons.cloud_sync),
                       title: "Transfer Scouting Data via QR Code",
-                    context,
-                    message: PrettyQrView.data(
-                      data: matchDataToCsv(match),
-                      errorCorrectLevel: QrErrorCorrectLevel.H,
-                      decoration: const PrettyQrDecoration(
-                        shape: PrettyQrRoundedSymbol(
-                          color: Color(0xFFFFFFFF),
-                        ),
-                        image: PrettyQrDecorationImage(
-                          image: AssetImage('assets/appicon_header.png'),
-                          position: PrettyQrDecorationImagePosition.embedded,
+                      context,
+                      message: PrettyQrView.data(
+                        data: matchDataToCsv(match),
+                        errorCorrectLevel: QrErrorCorrectLevel.H,
+                        decoration: const PrettyQrDecoration(
+                          shape: PrettyQrRoundedSymbol(
+                            color: Color(0xFFFFFFFF),
+                          ),
+                          image: PrettyQrDecorationImage(
+                            image: AssetImage('assets/appicon_header.png'),
+                            position: PrettyQrDecorationImagePosition.embedded,
+                          ),
                         ),
                       ),
+                      onConfirm: () => Debug()
+                          .info("PAST MATCHES: Popped QR Code Display for ${formalizeWord(match.matchType.name)} #${match.matchID}")
                     ),
-                    onConfirm: () => Debug()
-                        .info("Popped QR Code Display for ${formalizeWord(match.matchType.name)} #${match.matchID}")),
                   ),
                   ElevatedButton(
                     onPressed: () => onDelete(match.matchID),
