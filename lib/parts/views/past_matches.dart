@@ -3,6 +3,9 @@ import 'package:scouting_app_2024/parts/views_delegate.dart';
 import "package:scouting_app_2024/blobs/form_blob.dart";
 import "package:scouting_app_2024/user/team_model.dart";
 import "package:scouting_app_2024/blobs/locale_blob.dart";
+import 'package:pretty_qr_code/pretty_qr_code.dart';
+import 'package:scouting_app_2024/blobs/blobs.dart';
+import 'package:scouting_app_2024/debug.dart';
 
 class PastMatchesView extends StatefulWidget
     implements AppPageViewExporter {
@@ -35,11 +38,17 @@ class _PastMatchesViewState extends State<PastMatchesView> {
   void initState() {
     super.initState();
     loadMatches();
+    final QrCode qrCode = QrCode(
+      8,
+      QrErrorCorrectLevel.H,
+    )..addData("test sample data");
+
+    qrImage = QrImage(qrCode);
   }
 
   void loadMatches() {
     // todo, below just placeholder data
-    matches = [
+    matches = <TeamMatchData>[
       TeamMatchData(matchID: 1, matchType: MatchType.practice, startingPosition: MatchStartingPosition.left),
       TeamMatchData(matchID: 2, matchType: MatchType.practice, startingPosition: MatchStartingPosition.middle),
       TeamMatchData(matchID: 3, matchType: MatchType.qualification, startingPosition: MatchStartingPosition.right),
@@ -56,6 +65,9 @@ class _PastMatchesViewState extends State<PastMatchesView> {
       matches.removeWhere((TeamMatchData m) => m.matchID == matchID);
     });
   }
+
+  @protected
+  late QrImage qrImage;
 
   @override
   Widget build(BuildContext context) {
@@ -144,10 +156,26 @@ class MatchTile extends StatelessWidget {
                     child: const Text('Beam via Bluetooth'),
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      // TODO: generate QR code and display
-                    },
                     child: const Text('Generate QR Code'),
+                    onPressed: () async => await launchConfirmDialog(
+                      icon: const Icon(Icons.library_books_rounded),
+                      title: "Transfer Scouting Data via QR Code",
+                    context,
+                    message: PrettyQrView.data(
+                      data: matchDataToCsv(match),
+                      errorCorrectLevel: QrErrorCorrectLevel.H,
+                      decoration: const PrettyQrDecoration(
+                        shape: PrettyQrRoundedSymbol(
+                          color: Color(0xFFFFFFFF),
+                        ),
+                        image: PrettyQrDecorationImage(
+                          image: AssetImage('assets/appicon_header.png'),
+                          position: PrettyQrDecorationImagePosition.embedded,
+                        ),
+                      ),
+                    ),
+                    onConfirm: () => Debug()
+                        .info("Popped QR Code Display for ${formalizeWord(match.matchType.name)} #${match.matchID}")),
                   ),
                   ElevatedButton(
                     onPressed: () => onDelete(match.matchID),
@@ -175,3 +203,9 @@ class MatchTile extends StatelessWidget {
   }
 }
 
+String matchDataToCsv(TeamMatchData match) {
+  // Convert match data to csv for QR code export
+  String csv = '${match.matchID},${match.matchType.name},${match.startingPosition.name}';
+
+  return csv;
+}
