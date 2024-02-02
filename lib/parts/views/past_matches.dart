@@ -91,9 +91,23 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                   children: <Widget>[
                     IconButton(
                       icon: const Icon(Icons.delete_forever),
-                      onPressed: () {
-                        // TODO: deletes all matches, popup to confirm 
-                      },
+                      onPressed: () async => await launchConfirmDialog( // deletes all matches 
+                        okLabel: "Delete",
+                        denyLabel: "Cancel",
+                        icon: const Icon(Icons.warning_amber_rounded),
+                        title: "Confirm Deletion",
+                        context,
+                        message: const Text("Are you sure you want to delete all past matches? This action cannot be undone."),
+                        onConfirm: () {
+                          // TODO: delete all past matches from backend
+                          setState(() {
+                            matches.clear();
+                          });
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("All past matches deleted.")),
+                          );
+                        },
+                      ),
                     ),
                     IconButton(
                       icon: const Icon(Icons.download),
@@ -140,7 +154,7 @@ class MatchTile extends StatelessWidget {
           icon: (match.matchType == MatchType.practice) 
           ? Icons.flag_circle
           : Icons.emoji_events,
-          title: "${formalizeWord(match.matchType.name)} #${match.matchID}: (Team X)"
+          title: "${formalizeWord(match.matchType.name)} #${match.matchID}: (Team X)" // remember to update
         ),
         child: form_col(<Widget>[
           form_label(
