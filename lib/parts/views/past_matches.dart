@@ -164,9 +164,15 @@ class MatchTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   ElevatedButton(
-                    onPressed: () {
-                      // TODO: send via bluetooth 
-                    },
+                    onPressed: () async => await launchConfirmDialog(
+                      showOkLabel: false,
+                      denyLabel: "Close",
+                      icon: const Icon(Icons.warning_amber_rounded),
+                      title: "Warning",
+                      context,
+                      message: const Text("Bluetooth feature not yet available!"),
+                      onConfirm: () {}
+                    ),
                     child: const Text('Beam via Bluetooth'),
                   ),
                   ElevatedButton(
