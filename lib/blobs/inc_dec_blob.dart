@@ -67,7 +67,7 @@ class _PlusMinusState extends State<PlusMinus> {
               }
             },
             style: OutlinedButton.styleFrom(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(12),
               side: BorderSide(
                   color: _val == 0
                       ? ThemeProvider.themeOf(context)
@@ -106,7 +106,7 @@ class _PlusMinusState extends State<PlusMinus> {
               }
             },
             style: OutlinedButton.styleFrom(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(12),
               side: BorderSide(
                   color: ThemeProvider.themeOf(context)
                       .data
@@ -122,7 +122,6 @@ class _PlusMinusState extends State<PlusMinus> {
     );
   }
 }
-
 
 class PlusMinusRating extends StatefulWidget {
   final int initialValue;

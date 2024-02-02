@@ -1,12 +1,14 @@
+import "package:community_material_icon/community_material_icon.dart";
 import "package:flutter/material.dart";
 import "package:scouting_app_2024/blobs/blobs.dart";
 import "package:scouting_app_2024/blobs/form_blob.dart";
 import "package:scouting_app_2024/blobs/inc_dec_blob.dart";
 import "package:scouting_app_2024/blobs/locale_blob.dart";
+import "package:scouting_app_2024/extern/color.dart";
 import "package:scouting_app_2024/parts/team.dart";
 import "package:scouting_app_2024/parts/views_delegate.dart";
+import "package:scouting_app_2024/extern/datetime.dart";
 import "package:scouting_app_2024/user/team_model.dart";
-import "package:theme_provider/theme_provider.dart";
 import 'package:scouting_app_2024/debug.dart';
 
 typedef SectionId = ({String title, IconData icon});
@@ -47,32 +49,49 @@ class _ScoutingViewState extends State<ScoutingView>
       padding: const EdgeInsets.all(12.0),
       child: Column(
         children: <Widget>[
-          Flexible(
-              flex: 0,
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(
-                        child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.circular(12),
-                                color: ThemeProvider.themeOf(context)
-                                    .data
-                                    .colorScheme
-                                    .primary),
-                            child: const Text("Amogus"))),
-                    Expanded(
-                        child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.circular(12),
-                                color: ThemeProvider.themeOf(context)
-                                    .data
-                                    .colorScheme
-                                    .secondary),
-                            child: const Text("Amogus")))
-                  ])),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: TeamAlliance.blue.toColor()),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: form_label("Timestamp: ",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: TeamAlliance.blue
+                                .toColor()
+                                .biContrastingColor()),
+                        icon: Icon(CommunityMaterialIcons.clock,
+                            color: TeamAlliance.blue
+                                .toColor()
+                                .biContrastingColor()),
+                        child:
+                            Text.rich(TextSpan(children: <TextSpan>[
+                          TextSpan(
+                              text:
+                                  "${timeNow.hour.toString().padLeft(2, "0")}:${timeNow.minute.toString().padLeft(2, "0")}:${timeNow.second.toString().padLeft(2, "0")}.${timeNow.millisecond.toString().padLeft(3, "0")}\t",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: TeamAlliance.blue
+                                      .toColor()
+                                      .biContrastingColor())),
+                          TextSpan(
+                              text:
+                                  "${timeNow.monthName()} ${timeNow.day}, ${timeNow.year}",
+                              style: TextStyle(
+                                  color: TeamAlliance.blue
+                                      .toColor()
+                                      .biContrastingColor()))
+                        ]))),
+                  ),
+                ),
+              ),
+            ],
+          ),
           strut(height: 20),
           Flexible(
             child: form_grid_2(
