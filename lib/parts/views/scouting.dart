@@ -1,9 +1,11 @@
 import "package:flutter/material.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
 import "package:scouting_app_2024/blobs/blobs.dart";
 import "package:scouting_app_2024/blobs/form_blob.dart";
 import "package:scouting_app_2024/blobs/inc_dec_blob.dart";
 import "package:scouting_app_2024/blobs/locale_blob.dart";
 import "package:scouting_app_2024/extern/color.dart";
+import "package:scouting_app_2024/parts/bits/team_bloc.dart";
 import "package:scouting_app_2024/parts/team.dart";
 import "package:scouting_app_2024/parts/views_delegate.dart";
 import "package:scouting_app_2024/extern/datetime.dart";
@@ -14,13 +16,17 @@ import 'package:community_material_icon/community_material_icon.dart';
 
 typedef SectionId = ({String title, IconData icon});
 
-class ScoutingSessionViewDelegate extends StatefulWidget
+// so much boilerplate bruh lmao
+class ScoutingSessionViewDelegate extends StatelessWidget
     implements AppPageViewExporter {
   const ScoutingSessionViewDelegate({super.key});
 
   @override
-  State<ScoutingSessionViewDelegate> createState() =>
-      _ScoutingSessionViewDelegateState();
+  Widget build(BuildContext context) {
+    return BlocProvider<ScoutingSessionBloc>(
+        create: (BuildContext _) => ScoutingSessionBloc(),
+        child: _ScoutingSessionViewDelegate());
+  }
 
   @override
   ({
@@ -39,8 +45,14 @@ class ScoutingSessionViewDelegate extends StatefulWidget
   }
 }
 
+class _ScoutingSessionViewDelegate extends StatefulWidget {
+  @override
+  State<_ScoutingSessionViewDelegate> createState() =>
+      _ScoutingSessionViewDelegateState();
+}
+
 class _ScoutingSessionViewDelegateState
-    extends State<ScoutingSessionViewDelegate> {
+    extends State<_ScoutingSessionViewDelegate> {
   late bool _showScoutingSession;
 
   @override
@@ -210,7 +222,17 @@ class _ScoutingViewState extends State<ScoutingView>
                               minValue: 1,
                               maxValue: 999,
                               headerMessage: "Match Number",
-                              onChange: (int number) /*TODO*/ {}),
+                              onChange: (int number) /*TODO*/ {
+                            Debug().info(
+                                "UPDATE match number to $number");
+                            context
+                                .read<ScoutingSessionBloc>()
+                                .prelim
+                                .matchNumber = number;
+                            context
+                                .read<ScoutingSessionBloc>()
+                                .add(PrelimUpdateEvent());
+                          }),
                         ),
                         form_label("Type",
                             icon: const Icon(
@@ -235,6 +257,13 @@ class _ScoutingViewState extends State<ScoutingView>
                                 onSelect: (MatchType e) /*TODO*/ {
                                   Debug().info(
                                       "Switched match type to ${e.name}");
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .prelim
+                                      .matchType = e;
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .add(PrelimUpdateEvent());
                                 }))
                       ])),
                   form_sec(context,
@@ -253,7 +282,17 @@ class _ScoutingViewState extends State<ScoutingView>
                                 minValue: 1,
                                 maxValue: 9999,
                                 headerMessage: "Team Number",
-                                onChange: (int number) /*TODO*/ {}),
+                                onChange: (int number) /*TODO*/ {
+                              Debug().info(
+                                  "UPDATE team number to $number");
+                              context
+                                  .read<ScoutingSessionBloc>()
+                                  .prelim
+                                  .teamNumber = number;
+                              context
+                                  .read<ScoutingSessionBloc>()
+                                  .add(PrelimUpdateEvent());
+                            }),
                             icon: const Icon(Icons.numbers_rounded)),
                         form_label("Alliance",
                             icon: const Icon(Icons.flag_rounded),
@@ -261,6 +300,13 @@ class _ScoutingViewState extends State<ScoutingView>
                                 (TeamAlliance alliance) /*TODO*/ {
                           Debug().info(
                               "[TEAM] Alliance: ${alliance.name}");
+                          context
+                              .read<ScoutingSessionBloc>()
+                              .prelim
+                              .alliance = alliance;
+                          context
+                              .read<ScoutingSessionBloc>()
+                              .add(PrelimUpdateEvent());
                         })),
                         form_label("Starting Position",
                             icon:
@@ -286,6 +332,13 @@ class _ScoutingViewState extends State<ScoutingView>
                                     e) /*TODO*/ {
                                   Debug().info(
                                       "[TEAM] Switched starting position to ${e.name}");
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .prelim
+                                      .startingPosition = e;
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .add(PrelimUpdateEvent());
                                 })),
                       ])),
                   form_sec(context,
@@ -302,10 +355,17 @@ class _ScoutingViewState extends State<ScoutingView>
                                 onChanged: (bool e) /*TODO*/ {
                                   Debug().info(
                                       "[AUTO] Note preloaded: $e");
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .auto
+                                      .notePreloaded = e;
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .add(AutoUpdateEvent());
                                 })),
                         form_label("Picked up Note?",
                             icon: const Icon(Icons.trip_origin),
-                            child: form_seg_btn_1(
+                            child: form_seg_btn_2(
                                 segments: AutoPickup.values
                                     .map<
                                             ({
@@ -320,10 +380,20 @@ class _ScoutingViewState extends State<ScoutingView>
                                               value: e
                                             ))
                                     .toList(),
-                                initialSelection: AutoPickup.no,
-                                onSelect: (AutoPickup e) /*TODO*/ {
+                                initialSelection: <AutoPickup>{
+                                  AutoPickup.no
+                                },
+                                onSelect:
+                                    (List<AutoPickup> e) /*TODO*/ {
                                   Debug().info(
-                                      "[AUTO] Picked up note: ${e.name}");
+                                      "[AUTO] Picked up note: ${e.toString()}");
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .auto
+                                      .notesPickedUp = e;
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .add(AutoUpdateEvent());
                                 })),
                         form_label("Taxis?",
                             icon:
@@ -332,6 +402,13 @@ class _ScoutingViewState extends State<ScoutingView>
                                 initialValue: false,
                                 onChanged: (bool e) /*TODO*/ {
                                   Debug().info("[AUTO] Taxis: $e");
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .auto
+                                      .taxi = e;
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .add(AutoUpdateEvent());
                                 })),
                         form_label("Scored in Speaker",
                             icon: const Icon(Icons.volume_up),
@@ -340,6 +417,13 @@ class _ScoutingViewState extends State<ScoutingView>
                               onValueChanged: (int value) /*TODO*/ {
                                 Debug().info(
                                     "[AUTO] Scored in Speaker: $value");
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .auto
+                                    .scoredSpeaker = value;
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .add(AutoUpdateEvent());
                               },
                             )),
                         form_label("Missed Speaker Shots",
@@ -349,6 +433,13 @@ class _ScoutingViewState extends State<ScoutingView>
                               onValueChanged: (int value) /*TODO*/ {
                                 Debug().info(
                                     "[AUTO] Missed Speaker Shots: $value");
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .auto
+                                    .missedSpeaker = value;
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .add(AutoUpdateEvent());
                               },
                             )),
                         form_label("Scored in AMP",
@@ -358,6 +449,13 @@ class _ScoutingViewState extends State<ScoutingView>
                               onValueChanged: (int value) /*TODO*/ {
                                 Debug().info(
                                     "[AUTO] Scored in AMP: $value");
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .auto
+                                    .scoredAmp = value;
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .add(AutoUpdateEvent());
                               },
                             )),
                         form_label("Missed AMP Shots",
@@ -367,6 +465,13 @@ class _ScoutingViewState extends State<ScoutingView>
                               onValueChanged: (int value) /*TODO*/ {
                                 Debug().info(
                                     "[AUTO] Missed AMP Shots: $value");
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .auto
+                                    .missedAmp = value;
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .add(AutoUpdateEvent());
                               },
                             )),
                         form_label("Comments",
@@ -375,7 +480,17 @@ class _ScoutingViewState extends State<ScoutingView>
                               hint: "Enter your comments here",
                               label: "Comments",
                               dim: 300,
-                              onChanged: (String value) /*TODO*/ {},
+                              onChanged: (String value) /*TODO*/ {
+                                Debug()
+                                    .info("[AUTO] Comments: $value");
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .auto
+                                    .comments = value;
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .add(AutoUpdateEvent());
+                              },
                               inputType: TextInputType.multiline,
                             )),
                       ])),
@@ -393,30 +508,14 @@ class _ScoutingViewState extends State<ScoutingView>
                                 onChanged: (bool e) /*TODO*/ {
                                   Debug().info(
                                       "[TELE-OP] Plays defense: $e");
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .teleop
+                                      .playsDefense = e;
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .add(TeleOpUpdateEvent());
                                 })),
-                        /*
-                          form_label("Plays Defense?",
-                              icon: const Icon(Icons.shield),
-                              child: form_seg_btn_1(
-                                  segments: GenericUtils.boolOptions()
-                                      .map<
-                                              ({
-                                                Icon? icon,
-                                                String label,
-                                                bool value
-                                              })>(
-                                          (bool e) => (
-                                                label: e ? "Yes" : "No",
-                                                icon: const Icon(Icons.shield),
-                                                value: e
-                                              ))
-                                      .toList(),
-                                  initialSelection: false,
-                                  onSelect: (bool e) /*TODO*/ {
-                                    Debug().info(
-                                        "Plays defense: ${e ? "Yes" : "No"}");
-                                  })),
-                                  */
                         form_label("Was Defended?",
                             icon: const Icon(Icons.verified_user),
                             child: BasicToggleSwitch(
@@ -424,6 +523,13 @@ class _ScoutingViewState extends State<ScoutingView>
                                 onChanged: (bool e) /*TODO*/ {
                                   Debug().info(
                                       "[TELE-OP] Was Defended: $e");
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .teleop
+                                      .wasDefended = e;
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .add(TeleOpUpdateEvent());
                                 })),
                         form_label("Scored in Speaker",
                             icon: const Icon(Icons.volume_up),
@@ -432,6 +538,13 @@ class _ScoutingViewState extends State<ScoutingView>
                               onValueChanged: (int value) /*TODO*/ {
                                 Debug().info(
                                     "[TELE-OP] Scored in Speaker: $value");
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .teleop
+                                    .scoredSpeaker = value;
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .add(TeleOpUpdateEvent());
                               },
                             )),
                         form_label("Scored during AMP",
@@ -441,6 +554,13 @@ class _ScoutingViewState extends State<ScoutingView>
                               onValueChanged: (int value) /*TODO*/ {
                                 Debug().info(
                                     "[TELE-OP] Scored during AMP: $value");
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .teleop
+                                    .scoredWhileAmped = value;
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .add(TeleOpUpdateEvent());
                               },
                             )),
                         form_label("Missed Speaker Shots",
@@ -450,6 +570,13 @@ class _ScoutingViewState extends State<ScoutingView>
                               onValueChanged: (int value) /*TODO*/ {
                                 Debug().info(
                                     "[TELE-OP] Missed Speaker Shots: $value");
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .teleop
+                                    .missedSpeaker = value;
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .add(TeleOpUpdateEvent());
                               },
                             )),
                         form_label("Scored in AMP",
@@ -459,6 +586,13 @@ class _ScoutingViewState extends State<ScoutingView>
                               onValueChanged: (int value) /*TODO*/ {
                                 Debug().info(
                                     "[TELE-OP] Scored in AMP: $value");
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .teleop
+                                    .scoredAmp = value;
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .add(TeleOpUpdateEvent());
                               },
                             )),
                         form_label("Missed AMP Shots",
@@ -468,6 +602,13 @@ class _ScoutingViewState extends State<ScoutingView>
                               onValueChanged: (int value) /*TODO*/ {
                                 Debug().info(
                                     "[TELE-OP] Missed AMP Shots: $value");
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .teleop
+                                    .missedAmp = value;
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .add(TeleOpUpdateEvent());
                               },
                             )),
                         form_label("Comments",
@@ -476,7 +617,17 @@ class _ScoutingViewState extends State<ScoutingView>
                               hint: "Enter your comments here",
                               label: "Comments",
                               dim: 300,
-                              onChanged: (String value) /*TODO*/ {},
+                              onChanged: (String value) /*TODO*/ {
+                                Debug().info(
+                                    "[TELE-OP] Comments: $value");
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .teleop
+                                    .comments = value;
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .add(TeleOpUpdateEvent());
+                              },
                               inputType: TextInputType.multiline,
                             )),
                         form_label("Driver rating",
@@ -485,7 +636,14 @@ class _ScoutingViewState extends State<ScoutingView>
                               initialValue: 0,
                               onValueChanged: (int value) /*TODO*/ {
                                 Debug().info(
-                                    "Plays defense: ${value > 0 ? "$value" : "Reset to 0"}");
+                                    "[TELE-OP] Driver Rating: ${value > 0 ? "$value" : "Reset to 0"}");
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .teleop
+                                    .driverRating = value;
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .add(TeleOpUpdateEvent());
                               },
                             )),
                       ])),
@@ -503,29 +661,14 @@ class _ScoutingViewState extends State<ScoutingView>
                                 onChanged: (bool e) /*TODO*/ {
                                   Debug()
                                       .info("[ENDGAME] On chain: $e");
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .endgame
+                                      .onChain = e;
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .add(EndgameUpdateEvent());
                                 })),
-                        /*
-                          form_label("Status",
-                              icon: const Icon(Icons.shield),
-                              child: form_seg_btn_1(
-                                  segments: EndStatus.values
-                                      .map<
-                                              ({
-                                                Icon? icon,
-                                                String label,
-                                                EndStatus value
-                                              })>(
-                                          (EndStatus e) => (
-                                                label: formalizeWord(e.name),
-                                                icon: const Icon(Icons.shield),
-                                                value: e
-                                              ))
-                                      .toList(),
-                                  initialSelection: EndStatus.parked,
-                                  onSelect: (EndStatus e) /*TODO*/ {
-                                    Debug().info("[ENDGAME] Status: ${e.name}");
-                                  })),
-                                  */
                         form_label("Harmony (Used same chain)",
                             icon: const Icon(Icons.people),
                             child: form_seg_btn_1(
@@ -547,6 +690,13 @@ class _ScoutingViewState extends State<ScoutingView>
                                 onSelect: (Harmony e) /*TODO*/ {
                                   Debug().info(
                                       "[ENDGAME] Harmony: ${e.name}");
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .endgame
+                                      .harmony = e;
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .add(EndgameUpdateEvent());
                                 })),
                         form_label("Scored in Trap",
                             icon: const Icon(Icons.trip_origin),
@@ -569,6 +719,13 @@ class _ScoutingViewState extends State<ScoutingView>
                                 onSelect: (TrapScored e) /*TODO*/ {
                                   Debug().info(
                                       "[ENDGAME] Scored in trap: ${e.name}");
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .endgame
+                                      .trapScored = e;
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .add(EndgameUpdateEvent());
                                 })),
                         form_label("Comments",
                             icon: const Icon(Icons.comment),
@@ -576,7 +733,17 @@ class _ScoutingViewState extends State<ScoutingView>
                               hint: "Enter your comments here",
                               label: "Comments",
                               dim: 300,
-                              onChanged: (String value) /*TODO*/ {},
+                              onChanged: (String value) /*TODO*/ {
+                                Debug().info(
+                                    "[ENDGAME] Comments: $value");
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .endgame
+                                    .comments = value;
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .add(EndgameUpdateEvent());
+                              },
                               inputType: TextInputType.multiline,
                             )),
                       ])),
@@ -594,6 +761,13 @@ class _ScoutingViewState extends State<ScoutingView>
                                 onChanged: (bool e) /*TODO*/ {
                                   Debug().info(
                                       "[OTHER] Coopertition: $e");
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .misc
+                                      .coopertition = e;
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .add(MiscUpdateEvent());
                                 })),
                         form_label("Breakdown",
                             icon: const Icon(Icons.handyman),
@@ -602,6 +776,13 @@ class _ScoutingViewState extends State<ScoutingView>
                                 onChanged: (bool e) /*TODO*/ {
                                   Debug()
                                       .info("[OTHER] Breakdown: $e");
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .misc
+                                      .breakdown = e;
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .add(MiscUpdateEvent());
                                 })),
                       ])),
                 ]),

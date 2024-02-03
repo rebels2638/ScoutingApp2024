@@ -74,12 +74,18 @@ class _AppViewState extends State<_AppView> {
   /// delegates for all of the bottom nav bar items
   late TextEditingController _themeSelectorController;
   int _bottomNavBarIndexer = 0;
+  late bool _homeScreenVisible;
 
   @override
   void initState() {
     super.initState();
     _themeSelectorController = TextEditingController();
+    _homeScreenVisible = false;
   }
+
+  void _toggleHomePage() => setState(() {
+        _homeScreenVisible = !_homeScreenVisible;
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -195,9 +201,22 @@ class _AppViewState extends State<_AppView> {
             selectedIcon: consoleView.item.activeIcon,
             tooltip: consoleView.item.tooltip)
     ];
+    List<Widget> pageViewWidgets = <Widget>[
+      if (dataHostView != null) dataHostView.child,
+      scoutingView.child,
+      if (LockedInScoutingModal.isCasual(context))
+        pastMatchesView.child,
+      if (LockedInScoutingModal.isCasual(context)) settingsView.child,
+      if (LockedInScoutingModal.isCasual(context)) aboutAppView.child,
+      if (LockedInScoutingModal.isCasual(context)) gameMapView.child,
+      if (LockedInScoutingModal.isCasual(context) &&
+          ShowConsoleModal.isShowingConsole(context))
+        consoleView.child,
+    ];
     return Scaffold(
         floatingActionButtonLocation:
-            LockedInScoutingModal.isCasual(context)
+            LockedInScoutingModal.isCasual(context) &&
+                    !_homeScreenVisible
                 ? FloatingActionButtonLocation.endFloat
                 : FloatingActionButtonLocation.endContained,
         floatingActionButton: Padding(
@@ -274,41 +293,52 @@ class _AppViewState extends State<_AppView> {
                               ? const Icon(Icons.nightlight_round)
                               : const Icon(Icons.wb_sunny_rounded)),
                     ),
-                  if (LockedInScoutingModal.isCasual(context))
+                  if (LockedInScoutingModal.isCasual(context) &&
+                      !_homeScreenVisible)
                     strut(width: 10),
-                  Tooltip(
-                    message: "Lock-In Mode",
-                    child: FloatingActionButton(
-                        heroTag: null,
-                        onPressed: () {
-                          Provider.of<LockedInScoutingModal>(context,
-                                  listen: false)
-                              .toggle();
-                          setState(() => _bottomNavBarIndexer = 1);
-                          widget.pageController.animateToPage(
-                              _bottomNavBarIndexer,
-                              duration:
-                                  const Duration(milliseconds: 500),
-                              curve: Curves.ease);
-                        },
-                        child: LockedInScoutingModal.isCasual(context)
-                            ? const Icon(CommunityMaterialIcons
-                                .lock_open_variant)
-                            : const Icon(
-                                CommunityMaterialIcons.lock)),
-                  ),
+                  if (!_homeScreenVisible)
+                    Tooltip(
+                      message: "Lock-In Mode",
+                      child: FloatingActionButton(
+                          heroTag: null,
+                          onPressed: () {
+                            Provider.of<LockedInScoutingModal>(
+                                    context,
+                                    listen: false)
+                                .toggle();
+                            setState(() => _bottomNavBarIndexer = 1);
+                            widget.pageController.animateToPage(
+                                _bottomNavBarIndexer,
+                                duration:
+                                    const Duration(milliseconds: 500),
+                                curve: Curves.ease);
+                          },
+                          child:
+                              LockedInScoutingModal.isCasual(context)
+                                  ? const Icon(CommunityMaterialIcons
+                                      .lock_open_variant)
+                                  : const Icon(
+                                      CommunityMaterialIcons.lock)),
+                    ),
                 ])),
-        bottomNavigationBar: NavigationBar(
-          selectedIndex: _bottomNavBarIndexer,
-          destinations: bottomItems,
-          onDestinationSelected: (int i) {
-            Debug().info(
-                "BottomNavBar -> PageView move to $i and was at ${widget.pageController.page} for builder length: ${bottomItems.length}");
-            widget.pageController.animateToPage(i,
-                duration: const Duration(milliseconds: 200),
-                curve: Curves.ease);
-            setState(() => _bottomNavBarIndexer = i);
-          },
+        bottomNavigationBar: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 600),
+          switchInCurve: Curves.easeInOut,
+          switchOutCurve: Curves.easeIn,
+          child: !_homeScreenVisible
+              ? NavigationBar(
+                  selectedIndex: _bottomNavBarIndexer,
+                  destinations: bottomItems,
+                  onDestinationSelected: (int i) {
+                    Debug().info(
+                        "BottomNavBar -> PageView move to $i and was at ${widget.pageController.page} for builder length: ${bottomItems.length}");
+                    widget.pageController.animateToPage(i,
+                        duration: const Duration(milliseconds: 200),
+                        curve: Curves.ease);
+                    setState(() => _bottomNavBarIndexer = i);
+                  },
+                )
+              : const SizedBox(),
         ),
         appBar: LockedInScoutingModal.isCasual(context)
             ? AppBar(
@@ -330,7 +360,6 @@ class _AppViewState extends State<_AppView> {
                               "assets/appicon_header.png"),
                           width: 52,
                           height: 52,
-                          isAntiAlias: true,
                         ),
                       ),
                     ),
@@ -348,13 +377,13 @@ class _AppViewState extends State<_AppView> {
                         child: const Image(
                             height: 20,
                             image: ExactAssetImage(
-                                "assets/crescendo/crescendo_header.png")))
+                                "assets/crescendo/crescendo_header.png"))),
                   ]))
             : null /*lmao */,
         body: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: RepaintBoundary(
-            child: PageView(
+            padding: const EdgeInsets.all(10.0),
+            child: RepaintBoundary(
+              child: PageView(
                 // this keeps the bottom nav bar index and the page view index in sync. this is kind of unoptimized in the sense of setState
                 onPageChanged: (int pageNow) =>
                     setState(() => _bottomNavBarIndexer = pageNow),
@@ -362,23 +391,8 @@ class _AppViewState extends State<_AppView> {
                 allowImplicitScrolling:
                     false, // prevent users from accidentally swiping
                 controller: widget.pageController,
-                children: <Widget>[
-                  if (dataHostView != null)
-                    dataHostView.child,
-                  scoutingView.child,
-                  if (LockedInScoutingModal.isCasual(context))
-                    pastMatchesView.child,
-                  if (LockedInScoutingModal.isCasual(context))
-                    settingsView.child,
-                  if (LockedInScoutingModal.isCasual(context))
-                    aboutAppView.child,
-                  if (LockedInScoutingModal.isCasual(context))
-                    gameMapView.child,
-                  if (LockedInScoutingModal.isCasual(context) &&
-                      ShowConsoleModal.isShowingConsole(context))
-                    consoleView.child
-                ]),
-          ),
-        ));
+                children: pageViewWidgets,
+              ),
+            )));
   }
 }

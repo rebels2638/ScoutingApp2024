@@ -337,6 +337,67 @@ Widget form_seg_btn_1<T>(
       initialSelection: initialSelection,
     ));
 
+@pragma("vm:prefer-inline")
+Widget form_seg_btn_2<T>(
+        {required List<({T value, String label, Icon? icon})>
+            segments,
+        required Set<T> initialSelection,
+        required void Function(List<T> res) onSelect}) =>
+    Flexible(
+        child: _MSegSingleBtn<T>(
+      segments: segments,
+      onSelect: onSelect,
+      initialSelection: initialSelection,
+    ));
+
+class _MSegSingleBtn<T> extends StatefulWidget {
+  final List<({T value, String label, Icon? icon})> segments;
+  final Set<T> initialSelection;
+  final void Function(List<T> res) onSelect;
+  final ButtonStyle? style;
+
+  const _MSegSingleBtn(
+      {super.key,
+      this.style,
+      required this.onSelect,
+      required this.segments,
+      required this.initialSelection});
+  @override
+  State<_MSegSingleBtn<T>> createState() => _MSegSingleBtnState<T>();
+}
+
+class _MSegSingleBtnState<T> extends State<_MSegSingleBtn<T>> {
+  late Set<T> _selection;
+
+  @override
+  void initState() {
+    super.initState();
+    _selection = widget.initialSelection;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SegmentedButton<T>(
+      segments: <ButtonSegment<T>>[
+        for (({T value, String label, Icon? icon}) e
+            in widget.segments)
+          ButtonSegment<T>(
+              value: e.value,
+              label: Text(e.label,
+                  style: const TextStyle(
+                      overflow: TextOverflow.ellipsis)),
+              icon: e.icon)
+      ],
+      selected: _selection,
+      style: widget.style,
+      onSelectionChanged: (Set<T> values) {
+        setState(() => _selection = values);
+        widget.onSelect.call(values.toList());
+      },
+    );
+  }
+}
+
 class _SegSingleBtn<T> extends StatefulWidget {
   final List<({T value, String label, Icon? icon})> segments;
   final T initialSelection;

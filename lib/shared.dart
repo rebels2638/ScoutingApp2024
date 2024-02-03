@@ -6,6 +6,8 @@ class Shared {
   static const String FONT_FAMILY_SANS = "IBM Plex Sans";
 }
 
+const String APP_CANONICAL_NAME = ""; // be goofy with this :)
+
 const int REBEL_ROBOTICS_APP_VERSION = 20240120;
 const String REBEL_ROBOTICS_APP_NAME = "Rebel Robotics Scouting";
 const String REBEL_ROBOTICS_APP_LEGALESE =

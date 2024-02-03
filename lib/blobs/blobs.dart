@@ -11,6 +11,23 @@ enum SwitchIconPosition {
   aroundSwitch
 }
 
+@pragma("vm:prefer-inline")
+Widget material3ExtFabLook(
+        {required void Function() onTap,
+        Color? color,
+        required Widget child}) =>
+    GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16), color: color),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: child,
+        ),
+      ),
+    );
+
 // there is no much boilerplate shitty code for this number picker thing, just look below, there are like 2 delegate functions for this lmfao
 class _InternalNumberPicker extends StatefulWidget {
   final int maxValue;
