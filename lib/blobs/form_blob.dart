@@ -94,6 +94,96 @@ typedef SectionId = ({String title, IconData icon});
 
 const double _prompt_label_strut_width = 10;
 
+class _NumPickBtn extends StatefulWidget {
+  final int maxValue;
+  final int minValue;
+  final int itemCount;
+  final bool infiniteLoop;
+  final Axis? alignment;
+  final void Function(int res) onChange;
+  final String label;
+  final Icon icon;
+  final Icon? headerIcon;
+  final String headerMessage;
+  final String? comment;
+
+  const _NumPickBtn(
+      {required this.label,
+      required this.icon,
+      this.headerIcon,
+      required this.itemCount,
+      required this.minValue,
+      required this.maxValue,
+      this.infiniteLoop = true,
+      this.alignment = Axis.vertical,
+      required this.headerMessage,
+      this.comment,
+      required this.onChange});
+
+  @override
+  State<_NumPickBtn> createState() => _NumPickBtnState();
+}
+
+class _NumPickBtnState extends State<_NumPickBtn> {
+  late int _initValue;
+
+  @override
+  void initState() {
+    super.initState();
+    _initValue = -1;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(children: <Widget>[
+      FilledButton.icon(
+          icon: widget.icon,
+          label: Text(widget.label),
+          onPressed: () async => await launchNumberPickerDialog(
+                  context,
+                  maxValue: widget.maxValue.abs(),
+                  minValue: widget.minValue.abs(),
+                  headerIcon: widget.headerIcon,
+                  headerMessage: widget.headerMessage,
+                  alignment: widget.alignment,
+                  itemCount: widget.maxValue.abs().toString().length,
+                  infiniteLoop: widget.infiniteLoop,
+                  comment: widget.comment, onChange: (int value) {
+                setState(() => _initValue = value);
+                widget.onChange.call(value);
+              })),
+      strut(width: 6),
+      Text.rich(TextSpan(children: <InlineSpan>[
+        const TextSpan(text: " = "),
+        TextSpan(
+            text: _initValue == -1 ? "Unset" : _initValue.toString(),
+            style: const TextStyle(fontWeight: FontWeight.bold))
+      ]))
+    ]);
+  }
+}
+
+@pragma("vm:prefer-inline")
+Widget form_numpick(BuildContext context,
+        {required String label,
+        required Icon icon,
+        Icon? headerIcon,
+        required int minValue,
+        required int maxValue,
+        bool infiniteLoop = true,
+        Axis alignment = Axis.vertical,
+        required String headerMessage,
+        String? comment,
+        required void Function(int res) onChange}) =>
+    _NumPickBtn(
+        label: label,
+        icon: icon,
+        itemCount: maxValue.abs().toString().length,
+        minValue: minValue,
+        maxValue: maxValue,
+        headerMessage: headerMessage,
+        onChange: onChange);
+
 @pragma("vm:prefer-inline")
 Widget form_grid_2(
         {required int crossAxisCount,

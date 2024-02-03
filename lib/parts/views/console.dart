@@ -52,7 +52,7 @@ class ConsoleStateComponent extends State<_ConsoleComponent> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Row(children: <Widget>[
+          Wrap(children: <Widget>[
             TextButton.icon(
                 onPressed: () =>
                     setState(() => internalConsoleBuffer.clear()),
@@ -78,6 +78,53 @@ class ConsoleStateComponent extends State<_ConsoleComponent> {
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontFamily: "IBM Plex Mono"))),
+            TextButton.icon(
+                onPressed: () => ScaffoldMessenger.of(context)
+                    .showSnackBar(yummySnackBar(
+                        margin: null,
+                        width: 300,
+                        backgroundColor:
+                            ThemeProvider.themeOf(context)
+                                .data
+                                .colorScheme
+                                .primary,
+                        message: "Amogus",
+                        icon: Icon(Icons.adb_rounded,
+                            color: ThemeProvider.themeOf(context)
+                                .data
+                                .colorScheme
+                                .background))),
+                icon: const Icon(Icons.window_rounded),
+                label: const Text("Yummy Regular",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontFamily: "IBM Plex Mono"))),
+            TextButton.icon(
+                onPressed: () => ScaffoldMessenger.of(context)
+                    .showSnackBar(yummyWarningSnackBar("Amogus")),
+                icon: const Icon(Icons.window_rounded),
+                label: const Text("Yummy Warning",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontFamily: "IBM Plex Mono"))),
+            TextButton.icon(
+                onPressed: () => ScaffoldMessenger.of(context)
+                    .showSnackBar(yummyDeadlySnackBar("Amogus")),
+                icon: const Icon(Icons.window_rounded),
+                label: const Text("Yummy Deadly",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontFamily: "IBM Plex Mono"))),
+            TextButton.icon(
+                onPressed: () async => await launchNumberPickerDialog(
+                    context,
+                    minValue: 0,
+                    maxValue: 999,
+                    headerMessage: "Number Picker (ig)",
+                    onChange: (int res) {}),
+                icon: const Icon(Icons.check_box_rounded),
+                label: const Text("NumberPicker Dialog",
+                    style: TextStyle(fontWeight: FontWeight.bold))),
             TextButton.icon(
                 onPressed: () => launchConfirmDialog(context,
                     message: const Text("Debug Show CONFIRM_DIALOG"),

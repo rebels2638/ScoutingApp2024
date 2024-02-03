@@ -14,7 +14,7 @@ void main() {
   GetStorage.init("RebelRobotics2638UserPreferenceTelemetryUnit");
   FlutterError.onError = (FlutterErrorDetails details) {
     FlutterError.presentError.call(details);
-    Debug().warn(details.summary);
+    Debug().warn("${details.summary} ${details.context}");
   };
   Debug().init();
   UserTelemetry().reset();

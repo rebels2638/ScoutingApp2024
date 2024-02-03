@@ -100,7 +100,9 @@ class _AppViewState extends State<_AppView> {
         String label,
         String tooltip
       }) item
-    }) scoutingView = const ScoutingView().exportAppPageView();
+      // this is the only delegate that formally implements this feature where the view is not directly shown but through a delegate that can forward operations
+    }) scoutingView =
+        const ScoutingSessionViewDelegate().exportAppPageView();
     ({
       Widget child,
       ({
@@ -162,11 +164,12 @@ class _AppViewState extends State<_AppView> {
           label: scoutingView.item.label,
           selectedIcon: scoutingView.item.activeIcon,
           tooltip: scoutingView.item.tooltip),
-      NavigationDestination(
-          icon: pastMatchesView.item.icon,
-          label: pastMatchesView.item.label,
-          selectedIcon: pastMatchesView.item.activeIcon,
-          tooltip: pastMatchesView.item.tooltip),
+      if (LockedInScoutingModal.isCasual(context))
+        NavigationDestination(
+            icon: pastMatchesView.item.icon,
+            label: pastMatchesView.item.label,
+            selectedIcon: pastMatchesView.item.activeIcon,
+            tooltip: pastMatchesView.item.tooltip),
       if (LockedInScoutingModal.isCasual(context))
         NavigationDestination(
             icon: settingsView.item.icon,
@@ -297,50 +300,7 @@ class _AppViewState extends State<_AppView> {
                 ])),
         bottomNavigationBar: NavigationBar(
           selectedIndex: _bottomNavBarIndexer,
-          destinations: <NavigationDestination>[
-            // plsplsplspls make sure this matches with the following PageView's children ordering D:
-            if (dataHostView != null)
-              NavigationDestination(
-                  icon: dataHostView.item.icon,
-                  label: dataHostView.item.label,
-                  selectedIcon: dataHostView.item.activeIcon,
-                  tooltip: dataHostView.item.tooltip),
-            NavigationDestination(
-                icon: scoutingView.item.icon,
-                label: scoutingView.item.label,
-                selectedIcon: scoutingView.item.activeIcon,
-                tooltip: scoutingView.item.tooltip),
-            NavigationDestination(
-                icon: pastMatchesView.item.icon,
-                label: pastMatchesView.item.label,
-                selectedIcon: pastMatchesView.item.activeIcon,
-                tooltip: pastMatchesView.item.tooltip),
-            if (LockedInScoutingModal.isCasual(context))
-              NavigationDestination(
-                  icon: settingsView.item.icon,
-                  label: settingsView.item.label,
-                  selectedIcon: settingsView.item.activeIcon,
-                  tooltip: settingsView.item.tooltip),
-            if (LockedInScoutingModal.isCasual(context))
-              NavigationDestination(
-                  icon: aboutAppView.item.icon,
-                  label: aboutAppView.item.label,
-                  selectedIcon: aboutAppView.item.activeIcon,
-                  tooltip: aboutAppView.item.tooltip),
-            if (LockedInScoutingModal.isCasual(context))
-              NavigationDestination(
-                  icon: gameMapView.item.icon,
-                  label: gameMapView.item.label,
-                  selectedIcon: gameMapView.item.activeIcon,
-                  tooltip: gameMapView.item.tooltip),
-            if (LockedInScoutingModal.isCasual(context) &&
-                ShowConsoleModal.isShowingConsole(context))
-              NavigationDestination(
-                  icon: consoleView.item.icon,
-                  label: consoleView.item.label,
-                  selectedIcon: consoleView.item.activeIcon,
-                  tooltip: consoleView.item.tooltip)
-          ],
+          destinations: bottomItems,
           onDestinationSelected: (int i) {
             Debug().info(
                 "BottomNavBar -> PageView move to $i and was at ${widget.pageController.page} for builder length: ${bottomItems.length}");
@@ -403,9 +363,11 @@ class _AppViewState extends State<_AppView> {
                     false, // prevent users from accidentally swiping
                 controller: widget.pageController,
                 children: <Widget>[
-                  if (dataHostView != null) dataHostView.child,
+                  if (dataHostView != null)
+                    dataHostView.child,
                   scoutingView.child,
-                  pastMatchesView.child,
+                  if (LockedInScoutingModal.isCasual(context))
+                    pastMatchesView.child,
                   if (LockedInScoutingModal.isCasual(context))
                     settingsView.child,
                   if (LockedInScoutingModal.isCasual(context))

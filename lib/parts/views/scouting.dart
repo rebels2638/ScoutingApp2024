@@ -8,17 +8,19 @@ import "package:scouting_app_2024/parts/team.dart";
 import "package:scouting_app_2024/parts/views_delegate.dart";
 import "package:scouting_app_2024/extern/datetime.dart";
 import "package:scouting_app_2024/user/team_model.dart";
-import "package:scouting_app_2024/utils.dart";
 import "package:theme_provider/theme_provider.dart";
 import 'package:scouting_app_2024/debug.dart';
+import 'package:community_material_icon/community_material_icon.dart';
 
 typedef SectionId = ({String title, IconData icon});
 
-class ScoutingView extends StatefulWidget implements AppPageViewExporter {
-  const ScoutingView({super.key});
+class ScoutingSessionViewDelegate extends StatefulWidget
+    implements AppPageViewExporter {
+  const ScoutingSessionViewDelegate({super.key});
 
   @override
-  State<ScoutingView> createState() => _ScoutingViewState();
+  State<ScoutingSessionViewDelegate> createState() =>
+      _ScoutingSessionViewDelegateState();
 
   @override
   ({
@@ -35,6 +37,82 @@ class ScoutingView extends StatefulWidget implements AppPageViewExporter {
       )
     );
   }
+}
+
+class _ScoutingSessionViewDelegateState
+    extends State<ScoutingSessionViewDelegate> {
+  late bool _showScoutingSession;
+
+  @override
+  void initState() {
+    super.initState();
+    _showScoutingSession = false;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _showScoutingSession
+        ? const ScoutingView()
+        : Center(
+            // i feel liek this useless
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: strutAll(<Widget>[
+                  const Text("Scouting Session",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 24)),
+                  ElevatedButton(
+                      style: ButtonStyle(
+                          shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(16)))),
+                      onPressed: () {
+                        Debug().info(
+                            "Moving from SCOUTING_SESSION_LAUNCHER to SCOUTING_SESSION");
+                        setState(() => _showScoutingSession = true);
+                      },
+                      child: Padding(
+                        // a lot of the constraints here come from here: https://m3.material.io/components/floating-action-button/specs
+                        // altho kind shitty lmao, fuck it
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                            mainAxisAlignment:
+                                MainAxisAlignment.center,
+                            children: <Widget>[
+                              const Icon(
+                                  Icons.pending_actions_rounded),
+                              strut(height: 14),
+                              const Text.rich(
+                                  TextSpan(children: <InlineSpan>[
+                                    TextSpan(
+                                        text: "New Session\n",
+                                        style: TextStyle(
+                                            fontWeight:
+                                                FontWeight.w600,
+                                            fontSize: 18)),
+                                    TextSpan(
+                                        text:
+                                            "Launch a new scouting form",
+                                        style: TextStyle(
+                                            fontWeight:
+                                                FontWeight.w400,
+                                            fontSize: 12))
+                                  ]),
+                                  textAlign: TextAlign.center)
+                            ]),
+                      )),
+                ], height: 78)),
+          );
+  }
+}
+
+class ScoutingView extends StatefulWidget {
+  const ScoutingView({super.key});
+
+  @override
+  State<ScoutingView> createState() => _ScoutingViewState();
 }
 
 class _ScoutingViewState extends State<ScoutingView>
@@ -64,15 +142,23 @@ class _ScoutingViewState extends State<ScoutingView>
                         .data
                         .colorScheme
                         .inversePrimary,
-                    ThemeProvider.themeOf(context).data.colorScheme.background,
-                    ThemeProvider.themeOf(context).data.colorScheme.background,
-                    ThemeProvider.themeOf(context).data.colorScheme.secondary
+                    ThemeProvider.themeOf(context)
+                        .data
+                        .colorScheme
+                        .background,
+                    ThemeProvider.themeOf(context)
+                        .data
+                        .colorScheme
+                        .background,
+                    ThemeProvider.themeOf(context)
+                        .data
+                        .colorScheme
+                        .secondary
                   ])),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: form_label("Timestamp: ",
-                    icon: svgIcon(
-                        "assets/icons/pace_FILL0_wght400_GRAD0_opsz24.svg"),
+                    icon: const Icon(CommunityMaterialIcons.clock),
                     child: Text.rich(TextSpan(children: <TextSpan>[
                       TextSpan(
                           text:
@@ -117,25 +203,38 @@ class _ScoutingViewState extends State<ScoutingView>
                         form_label(
                           "Number ",
                           icon: const Icon(Icons.numbers_rounded),
-                          child: form_txtin(
-                              dim: 300, inputType: TextInputType.number),
+                          child: form_numpick(context,
+                              label: "Picker",
+                              icon: const Icon(
+                                  CommunityMaterialIcons.counter),
+                              minValue: 1,
+                              maxValue: 999,
+                              headerMessage: "Match Number",
+                              onChange: (int number) /*TODO*/ {}),
                         ),
                         form_label("Type",
-                            icon: const Icon(Icons.account_tree_rounded),
+                            icon: const Icon(
+                                Icons.account_tree_rounded),
                             child: form_seg_btn_1(
                                 segments: MatchType.values
-                                    .map<({Icon? icon, String label, MatchType value})>(
+                                    .map<
+                                            ({
+                                              Icon? icon,
+                                              String label,
+                                              MatchType value
+                                            })>(
                                         (MatchType e) => (
-                                              label: formalizeWord(e.name),
-                                              icon: const Icon(
-                                                  Icons.account_tree_rounded),
+                                              label: formalizeWord(
+                                                  e.name),
+                                              icon: null,
                                               value: e
                                             ))
                                     .toList(),
-                                initialSelection: MatchType.qualification,
+                                initialSelection:
+                                    MatchType.qualification,
                                 onSelect: (MatchType e) /*TODO*/ {
-                                  Debug()
-                                      .info("Switched match type to ${e.name}");
+                                  Debug().info(
+                                      "Switched match type to ${e.name}");
                                 }))
                       ])),
                   form_sec(context,
@@ -147,30 +246,44 @@ class _ScoutingViewState extends State<ScoutingView>
                       // for each of these information sections, no need to mention the individual word again like "[team] number"
                       child: form_col(<Widget>[
                         form_label("Number",
-                            child: form_txtin(
-                                dim: 300, inputType: TextInputType.number),
+                            child: form_numpick(context,
+                                label: "Picker",
+                                icon: const Icon(
+                                    CommunityMaterialIcons.counter),
+                                minValue: 1,
+                                maxValue: 9999,
+                                headerMessage: "Team Number",
+                                onChange: (int number) /*TODO*/ {}),
                             icon: const Icon(Icons.numbers_rounded)),
                         form_label("Alliance",
                             icon: const Icon(Icons.flag_rounded),
-                            child: TeamAllianceSwitch(
-                                onChanged:
-                                    (TeamAlliance alliance) /*TODO*/ {
-                                      Debug().info("[TEAM] Alliance: ${alliance.name}");
-                                    })),
+                            child: TeamAllianceSwitch(onChanged:
+                                (TeamAlliance alliance) /*TODO*/ {
+                          Debug().info(
+                              "[TEAM] Alliance: ${alliance.name}");
+                        })),
                         form_label("Starting Position",
-                            icon: const Icon(Icons.location_on_rounded),
+                            icon:
+                                const Icon(Icons.location_on_rounded),
                             child: form_seg_btn_1(
                                 segments: MatchStartingPosition.values
-                                    .map<({Icon? icon, String label, MatchStartingPosition value})>(
+                                    .map<
+                                            ({
+                                              Icon? icon,
+                                              String label,
+                                              MatchStartingPosition value
+                                            })>(
                                         (MatchStartingPosition e) => (
-                                              label: formalizeWord(e.name),
-                                              icon: const Icon(
-                                                  Icons.location_on_rounded),
+                                              label: formalizeWord(
+                                                  e.name),
+                                              icon: null,
                                               value: e
                                             ))
                                     .toList(),
-                                initialSelection: MatchStartingPosition.middle,
-                                onSelect: (MatchStartingPosition e) /*TODO*/ {
+                                initialSelection:
+                                    MatchStartingPosition.middle,
+                                onSelect: (MatchStartingPosition
+                                    e) /*TODO*/ {
                                   Debug().info(
                                       "[TEAM] Switched starting position to ${e.name}");
                                 })),
@@ -187,7 +300,8 @@ class _ScoutingViewState extends State<ScoutingView>
                             child: BasicToggleSwitch(
                                 initialValue: false,
                                 onChanged: (bool e) /*TODO*/ {
-                                  Debug().info("[AUTO] Note preloaded: $e");
+                                  Debug().info(
+                                      "[AUTO] Note preloaded: $e");
                                 })),
                         form_label("Picked up Note?",
                             icon: const Icon(Icons.trip_origin),
@@ -200,19 +314,20 @@ class _ScoutingViewState extends State<ScoutingView>
                                               AutoPickup value
                                             })>(
                                         (AutoPickup e) => (
-                                              label: formalizeWord(e.name),
-                                              icon:
-                                                  const Icon(Icons.trip_origin),
+                                              label: formalizeWord(
+                                                  e.name),
+                                              icon: null,
                                               value: e
                                             ))
                                     .toList(),
                                 initialSelection: AutoPickup.no,
                                 onSelect: (AutoPickup e) /*TODO*/ {
-                                  Debug()
-                                      .info("[AUTO] Picked up note: ${e.name}");
+                                  Debug().info(
+                                      "[AUTO] Picked up note: ${e.name}");
                                 })),
                         form_label("Taxis?",
-                            icon: const Icon(Icons.local_taxi_rounded),
+                            icon:
+                                const Icon(Icons.local_taxi_rounded),
                             child: BasicToggleSwitch(
                                 initialValue: false,
                                 onChanged: (bool e) /*TODO*/ {
@@ -223,8 +338,8 @@ class _ScoutingViewState extends State<ScoutingView>
                             child: PlusMinus(
                               initialValue: 0,
                               onValueChanged: (int value) /*TODO*/ {
-                                Debug()
-                                    .info("[AUTO] Scored in Speaker: $value");
+                                Debug().info(
+                                    "[AUTO] Scored in Speaker: $value");
                               },
                             )),
                         form_label("Missed Speaker Shots",
@@ -241,7 +356,8 @@ class _ScoutingViewState extends State<ScoutingView>
                             child: PlusMinus(
                               initialValue: 0,
                               onValueChanged: (int value) /*TODO*/ {
-                                Debug().info("[AUTO] Scored in AMP: $value");
+                                Debug().info(
+                                    "[AUTO] Scored in AMP: $value");
                               },
                             )),
                         form_label("Missed AMP Shots",
@@ -249,7 +365,8 @@ class _ScoutingViewState extends State<ScoutingView>
                             child: PlusMinus(
                               initialValue: 0,
                               onValueChanged: (int value) /*TODO*/ {
-                                Debug().info("[AUTO] Missed AMP Shots: $value");
+                                Debug().info(
+                                    "[AUTO] Missed AMP Shots: $value");
                               },
                             )),
                         form_label("Comments",
@@ -264,44 +381,49 @@ class _ScoutingViewState extends State<ScoutingView>
                       ])),
                   form_sec(context,
                       backgroundColor: Colors.transparent,
-                      header: (icon: Icons.accessibility, title: "Tele-op"),
+                      header: (
+                        icon: Icons.accessibility,
+                        title: "Tele-op"
+                      ),
                       child: form_col(<Widget>[
                         form_label("Plays Defense",
                             icon: const Icon(Icons.shield),
                             child: BasicToggleSwitch(
                                 initialValue: false,
                                 onChanged: (bool e) /*TODO*/ {
-                                  Debug().info("[TELE-OP] Plays defense: $e");
+                                  Debug().info(
+                                      "[TELE-OP] Plays defense: $e");
                                 })),
                         /*
-                        form_label("Plays Defense?",
-                            icon: const Icon(Icons.shield),
-                            child: form_seg_btn_1(
-                                segments: GenericUtils.boolOptions()
-                                    .map<
-                                            ({
-                                              Icon? icon,
-                                              String label,
-                                              bool value
-                                            })>(
-                                        (bool e) => (
-                                              label: e ? "Yes" : "No",
-                                              icon: const Icon(Icons.shield),
-                                              value: e
-                                            ))
-                                    .toList(),
-                                initialSelection: false,
-                                onSelect: (bool e) /*TODO*/ {
-                                  Debug().info(
-                                      "Plays defense: ${e ? "Yes" : "No"}");
-                                })),
-                                */
+                          form_label("Plays Defense?",
+                              icon: const Icon(Icons.shield),
+                              child: form_seg_btn_1(
+                                  segments: GenericUtils.boolOptions()
+                                      .map<
+                                              ({
+                                                Icon? icon,
+                                                String label,
+                                                bool value
+                                              })>(
+                                          (bool e) => (
+                                                label: e ? "Yes" : "No",
+                                                icon: const Icon(Icons.shield),
+                                                value: e
+                                              ))
+                                      .toList(),
+                                  initialSelection: false,
+                                  onSelect: (bool e) /*TODO*/ {
+                                    Debug().info(
+                                        "Plays defense: ${e ? "Yes" : "No"}");
+                                  })),
+                                  */
                         form_label("Was Defended?",
                             icon: const Icon(Icons.verified_user),
                             child: BasicToggleSwitch(
                                 initialValue: false,
                                 onChanged: (bool e) /*TODO*/ {
-                                  Debug().info("[TELE-OP] Was Defended: $e");
+                                  Debug().info(
+                                      "[TELE-OP] Was Defended: $e");
                                 })),
                         form_label("Scored in Speaker",
                             icon: const Icon(Icons.volume_up),
@@ -312,7 +434,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                     "[TELE-OP] Scored in Speaker: $value");
                               },
                             )),
-                            form_label("Scored during AMP",
+                        form_label("Scored during AMP",
                             icon: const Icon(Icons.volume_up),
                             child: PlusMinus(
                               initialValue: 0,
@@ -335,7 +457,8 @@ class _ScoutingViewState extends State<ScoutingView>
                             child: PlusMinus(
                               initialValue: 0,
                               onValueChanged: (int value) /*TODO*/ {
-                                Debug().info("[TELE-OP] Scored in AMP: $value");
+                                Debug().info(
+                                    "[TELE-OP] Scored in AMP: $value");
                               },
                             )),
                         form_label("Missed AMP Shots",
@@ -343,8 +466,8 @@ class _ScoutingViewState extends State<ScoutingView>
                             child: PlusMinus(
                               initialValue: 0,
                               onValueChanged: (int value) /*TODO*/ {
-                                Debug()
-                                    .info("[TELE-OP] Missed AMP Shots: $value");
+                                Debug().info(
+                                    "[TELE-OP] Missed AMP Shots: $value");
                               },
                             )),
                         form_label("Comments",
@@ -368,37 +491,41 @@ class _ScoutingViewState extends State<ScoutingView>
                       ])),
                   form_sec(context,
                       backgroundColor: Colors.transparent,
-                      header: (icon: Icons.accessibility, title: "Endgame"),
+                      header: (
+                        icon: Icons.accessibility,
+                        title: "Endgame"
+                      ),
                       child: form_col(<Widget>[
                         form_label("On chain",
                             icon: const Icon(Icons.link),
                             child: BasicToggleSwitch(
                                 initialValue: false,
                                 onChanged: (bool e) /*TODO*/ {
-                                  Debug().info("[ENDGAME] On chain: $e");
+                                  Debug()
+                                      .info("[ENDGAME] On chain: $e");
                                 })),
                         /*
-                        form_label("Status",
-                            icon: const Icon(Icons.shield),
-                            child: form_seg_btn_1(
-                                segments: EndStatus.values
-                                    .map<
-                                            ({
-                                              Icon? icon,
-                                              String label,
-                                              EndStatus value
-                                            })>(
-                                        (EndStatus e) => (
-                                              label: formalizeWord(e.name),
-                                              icon: const Icon(Icons.shield),
-                                              value: e
-                                            ))
-                                    .toList(),
-                                initialSelection: EndStatus.parked,
-                                onSelect: (EndStatus e) /*TODO*/ {
-                                  Debug().info("[ENDGAME] Status: ${e.name}");
-                                })),
-                                */
+                          form_label("Status",
+                              icon: const Icon(Icons.shield),
+                              child: form_seg_btn_1(
+                                  segments: EndStatus.values
+                                      .map<
+                                              ({
+                                                Icon? icon,
+                                                String label,
+                                                EndStatus value
+                                              })>(
+                                          (EndStatus e) => (
+                                                label: formalizeWord(e.name),
+                                                icon: const Icon(Icons.shield),
+                                                value: e
+                                              ))
+                                      .toList(),
+                                  initialSelection: EndStatus.parked,
+                                  onSelect: (EndStatus e) /*TODO*/ {
+                                    Debug().info("[ENDGAME] Status: ${e.name}");
+                                  })),
+                                  */
                         form_label("Harmony (Used same chain)",
                             icon: const Icon(Icons.people),
                             child: form_seg_btn_1(
@@ -410,14 +537,16 @@ class _ScoutingViewState extends State<ScoutingView>
                                               Harmony value
                                             })>(
                                         (Harmony e) => (
-                                              label: formalizeWord(e.name),
-                                              icon: const Icon(Icons.people),
+                                              label: formalizeWord(
+                                                  e.name),
+                                              icon: null,
                                               value: e
                                             ))
                                     .toList(),
                                 initialSelection: Harmony.no,
                                 onSelect: (Harmony e) /*TODO*/ {
-                                  Debug().info("[ENDGAME] Harmony: ${e.name}");
+                                  Debug().info(
+                                      "[ENDGAME] Harmony: ${e.name}");
                                 })),
                         form_label("Scored in Trap",
                             icon: const Icon(Icons.trip_origin),
@@ -430,15 +559,16 @@ class _ScoutingViewState extends State<ScoutingView>
                                               TrapScored value
                                             })>(
                                         (TrapScored e) => (
-                                              label: formalizeWord(e.name),
-                                              icon:
-                                                  const Icon(Icons.trip_origin),
+                                              label: formalizeWord(
+                                                  e.name),
+                                              icon: null,
                                               value: e
                                             ))
                                     .toList(),
                                 initialSelection: TrapScored.no,
                                 onSelect: (TrapScored e) /*TODO*/ {
-                                  Debug().info("[ENDGAME] Scored in trap: ${e.name}");
+                                  Debug().info(
+                                      "[ENDGAME] Scored in trap: ${e.name}");
                                 })),
                         form_label("Comments",
                             icon: const Icon(Icons.comment),
@@ -452,21 +582,26 @@ class _ScoutingViewState extends State<ScoutingView>
                       ])),
                   form_sec(context,
                       backgroundColor: Colors.transparent,
-                      header: (icon: Icons.accessibility, title: "Other"),
+                      header: (
+                        icon: Icons.accessibility,
+                        title: "Other"
+                      ),
                       child: form_col(<Widget>[
                         form_label("Coopertition",
                             icon: const Icon(Icons.groups),
                             child: BasicToggleSwitch(
                                 initialValue: false,
                                 onChanged: (bool e) /*TODO*/ {
-                                  Debug().info("[OTHER] Coopertition: $e");
+                                  Debug().info(
+                                      "[OTHER] Coopertition: $e");
                                 })),
                         form_label("Breakdown",
                             icon: const Icon(Icons.handyman),
                             child: BasicToggleSwitch(
                                 initialValue: false,
                                 onChanged: (bool e) /*TODO*/ {
-                                  Debug().info("[OTHER] Breakdown: $e");
+                                  Debug()
+                                      .info("[OTHER] Breakdown: $e");
                                 })),
                       ])),
                 ]),
