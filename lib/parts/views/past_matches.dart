@@ -201,9 +201,24 @@ class MatchTile extends StatelessWidget {
                     ),
                   ),
                   ElevatedButton(
+                    onPressed: () async => await launchConfirmDialog(
+                      showOkLabel: true,
+                      okLabel: "Delete",
+                      denyLabel: "No",
+                      icon: const Icon(Icons.warning_amber_rounded),
+                      title: "Delete Past Match",
+                      context,
+                      message: const Text("Are you sure you want to delete this match?"),
+                      onConfirm: () => onDelete(match.matchID),
+                    ),
+                    child: const Text('Delete'),
+                  ),
+                  /*
+                  ElevatedButton(
                     onPressed: () => onDelete(match.matchID),
                     child: const Text('Delete'),
                   ),
+                  */
                 ],
               ),
             ),
