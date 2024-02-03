@@ -44,13 +44,23 @@ enum Harmony { yes, no, failed }
 
 enum TrapScored { yes, no, missed }
 
+//for past_matches.dart
 class TeamMatchData {
   int matchID;
   MatchType matchType;
   MatchStartingPosition startingPosition;
+  EndStatus endStatus;
+  AutoPickup autoPickup;
+  Harmony harmony;
+  TrapScored trapScored;
 
   TeamMatchData(
       {required this.matchID,
       required this.matchType,
-      required this.startingPosition});
+      required this.startingPosition,
+      required this.endStatus,
+      required this.autoPickup,
+      required this.harmony,
+      required this.trapScored,
+      });
 }
