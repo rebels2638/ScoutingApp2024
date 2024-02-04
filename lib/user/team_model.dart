@@ -15,7 +15,7 @@ class TeamModelBlock {
   TeamAlliance alliance;
   int number;
   DateTime timeStamp;
-  List<TeamMatchData> matchData;
+  List<PastMatchesOverViewData> matchData;
 
   TeamModelBlock(
       {required this.alliance,
@@ -25,7 +25,7 @@ class TeamModelBlock {
 
   bool playedMatch(int id) {
     bool r = false;
-    for (TeamMatchData element in matchData) {
+    for (PastMatchesOverViewData element in matchData) {
       r = element.matchID == id;
     }
     return r;
@@ -45,7 +45,7 @@ enum Harmony { yes, no, failed }
 enum TrapScored { yes, no, missed }
 
 //for past_matches.dart
-class TeamMatchData {
+class PastMatchesOverViewData { // not hollistic
   int matchID;
   MatchType matchType;
   MatchStartingPosition startingPosition;
@@ -54,7 +54,7 @@ class TeamMatchData {
   Harmony harmony;
   TrapScored trapScored;
 
-  TeamMatchData(
+  PastMatchesOverViewData(
       {required this.matchID,
       required this.matchType,
       required this.startingPosition,

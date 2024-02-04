@@ -31,7 +31,7 @@ class PastMatchesView extends StatefulWidget implements AppPageViewExporter {
 }
 
 class _PastMatchesViewState extends State<PastMatchesView> {
-  List<TeamMatchData> matches = <TeamMatchData>[];
+  List<PastMatchesOverViewData> matches = <PastMatchesOverViewData>[];
 
   @override
   void initState() {
@@ -48,8 +48,8 @@ class _PastMatchesViewState extends State<PastMatchesView> {
 //this is all from team_model.dart
   void loadMatches() {
     // todo, below just placeholder data
-    matches = <TeamMatchData>[
-      TeamMatchData(
+    matches = <PastMatchesOverViewData>[
+      PastMatchesOverViewData(
           matchID: 1,
           matchType: MatchType.practice,
           startingPosition: MatchStartingPosition.left,
@@ -57,7 +57,7 @@ class _PastMatchesViewState extends State<PastMatchesView> {
           autoPickup: AutoPickup.m,
           harmony: Harmony.yes,
           trapScored: TrapScored.missed,),
-      TeamMatchData(
+      PastMatchesOverViewData(
           matchID: 2,
           matchType: MatchType.practice,
           startingPosition: MatchStartingPosition.middle,
@@ -65,7 +65,7 @@ class _PastMatchesViewState extends State<PastMatchesView> {
           autoPickup: AutoPickup.m,
           harmony: Harmony.yes,
           trapScored: TrapScored.missed,),
-      TeamMatchData(
+      PastMatchesOverViewData(
           matchID: 3,
           matchType: MatchType.qualification,
           startingPosition: MatchStartingPosition.right,
@@ -73,7 +73,7 @@ class _PastMatchesViewState extends State<PastMatchesView> {
           autoPickup: AutoPickup.m,
           harmony: Harmony.yes,
           trapScored: TrapScored.missed,),
-      TeamMatchData(
+      PastMatchesOverViewData(
           matchID: 4,
           matchType: MatchType.qualification,
           startingPosition: MatchStartingPosition.left,
@@ -81,7 +81,7 @@ class _PastMatchesViewState extends State<PastMatchesView> {
           autoPickup: AutoPickup.m,
           harmony: Harmony.yes,
           trapScored: TrapScored.missed,),
-      TeamMatchData(
+      PastMatchesOverViewData(
           matchID: 5,
           matchType: MatchType.playoff,
           startingPosition: MatchStartingPosition.middle,
@@ -89,7 +89,7 @@ class _PastMatchesViewState extends State<PastMatchesView> {
           autoPickup: AutoPickup.m,
           harmony: Harmony.yes,
           trapScored: TrapScored.missed,),
-      TeamMatchData(
+      PastMatchesOverViewData(
           matchID: 6,
           matchType: MatchType.playoff,
           startingPosition: MatchStartingPosition.right,
@@ -104,7 +104,8 @@ class _PastMatchesViewState extends State<PastMatchesView> {
 
   void removeMatch(int matchID) {
     setState(() {
-      matches.removeWhere((TeamMatchData m) => m.matchID == matchID);
+      matches.removeWhere(
+          (PastMatchesOverViewData m) => m.matchID == matchID);
     });
   }
 
@@ -185,7 +186,7 @@ class _PastMatchesViewState extends State<PastMatchesView> {
 }
 
 class MatchTile extends StatelessWidget {
-  final TeamMatchData match;
+  final PastMatchesOverViewData match;
   final Function(int) onDelete;
 
   const MatchTile({super.key, required this.match, required this.onDelete});
@@ -289,7 +290,7 @@ class MatchTile extends StatelessWidget {
   }
 }
 
-String matchDataToCsv(TeamMatchData match) {
+String matchDataToCsv(PastMatchesOverViewData match) {
   // Convert match data to csv for QR code export
   String csv =
   '${match.matchID},${match.matchType.name},${match.startingPosition.name},${match.endStatus.name},${match.autoPickup.name},${match.harmony.name},${match.trapScored.name},';

@@ -208,10 +208,10 @@ class PrelimState extends ScoutingSessionStates {
 class ScoutingSessionBloc
     extends Bloc<ScoutingSessionEvents, ScoutingSessionStates> {
   PrelimInfo prelim;
-  late AutoInfo auto;
-  late TeleOpInfo teleop;
-  late EndgameInfo endgame;
-  late MiscInfo misc;
+  AutoInfo auto;
+  TeleOpInfo teleop;
+  EndgameInfo endgame;
+  MiscInfo misc;
 
   ScoutingSessionBloc()
       : prelim = PrelimInfo.optional(),
@@ -241,4 +241,26 @@ class ScoutingSessionBloc
       emit(EndgameState(endgame));
     });
   }
+
+  ({
+    PrelimInfo prelim,
+    AutoInfo auto,
+    TeleOpInfo teleop,
+    EndgameInfo endgame,
+    MiscInfo misc
+  }) export() => (
+        prelim: prelim,
+        auto: auto,
+        teleop: teleop,
+        endgame: endgame,
+        misc: misc
+      );
+
+  Map<String, dynamic> exportMap() => <String, dynamic>{
+        "prelim": prelim,
+        "auto": auto,
+        "teleop": teleop,
+        "endgame": endgame,
+        "misc": misc
+      };
 }
