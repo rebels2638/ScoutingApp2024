@@ -43,7 +43,6 @@ class UserTelemetry {
             (Timer timer) async {
           // this is kinda bad since we dont check if the objects are the same and if it already persists in storage lmao, its just wasting cpu time saving for no reason, whatever
           await save();
-          Debug().info("Saved telemetry model");
         });
       });
 
@@ -54,8 +53,18 @@ class UserTelemetry {
   }
 
   Future<void> save() async {
-    await _prefs.setString(
-        userDBName, jsonEncode(_currentModel.toJson()));
+    Debug().info("Saving User Telemetry...");
+    await _prefs
+        .setString(userDBName, jsonEncode(_currentModel.toJson()))
+        .then((bool success) {
+      if (success) {
+        Debug().info(
+            "UserTelemetry saved OK! Content: ${_currentModel.toJson()}");
+      } else {
+        Debug().warn(
+            "UserTelemetry save FAILED! Content: ${_currentModel.toJson()}");
+      }
+    });
   }
 }
 
@@ -65,15 +74,20 @@ class UserPrefModel {
   static final UserPrefModel defaultModel =
       UserPrefModel(selectedTheme: AvaliableThemes.default_dark);
 
-  @JsonKey(required: true, defaultValue: AvaliableThemes.default_dark)
+  @JsonKey(required: false, defaultValue: AvaliableThemes.default_dark)
   AvaliableThemes selectedTheme;
 
   @JsonKey(required: false, defaultValue: false)
   bool showConsole;
 
+  @JsonKey(required: false, defaultValue: true)
+  bool showGameMap;
+
   // make sure to run flutter pub run build_runner build
   UserPrefModel(
-      {required this.selectedTheme, this.showConsole = false});
+      {required this.selectedTheme,
+      this.showConsole = false,
+      this.showGameMap = true});
 
   factory UserPrefModel.fromJson(Map<String, dynamic> json) =>
       _$UserPrefModelFromJson(json);

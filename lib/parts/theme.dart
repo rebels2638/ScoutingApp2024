@@ -30,6 +30,11 @@ enum AvaliableThemes {
 }
 
 final class ThemeBlob {
+  static ButtonStyle exportBtnBlobStyle() => ButtonStyle(
+      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8))));
+
   static List<AppTheme> export() => <AppTheme>[
         AppTheme(
             id: AvaliableThemes.default_dark.name,

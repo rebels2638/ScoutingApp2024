@@ -8,6 +8,7 @@ import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/bits/lock_in.dart';
 import 'package:scouting_app_2024/parts/bits/perf_overlay.dart';
 import 'package:scouting_app_2024/parts/bits/show_console.dart';
+import 'package:scouting_app_2024/parts/bits/show_game_map.dart';
 import 'package:scouting_app_2024/parts/bits/theme_mode.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/shared.dart';
@@ -31,6 +32,9 @@ class ThemedAppBundle extends StatelessWidget {
                 builder: (BuildContext
                         themeCtxt) => /*lol this is very scuffed XD i hope you can forgive me*/
                     MultiProvider(providers: <SingleChildWidget>[
+                      ChangeNotifierProvider<ShowGameMapModal>(
+                          create: (BuildContext _) =>
+                              ShowGameMapModal()),
                       ChangeNotifierProvider<ThemeModeModal>(
                           create: (BuildContext _) =>
                               ThemeModeModal()),
@@ -187,7 +191,8 @@ class _AppViewState extends State<_AppView> {
             label: aboutAppView.item.label,
             selectedIcon: aboutAppView.item.activeIcon,
             tooltip: aboutAppView.item.tooltip),
-      if (LockedInScoutingModal.isCasual(context))
+      if (LockedInScoutingModal.isCasual(context) &&
+          ShowGameMapModal.isShowingConsole(context))
         NavigationDestination(
             icon: gameMapView.item.icon,
             label: gameMapView.item.label,
@@ -208,7 +213,9 @@ class _AppViewState extends State<_AppView> {
         pastMatchesView.child,
       if (LockedInScoutingModal.isCasual(context)) settingsView.child,
       if (LockedInScoutingModal.isCasual(context)) aboutAppView.child,
-      if (LockedInScoutingModal.isCasual(context)) gameMapView.child,
+      if (LockedInScoutingModal.isCasual(context) &&
+          ShowGameMapModal.isShowingConsole(context))
+        gameMapView.child,
       if (LockedInScoutingModal.isCasual(context) &&
           ShowConsoleModal.isShowingConsole(context))
         consoleView.child,

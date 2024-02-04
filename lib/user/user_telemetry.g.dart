@@ -11,10 +11,6 @@ UserPrefModel _$UserPrefModelFromJson(Map<String, dynamic> json) =>
       'UserPrefModel',
       json,
       ($checkedConvert) {
-        $checkKeys(
-          json,
-          requiredKeys: const ['selectedTheme'],
-        );
         final val = UserPrefModel(
           selectedTheme: $checkedConvert(
               'selectedTheme',
@@ -23,6 +19,8 @@ UserPrefModel _$UserPrefModelFromJson(Map<String, dynamic> json) =>
                   AvaliableThemes.default_dark),
           showConsole:
               $checkedConvert('showConsole', (v) => v as bool? ?? false),
+          showGameMap:
+              $checkedConvert('showGameMap', (v) => v as bool? ?? true),
         );
         return val;
       },
@@ -32,6 +30,7 @@ Map<String, dynamic> _$UserPrefModelToJson(UserPrefModel instance) =>
     <String, dynamic>{
       'selectedTheme': _$AvaliableThemesEnumMap[instance.selectedTheme]!,
       'showConsole': instance.showConsole,
+      'showGameMap': instance.showGameMap,
     };
 
 const _$AvaliableThemesEnumMap = {
