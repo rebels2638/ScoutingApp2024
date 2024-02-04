@@ -4,13 +4,10 @@ import "package:scouting_app_2024/blobs/blobs.dart";
 import "package:scouting_app_2024/blobs/form_blob.dart";
 import "package:scouting_app_2024/blobs/inc_dec_blob.dart";
 import "package:scouting_app_2024/blobs/locale_blob.dart";
-import "package:scouting_app_2024/extern/color.dart";
 import "package:scouting_app_2024/parts/bits/team_bloc.dart";
 import "package:scouting_app_2024/parts/team.dart";
 import "package:scouting_app_2024/parts/views_delegate.dart";
-import "package:scouting_app_2024/extern/datetime.dart";
 import "package:scouting_app_2024/user/team_model.dart";
-import "package:theme_provider/theme_provider.dart";
 import 'package:scouting_app_2024/debug.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 
@@ -133,68 +130,55 @@ class _ScoutingViewState extends State<ScoutingView>
   Widget build(BuildContext context) {
     // MOCKUP, NOT FINAL
     super.build(context);
-    DateTime timeNow = DateTime
-        .now(); // TODO: this has to be linked up to the backend for it to work
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(10.0),
       child: Column(
         children: <Widget>[
           Flexible(
-            flex: 0,
-            child: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  gradient: LinearGradient(stops: const <double>[
-                    0.175,
-                    0.45,
-                    0.55,
-                    0.975
-                  ], colors: <Color>[
-                    ThemeProvider.themeOf(context)
-                        .data
-                        .colorScheme
-                        .inversePrimary,
-                    ThemeProvider.themeOf(context)
-                        .data
-                        .colorScheme
-                        .background,
-                    ThemeProvider.themeOf(context)
-                        .data
-                        .colorScheme
-                        .background,
-                    ThemeProvider.themeOf(context)
-                        .data
-                        .colorScheme
-                        .secondary
-                  ])),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: form_label("Timestamp: ",
-                    icon: const Icon(CommunityMaterialIcons.clock),
-                    child: Text.rich(TextSpan(children: <TextSpan>[
-                      TextSpan(
-                          text:
-                              "${timeNow.hour}:${timeNow.minute}:${timeNow.second}.${timeNow.millisecond}\t",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: ThemeProvider.themeOf(context)
-                                  .data
-                                  .colorScheme
-                                  .secondary
-                                  .biContrastingColor())),
-                      TextSpan(
-                          text:
-                              "${timeNow.monthName()} ${timeNow.day}, ${timeNow.year}",
-                          style: TextStyle(
-                              color: ThemeProvider.themeOf(context)
-                                  .data
-                                  .colorScheme
-                                  .secondary
-                                  .biContrastingColor()))
-                    ]))),
-              ),
-            ),
-          ),
+              flex: 0,
+              child: Wrap(
+                  children: strutAll(<Widget>[
+                FilledButton.icon(
+                    style: ButtonStyle(
+                        shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(8)))),
+                    icon: const Icon(Icons.exit_to_app_rounded),
+                    label: const Text("Exit Session"),
+                    onPressed: () {}),
+                FilledButton.icon(
+                    style: ButtonStyle(
+                        shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(8)))),
+                    icon: const Icon(CommunityMaterialIcons.bluetooth_connect),
+                    label: const Text("Beam Session"),
+                    onPressed: () {}),
+                FilledButton.icon(
+                    style: ButtonStyle(
+                        shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(8)))),
+                    icon: const Icon(CommunityMaterialIcons.qrcode),
+                    label: const Text("Export Session"),
+                    onPressed: () {}),
+                FilledButton.icon(
+                    style: ButtonStyle(
+                        shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(8)))),
+                    icon: const Icon(Icons.save_rounded),
+                    label: const Text("Save Session"),
+                    onPressed: () {}),
+              ], width: 12))),
           strut(height: 20),
           Flexible(
             child: form_grid_2(

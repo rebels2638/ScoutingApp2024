@@ -60,8 +60,7 @@ class _AboutAppViewState extends State<AboutAppView> {
                         alignment: Alignment.center,
                         fit: BoxFit.cover,
                         width: MediaQuery.of(context).size.width),
-                    ColoredBox(
-                        color: Colors.black.withOpacity(0.4)),
+                    ColoredBox(color: Colors.black.withOpacity(0.4)),
                   ],
                 ),
               ),
@@ -117,110 +116,115 @@ class _AboutAppViewState extends State<AboutAppView> {
     return strutAll(
       <Widget>[
         const Center(
-            // lets gooo its const
-            child: Text.rich(TextSpan(
-                //text: "asdawfsuiunnnnnnnnnnnnnnnnnnnn\n",
-                children: <TextSpan>[
+          // lets gooo its const
+          child: Text.rich(
               TextSpan(
-                text: "2638 Scouting App\n",
-                style: TextStyle(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 21,
-                  //decoration:TextDecoration.underline,
-                ),
-              ),
-              TextSpan(
-                text: "Version $REBEL_ROBOTICS_APP_VERSION",
-                style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              TextSpan(
-                text: "\n\n\n\n",
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              TextSpan(
-                  text: "Development Team\n",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 17,
-                    //decoration:TextDecoration.underline,
-                  )),
-              TextSpan(
-                text: "Jack Meng\nChiming Wang\nRichard Xu",
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              TextSpan(
-                text: "\n\n\n",
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              TextSpan(
-                  text: "Helpers\n",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 17,
-                    //decoration:TextDecoration.underline,
-                  )),
-              TextSpan(
-                text: "Aiden Pan\nAarav Minocha",
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              TextSpan(
-                text: "\n\n\n",
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              TextSpan(
-                  text: "Tools Used\n",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 17,
-                    //decoration:TextDecoration.underline,
-                  )),
-              TextSpan(
-                text: "Flutter/Dart\nVisual Studio Code\nGithub",
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              TextSpan(
-                text: "\n\n\n",
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              TextSpan(
-                  text: "Special thanks to\n",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 17,
-                    //decoration:TextDecoration.underline,
-                  )),
-              TextSpan(
-                text:
-                    "John Motchkavitz\nMatthew Corrigan\nAndrea Zinn\nGeroge Motchkavitz\n",
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              TextSpan(
-                text: "And all of our amazing mentors!",
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
-            ]))),
+                  //text: "asdawfsuiunnnnnnnnnnnnnnnnnnnn\n",
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: "2638 Scouting App\n",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 21,
+                        //decoration:TextDecoration.underline,
+                      ),
+                    ),
+                    TextSpan(
+                      text: "Version $REBEL_ROBOTICS_APP_VERSION",
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    TextSpan(
+                      text: "\n\n\n\n",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    TextSpan(
+                        text: "Development Team\n",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w800,
+                          fontSize: 17,
+                          //decoration:TextDecoration.underline,
+                        )),
+                    TextSpan(
+                      text: "Jack Meng\nChiming Wang\nRichard Xu",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    TextSpan(
+                      text: "\n\n\n",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    TextSpan(
+                        text: "Helpers\n",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w800,
+                          fontSize: 17,
+                          //decoration:TextDecoration.underline,
+                        )),
+                    TextSpan(
+                      text: "Aiden Pan\nAarav Minocha",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    TextSpan(
+                      text: "\n\n\n",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    TextSpan(
+                        text: "Tools Used\n",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w800,
+                          fontSize: 17,
+                          //decoration:TextDecoration.underline,
+                        )),
+                    TextSpan(
+                      text:
+                          "Flutter/Dart\nVisual Studio Code\nGithub",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    TextSpan(
+                      text: "\n\n\n",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    TextSpan(
+                        text: "Special thanks to\n",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w800,
+                          fontSize: 17,
+                          //decoration:TextDecoration.underline,
+                        )),
+                    TextSpan(
+                      text:
+                          "John Motchkavitz\nMatthew Corrigan\nAndrea Zinn\nGeroge Motchkavitz\n",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    TextSpan(
+                      text: "And all of our amazing mentors!",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ]),
+              style: TextStyle(
+                  color: Colors.white)),
+        ),
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: strutAll(<Widget>[

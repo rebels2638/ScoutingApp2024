@@ -311,47 +311,50 @@ class _AppViewState extends State<_AppView> {
                     )),
               )
             ],
+            centerTitle: true,
             title: LockedInScoutingModal.isCasual(context)
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                        GestureDetector(
-                          onTap: () async => await launchConfirmDialog(
-                              context,
-                              message: const Text(
-                                  "You are about to visit the Rebel Robotics' website"),
-                              onConfirm: () async => await launchUrl(
-                                  Uri.parse(
-                                      RebelRoboticsShared.website))),
-                          child: const Hero(
-                            tag: "RebelsLogo",
-                            child: Image(
-                              image: ExactAssetImage(
-                                  "assets/appicon_header.png"),
-                              width: 52,
-                              height: 52,
-                            ),
-                          ),
-                        ),
-                        strut(width: 10),
-                        const Text(APP_CANONICAL_NAME,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500)),
-                        strut(width: 10),
-                        GestureDetector(
+                ? Center(
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                          GestureDetector(
                             onTap: () async => await launchConfirmDialog(
                                 context,
                                 message: const Text(
-                                    "You are about to visit the FRC Game Overview website"),
-                                onConfirm: () async =>
-                                    await launchUrl(Uri.parse(
-                                        FIRSTCrescendoShared
-                                            .website))),
-                            child: const Image(
-                                height: 20,
+                                    "You are about to visit the Rebel Robotics' website"),
+                                onConfirm: () async => await launchUrl(
+                                    Uri.parse(
+                                        RebelRoboticsShared.website))),
+                            child: const Hero(
+                              tag: "RebelsLogo",
+                              child: Image(
                                 image: ExactAssetImage(
-                                    "assets/crescendo/crescendo_header.png"))),
-                      ])
+                                    "assets/appicon_header.png"),
+                                width: 52,
+                                height: 52,
+                              ),
+                            ),
+                          ),
+                          strut(width: 10),
+                          const Text(APP_CANONICAL_NAME,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500)),
+                          strut(width: 10),
+                          GestureDetector(
+                              onTap: () async => await launchConfirmDialog(
+                                  context,
+                                  message: const Text(
+                                      "You are about to visit the FRC Game Overview website"),
+                                  onConfirm: () async =>
+                                      await launchUrl(Uri.parse(
+                                          FIRSTCrescendoShared
+                                              .website))),
+                              child: const Image(
+                                  height: 20,
+                                  image: ExactAssetImage(
+                                      "assets/crescendo/crescendo_header.png"))),
+                        ]),
+                )
                 : Container()) /*lmao */,
         body: Padding(
             padding: const EdgeInsets.all(10.0),
