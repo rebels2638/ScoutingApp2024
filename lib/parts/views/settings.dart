@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
+import 'package:scouting_app_2024/user/user_telemetry.dart';
 
 class SettingsView extends StatelessWidget
     implements AppPageViewExporter {
@@ -57,14 +58,16 @@ class SettingsView extends StatelessWidget
                 label: "Show Development Console",
                 hint: "A page for debug and development purposes",
                 child: BasicToggleSwitch(
-                    initialValue: Provider.of<ShowConsoleModal>(
-                            context,
-                            listen: false)
-                        .showingConsole, // i feel like we could somehow combine it with the preceding Provider.of because both are going to traverse the tree anyways
-                    onChanged: (bool val) =>
-                        Provider.of<ShowConsoleModal>(context,
-                                listen: false)
-                            .showingConsole = val))
+                    initialValue: UserTelemetry()
+                        .currentModel
+                        .showConsole, // i feel like we could somehow combine it with the preceding Provider.of because both are going to traverse the tree anyways
+                    onChanged: (bool val) {
+                      Provider.of<ShowConsoleModal>(context,
+                              listen: false)
+                          .showingConsole = val;
+                      UserTelemetry().currentModel.showConsole = val;
+                      UserTelemetry().save();
+                    }))
           ])),
     );
   }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scouting_app_2024/debug.dart';
+import 'package:scouting_app_2024/user/user_telemetry.dart';
 
 class ShowConsoleModal extends ChangeNotifier {
-  bool _showConsole = false;
+  bool _showConsole = UserTelemetry().currentModel.showConsole;
 
   bool get showingConsole => _showConsole;
 

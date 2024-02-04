@@ -70,7 +70,6 @@ const ColorScheme darkColorScheme3 = ColorScheme(
   scrim: Color(0xFF000000),
 );
 
-
 // peach
 const ColorScheme lightColorScheme2 = ColorScheme(
   brightness: Brightness.light,

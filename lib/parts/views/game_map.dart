@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 
 class GameMapView extends StatelessWidget implements AppPageViewExporter {
@@ -91,7 +90,7 @@ class GameMapView extends StatelessWidget implements AppPageViewExporter {
     'Notes': Icons.music_note,
   };
 
-  IconData icon = icons[title] ?? Icons.help_outline; 
+  IconData icon = icons[title] ?? Icons.help_outline;
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,

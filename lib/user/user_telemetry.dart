@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
@@ -26,33 +27,35 @@ class UserTelemetry {
 
   UserPrefModel get currentModel => _currentModel;
 
-  void init() =>
-      SharedPreferences.getInstance().then((SharedPreferences e) {
+  Future<void> init() async => await SharedPreferences.getInstance()
+          .then((SharedPreferences e) {
         _prefs = e;
         if (isEmpty()) {
           reset();
         }
+        _currentModel = UserPrefModel.fromJson(
+            jsonDecode(_prefs.getString(userDBName)!));
+        Debug().info(
+            "${jsonDecode(_prefs.getString(userDBName)!).runtimeType} with the following content: ${_prefs.getString(userDBName)}");
+        Debug().info(
+            "Model ready with the following content: ${_currentModel.toJson().toString()}");
         Timer.periodic(const Duration(seconds: 10),
             (Timer timer) async {
           // this is kinda bad since we dont check if the objects are the same and if it already persists in storage lmao, its just wasting cpu time saving for no reason, whatever
-          Debug().info(
-              "USER_TELEMETRY Saving UserTelemetry Model now. Values: ${_currentModel.toJson()}");
           await save();
-          Debug().info(
-              "UserTelemetry Received the following content: ${_prefs.getString(userDBName)}");
+          Debug().info("Saved telemetry model");
         });
       });
 
   /// resets the model, but does not perform a save
-  void reset() => _currentModel = UserPrefModel.defaultModel;
+  void reset() {
+    _currentModel = UserPrefModel.defaultModel;
+    save();
+  }
 
   Future<void> save() async {
-    for (MapEntry<String, dynamic> entry
-        in _currentModel.toJson().entries) {
-      Debug()
-          .info("USER_TELEMETRY Writing ${entry.key}=${entry.value}");
-      await _prefs.setString(userDBName, entry.value.toString());
-    }
+    await _prefs.setString(
+        userDBName, jsonEncode(_currentModel.toJson()));
   }
 }
 
@@ -65,7 +68,12 @@ class UserPrefModel {
   @JsonKey(required: true, defaultValue: AvaliableThemes.default_dark)
   AvaliableThemes selectedTheme;
 
-  UserPrefModel({required this.selectedTheme});
+  @JsonKey(required: false, defaultValue: false)
+  bool showConsole;
+
+  // make sure to run flutter pub run build_runner build
+  UserPrefModel(
+      {required this.selectedTheme, this.showConsole = false});
 
   factory UserPrefModel.fromJson(Map<String, dynamic> json) =>
       _$UserPrefModelFromJson(json);

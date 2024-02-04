@@ -189,7 +189,8 @@ class _AppViewState extends State<_AppView> {
             label: gameMapView.item.label,
             selectedIcon: gameMapView.item.activeIcon,
             tooltip: gameMapView.item.tooltip),
-      if (LockedInScoutingModal.isCasual(context))
+      if (LockedInScoutingModal.isCasual(context) &&
+          ShowConsoleModal.isShowingConsole(context))
         NavigationDestination(
             icon: consoleView.item.icon,
             label: consoleView.item.label,

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -5,6 +7,7 @@ import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/blobs/locale_blob.dart';
 import 'package:scouting_app_2024/parts/bits/perf_overlay.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
+import 'package:scouting_app_2024/user/user_telemetry.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 class ConsoleView extends StatelessWidget
@@ -112,6 +115,51 @@ class ConsoleStateComponent extends State<_ConsoleComponent> {
                     .showSnackBar(yummyDeadlySnackBar("Amogus")),
                 icon: const Icon(Icons.window_rounded),
                 label: const Text("Yummy Deadly",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontFamily: "IBM Plex Mono"))),
+            TextButton.icon(
+                onPressed: () => launchConfirmDialog(context,
+                    message: Container(
+                      decoration: BoxDecoration(
+                          color: ThemeProvider.themeOf(context)
+                              .data
+                              .colorScheme
+                              .background
+                              .withOpacity(0.8),
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Column(
+                        children: <Widget>[
+                          TextButton.icon(
+                              onPressed: () async =>
+                                  await Clipboard.setData(
+                                      ClipboardData(
+                                          text: jsonEncode(
+                                              UserTelemetry()
+                                                  .currentModel
+                                                  .toJson()))),
+                              icon: const Icon(Icons.copy_rounded),
+                              label: const Text("Copy",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: "IBM Plex Mono"))),
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text(
+                                jsonEncode(UserTelemetry()
+                                    .currentModel
+                                    .toJson()),
+                                style: const TextStyle(
+                                    fontFamily: "IBM Plex Mono",
+                                    fontWeight: FontWeight.w600)),
+                          ),
+                        ],
+                      ),
+                    ),
+                    title: "User Prefs RAW",
+                    onConfirm: () {}),
+                icon: const Icon(Icons.subscript_rounded),
+                label: const Text("User Prefs",
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontFamily: "IBM Plex Mono"))),

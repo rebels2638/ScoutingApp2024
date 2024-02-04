@@ -45,7 +45,8 @@ enum Harmony { yes, no, failed }
 enum TrapScored { yes, no, missed }
 
 //for past_matches.dart
-class PastMatchesOverViewData { // not hollistic
+class PastMatchesOverViewData {
+  // not hollistic
   int matchID;
   MatchType matchType;
   MatchStartingPosition startingPosition;
@@ -54,13 +55,13 @@ class PastMatchesOverViewData { // not hollistic
   Harmony harmony;
   TrapScored trapScored;
 
-  PastMatchesOverViewData(
-      {required this.matchID,
-      required this.matchType,
-      required this.startingPosition,
-      required this.endStatus,
-      required this.autoPickup,
-      required this.harmony,
-      required this.trapScored,
-      });
+  PastMatchesOverViewData({
+    required this.matchID,
+    required this.matchType,
+    required this.startingPosition,
+    required this.endStatus,
+    required this.autoPickup,
+    required this.harmony,
+    required this.trapScored,
+  });
 }

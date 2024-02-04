@@ -20,17 +20,18 @@ void main() async {
     FlutterError.presentError.call(details);
     Debug().warn("${details.summary} ${details.context}");
   };
+
   Debug().init();
-  UserTelemetry().reset();
-  UserTelemetry().init();
-  Bloc.observer = const DebugObserver();
-  const ThemedAppBundle app = ThemedAppBundle();
-  runApp(app);
-  if (Platform.isWindows) {
-    await WindowManager.instance.ensureInitialized();
-    await windowManager.setTitle(
-        "2638 Scout \"$APP_CANONICAL_NAME\" (Build $REBEL_ROBOTICS_APP_VERSION)");
-  }
-  Debug().info(
-      "Took ${DateTime.now().millisecondsSinceEpoch - now.millisecondsSinceEpoch} ms to launch the app...");
+  UserTelemetry().init().then((_) async {
+    Bloc.observer = const DebugObserver();
+    const ThemedAppBundle app = ThemedAppBundle();
+    runApp(app);
+    if (Platform.isWindows) {
+      await WindowManager.instance.ensureInitialized();
+      await windowManager.setTitle(
+          "2638 Scout \"$APP_CANONICAL_NAME\" (Build $REBEL_ROBOTICS_APP_VERSION)");
+    }
+    Debug().info(
+        "Took ${DateTime.now().millisecondsSinceEpoch - now.millisecondsSinceEpoch} ms to launch the app...");
+  });
 }
