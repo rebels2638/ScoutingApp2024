@@ -8,6 +8,7 @@ import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/bits/lock_in.dart';
 import 'package:scouting_app_2024/parts/bits/perf_overlay.dart';
 import 'package:scouting_app_2024/parts/bits/show_console.dart';
+import 'package:scouting_app_2024/parts/bits/theme_mode.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/shared.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
@@ -30,6 +31,9 @@ class ThemedAppBundle extends StatelessWidget {
                 builder: (BuildContext
                         themeCtxt) => /*lol this is very scuffed XD i hope you can forgive me*/
                     MultiProvider(providers: <SingleChildWidget>[
+                      ChangeNotifierProvider<ThemeModeModal>(
+                          create: (BuildContext _) =>
+                              ThemeModeModal()),
                       ChangeNotifierProvider<ShowConsoleModal>(
                           create: (BuildContext _) =>
                               ShowConsoleModal()),
@@ -209,6 +213,13 @@ class _AppViewState extends State<_AppView> {
           ShowConsoleModal.isShowingConsole(context))
         consoleView.child,
     ];
+    Future<void>.delayed(Duration.zero, () {
+      if (ThemeClassifier.of(context) !=
+          UserTelemetry().currentModel.selectedTheme) {
+        setState(() => ThemeProvider.controllerOf(context).setTheme(
+            UserTelemetry().currentModel.selectedTheme.name));
+      }
+    });
     return Scaffold(
         bottomNavigationBar: AnimatedSwitcher(
             duration: const Duration(milliseconds: 600),
@@ -292,8 +303,17 @@ class _AppViewState extends State<_AppView> {
                                         .toList()),
                                 actions: <Widget>[
                                   TextButton.icon(
-                                      onPressed: () =>
-                                          Navigator.of(context).pop(),
+                                      onPressed: () async {
+                                        Debug().info(
+                                            "User affirmed theme change");
+                                        Navigator.of(context).pop();
+                                        UserTelemetry()
+                                                .currentModel
+                                                .selectedTheme =
+                                            ThemeClassifier.of(
+                                                context);
+                                        await UserTelemetry().save();
+                                      },
                                       icon: const Icon(
                                           Icons.check_rounded),
                                       label: const Text("Ok",
@@ -314,17 +334,18 @@ class _AppViewState extends State<_AppView> {
             centerTitle: true,
             title: LockedInScoutingModal.isCasual(context)
                 ? Center(
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
                           GestureDetector(
                             onTap: () async => await launchConfirmDialog(
                                 context,
                                 message: const Text(
                                     "You are about to visit the Rebel Robotics' website"),
-                                onConfirm: () async => await launchUrl(
-                                    Uri.parse(
-                                        RebelRoboticsShared.website))),
+                                onConfirm: () async =>
+                                    await launchUrl(Uri.parse(
+                                        RebelRoboticsShared
+                                            .website))),
                             child: const Hero(
                               tag: "RebelsLogo",
                               child: Image(
@@ -341,20 +362,21 @@ class _AppViewState extends State<_AppView> {
                                   fontWeight: FontWeight.w500)),
                           strut(width: 10),
                           GestureDetector(
-                              onTap: () async => await launchConfirmDialog(
-                                  context,
-                                  message: const Text(
-                                      "You are about to visit the FRC Game Overview website"),
-                                  onConfirm: () async =>
-                                      await launchUrl(Uri.parse(
-                                          FIRSTCrescendoShared
-                                              .website))),
+                              onTap: () async =>
+                                  await launchConfirmDialog(
+                                      context,
+                                      message: const Text(
+                                          "You are about to visit the FRC Game Overview website"),
+                                      onConfirm: () async =>
+                                          await launchUrl(Uri.parse(
+                                              FIRSTCrescendoShared
+                                                  .website))),
                               child: const Image(
                                   height: 20,
                                   image: ExactAssetImage(
                                       "assets/crescendo/crescendo_header.png"))),
                         ]),
-                )
+                  )
                 : Container()) /*lmao */,
         body: Padding(
             padding: const EdgeInsets.all(10.0),

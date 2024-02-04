@@ -155,7 +155,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.circular(8)))),
-                    icon: const Icon(CommunityMaterialIcons.bluetooth_connect),
+                    icon: const Icon(Icons.bluetooth_connected_rounded),
                     label: const Text("Beam Session"),
                     onPressed: () {}),
                 FilledButton.icon(
