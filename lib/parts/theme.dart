@@ -20,6 +20,7 @@ enum AvaliableThemes {
   default_light("Default Light", false),
   mint("Mint", false),
   forest("Forest"),
+  matcha("Matcha", false),
   peach("Peach", false),
   plum("Plum");
 
@@ -50,6 +51,13 @@ final class ThemeBlob {
                 useMaterial3: true,
                 fontFamily: Shared.FONT_FAMILY_SANS,
                 colorScheme: lightColorScheme3)),
+        AppTheme(
+            id: AvaliableThemes.matcha.name,
+            description: "Matcha",
+            data: ThemeData(
+                useMaterial3: true,
+                fontFamily: Shared.FONT_FAMILY_SANS,
+                colorScheme: matcha)),
         AppTheme(
             id: AvaliableThemes.mint.name,
             description: "Mint",

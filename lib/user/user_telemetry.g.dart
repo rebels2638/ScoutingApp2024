@@ -47,6 +47,7 @@ const _$AvaliableThemesEnumMap = {
   AvaliableThemes.default_light: 'default_light',
   AvaliableThemes.mint: 'mint',
   AvaliableThemes.forest: 'forest',
+  AvaliableThemes.matcha: 'matcha',
   AvaliableThemes.peach: 'peach',
   AvaliableThemes.plum: 'plum',
 };
