@@ -11,7 +11,9 @@ sealed class ScoutingSessionStates extends Equatable {
 
 sealed class ScoutingSessionEvents {}
 
-sealed class ScoutingInfo {}
+sealed class ScoutingInfo {
+  Map<String, dynamic> exportMap();
+}
 
 class MiscInfo extends ScoutingInfo {
   bool coopertition;
@@ -22,6 +24,12 @@ class MiscInfo extends ScoutingInfo {
   factory MiscInfo.optional(
           {bool coopertition = false, bool breakdown = false}) =>
       MiscInfo(coopertition: coopertition, breakdown: breakdown);
+
+  @override
+  Map<String, dynamic> exportMap() => <String, dynamic>{
+        "coopertition": coopertition,
+        "breakdown": breakdown
+      };
 }
 
 class MiscUpdateEvent extends ScoutingSessionEvents {}
@@ -53,6 +61,14 @@ class EndgameInfo extends ScoutingInfo {
           harmony: harmony,
           trapScored: trapScored,
           comments: comments);
+
+  @override
+  Map<String, dynamic> exportMap() => <String, dynamic>{
+        "onChain": onChain,
+        "harmony": harmony,
+        "trapScored": trapScored,
+        "comments": comments
+      };
 }
 
 class EndgameUpdateEvent extends ScoutingSessionEvents {}
@@ -104,6 +120,19 @@ class TeleOpInfo extends ScoutingInfo {
           scoredWhileAmped: scoredWhileAmped,
           comments: comments,
           driverRating: driverRating);
+
+  @override
+  Map<String, dynamic> exportMap() => <String, dynamic>{
+        "playsDefense": playsDefense,
+        "wasDefended": wasDefended,
+        "scoredSpeaker": scoredSpeaker,
+        "missedSpeaker": missedSpeaker,
+        "scoredAmp": scoredAmp,
+        "missedAmp": missedAmp,
+        "scoredWhileAmped": scoredWhileAmped,
+        "comments": comments,
+        "driverRating": driverRating
+      };
 }
 
 class TeleOpUpdateEvent extends ScoutingSessionEvents {}
@@ -151,6 +180,18 @@ class AutoInfo extends ScoutingInfo {
           scoredAmp: scoredAmp,
           missedAmp: missedAmp,
           comments: comments);
+
+  @override
+  Map<String, dynamic> exportMap() => <String, dynamic>{
+        "notePreloaded": notePreloaded,
+        "notesPickedUp": notesPickedUp,
+        "taxi": taxi,
+        "scoredSpeaker": scoredSpeaker,
+        "missedSpeaker": missedSpeaker,
+        "scoredAmp": scoredAmp,
+        "missedAmp": missedAmp,
+        "comments": comments
+      };
 }
 
 class AutoUpdateEvent extends ScoutingSessionEvents {}
@@ -195,6 +236,17 @@ class PrelimInfo extends ScoutingInfo {
           matchType: matchType,
           alliance: alliance,
           startingPosition: startingPosition);
+
+  @override
+  Map<String, dynamic> exportMap() => <String, dynamic>{
+        "timeStamp": timeStamp,
+        "scouters": scouters,
+        "teamNumber": teamNumber,
+        "matchNumber": matchNumber,
+        "matchType": matchType,
+        "alliance": alliance,
+        "startingPosition": startingPosition
+      };
 }
 
 class PrelimUpdateEvent extends ScoutingSessionEvents {}
@@ -256,6 +308,14 @@ class ScoutingSessionBloc
         misc: misc
       );
 
+  Map<String, dynamic> exportMapDeep() => <String, dynamic>{
+        "prelim": prelim.exportMap(),
+        "auto": auto.exportMap(),
+        "teleop": teleop.exportMap(),
+        "endgame": endgame.exportMap(),
+        "misc": misc.exportMap()
+      };
+
   Map<String, dynamic> exportMap() => <String, dynamic>{
         "prelim": prelim,
         "auto": auto,
@@ -263,4 +323,11 @@ class ScoutingSessionBloc
         "endgame": endgame,
         "misc": misc
       };
+
+  HollisticMatchScoutingData exportHollistic() =>
+      HollisticMatchScoutingData(
+          preliminary: prelim,
+          auto: auto,
+          teleop: teleop,
+          endgame: endgame);
 }

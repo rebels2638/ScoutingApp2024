@@ -1,9 +1,12 @@
+import "dart:convert";
+
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:scouting_app_2024/blobs/blobs.dart";
 import "package:scouting_app_2024/blobs/form_blob.dart";
 import "package:scouting_app_2024/blobs/inc_dec_blob.dart";
 import "package:scouting_app_2024/blobs/locale_blob.dart";
+import "package:scouting_app_2024/parts/bits/show_experimental.dart";
 import "package:scouting_app_2024/parts/bits/team_bloc.dart";
 import "package:scouting_app_2024/parts/team.dart";
 import "package:scouting_app_2024/parts/views_delegate.dart";
@@ -155,7 +158,8 @@ class _ScoutingViewState extends State<ScoutingView>
                             RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.circular(8)))),
-                    icon: const Icon(Icons.bluetooth_connected_rounded),
+                    icon:
+                        const Icon(Icons.bluetooth_connected_rounded),
                     label: const Text("Beam Session"),
                     onPressed: () {}),
                 FilledButton.icon(
@@ -178,6 +182,23 @@ class _ScoutingViewState extends State<ScoutingView>
                     icon: const Icon(Icons.save_rounded),
                     label: const Text("Save Session"),
                     onPressed: () {}),
+                if (ShowExperimentalModal.isShowingExperimental(context))
+                  FilledButton.icon(
+                      style: ButtonStyle(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(8)))),
+                      icon:
+                          const Icon(Icons.spatial_tracking_rounded),
+                      label: const Text("View Raw"),
+                      onPressed: () async => await launchConfirmDialog(
+                          context,
+                          message: Text.rich(TextSpan(
+                              text:
+                                  "RAW\n${jsonEncode(context.read<ScoutingSessionBloc>().exportMapDeep().toString())}\n\nHollistic\n${jsonEncode(context.read<ScoutingSessionBloc>().exportHollistic().toString())}")),
+                          onConfirm: () {})),
               ], width: 12))),
           strut(height: 20),
           Flexible(
@@ -595,6 +616,22 @@ class _ScoutingViewState extends State<ScoutingView>
                                     .add(TeleOpUpdateEvent());
                               },
                             )),
+                        form_label("Driver rating",
+                            icon: const Icon(Icons.call_missed),
+                            child: PlusMinusRating(
+                              initialValue: 0,
+                              onValueChanged: (int value) /*TODO*/ {
+                                Debug().info(
+                                    "[TELE-OP] Driver Rating: ${value > 0 ? "$value" : "Reset to 0"}");
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .teleop
+                                    .driverRating = value;
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .add(TeleOpUpdateEvent());
+                              },
+                            )),
                         form_label("Comments",
                             icon: const Icon(Icons.comment),
                             child: form_txtin(
@@ -613,22 +650,6 @@ class _ScoutingViewState extends State<ScoutingView>
                                     .add(TeleOpUpdateEvent());
                               },
                               inputType: TextInputType.multiline,
-                            )),
-                        form_label("Driver rating",
-                            icon: const Icon(Icons.call_missed),
-                            child: PlusMinusRating(
-                              initialValue: 0,
-                              onValueChanged: (int value) /*TODO*/ {
-                                Debug().info(
-                                    "[TELE-OP] Driver Rating: ${value > 0 ? "$value" : "Reset to 0"}");
-                                context
-                                    .read<ScoutingSessionBloc>()
-                                    .teleop
-                                    .driverRating = value;
-                                context
-                                    .read<ScoutingSessionBloc>()
-                                    .add(TeleOpUpdateEvent());
-                              },
                             )),
                       ])),
                   form_sec(context,

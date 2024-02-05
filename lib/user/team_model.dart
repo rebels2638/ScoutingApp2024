@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:scouting_app_2024/parts/bits/team_bloc.dart';
+import 'package:scouting_app_2024/shared.dart';
 
 enum TeamAlliance {
   blue(0xFF2463B0),
@@ -43,6 +45,28 @@ enum AutoPickup { l, m, r, no }
 enum Harmony { yes, no, failed }
 
 enum TrapScored { yes, no, missed }
+
+class HollisticMatchScoutingData {
+  PrelimInfo preliminary;
+  AutoInfo auto;
+  TeleOpInfo teleop;
+  EndgameInfo endgame;
+  late String id;
+
+  HollisticMatchScoutingData({
+    required this.preliminary,
+    required this.auto,
+    required this.teleop,
+    required this.endgame,
+  }) {
+    id = Shared.uuid.v1();
+  }
+
+  @override
+  String toString() {
+    return "ID: $id Preliminary: ${preliminary.exportMap().toString()}\nAuto: ${auto.exportMap().toString()}\nTeleop: ${teleop.exportMap().toString()}\nEndgame: ${endgame.exportMap().toString()}";
+  }
+}
 
 //for past_matches.dart
 class PastMatchesOverViewData {

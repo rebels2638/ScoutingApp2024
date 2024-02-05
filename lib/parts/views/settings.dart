@@ -10,6 +10,7 @@ import 'package:scouting_app_2024/parts/bits/show_pastmatches_lockedin.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class SettingsView extends StatelessWidget
     implements AppPageViewExporter {
@@ -61,7 +62,25 @@ class SettingsView extends StatelessWidget
         children: <Widget>[
           FilledButton.tonalIcon(
               style: ThemeBlob.exportBtnBlobStyle(),
-              onPressed: () => UserTelemetry().save(),
+              onPressed: () {
+                UserTelemetry().save();
+                ScaffoldMessenger.of(context).showSnackBar(
+                    yummySnackBar(
+                        duration: const Duration(milliseconds: 1500),
+                        margin: null,
+                        width: 300,
+                        icon: Icon(Icons.save_rounded,
+                            color: ThemeProvider.themeOf(context)
+                                .data
+                                .colorScheme
+                                .background),
+                        backgroundColor:
+                            ThemeProvider.themeOf(context)
+                                .data
+                                .colorScheme
+                                .primary,
+                        message: "Settings Saved!"));
+              },
               icon: const Icon(Icons.save_alt_rounded),
               label: const Text("Save Settings")),
           SingleChildScrollView(

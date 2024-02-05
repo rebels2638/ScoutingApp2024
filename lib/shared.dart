@@ -1,9 +1,13 @@
+
+import 'package:uuid/uuid.dart';
+
 class Shared {
   static const int MAX_LOG_LENGTH = 512;
   static const int PERIODIC_LOGGING_REFRESH =
       1500; // every 1,5 seconds
 
   static const String FONT_FAMILY_SANS = "IBM Plex Sans";
+  static const Uuid uuid = Uuid();
 }
 
 const String APP_CANONICAL_NAME = "Argus"; // be goofy with this :)
