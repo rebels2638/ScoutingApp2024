@@ -74,7 +74,8 @@ class UserPrefModel {
   static final UserPrefModel defaultModel =
       UserPrefModel(selectedTheme: AvaliableThemes.default_dark);
 
-  @JsonKey(required: false, defaultValue: AvaliableThemes.default_dark)
+  @JsonKey(
+      required: false, defaultValue: AvaliableThemes.default_dark)
   AvaliableThemes selectedTheme;
 
   @JsonKey(required: false, defaultValue: false)
@@ -83,11 +84,23 @@ class UserPrefModel {
   @JsonKey(required: false, defaultValue: true)
   bool showGameMap;
 
+  @JsonKey(required: false, defaultValue: false)
+  bool showExperimental;
+
+  @JsonKey(required: false, defaultValue: false)
+  bool showFPSMonitor;
+
+  @JsonKey(required: false, defaultValue: false)
+  bool showPastMatchesWhileLockedIn;
+
   // make sure to run flutter pub run build_runner build
   UserPrefModel(
       {required this.selectedTheme,
       this.showConsole = false,
-      this.showGameMap = true});
+      this.showGameMap = true,
+      this.showPastMatchesWhileLockedIn = false,
+      this.showFPSMonitor = false,
+      this.showExperimental = false});
 
   factory UserPrefModel.fromJson(Map<String, dynamic> json) =>
       _$UserPrefModelFromJson(json);

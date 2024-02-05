@@ -8,13 +8,17 @@ import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/bits/lock_in.dart';
 import 'package:scouting_app_2024/parts/bits/perf_overlay.dart';
 import 'package:scouting_app_2024/parts/bits/show_console.dart';
+import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
+import 'package:scouting_app_2024/parts/bits/show_fps_monitor.dart';
 import 'package:scouting_app_2024/parts/bits/show_game_map.dart';
+import 'package:scouting_app_2024/parts/bits/show_pastmatches_lockedin.dart';
 import 'package:scouting_app_2024/parts/bits/theme_mode.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/shared.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
 import 'package:scouting_app_2024/parts/views/views.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
+import 'package:show_fps/show_fps.dart';
 import "package:theme_provider/theme_provider.dart";
 import 'package:url_launcher/url_launcher.dart';
 
@@ -32,6 +36,16 @@ class ThemedAppBundle extends StatelessWidget {
                 builder: (BuildContext
                         themeCtxt) => /*lol this is very scuffed XD i hope you can forgive me*/
                     MultiProvider(providers: <SingleChildWidget>[
+                      ChangeNotifierProvider<
+                              ShowPastMatchesWhileLockedInModal>(
+                          create: (BuildContext _) =>
+                              ShowPastMatchesWhileLockedInModal()),
+                      ChangeNotifierProvider<ShowFPSMonitorModal>(
+                          create: (BuildContext _) =>
+                              ShowFPSMonitorModal()),
+                      ChangeNotifierProvider<ShowExperimentalModal>(
+                          create: (BuildContext _) =>
+                              ShowExperimentalModal()),
                       ChangeNotifierProvider<ShowGameMapModal>(
                           create: (BuildContext _) =>
                               ShowGameMapModal()),
@@ -65,7 +79,13 @@ class IntermediateMaterialApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeProvider.themeOf(context).data,
       darkTheme: ThemeProvider.themeOf(context).data,
-      home: _AppView(),
+      home: ShowFPS(
+          alignment: Alignment.topLeft,
+          visible: ShowFPSMonitorModal.isShowingFPSMonitor(context),
+          showChart: true,
+          borderRadius: const BorderRadius.only(
+              bottomRight: Radius.circular(8)),
+          child: _AppView()),
     );
   }
 }
@@ -162,7 +182,8 @@ class _AppViewState extends State<_AppView> {
     }
     List<NavigationDestination> bottomItems = <NavigationDestination>[
       // plsplsplspls make sure this matches with the following PageView's children ordering D:
-      if (dataHostView != null)
+      if (dataHostView != null &&
+          ShowExperimentalModal.isShowingExperimental(context))
         NavigationDestination(
             icon: dataHostView.item.icon,
             label: dataHostView.item.label,
@@ -173,7 +194,9 @@ class _AppViewState extends State<_AppView> {
           label: scoutingView.item.label,
           selectedIcon: scoutingView.item.activeIcon,
           tooltip: scoutingView.item.tooltip),
-      if (LockedInScoutingModal.isCasual(context))
+      if (LockedInScoutingModal.isCasual(context) &&
+          ShowPastMatchesWhileLockedInModal.isShowingPastMatches(
+              context))
         NavigationDestination(
             icon: pastMatchesView.item.icon,
             label: pastMatchesView.item.label,
@@ -207,9 +230,13 @@ class _AppViewState extends State<_AppView> {
             tooltip: consoleView.item.tooltip)
     ];
     List<Widget> pageViewWidgets = <Widget>[
-      if (dataHostView != null) dataHostView.child,
+      if (dataHostView != null &&
+          ShowExperimentalModal.isShowingExperimental(context))
+        dataHostView.child,
       scoutingView.child,
-      if (LockedInScoutingModal.isCasual(context))
+      if (LockedInScoutingModal.isCasual(context) &&
+          ShowPastMatchesWhileLockedInModal.isShowingPastMatches(
+              context))
         pastMatchesView.child,
       if (LockedInScoutingModal.isCasual(context)) settingsView.child,
       if (LockedInScoutingModal.isCasual(context)) aboutAppView.child,
