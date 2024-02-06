@@ -101,7 +101,6 @@ class TeleOpInfo extends ScoutingInfo {
       required this.scoredSpeaker,
       required this.missedSpeaker,
       required this.scoredAmp,
-
       required this.missedAmp,
       required this.scoredWhileAmped,
       this.comments = "",
@@ -114,7 +113,6 @@ class TeleOpInfo extends ScoutingInfo {
           int missedSpeaker = 0,
           int scoredAmp = 0,
           int missedAmp = 0,
-
           int scoredWhileAmped = 0,
           String comments = "",
           int driverRating = 0}) =>
@@ -125,7 +123,6 @@ class TeleOpInfo extends ScoutingInfo {
           missedSpeaker: missedSpeaker,
           scoredAmp: scoredAmp,
           missedAmp: missedAmp,
-
           scoredWhileAmped: scoredWhileAmped,
           comments: comments,
           driverRating: driverRating);
@@ -281,6 +278,11 @@ class ScoutingSessionBloc
         endgame = EndgameInfo.optional(),
         misc = MiscInfo.optional(),
         super(PrelimState(PrelimInfo.optional())) {
+    on<PrelimUpdateEvent>((PrelimUpdateEvent event,
+        Emitter<ScoutingSessionStates> emit) {
+      prelim = PrelimInfo.optional();
+      emit(PrelimState(prelim));
+    });
     on<AutoUpdateEvent>(
         (AutoUpdateEvent event, Emitter<ScoutingSessionStates> emit) {
       auto = AutoInfo.optional();

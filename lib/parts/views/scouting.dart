@@ -213,7 +213,7 @@ class _ScoutingViewState extends State<ScoutingView>
                               minValue: 1,
                               maxValue: 999,
                               headerMessage: "Match Number",
-                              onChange: (int number) /*TODO*/ {
+                              onChange: (int number) {
                             Debug().info("UPDATE match number to $number");
                             context
                                 .read<ScoutingSessionBloc>()
@@ -241,7 +241,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                             ))
                                     .toList(),
                                 initialSelection: MatchType.qualification,
-                                onSelect: (MatchType e) /*TODO*/ {
+                                onSelect: (MatchType e) {
                                   Debug()
                                       .info("Switched match type to ${e.name}");
                                   context
@@ -269,7 +269,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                 minValue: 1,
                                 maxValue: 9999,
                                 headerMessage: "Team Number",
-                                onChange: (int number) /*TODO*/ {
+                                onChange: (int number) {
                               Debug().info("UPDATE team number to $number");
                               context
                                   .read<ScoutingSessionBloc>()
@@ -283,7 +283,7 @@ class _ScoutingViewState extends State<ScoutingView>
                         form_label("Alliance",
                             icon: const Icon(Icons.flag_rounded),
                             child: TeamAllianceSwitch(
-                                onChanged: (TeamAlliance alliance) /*TODO*/ {
+                                onChanged: (TeamAlliance alliance) {
                           Debug().info("[TEAM] Alliance: ${alliance.name}");
                           context.read<ScoutingSessionBloc>().prelim.alliance =
                               alliance;
@@ -308,7 +308,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                             ))
                                     .toList(),
                                 initialSelection: MatchStartingPosition.middle,
-                                onSelect: (MatchStartingPosition e) /*TODO*/ {
+                                onSelect: (MatchStartingPosition e) {
                                   Debug().info(
                                       "[TEAM] Switched starting position to ${e.name}");
                                   context
@@ -331,7 +331,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             icon: const Icon(Icons.trip_origin),
                             child: BasicToggleSwitch(
                                 initialValue: false,
-                                onChanged: (bool e) /*TODO*/ {
+                                onChanged: (bool e) {
                                   Debug().info("[AUTO] Note preloaded: $e");
                                   context
                                       .read<ScoutingSessionBloc>()
@@ -358,7 +358,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                             ))
                                     .toList(),
                                 initialSelection: <AutoPickup>{AutoPickup.no},
-                                onSelect: (List<AutoPickup> e) /*TODO*/ {
+                                onSelect: (List<AutoPickup> e) {
                                   Debug().info(
                                       "[AUTO] Picked up note: ${e.toString()}");
                                   context
@@ -373,7 +373,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             icon: const Icon(Icons.local_taxi_rounded),
                             child: BasicToggleSwitch(
                                 initialValue: false,
-                                onChanged: (bool e) /*TODO*/ {
+                                onChanged: (bool e) {
                                   Debug().info("[AUTO] Taxis: $e");
                                   context
                                       .read<ScoutingSessionBloc>()
@@ -387,7 +387,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             icon: const Icon(Icons.volume_up),
                             child: PlusMinus(
                               initialValue: 0,
-                              onValueChanged: (int value) /*TODO*/ {
+                              onValueChanged: (int value) {
                                 Debug()
                                     .info("[AUTO] Scored in Speaker: $value");
                                 context
@@ -403,7 +403,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             icon: const Icon(Icons.call_missed),
                             child: PlusMinus(
                               initialValue: 0,
-                              onValueChanged: (int value) /*TODO*/ {
+                              onValueChanged: (int value) {
                                 Debug().info(
                                     "[AUTO] Missed Speaker Shots: $value");
                                 context
@@ -419,7 +419,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             icon: const Icon(Icons.music_note),
                             child: PlusMinus(
                               initialValue: 0,
-                              onValueChanged: (int value) /*TODO*/ {
+                              onValueChanged: (int value) {
                                 Debug().info("[AUTO] Scored in AMP: $value");
                                 context
                                     .read<ScoutingSessionBloc>()
@@ -434,7 +434,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             icon: const Icon(Icons.call_missed),
                             child: PlusMinus(
                               initialValue: 0,
-                              onValueChanged: (int value) /*TODO*/ {
+                              onValueChanged: (int value) {
                                 Debug().info("[AUTO] Missed AMP Shots: $value");
                                 context
                                     .read<ScoutingSessionBloc>()
@@ -451,7 +451,7 @@ class _ScoutingViewState extends State<ScoutingView>
                               hint: "Enter your comments here",
                               label: "Comments",
                               dim: 300,
-                              onChanged: (String value) /*TODO*/ {
+                              onChanged: (String value) {
                                 Debug().info("[AUTO] Comments: $value");
                                 context
                                     .read<ScoutingSessionBloc>()
@@ -472,7 +472,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             icon: const Icon(Icons.shield),
                             child: BasicToggleSwitch(
                                 initialValue: false,
-                                onChanged: (bool e) /*TODO*/ {
+                                onChanged: (bool e) {
                                   Debug().info("[TELE-OP] Plays defense: $e");
                                   context
                                       .read<ScoutingSessionBloc>()
@@ -486,7 +486,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             icon: const Icon(Icons.verified_user),
                             child: BasicToggleSwitch(
                                 initialValue: false,
-                                onChanged: (bool e) /*TODO*/ {
+                                onChanged: (bool e) {
                                   Debug().info("[TELE-OP] Was Defended: $e");
                                   context
                                       .read<ScoutingSessionBloc>()
@@ -500,7 +500,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             icon: const Icon(Icons.volume_up),
                             child: PlusMinus(
                               initialValue: 0,
-                              onValueChanged: (int value) /*TODO*/ {
+                              onValueChanged: (int value) {
                                 Debug().info(
                                     "[TELE-OP] Scored in Speaker: $value");
                                 context
@@ -516,7 +516,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             icon: const Icon(Icons.volume_up),
                             child: PlusMinus(
                               initialValue: 0,
-                              onValueChanged: (int value) /*TODO*/ {
+                              onValueChanged: (int value) {
                                 Debug().info(
                                     "[TELE-OP] Scored during AMP: $value");
                                 context
@@ -532,7 +532,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             icon: const Icon(Icons.call_missed),
                             child: PlusMinus(
                               initialValue: 0,
-                              onValueChanged: (int value) /*TODO*/ {
+                              onValueChanged: (int value) {
                                 Debug().info(
                                     "[TELE-OP] Missed Speaker Shots: $value");
                                 context
@@ -548,7 +548,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             icon: const Icon(Icons.music_note),
                             child: PlusMinus(
                               initialValue: 0,
-                              onValueChanged: (int value) /*TODO*/ {
+                              onValueChanged: (int value) {
                                 Debug().info("[TELE-OP] Scored in AMP: $value");
                                 context
                                     .read<ScoutingSessionBloc>()
@@ -563,7 +563,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             icon: const Icon(Icons.call_missed),
                             child: PlusMinus(
                               initialValue: 0,
-                              onValueChanged: (int value) /*TODO*/ {
+                              onValueChanged: (int value) {
                                 Debug()
                                     .info("[TELE-OP] Missed AMP Shots: $value");
                                 context
@@ -579,7 +579,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             icon: const Icon(Icons.call_missed),
                             child: PlusMinusRating(
                               initialValue: 0,
-                              onValueChanged: (int value) /*TODO*/ {
+                              onValueChanged: (int value) {
                                 Debug().info(
                                     "[TELE-OP] Driver Rating: ${value > 0 ? "$value" : "Reset to 0"}");
                                 context
@@ -597,7 +597,7 @@ class _ScoutingViewState extends State<ScoutingView>
                               hint: "Enter your comments here",
                               label: "Comments",
                               dim: 300,
-                              onChanged: (String value) /*TODO*/ {
+                              onChanged: (String value) {
                                 Debug().info("[TELE-OP] Comments: $value");
                                 context
                                     .read<ScoutingSessionBloc>()
@@ -618,7 +618,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             icon: const Icon(Icons.link),
                             child: BasicToggleSwitch(
                                 initialValue: false,
-                                onChanged: (bool e) /*TODO*/ {
+                                onChanged: (bool e) {
                                   Debug().info("[ENDGAME] On chain: $e");
                                   context
                                       .read<ScoutingSessionBloc>()
@@ -645,7 +645,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                             ))
                                     .toList(),
                                 initialSelection: Harmony.no,
-                                onSelect: (Harmony e) /*TODO*/ {
+                                onSelect: (Harmony e) {
                                   Debug().info("[ENDGAME] Harmony: ${e.name}");
                                   context
                                       .read<ScoutingSessionBloc>()
@@ -672,7 +672,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                             ))
                                     .toList(),
                                 initialSelection: TrapScored.no,
-                                onSelect: (TrapScored e) /*TODO*/ {
+                                onSelect: (TrapScored e) {
                                   Debug().info(
                                       "[ENDGAME] Scored in trap: ${e.name}");
                                   context
@@ -700,7 +700,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                             ))
                                     .toList(),
                                 initialSelection: MicScored.no,
-                                onSelect: (MicScored e) /*TODO*/ {
+                                onSelect: (MicScored e) {
                                   Debug().info(
                                       "[ENDGAME] Scored on mic: ${e.name}");
                                   context
@@ -717,7 +717,7 @@ class _ScoutingViewState extends State<ScoutingView>
                               hint: "Enter your comments here",
                               label: "Comments",
                               dim: 300,
-                              onChanged: (String value) /*TODO*/ {
+                              onChanged: (String value) {
                                 Debug().info("[ENDGAME] Comments: $value");
                                 context
                                     .read<ScoutingSessionBloc>()
@@ -738,7 +738,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             icon: const Icon(Icons.groups),
                             child: BasicToggleSwitch(
                                 initialValue: false,
-                                onChanged: (bool e) /*TODO*/ {
+                                onChanged: (bool e) {
                                   Debug().info("[OTHER] Coopertition: $e");
                                   context
                                       .read<ScoutingSessionBloc>()
@@ -752,7 +752,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             icon: const Icon(Icons.handyman),
                             child: BasicToggleSwitch(
                                 initialValue: false,
-                                onChanged: (bool e) /*TODO*/ {
+                                onChanged: (bool e) {
                                   Debug().info("[OTHER] Breakdown: $e");
                                   context
                                       .read<ScoutingSessionBloc>()

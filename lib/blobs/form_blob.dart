@@ -390,6 +390,7 @@ class _MSegSingleBtnState<T> extends State<_MSegSingleBtn<T>> {
       ],
       selected: _selection,
       style: widget.style,
+      showSelectedIcon: false,
       onSelectionChanged: (Set<T> values) {
         setState(() => _selection = values);
         widget.onSelect.call(values.toList());
@@ -440,6 +441,7 @@ class _SegSingleBtnState<T> extends State<_SegSingleBtn<T>> {
       selected: <T>{
         _selection,
       },
+      showSelectedIcon: false,
       style: widget.style,
       onSelectionChanged: (Set<T> values) {
         setState(() => _selection = values.first);
