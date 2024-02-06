@@ -43,23 +43,27 @@ class EndgameInfo extends ScoutingInfo {
   bool onChain;
   Harmony harmony;
   TrapScored trapScored;
+  MicScored micScored;
   String? comments;
 
   EndgameInfo(
       {required this.onChain,
       required this.harmony,
       required this.trapScored,
+      required this.micScored,
       this.comments = ""});
 
   factory EndgameInfo.optional(
           {bool onChain = false,
           Harmony harmony = Harmony.no,
           TrapScored trapScored = TrapScored.no,
+          MicScored micScored = MicScored.no,
           String comments = ""}) =>
       EndgameInfo(
           onChain: onChain,
           harmony: harmony,
           trapScored: trapScored,
+          micScored: micScored,
           comments: comments);
 
   @override
@@ -67,6 +71,7 @@ class EndgameInfo extends ScoutingInfo {
         "onChain": onChain,
         "harmony": harmony,
         "trapScored": trapScored,
+        "micScored": micScored,
         "comments": comments
       };
 }
