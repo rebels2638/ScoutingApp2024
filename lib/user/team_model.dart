@@ -46,6 +46,8 @@ enum Harmony { yes, no, failed }
 
 enum TrapScored { yes, no, missed }
 
+enum MicScored {yes, no, missed}
+
 class HollisticMatchScoutingData {
   PrelimInfo preliminary;
   AutoInfo auto;

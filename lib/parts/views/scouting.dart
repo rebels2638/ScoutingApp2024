@@ -71,15 +71,15 @@ class _ScoutingSessionViewDelegateState
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: strutAll(<Widget>[
                   const Text("Scouting Session",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 24)),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
                   ElevatedButton(
                       style: ButtonStyle(
-                          shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(16)))),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(16)))),
                       onPressed: () {
                         Debug().info(
                             "Moving from SCOUTING_SESSION_LAUNCHER to SCOUTING_SESSION");
@@ -90,26 +90,21 @@ class _ScoutingSessionViewDelegateState
                         // altho kind shitty lmao, fuck it
                         padding: const EdgeInsets.all(16.0),
                         child: Column(
-                            mainAxisAlignment:
-                                MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              const Icon(
-                                  Icons.pending_actions_rounded),
+                              const Icon(Icons.pending_actions_rounded),
                               strut(height: 14),
                               const Text.rich(
                                   TextSpan(children: <InlineSpan>[
                                     TextSpan(
                                         text: "New Session\n",
                                         style: TextStyle(
-                                            fontWeight:
-                                                FontWeight.w600,
+                                            fontWeight: FontWeight.w600,
                                             fontSize: 18)),
                                     TextSpan(
-                                        text:
-                                            "Launch a new scouting form",
+                                        text: "Launch a new scouting form",
                                         style: TextStyle(
-                                            fontWeight:
-                                                FontWeight.w400,
+                                            fontWeight: FontWeight.w400,
                                             fontSize: 12))
                                   ]),
                                   textAlign: TextAlign.center)
@@ -143,42 +138,37 @@ class _ScoutingViewState extends State<ScoutingView>
                   children: strutAll(<Widget>[
                 FilledButton.icon(
                     style: ButtonStyle(
-                        shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(8)))),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)))),
                     icon: const Icon(Icons.exit_to_app_rounded),
                     label: const Text("Exit Session"),
                     onPressed: () {}),
                 FilledButton.icon(
                     style: ButtonStyle(
-                        shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(8)))),
-                    icon:
-                        const Icon(Icons.bluetooth_connected_rounded),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)))),
+                    icon: const Icon(Icons.bluetooth_connected_rounded),
                     label: const Text("Beam Session"),
                     onPressed: () {}),
                 FilledButton.icon(
                     style: ButtonStyle(
-                        shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(8)))),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)))),
                     icon: const Icon(CommunityMaterialIcons.qrcode),
                     label: const Text("Export Session"),
                     onPressed: () {}),
                 FilledButton.icon(
                     style: ButtonStyle(
-                        shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(8)))),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)))),
                     icon: const Icon(Icons.save_rounded),
                     label: const Text("Save Session"),
                     onPressed: () {}),
@@ -188,13 +178,10 @@ class _ScoutingViewState extends State<ScoutingView>
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(8)))),
-                      icon:
-                          const Icon(Icons.spatial_tracking_rounded),
+                                      borderRadius: BorderRadius.circular(8)))),
+                      icon: const Icon(Icons.spatial_tracking_rounded),
                       label: const Text("View Raw"),
-                      onPressed: () async => await launchConfirmDialog(
-                          context,
+                      onPressed: () async => await launchConfirmDialog(context,
                           message: Text.rich(TextSpan(
                               text:
                                   "RAW\n${jsonEncode(context.read<ScoutingSessionBloc>().exportMapDeep().toString())}\n\nHollistic\n${jsonEncode(context.read<ScoutingSessionBloc>().exportHollistic().toString())}")),
@@ -222,14 +209,12 @@ class _ScoutingViewState extends State<ScoutingView>
                           icon: const Icon(Icons.numbers_rounded),
                           child: form_numpick(context,
                               label: "Picker",
-                              icon: const Icon(
-                                  CommunityMaterialIcons.counter),
+                              icon: const Icon(CommunityMaterialIcons.counter),
                               minValue: 1,
                               maxValue: 999,
                               headerMessage: "Match Number",
                               onChange: (int number) /*TODO*/ {
-                            Debug().info(
-                                "UPDATE match number to $number");
+                            Debug().info("UPDATE match number to $number");
                             context
                                 .read<ScoutingSessionBloc>()
                                 .prelim
@@ -240,8 +225,7 @@ class _ScoutingViewState extends State<ScoutingView>
                           }),
                         ),
                         form_label("Type",
-                            icon: const Icon(
-                                Icons.account_tree_rounded),
+                            icon: const Icon(Icons.account_tree_rounded),
                             child: form_seg_btn_1(
                                 segments: MatchType.values
                                     .map<
@@ -251,17 +235,15 @@ class _ScoutingViewState extends State<ScoutingView>
                                               MatchType value
                                             })>(
                                         (MatchType e) => (
-                                              label: formalizeWord(
-                                                  e.name),
+                                              label: formalizeWord(e.name),
                                               icon: null,
                                               value: e
                                             ))
                                     .toList(),
-                                initialSelection:
-                                    MatchType.qualification,
+                                initialSelection: MatchType.qualification,
                                 onSelect: (MatchType e) /*TODO*/ {
-                                  Debug().info(
-                                      "Switched match type to ${e.name}");
+                                  Debug()
+                                      .info("Switched match type to ${e.name}");
                                   context
                                       .read<ScoutingSessionBloc>()
                                       .prelim
@@ -282,14 +264,13 @@ class _ScoutingViewState extends State<ScoutingView>
                         form_label("Number",
                             child: form_numpick(context,
                                 label: "Picker",
-                                icon: const Icon(
-                                    CommunityMaterialIcons.counter),
+                                icon:
+                                    const Icon(CommunityMaterialIcons.counter),
                                 minValue: 1,
                                 maxValue: 9999,
                                 headerMessage: "Team Number",
                                 onChange: (int number) /*TODO*/ {
-                              Debug().info(
-                                  "UPDATE team number to $number");
+                              Debug().info("UPDATE team number to $number");
                               context
                                   .read<ScoutingSessionBloc>()
                                   .prelim
@@ -301,21 +282,17 @@ class _ScoutingViewState extends State<ScoutingView>
                             icon: const Icon(Icons.numbers_rounded)),
                         form_label("Alliance",
                             icon: const Icon(Icons.flag_rounded),
-                            child: TeamAllianceSwitch(onChanged:
-                                (TeamAlliance alliance) /*TODO*/ {
-                          Debug().info(
-                              "[TEAM] Alliance: ${alliance.name}");
-                          context
-                              .read<ScoutingSessionBloc>()
-                              .prelim
-                              .alliance = alliance;
+                            child: TeamAllianceSwitch(
+                                onChanged: (TeamAlliance alliance) /*TODO*/ {
+                          Debug().info("[TEAM] Alliance: ${alliance.name}");
+                          context.read<ScoutingSessionBloc>().prelim.alliance =
+                              alliance;
                           context
                               .read<ScoutingSessionBloc>()
                               .add(PrelimUpdateEvent());
                         })),
                         form_label("Starting Position",
-                            icon:
-                                const Icon(Icons.location_on_rounded),
+                            icon: const Icon(Icons.location_on_rounded),
                             child: form_seg_btn_1(
                                 segments: MatchStartingPosition.values
                                     .map<
@@ -325,16 +302,13 @@ class _ScoutingViewState extends State<ScoutingView>
                                               MatchStartingPosition value
                                             })>(
                                         (MatchStartingPosition e) => (
-                                              label: formalizeWord(
-                                                  e.name),
+                                              label: formalizeWord(e.name),
                                               icon: null,
                                               value: e
                                             ))
                                     .toList(),
-                                initialSelection:
-                                    MatchStartingPosition.middle,
-                                onSelect: (MatchStartingPosition
-                                    e) /*TODO*/ {
+                                initialSelection: MatchStartingPosition.middle,
+                                onSelect: (MatchStartingPosition e) /*TODO*/ {
                                   Debug().info(
                                       "[TEAM] Switched starting position to ${e.name}");
                                   context
@@ -358,8 +332,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             child: BasicToggleSwitch(
                                 initialValue: false,
                                 onChanged: (bool e) /*TODO*/ {
-                                  Debug().info(
-                                      "[AUTO] Note preloaded: $e");
+                                  Debug().info("[AUTO] Note preloaded: $e");
                                   context
                                       .read<ScoutingSessionBloc>()
                                       .auto
@@ -379,17 +352,13 @@ class _ScoutingViewState extends State<ScoutingView>
                                               AutoPickup value
                                             })>(
                                         (AutoPickup e) => (
-                                              label: formalizeWord(
-                                                  e.name),
+                                              label: formalizeWord(e.name),
                                               icon: null,
                                               value: e
                                             ))
                                     .toList(),
-                                initialSelection: <AutoPickup>{
-                                  AutoPickup.no
-                                },
-                                onSelect:
-                                    (List<AutoPickup> e) /*TODO*/ {
+                                initialSelection: <AutoPickup>{AutoPickup.no},
+                                onSelect: (List<AutoPickup> e) /*TODO*/ {
                                   Debug().info(
                                       "[AUTO] Picked up note: ${e.toString()}");
                                   context
@@ -401,8 +370,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                       .add(AutoUpdateEvent());
                                 })),
                         form_label("Taxis?",
-                            icon:
-                                const Icon(Icons.local_taxi_rounded),
+                            icon: const Icon(Icons.local_taxi_rounded),
                             child: BasicToggleSwitch(
                                 initialValue: false,
                                 onChanged: (bool e) /*TODO*/ {
@@ -420,8 +388,8 @@ class _ScoutingViewState extends State<ScoutingView>
                             child: PlusMinus(
                               initialValue: 0,
                               onValueChanged: (int value) /*TODO*/ {
-                                Debug().info(
-                                    "[AUTO] Scored in Speaker: $value");
+                                Debug()
+                                    .info("[AUTO] Scored in Speaker: $value");
                                 context
                                     .read<ScoutingSessionBloc>()
                                     .auto
@@ -452,8 +420,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             child: PlusMinus(
                               initialValue: 0,
                               onValueChanged: (int value) /*TODO*/ {
-                                Debug().info(
-                                    "[AUTO] Scored in AMP: $value");
+                                Debug().info("[AUTO] Scored in AMP: $value");
                                 context
                                     .read<ScoutingSessionBloc>()
                                     .auto
@@ -468,8 +435,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             child: PlusMinus(
                               initialValue: 0,
                               onValueChanged: (int value) /*TODO*/ {
-                                Debug().info(
-                                    "[AUTO] Missed AMP Shots: $value");
+                                Debug().info("[AUTO] Missed AMP Shots: $value");
                                 context
                                     .read<ScoutingSessionBloc>()
                                     .auto
@@ -486,8 +452,7 @@ class _ScoutingViewState extends State<ScoutingView>
                               label: "Comments",
                               dim: 300,
                               onChanged: (String value) /*TODO*/ {
-                                Debug()
-                                    .info("[AUTO] Comments: $value");
+                                Debug().info("[AUTO] Comments: $value");
                                 context
                                     .read<ScoutingSessionBloc>()
                                     .auto
@@ -501,18 +466,14 @@ class _ScoutingViewState extends State<ScoutingView>
                       ])),
                   form_sec(context,
                       backgroundColor: Colors.transparent,
-                      header: (
-                        icon: Icons.accessibility,
-                        title: "Tele-op"
-                      ),
+                      header: (icon: Icons.accessibility, title: "Tele-op"),
                       child: form_col(<Widget>[
                         form_label("Plays Defense",
                             icon: const Icon(Icons.shield),
                             child: BasicToggleSwitch(
                                 initialValue: false,
                                 onChanged: (bool e) /*TODO*/ {
-                                  Debug().info(
-                                      "[TELE-OP] Plays defense: $e");
+                                  Debug().info("[TELE-OP] Plays defense: $e");
                                   context
                                       .read<ScoutingSessionBloc>()
                                       .teleop
@@ -526,8 +487,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             child: BasicToggleSwitch(
                                 initialValue: false,
                                 onChanged: (bool e) /*TODO*/ {
-                                  Debug().info(
-                                      "[TELE-OP] Was Defended: $e");
+                                  Debug().info("[TELE-OP] Was Defended: $e");
                                   context
                                       .read<ScoutingSessionBloc>()
                                       .teleop
@@ -589,8 +549,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             child: PlusMinus(
                               initialValue: 0,
                               onValueChanged: (int value) /*TODO*/ {
-                                Debug().info(
-                                    "[TELE-OP] Scored in AMP: $value");
+                                Debug().info("[TELE-OP] Scored in AMP: $value");
                                 context
                                     .read<ScoutingSessionBloc>()
                                     .teleop
@@ -605,8 +564,8 @@ class _ScoutingViewState extends State<ScoutingView>
                             child: PlusMinus(
                               initialValue: 0,
                               onValueChanged: (int value) /*TODO*/ {
-                                Debug().info(
-                                    "[TELE-OP] Missed AMP Shots: $value");
+                                Debug()
+                                    .info("[TELE-OP] Missed AMP Shots: $value");
                                 context
                                     .read<ScoutingSessionBloc>()
                                     .teleop
@@ -639,8 +598,7 @@ class _ScoutingViewState extends State<ScoutingView>
                               label: "Comments",
                               dim: 300,
                               onChanged: (String value) /*TODO*/ {
-                                Debug().info(
-                                    "[TELE-OP] Comments: $value");
+                                Debug().info("[TELE-OP] Comments: $value");
                                 context
                                     .read<ScoutingSessionBloc>()
                                     .teleop
@@ -654,18 +612,14 @@ class _ScoutingViewState extends State<ScoutingView>
                       ])),
                   form_sec(context,
                       backgroundColor: Colors.transparent,
-                      header: (
-                        icon: Icons.accessibility,
-                        title: "Endgame"
-                      ),
+                      header: (icon: Icons.accessibility, title: "Endgame"),
                       child: form_col(<Widget>[
                         form_label("On chain",
                             icon: const Icon(Icons.link),
                             child: BasicToggleSwitch(
                                 initialValue: false,
                                 onChanged: (bool e) /*TODO*/ {
-                                  Debug()
-                                      .info("[ENDGAME] On chain: $e");
+                                  Debug().info("[ENDGAME] On chain: $e");
                                   context
                                       .read<ScoutingSessionBloc>()
                                       .endgame
@@ -685,16 +639,14 @@ class _ScoutingViewState extends State<ScoutingView>
                                               Harmony value
                                             })>(
                                         (Harmony e) => (
-                                              label: formalizeWord(
-                                                  e.name),
+                                              label: formalizeWord(e.name),
                                               icon: null,
                                               value: e
                                             ))
                                     .toList(),
                                 initialSelection: Harmony.no,
                                 onSelect: (Harmony e) /*TODO*/ {
-                                  Debug().info(
-                                      "[ENDGAME] Harmony: ${e.name}");
+                                  Debug().info("[ENDGAME] Harmony: ${e.name}");
                                   context
                                       .read<ScoutingSessionBloc>()
                                       .endgame
@@ -714,8 +666,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                               TrapScored value
                                             })>(
                                         (TrapScored e) => (
-                                              label: formalizeWord(
-                                                  e.name),
+                                              label: formalizeWord(e.name),
                                               icon: null,
                                               value: e
                                             ))
@@ -732,6 +683,34 @@ class _ScoutingViewState extends State<ScoutingView>
                                       .read<ScoutingSessionBloc>()
                                       .add(EndgameUpdateEvent());
                                 })),
+                        form_label("Human Scored on Mic",
+                            icon: const Icon(Icons.trip_origin),
+                            child: form_seg_btn_1(
+                                segments: MicScored.values
+                                    .map<
+                                            ({
+                                              Icon? icon,
+                                              String label,
+                                              MicScored value
+                                            })>(
+                                        (MicScored e) => (
+                                              label: formalizeWord(e.name),
+                                              icon: null,
+                                              value: e
+                                            ))
+                                    .toList(),
+                                initialSelection: MicScored.no,
+                                onSelect: (MicScored e) /*TODO*/ {
+                                  Debug().info(
+                                      "[ENDGAME] Scored on mic: ${e.name}");
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .endgame
+                                      .micScored = e;
+                                  context
+                                      .read<ScoutingSessionBloc>()
+                                      .add(EndgameUpdateEvent());
+                                })),
                         form_label("Comments",
                             icon: const Icon(Icons.comment),
                             child: form_txtin(
@@ -739,8 +718,7 @@ class _ScoutingViewState extends State<ScoutingView>
                               label: "Comments",
                               dim: 300,
                               onChanged: (String value) /*TODO*/ {
-                                Debug().info(
-                                    "[ENDGAME] Comments: $value");
+                                Debug().info("[ENDGAME] Comments: $value");
                                 context
                                     .read<ScoutingSessionBloc>()
                                     .endgame
@@ -754,18 +732,14 @@ class _ScoutingViewState extends State<ScoutingView>
                       ])),
                   form_sec(context,
                       backgroundColor: Colors.transparent,
-                      header: (
-                        icon: Icons.accessibility,
-                        title: "Other"
-                      ),
+                      header: (icon: Icons.accessibility, title: "Other"),
                       child: form_col(<Widget>[
                         form_label("Coopertition",
                             icon: const Icon(Icons.groups),
                             child: BasicToggleSwitch(
                                 initialValue: false,
                                 onChanged: (bool e) /*TODO*/ {
-                                  Debug().info(
-                                      "[OTHER] Coopertition: $e");
+                                  Debug().info("[OTHER] Coopertition: $e");
                                   context
                                       .read<ScoutingSessionBloc>()
                                       .misc
@@ -779,8 +753,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             child: BasicToggleSwitch(
                                 initialValue: false,
                                 onChanged: (bool e) /*TODO*/ {
-                                  Debug()
-                                      .info("[OTHER] Breakdown: $e");
+                                  Debug().info("[OTHER] Breakdown: $e");
                                   context
                                       .read<ScoutingSessionBloc>()
                                       .misc
