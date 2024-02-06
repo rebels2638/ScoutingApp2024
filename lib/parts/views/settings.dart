@@ -60,29 +60,63 @@ class SettingsView extends StatelessWidget
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          FilledButton.tonalIcon(
-              style: ThemeBlob.exportBtnBlobStyle(),
-              onPressed: () {
-                UserTelemetry().save();
-                ScaffoldMessenger.of(context).showSnackBar(
-                    yummySnackBar(
-                        duration: const Duration(milliseconds: 1500),
-                        margin: null,
-                        width: 300,
-                        icon: Icon(Icons.save_rounded,
-                            color: ThemeProvider.themeOf(context)
-                                .data
-                                .colorScheme
-                                .background),
-                        backgroundColor:
-                            ThemeProvider.themeOf(context)
-                                .data
-                                .colorScheme
-                                .primary,
-                        message: "Settings Saved!"));
-              },
-              icon: const Icon(Icons.save_alt_rounded),
-              label: const Text("Save Settings")),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                FilledButton.tonalIcon(
+                    style: ThemeBlob.exportBtnBlobStyle(),
+                    onPressed: () {
+                      UserTelemetry().reset();
+                      UserTelemetry().resetHard();
+                      UserTelemetry().save();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          yummySnackBar(
+                              duration:
+                                  const Duration(milliseconds: 1500),
+                              margin: null,
+                              width: 300,
+                              icon: Icon(Icons.save_rounded,
+                                  color:
+                                      ThemeProvider.themeOf(context)
+                                          .data
+                                          .colorScheme
+                                          .background),
+                              backgroundColor:
+                                  ThemeProvider.themeOf(context)
+                                      .data
+                                      .colorScheme
+                                      .primary,
+                              message: "Settings Reset!"));
+                    },
+                    icon: const Icon(Icons.replay_rounded),
+                    label: const Text("Reset Settings")),
+                strut(width: 12),
+                FilledButton.tonalIcon(
+                    style: ThemeBlob.exportBtnBlobStyle(),
+                    onPressed: () {
+                      UserTelemetry().save();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          yummySnackBar(
+                              duration:
+                                  const Duration(milliseconds: 1500),
+                              margin: null,
+                              width: 300,
+                              icon: Icon(Icons.save_rounded,
+                                  color:
+                                      ThemeProvider.themeOf(context)
+                                          .data
+                                          .colorScheme
+                                          .background),
+                              backgroundColor:
+                                  ThemeProvider.themeOf(context)
+                                      .data
+                                      .colorScheme
+                                      .primary,
+                              message: "Settings Saved!"));
+                    },
+                    icon: const Icon(Icons.save_alt_rounded),
+                    label: const Text("Save Settings")),
+              ]),
           SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Padding(

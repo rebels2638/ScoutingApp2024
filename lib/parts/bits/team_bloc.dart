@@ -85,6 +85,7 @@ class TeleOpInfo extends ScoutingInfo {
   int missedSpeaker;
   int scoredAmp;
   int missedAmp;
+
   int scoredWhileAmped; // such a goofy name
   String? comments;
   int driverRating;
@@ -95,6 +96,7 @@ class TeleOpInfo extends ScoutingInfo {
       required this.scoredSpeaker,
       required this.missedSpeaker,
       required this.scoredAmp,
+
       required this.missedAmp,
       required this.scoredWhileAmped,
       this.comments = "",
@@ -107,6 +109,7 @@ class TeleOpInfo extends ScoutingInfo {
           int missedSpeaker = 0,
           int scoredAmp = 0,
           int missedAmp = 0,
+
           int scoredWhileAmped = 0,
           String comments = "",
           int driverRating = 0}) =>
@@ -117,6 +120,7 @@ class TeleOpInfo extends ScoutingInfo {
           missedSpeaker: missedSpeaker,
           scoredAmp: scoredAmp,
           missedAmp: missedAmp,
+
           scoredWhileAmped: scoredWhileAmped,
           comments: comments,
           driverRating: driverRating);

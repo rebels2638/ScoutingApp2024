@@ -17,24 +17,31 @@ class UserTelemetry {
   factory UserTelemetry() => _singleton;
   UserTelemetry._();
 
+  void resetHard() => _prefs.setString(userDBName, "");
+
   static late UserPrefModel _currentModel;
 
   bool isEmpty() =>
-      _prefs.getString(userDBName) == null ||
-      _prefs
-          .getString(userDBName)!
-          .isEmpty; // i feel like this is really bad
+      _prefs.getString(userDBName) ==
+      null; // i feel like this is really bad
 
   UserPrefModel get currentModel => _currentModel;
 
   Future<void> init() async => await SharedPreferences.getInstance()
           .then((SharedPreferences e) {
         _prefs = e;
-        if (isEmpty()) {
+        try {
+          if (_prefs.getString(userDBName) == null) {
+            reset();
+          } else {
+            _currentModel = UserPrefModel.fromJson(
+                jsonDecode(_prefs.getString(userDBName)!));
+          }
+        } catch (e) {
+          _prefs.clear();
           reset();
+          save();
         }
-        _currentModel = UserPrefModel.fromJson(
-            jsonDecode(_prefs.getString(userDBName)!));
         Debug().info(
             "${jsonDecode(_prefs.getString(userDBName)!).runtimeType} with the following content: ${_prefs.getString(userDBName)}");
         Debug().info(
@@ -49,7 +56,6 @@ class UserTelemetry {
   /// resets the model, but does not perform a save
   void reset() {
     _currentModel = UserPrefModel.defaultModel;
-    save();
   }
 
   Future<void> save() async {
