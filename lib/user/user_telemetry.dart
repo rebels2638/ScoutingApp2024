@@ -33,6 +33,7 @@ class UserTelemetry {
         try {
           if (_prefs.getString(userDBName) == null) {
             reset();
+            save();
           } else {
             _currentModel = UserPrefModel.fromJson(
                 jsonDecode(_prefs.getString(userDBName)!));
@@ -96,15 +97,11 @@ class UserPrefModel {
   @JsonKey(required: false, defaultValue: false)
   bool showFPSMonitor;
 
-  @JsonKey(required: false, defaultValue: false)
-  bool showPastMatchesWhileLockedIn;
-
   // make sure to run flutter pub run build_runner build
   UserPrefModel(
       {required this.selectedTheme,
       this.showConsole = false,
       this.showGameMap = true,
-      this.showPastMatchesWhileLockedIn = false,
       this.showFPSMonitor = false,
       this.showExperimental = false});
 

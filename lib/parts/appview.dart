@@ -11,7 +11,6 @@ import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
 import 'package:scouting_app_2024/parts/bits/show_fps_monitor.dart';
 import 'package:scouting_app_2024/parts/bits/show_game_map.dart';
-import 'package:scouting_app_2024/parts/bits/show_pastmatches_lockedin.dart';
 import 'package:scouting_app_2024/parts/bits/theme_mode.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/shared.dart';
@@ -35,12 +34,7 @@ class ThemedAppBundle extends StatelessWidget {
             child: Builder(
                 builder: (BuildContext
                         themeCtxt) => /*lol this is very scuffed XD i hope you can forgive me*/
-                    MultiProvider(providers: <SingleChildWidget>[
-                      ChangeNotifierProvider<
-                              ShowPastMatchesWhileLockedInModal>(
-                          create: (BuildContext _) =>
-                              ShowPastMatchesWhileLockedInModal()),
-                      ChangeNotifierProvider<ShowFPSMonitorModal>(
+                    MultiProvider(providers: <SingleChildWidget>[                      ChangeNotifierProvider<ShowFPSMonitorModal>(
                           create: (BuildContext _) =>
                               ShowFPSMonitorModal()),
                       ChangeNotifierProvider<ShowExperimentalModal>(
@@ -194,14 +188,11 @@ class _AppViewState extends State<_AppView> {
           label: scoutingView.item.label,
           selectedIcon: scoutingView.item.activeIcon,
           tooltip: scoutingView.item.tooltip),
-      if (LockedInScoutingModal.isCasual(context) &&
-          ShowPastMatchesWhileLockedInModal.isShowingPastMatches(
-              context))
-        NavigationDestination(
-            icon: pastMatchesView.item.icon,
-            label: pastMatchesView.item.label,
-            selectedIcon: pastMatchesView.item.activeIcon,
-            tooltip: pastMatchesView.item.tooltip),
+      NavigationDestination(
+          icon: pastMatchesView.item.icon,
+          label: pastMatchesView.item.label,
+          selectedIcon: pastMatchesView.item.activeIcon,
+          tooltip: pastMatchesView.item.tooltip),
       if (LockedInScoutingModal.isCasual(context))
         NavigationDestination(
             icon: settingsView.item.icon,
@@ -234,10 +225,7 @@ class _AppViewState extends State<_AppView> {
           ShowExperimentalModal.isShowingExperimental(context))
         dataHostView.child,
       scoutingView.child,
-      if (LockedInScoutingModal.isCasual(context) &&
-          ShowPastMatchesWhileLockedInModal.isShowingPastMatches(
-              context))
-        pastMatchesView.child,
+      pastMatchesView.child,
       if (LockedInScoutingModal.isCasual(context)) settingsView.child,
       if (LockedInScoutingModal.isCasual(context)) aboutAppView.child,
       if (LockedInScoutingModal.isCasual(context) &&
@@ -278,11 +266,23 @@ class _AppViewState extends State<_AppView> {
                     Provider.of<LockedInScoutingModal>(context,
                             listen: false)
                         .toggle();
-                    setState(() => _bottomNavBarIndexer = 1);
-                    widget.pageController.animateToPage(
-                        _bottomNavBarIndexer,
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.ease);
+                    Debug().info(
+                        "BottomItems: ${bottomItems.length} and $_bottomNavBarIndexer for PageView length: ${pageViewWidgets.length}");
+                    // use a loop to find where the scouting view is
+                    for (int i = 0; i < bottomItems.length; i++) {
+                      if (bottomItems[i].label.contains("Scouting")) {
+                        Debug().info(
+                            "BottomNavBar -> Found Scouting view at $i");
+                        setState(() {
+                          _bottomNavBarIndexer = i;
+                          widget.pageController.animateToPage(
+                              _bottomNavBarIndexer,
+                              duration:
+                                  const Duration(milliseconds: 500),
+                              curve: Curves.ease);
+                        });
+                      }
+                    }
                   },
                   icon: AnimatedSwitcher(
                       duration: const Duration(milliseconds: 500),

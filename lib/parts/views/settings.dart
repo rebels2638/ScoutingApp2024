@@ -6,7 +6,6 @@ import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
 import 'package:scouting_app_2024/parts/bits/show_fps_monitor.dart';
 import 'package:scouting_app_2024/parts/bits/show_game_map.dart';
-import 'package:scouting_app_2024/parts/bits/show_pastmatches_lockedin.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
@@ -124,26 +123,6 @@ class SettingsView extends StatelessWidget
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: strutAll(<Widget>[
-                    _labelIt(
-                        icon: Icons.history_rounded,
-                        label: "Show Past Matches Locked In",
-                        hint:
-                            "While locked in, you are still able to view past matches",
-                        child: BasicToggleSwitch(
-                            initialValue: UserTelemetry()
-                                .currentModel
-                                .showPastMatchesWhileLockedIn,
-                            onChanged: (bool val) {
-                              Provider.of<ShowPastMatchesWhileLockedInModal>(
-                                          context,
-                                          listen: false)
-                                      .showingPastMatchesWhileLockedIn =
-                                  val;
-                              UserTelemetry()
-                                  .currentModel
-                                  .showPastMatchesWhileLockedIn = val;
-                              UserTelemetry().save();
-                            })),
                     _labelIt(
                         icon: Icons.terminal_rounded,
                         label: "Show Development Console",
