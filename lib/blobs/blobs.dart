@@ -123,7 +123,7 @@ Future<void> launchNumberPickerDialog(BuildContext context,
                             onPressed: () =>
                                 Navigator.of(context).pop(),
                             icon: const Icon(Icons.check_rounded),
-                            label: const Text("Ok")),
+                            label: const Text("OK")),
                       ],
                       icon: headerIcon,
                       title: Text(headerMessage),
