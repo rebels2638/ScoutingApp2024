@@ -302,55 +302,96 @@ class _AppViewState extends State<_AppView> {
                       showDialog(
                           context: context,
                           builder: (BuildContext ctxt) {
+                            List<AppTheme> appThemes = context
+                                    .findAncestorWidgetOfExactType<
+                                        ThemeProvider>()
+                                    ?.themes ??
+                                <AppTheme>[];
                             return AlertDialog(
                                 title: const Text("Theme Picker"),
-                                content: DropdownMenu<AvaliableTheme>(
-                                    initialSelection:
-                                        ThemeClassifier.of(context),
-                                    controller:
-                                        _themeSelectorController,
-                                    requestFocusOnTap: true,
-                                    label: const Text("Theme Name"),
-                                    onSelected:
-                                        (AvaliableTheme? theme) =>
-                                            setState(() {
-                                              if (theme != null) {
-                                                Debug().info(
-                                                    "Switched theme to ${theme.id}");
-
-                                                UserTelemetry()
-                                                        .currentModel
-                                                        .selectedTheme =
-                                                    theme.id;
-                                                ThemeProvider
-                                                        .controllerOf(
-                                                            context)
-                                                    .setTheme(
-                                                        theme.id);
-                                              }
-                                            }),
-                                    dropdownMenuEntries: AvaliableTheme
-                                        .export
-                                        .map<
-                                                DropdownMenuEntry<
-                                                    AvaliableTheme>>(
-                                            (AvaliableTheme e) => DropdownMenuEntry<
-                                                    AvaliableTheme>(
-                                                value: e,
-                                                label: e.properName,
-                                                leadingIcon: e.builtin
-                                                    ? e.isDarkMode
-                                                        ? const Icon(Icons
-                                                            .nightlight_round)
-                                                        : const Icon(Icons
-                                                            .wb_sunny_rounded)
-                                                    : Icon(e.icon!)))
-                                        .toList()),
+                                content: SingleChildScrollView(
+                                    child: Wrap(children: <Widget>[
+                                  for (AppTheme e in appThemes)
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.all(8.0),
+                                      child: ElevatedButton.icon(
+                                          style: ButtonStyle(
+                                              visualDensity: VisualDensity
+                                                  .comfortable,
+                                              backgroundColor:
+                                                  MaterialStateProperty.all<Color>(e
+                                                      .data
+                                                      .primaryColor),
+                                              iconColor: MaterialStateProperty.all<Color>(
+                                                  e.data.iconTheme.color ??
+                                                      Colors.black),
+                                              foregroundColor:
+                                                  MaterialStateProperty.all<Color>(e
+                                                          .data
+                                                          .iconTheme
+                                                          .color ??
+                                                      Colors.black),
+                                              iconSize: MaterialStateProperty.all<double>(30),
+                                              shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                                              padding: MaterialStateProperty.all<EdgeInsetsGeometry>(const EdgeInsets.all(14))),
+                                          onPressed: () {
+                                            ThemeProvider
+                                                    .controllerOf(
+                                                        context)
+                                                .setTheme(e.id);
+                                            UserTelemetry()
+                                                    .currentModel
+                                                    .selectedTheme =
+                                                ThemeClassifier.of(
+                                                        context)
+                                                    .id;
+                                            UserTelemetry().save();
+                                          },
+                                          icon: Column(
+                                            children: <Widget>[
+                                              Icon(AvaliableTheme.of(
+                                                e.id,
+                                              ).icon),
+                                              strut(height: 6),
+                                              if(e.data.brightness == Brightness.dark)
+                                                const Icon(Icons.nightlight_round, size: 14)
+                                              else
+                                                const Icon(Icons.wb_sunny_rounded, size: 14)
+                                            ],
+                                          ),
+                                          label: Text.rich(TextSpan(children: <InlineSpan>[
+                                            TextSpan(
+                                                text: AvaliableTheme
+                                                        .of(e.id)
+                                                    .properName,
+                                                style:
+                                                    const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight
+                                                                .bold,
+                                                        fontSize:
+                                                            18)),
+                                            const TextSpan(
+                                                text: "\nBy "),
+                                            TextSpan(
+                                                text: AvaliableTheme
+                                                        .of(e.id)
+                                                    .author,
+                                                style: const TextStyle(
+                                                    fontWeight:
+                                                        FontWeight
+                                                            .w400,
+                                                    fontSize: 12,
+                                                    fontStyle:
+                                                        FontStyle
+                                                            .italic))
+                                          ]))),
+                                    )
+                                ])),
                                 actions: <Widget>[
                                   TextButton.icon(
-                                      onPressed: () async {
-                                        Debug().info(
-                                            "User affirmed theme change");
+                                      onPressed: () {
                                         Navigator.of(context).pop();
                                         UserTelemetry()
                                                 .currentModel
@@ -358,11 +399,11 @@ class _AppViewState extends State<_AppView> {
                                             ThemeClassifier.of(
                                                     context)
                                                 .id;
-                                        await UserTelemetry().save();
+                                        UserTelemetry().save();
                                       },
                                       icon: const Icon(
                                           Icons.check_rounded),
-                                      label: const Text("Ok",
+                                      label: const Text("Set",
                                           style: TextStyle(
                                               fontWeight:
                                                   FontWeight.bold)))

@@ -11,11 +11,13 @@ import 'package:scouting_app_2024/utils.dart';
 import 'package:theme_provider/theme_provider.dart';
 import 'package:yaml/yaml.dart';
 
+// this file has caused me great pain... ~ exoad (2/6/2024)
+
 class ThemeClassifier {
   static AvaliableTheme of(BuildContext context) {
     String name = ThemeProvider.themeOf(context).id;
     for (AvaliableTheme e in AvaliableTheme.export) {
-      if (e.properName == name) {
+      if (e.id == name) {
         return e;
       }
     }
@@ -26,17 +28,12 @@ class ThemeClassifier {
 class AvaliableTheme {
   final String properName;
   final bool isDarkMode;
+  final String author;
   late String id;
-  final bool builtin;
   final IconData? icon;
 
-  AvaliableTheme(this.properName, this.id, this.icon,
-      [this.isDarkMode = true, this.builtin = true]);
-  AvaliableTheme.builtin(this.properName,
-      [this.isDarkMode = true, this.builtin = true])
-      : icon = null {
-    id = "builtin_${properName.toLowerCase().replaceAll(" ", "_")}";
-  }
+  AvaliableTheme(this.properName, this.id, this.icon, this.author,
+      [this.isDarkMode = true]);
 
   static final List<AvaliableTheme> export = <AvaliableTheme>[
     /*
@@ -141,8 +138,8 @@ final class ThemeBlob {
                     x['canonical_name'],
                     x['id'],
                     icon,
-                    better.brightness == Brightness.dark,
-                    false));
+                    x['author'],
+                    better.brightness == Brightness.dark));
                 Debug().info(
                     "Registered: ${x['id']} to the intricate theme list!");
                 i++;
@@ -181,17 +178,12 @@ final class ThemeBlob {
         primaryTextTheme: theme.primaryTextTheme
             .apply(fontFamily: Shared.FONT_FAMILY_SANS),
       );
-      export.add(_gen(
-          id: "Default Dark",
-          data: better));
-      AvaliableTheme.export.add(AvaliableTheme(
-          "Default Dark",
-          "default_dark",
-          Icons.palette_rounded,
-          true));
+      export.add(_gen(id: "Default Dark", data: better));
+      AvaliableTheme.export.add(AvaliableTheme("Default Dark",
+          "default_dark", Icons.palette_rounded, "Builtin", true));
     } else {
       throw "BUG WITH LOADING DEFAULT THEME! 049";
-          }
+    }
   }
 
   static List<AppTheme> export = <AppTheme>[

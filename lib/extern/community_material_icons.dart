@@ -8,7 +8,9 @@ import 'package:flutter/widgets.dart';
 enum CommunityMaterialIconsEnumMapper {
   cactus(CommunityMaterialIcons.cactus),
   halloween(CommunityMaterialIcons.halloween),
+  washing_machine(CommunityMaterialIcons.washing_machine),
   fruit_cherries(CommunityMaterialIcons.fruit_cherries),
+  snowflake(CommunityMaterialIcons.snowflake)
   ;
 
   final IconData data;

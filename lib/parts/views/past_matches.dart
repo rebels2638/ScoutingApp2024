@@ -7,7 +7,8 @@ import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/debug.dart';
 
-class PastMatchesView extends StatefulWidget implements AppPageViewExporter {
+class PastMatchesView extends StatefulWidget
+    implements AppPageViewExporter {
   const PastMatchesView({super.key});
 
   @override
@@ -50,53 +51,59 @@ class _PastMatchesViewState extends State<PastMatchesView> {
     // todo, below just placeholder data
     matches = <PastMatchesOverViewData>[
       PastMatchesOverViewData(
-          matchID: 1,
-          matchType: MatchType.practice,
-          startingPosition: MatchStartingPosition.left,
-          endStatus: EndStatus.parked,
-          autoPickup: AutoPickup.m,
-          harmony: Harmony.yes,
-          trapScored: TrapScored.missed,),
+        matchID: 1,
+        matchType: MatchType.practice,
+        startingPosition: MatchStartingPosition.left,
+        endStatus: EndStatus.parked,
+        autoPickup: AutoPickup.m,
+        harmony: Harmony.yes,
+        trapScored: TrapScored.missed,
+      ),
       PastMatchesOverViewData(
-          matchID: 2,
-          matchType: MatchType.practice,
-          startingPosition: MatchStartingPosition.middle,
-          endStatus: EndStatus.parked,
-          autoPickup: AutoPickup.m,
-          harmony: Harmony.yes,
-          trapScored: TrapScored.missed,),
+        matchID: 2,
+        matchType: MatchType.practice,
+        startingPosition: MatchStartingPosition.middle,
+        endStatus: EndStatus.parked,
+        autoPickup: AutoPickup.m,
+        harmony: Harmony.yes,
+        trapScored: TrapScored.missed,
+      ),
       PastMatchesOverViewData(
-          matchID: 3,
-          matchType: MatchType.qualification,
-          startingPosition: MatchStartingPosition.right,
-          endStatus: EndStatus.parked,
-          autoPickup: AutoPickup.m,
-          harmony: Harmony.yes,
-          trapScored: TrapScored.missed,),
+        matchID: 3,
+        matchType: MatchType.qualification,
+        startingPosition: MatchStartingPosition.right,
+        endStatus: EndStatus.parked,
+        autoPickup: AutoPickup.m,
+        harmony: Harmony.yes,
+        trapScored: TrapScored.missed,
+      ),
       PastMatchesOverViewData(
-          matchID: 4,
-          matchType: MatchType.qualification,
-          startingPosition: MatchStartingPosition.left,
-          endStatus: EndStatus.parked,
-          autoPickup: AutoPickup.m,
-          harmony: Harmony.yes,
-          trapScored: TrapScored.missed,),
+        matchID: 4,
+        matchType: MatchType.qualification,
+        startingPosition: MatchStartingPosition.left,
+        endStatus: EndStatus.parked,
+        autoPickup: AutoPickup.m,
+        harmony: Harmony.yes,
+        trapScored: TrapScored.missed,
+      ),
       PastMatchesOverViewData(
-          matchID: 5,
-          matchType: MatchType.playoff,
-          startingPosition: MatchStartingPosition.middle,
-          endStatus: EndStatus.parked,
-          autoPickup: AutoPickup.m,
-          harmony: Harmony.yes,
-          trapScored: TrapScored.missed,),
+        matchID: 5,
+        matchType: MatchType.playoff,
+        startingPosition: MatchStartingPosition.middle,
+        endStatus: EndStatus.parked,
+        autoPickup: AutoPickup.m,
+        harmony: Harmony.yes,
+        trapScored: TrapScored.missed,
+      ),
       PastMatchesOverViewData(
-          matchID: 6,
-          matchType: MatchType.playoff,
-          startingPosition: MatchStartingPosition.right,
-          endStatus: EndStatus.parked,
-          autoPickup: AutoPickup.m,
-          harmony: Harmony.yes,
-          trapScored: TrapScored.missed,)
+        matchID: 6,
+        matchType: MatchType.playoff,
+        startingPosition: MatchStartingPosition.right,
+        endStatus: EndStatus.parked,
+        autoPickup: AutoPickup.m,
+        harmony: Harmony.yes,
+        trapScored: TrapScored.missed,
+      )
     ];
 
     setState(() {});
@@ -127,14 +134,16 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                   children: [
                     Icon(Icons.calendar_month),
                     SizedBox(width: 8.0),
-                    Text("Past Matches", style: TextStyle(fontSize: 20.0)),
+                    Text("Past Matches",
+                        style: TextStyle(fontSize: 20.0)),
                   ],
                 ),
                 Row(
                   children: <Widget>[
                     IconButton(
                       icon: const Icon(Icons.delete_forever),
-                      onPressed: () async => await launchConfirmDialog(
+                      onPressed: () async =>
+                          await launchConfirmDialog(
                         // deletes all matches
                         okLabel: "Delete",
                         denyLabel: "Cancel",
@@ -150,7 +159,8 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                           });
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                                content: Text("All past matches deleted.")),
+                                content: Text(
+                                    "All past matches deleted.")),
                           );
                         },
                       ),
@@ -168,7 +178,8 @@ class _PastMatchesViewState extends State<PastMatchesView> {
           ),
           Expanded(
             child: matches.isEmpty
-                ? const Center(child: Text('No past matches available!'))
+                ? const Center(
+                    child: Text('No past matches available!'))
                 : ListView.builder(
                     itemCount: matches.length,
                     itemBuilder: (BuildContext context, int index) {
@@ -189,7 +200,8 @@ class MatchTile extends StatelessWidget {
   final PastMatchesOverViewData match;
   final Function(int) onDelete;
 
-  const MatchTile({super.key, required this.match, required this.onDelete});
+  const MatchTile(
+      {super.key, required this.match, required this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -210,7 +222,7 @@ class MatchTile extends StatelessWidget {
             child: Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
+                children: strutAll(<Widget>[
                   ElevatedButton(
                     onPressed: () async => await launchConfirmDialog(
                         showOkLabel: false,
@@ -218,8 +230,8 @@ class MatchTile extends StatelessWidget {
                         icon: const Icon(Icons.warning_amber_rounded),
                         title: "Warning",
                         context,
-                        message:
-                            const Text("Bluetooth feature not yet available!"),
+                        message: const Text(
+                            "Bluetooth feature not yet available!"),
                         onConfirm: () {}),
                     child: const Text('Beam via Bluetooth'),
                   ),
@@ -239,9 +251,11 @@ class MatchTile extends StatelessWidget {
                               color: Color(0xFFFFFFFF),
                             ),
                             image: PrettyQrDecorationImage(
-                              image: AssetImage('assets/appicon_header.png'),
+                              image: AssetImage(
+                                  'assets/appicon_header.png'),
                               position:
-                                  PrettyQrDecorationImagePosition.embedded,
+                                  PrettyQrDecorationImagePosition
+                                      .embedded,
                             ),
                           ),
                         ),
@@ -268,7 +282,7 @@ class MatchTile extends StatelessWidget {
                     child: const Text('Delete'),
                   ),
                   */
-                ],
+                ], width: 6),
               ),
             ),
             icon: const Icon(Icons.cell_tower),
@@ -293,7 +307,7 @@ class MatchTile extends StatelessWidget {
 String matchDataToCsv(PastMatchesOverViewData match) {
   // Convert match data to csv for QR code export
   String csv =
-  '${match.matchID},${match.matchType.name},${match.startingPosition.name},${match.endStatus.name},${match.autoPickup.name},${match.harmony.name},${match.trapScored.name},';
+      '${match.matchID},${match.matchType.name},${match.startingPosition.name},${match.endStatus.name},${match.autoPickup.name},${match.harmony.name},${match.trapScored.name},';
 
   return csv;
 }

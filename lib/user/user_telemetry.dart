@@ -38,6 +38,7 @@ class UserTelemetry {
                 jsonDecode(_prefs.getString(userDBName)!));
           }
         } catch (e) {
+          Debug().ohno("Caught $e");
           _prefs.clear();
           reset();
           save();
