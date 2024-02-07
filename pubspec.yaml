@@ -34,6 +34,7 @@ dependencies:
   url_launcher: ^6.2.3
   uuid: ^3.0.7
   window_manager: ^0.3.8
+  yaml: ^3.1.2
 
 dev_dependencies:
   flutter_test:
@@ -54,6 +55,9 @@ flutter:
     - assets/legals/BSD-4.txt
     - assets/2324_teampic.jpg
     - assets/2324_teampic_blurred.jpg
+    - assets/themes/
+    - assets/rules/
+    - assets/default_dark.json
 
   fonts:
     - family: IBM Plex Sans

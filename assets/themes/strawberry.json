@@ -4,7 +4,7 @@
   "buttonTheme": {
     "alignedDropdown": false,
     "colorScheme": {
-      "background": "#fff3f3f3",
+      "background": "#fffbf8f6",
       "brightness": "light",
       "error": "#ffb00020",
       "errorContainer": "#ffb00020",
@@ -13,7 +13,7 @@
       "onBackground": "#ff000000",
       "onError": "#ffffffff",
       "onErrorContainer": "#ffffffff",
-      "onInverseSurface": "#fffde9e5",
+      "onInverseSurface": "#fffbf2b7",
       "onPrimary": "#ffffffff",
       "onPrimaryContainer": "#ffffffff",
       "onSecondary": "#ff000000",
@@ -24,17 +24,17 @@
       "onTertiaryContainer": "#ff000000",
       "outline": "#ff000000",
       "outlineVariant": "#ff000000",
-      "primary": "#ffcd1957",
-      "primaryContainer": "#ffa11143",
+      "primary": "#ff217043",
+      "primaryContainer": "#ff175632",
       "scrim": "#ff000000",
-      "secondary": "#ff18794e",
-      "secondaryContainer": "#ff105e3b",
+      "secondary": "#ff962dc4",
+      "secondaryContainer": "#ff742197",
       "shadow": "#ff000000",
-      "surface": "#fffde9e5",
-      "surfaceTint": "#ffcd1957",
-      "surfaceVariant": "#fffde9e5",
-      "tertiary": "#ff18794e",
-      "tertiaryContainer": "#ff18794e"
+      "surface": "#fffbf2b7",
+      "surfaceTint": "#ff217043",
+      "surfaceVariant": "#fffbf2b7",
+      "tertiary": "#ff962dc4",
+      "tertiaryContainer": "#ff962dc4"
     },
     "height": 36,
     "layoutBehavior": "padded",
@@ -79,10 +79,10 @@
     },
     "textTheme": "normal"
   },
-  "canvasColor": "#fff3f3f3",
-  "cardColor": "#fffde9e5",
+  "canvasColor": "#fffbf8f6",
+  "cardColor": "#fffbf2b7",
   "colorScheme": {
-    "background": "#fff3f3f3",
+    "background": "#fffbf8f6",
     "brightness": "light",
     "error": "#ffb00020",
     "errorContainer": "#ffb00020",
@@ -91,7 +91,7 @@
     "onBackground": "#ff000000",
     "onError": "#ffffffff",
     "onErrorContainer": "#ffffffff",
-    "onInverseSurface": "#fffde9e5",
+    "onInverseSurface": "#fffbf2b7",
     "onPrimary": "#ffffffff",
     "onPrimaryContainer": "#ffffffff",
     "onSecondary": "#ff000000",
@@ -102,19 +102,19 @@
     "onTertiaryContainer": "#ff000000",
     "outline": "#ff000000",
     "outlineVariant": "#ff000000",
-    "primary": "#ffcd1957",
-    "primaryContainer": "#ffa11143",
+    "primary": "#ff217043",
+    "primaryContainer": "#ff175632",
     "scrim": "#ff000000",
-    "secondary": "#ff18794e",
-    "secondaryContainer": "#ff105e3b",
+    "secondary": "#ff962dc4",
+    "secondaryContainer": "#ff742197",
     "shadow": "#ff000000",
-    "surface": "#fffde9e5",
-    "surfaceTint": "#ffcd1957",
-    "surfaceVariant": "#fffde9e5",
-    "tertiary": "#ff18794e",
-    "tertiaryContainer": "#ff18794e"
+    "surface": "#fffbf2b7",
+    "surfaceTint": "#ff217043",
+    "surfaceVariant": "#fffbf2b7",
+    "tertiary": "#ff962dc4",
+    "tertiaryContainer": "#ff962dc4"
   },
-  "dialogBackgroundColor": "#fff3f3f3",
+  "dialogBackgroundColor": "#fffbf8f6",
   "disabledColor": "#61000000",
   "dividerColor": "#1f000000",
   "focusColor": "#1f000000",
@@ -134,8 +134,8 @@
     "isDense": false
   },
   "materialTapTargetSize": "shrinkWrap",
-  "platform": "macOS",
-  "primaryColor": "#ffcd1957",
+  "platform": "windows",
+  "primaryColor": "#ff217043",
   "primaryColorDark": "#ff1976d2",
   "primaryColorLight": "#ffbbdefb",
   "primaryIconTheme": {
@@ -143,10 +143,10 @@
   },
   "primaryTextTheme": {
     "bodyLarge": {
-      "color": "#fffde9e5",
+      "color": "#fffbf2b7",
       "decoration": "none",
-      "decorationColor": "#fffde9e5",
-      "fontFamily": ".AppleSystemUIFont",
+      "decorationColor": "#fffbf2b7",
+      "fontFamily": "Segoe UI",
       "fontSize": 16,
       "fontWeight": "w400",
       "inherit": false,
@@ -154,10 +154,10 @@
       "textBaseline": "alphabetic"
     },
     "bodyMedium": {
-      "color": "#fffde9e5",
+      "color": "#fffbf2b7",
       "decoration": "none",
-      "decorationColor": "#fffde9e5",
-      "fontFamily": ".AppleSystemUIFont",
+      "decorationColor": "#fffbf2b7",
+      "fontFamily": "Segoe UI",
       "fontSize": 14,
       "fontWeight": "w400",
       "inherit": false,
@@ -165,10 +165,10 @@
       "textBaseline": "alphabetic"
     },
     "bodySmall": {
-      "color": "#fffde9e5",
+      "color": "#fffbf2b7",
       "decoration": "none",
-      "decorationColor": "#fffde9e5",
-      "fontFamily": ".AppleSystemUIFont",
+      "decorationColor": "#fffbf2b7",
+      "fontFamily": "Segoe UI",
       "fontSize": 12,
       "fontWeight": "w400",
       "inherit": false,
@@ -176,10 +176,10 @@
       "textBaseline": "alphabetic"
     },
     "displayLarge": {
-      "color": "#fffde9e5",
+      "color": "#fffbf2b7",
       "decoration": "none",
-      "decorationColor": "#fffde9e5",
-      "fontFamily": ".AppleSystemUIFont",
+      "decorationColor": "#fffbf2b7",
+      "fontFamily": "Segoe UI",
       "fontSize": 96,
       "fontWeight": "w300",
       "inherit": false,
@@ -187,10 +187,10 @@
       "textBaseline": "alphabetic"
     },
     "displayMedium": {
-      "color": "#fffde9e5",
+      "color": "#fffbf2b7",
       "decoration": "none",
-      "decorationColor": "#fffde9e5",
-      "fontFamily": ".AppleSystemUIFont",
+      "decorationColor": "#fffbf2b7",
+      "fontFamily": "Segoe UI",
       "fontSize": 60,
       "fontWeight": "w300",
       "inherit": false,
@@ -198,10 +198,10 @@
       "textBaseline": "alphabetic"
     },
     "displaySmall": {
-      "color": "#fffde9e5",
+      "color": "#fffbf2b7",
       "decoration": "none",
-      "decorationColor": "#fffde9e5",
-      "fontFamily": ".AppleSystemUIFont",
+      "decorationColor": "#fffbf2b7",
+      "fontFamily": "Segoe UI",
       "fontSize": 48,
       "fontWeight": "w400",
       "inherit": false,
@@ -209,10 +209,10 @@
       "textBaseline": "alphabetic"
     },
     "headlineLarge": {
-      "color": "#fffde9e5",
+      "color": "#fffbf2b7",
       "decoration": "none",
-      "decorationColor": "#fffde9e5",
-      "fontFamily": ".AppleSystemUIFont",
+      "decorationColor": "#fffbf2b7",
+      "fontFamily": "Segoe UI",
       "fontSize": 40,
       "fontWeight": "w400",
       "inherit": false,
@@ -220,10 +220,10 @@
       "textBaseline": "alphabetic"
     },
     "headlineMedium": {
-      "color": "#fffde9e5",
+      "color": "#fffbf2b7",
       "decoration": "none",
-      "decorationColor": "#fffde9e5",
-      "fontFamily": ".AppleSystemUIFont",
+      "decorationColor": "#fffbf2b7",
+      "fontFamily": "Segoe UI",
       "fontSize": 34,
       "fontWeight": "w400",
       "inherit": false,
@@ -231,10 +231,10 @@
       "textBaseline": "alphabetic"
     },
     "headlineSmall": {
-      "color": "#fffde9e5",
+      "color": "#fffbf2b7",
       "decoration": "none",
-      "decorationColor": "#fffde9e5",
-      "fontFamily": ".AppleSystemUIFont",
+      "decorationColor": "#fffbf2b7",
+      "fontFamily": "Segoe UI",
       "fontSize": 24,
       "fontWeight": "w400",
       "inherit": false,
@@ -242,10 +242,10 @@
       "textBaseline": "alphabetic"
     },
     "labelLarge": {
-      "color": "#fffde9e5",
+      "color": "#fffbf2b7",
       "decoration": "none",
-      "decorationColor": "#fffde9e5",
-      "fontFamily": ".AppleSystemUIFont",
+      "decorationColor": "#fffbf2b7",
+      "fontFamily": "Segoe UI",
       "fontSize": 14,
       "fontWeight": "w500",
       "inherit": false,
@@ -253,10 +253,10 @@
       "textBaseline": "alphabetic"
     },
     "labelMedium": {
-      "color": "#fffde9e5",
+      "color": "#fffbf2b7",
       "decoration": "none",
-      "decorationColor": "#fffde9e5",
-      "fontFamily": ".AppleSystemUIFont",
+      "decorationColor": "#fffbf2b7",
+      "fontFamily": "Segoe UI",
       "fontSize": 11,
       "fontWeight": "w400",
       "inherit": false,
@@ -264,10 +264,10 @@
       "textBaseline": "alphabetic"
     },
     "labelSmall": {
-      "color": "#fffde9e5",
+      "color": "#fffbf2b7",
       "decoration": "none",
-      "decorationColor": "#fffde9e5",
-      "fontFamily": ".AppleSystemUIFont",
+      "decorationColor": "#fffbf2b7",
+      "fontFamily": "Segoe UI",
       "fontSize": 10,
       "fontWeight": "w400",
       "inherit": false,
@@ -275,10 +275,10 @@
       "textBaseline": "alphabetic"
     },
     "titleLarge": {
-      "color": "#fffde9e5",
+      "color": "#fffbf2b7",
       "decoration": "none",
-      "decorationColor": "#fffde9e5",
-      "fontFamily": ".AppleSystemUIFont",
+      "decorationColor": "#fffbf2b7",
+      "fontFamily": "Segoe UI",
       "fontSize": 20,
       "fontWeight": "w500",
       "inherit": false,
@@ -286,10 +286,10 @@
       "textBaseline": "alphabetic"
     },
     "titleMedium": {
-      "color": "#fffde9e5",
+      "color": "#fffbf2b7",
       "decoration": "none",
-      "decorationColor": "#fffde9e5",
-      "fontFamily": ".AppleSystemUIFont",
+      "decorationColor": "#fffbf2b7",
+      "fontFamily": "Segoe UI",
       "fontSize": 16,
       "fontWeight": "w400",
       "inherit": false,
@@ -297,10 +297,10 @@
       "textBaseline": "alphabetic"
     },
     "titleSmall": {
-      "color": "#fffde9e5",
+      "color": "#fffbf2b7",
       "decoration": "none",
-      "decorationColor": "#fffde9e5",
-      "fontFamily": ".AppleSystemUIFont",
+      "decorationColor": "#fffbf2b7",
+      "fontFamily": "Segoe UI",
       "fontSize": 14,
       "fontWeight": "w500",
       "inherit": false,
@@ -308,7 +308,7 @@
       "textBaseline": "alphabetic"
     }
   },
-  "scaffoldBackgroundColor": "#fff3f3f3",
+  "scaffoldBackgroundColor": "#fffbf8f6",
   "secondaryHeaderColor": "#ffe3f2fd",
   "shadowColor": "#ff000000",
   "splashColor": "#66c8c8c8",
@@ -318,7 +318,7 @@
       "color": "#ff000000",
       "decoration": "none",
       "decorationColor": "#ff000000",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Segoe UI",
       "fontSize": 16,
       "fontWeight": "w400",
       "inherit": false,
@@ -329,7 +329,7 @@
       "color": "#ff000000",
       "decoration": "none",
       "decorationColor": "#ff000000",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Segoe UI",
       "fontSize": 14,
       "fontWeight": "w400",
       "inherit": false,
@@ -340,7 +340,7 @@
       "color": "#ff000000",
       "decoration": "none",
       "decorationColor": "#ff000000",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Segoe UI",
       "fontSize": 12,
       "fontWeight": "w400",
       "inherit": false,
@@ -351,7 +351,7 @@
       "color": "#ff000000",
       "decoration": "none",
       "decorationColor": "#ff000000",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Segoe UI",
       "fontSize": 96,
       "fontWeight": "w300",
       "inherit": false,
@@ -362,7 +362,7 @@
       "color": "#ff000000",
       "decoration": "none",
       "decorationColor": "#ff000000",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Segoe UI",
       "fontSize": 60,
       "fontWeight": "w300",
       "inherit": false,
@@ -373,7 +373,7 @@
       "color": "#ff000000",
       "decoration": "none",
       "decorationColor": "#ff000000",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Segoe UI",
       "fontSize": 48,
       "fontWeight": "w400",
       "inherit": false,
@@ -384,7 +384,7 @@
       "color": "#ff000000",
       "decoration": "none",
       "decorationColor": "#ff000000",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Segoe UI",
       "fontSize": 40,
       "fontWeight": "w400",
       "inherit": false,
@@ -395,7 +395,7 @@
       "color": "#ff000000",
       "decoration": "none",
       "decorationColor": "#ff000000",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Segoe UI",
       "fontSize": 34,
       "fontWeight": "w400",
       "inherit": false,
@@ -406,7 +406,7 @@
       "color": "#ff000000",
       "decoration": "none",
       "decorationColor": "#ff000000",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Segoe UI",
       "fontSize": 24,
       "fontWeight": "w400",
       "inherit": false,
@@ -417,7 +417,7 @@
       "color": "#ff000000",
       "decoration": "none",
       "decorationColor": "#ff000000",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Segoe UI",
       "fontSize": 14,
       "fontWeight": "w500",
       "inherit": false,
@@ -428,7 +428,7 @@
       "color": "#ff000000",
       "decoration": "none",
       "decorationColor": "#ff000000",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Segoe UI",
       "fontSize": 11,
       "fontWeight": "w400",
       "inherit": false,
@@ -439,7 +439,7 @@
       "color": "#ff000000",
       "decoration": "none",
       "decorationColor": "#ff000000",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Segoe UI",
       "fontSize": 10,
       "fontWeight": "w400",
       "inherit": false,
@@ -450,7 +450,7 @@
       "color": "#ff000000",
       "decoration": "none",
       "decorationColor": "#ff000000",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Segoe UI",
       "fontSize": 20,
       "fontWeight": "w500",
       "inherit": false,
@@ -461,7 +461,7 @@
       "color": "#ff000000",
       "decoration": "none",
       "decorationColor": "#ff000000",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Segoe UI",
       "fontSize": 16,
       "fontWeight": "w400",
       "inherit": false,
@@ -472,7 +472,7 @@
       "color": "#ff000000",
       "decoration": "none",
       "decorationColor": "#ff000000",
-      "fontFamily": ".AppleSystemUIFont",
+      "fontFamily": "Segoe UI",
       "fontSize": 14,
       "fontWeight": "w500",
       "inherit": false,
@@ -486,106 +486,106 @@
         "color": "#ff000000",
         "decoration": "none",
         "decorationColor": "#ff000000",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "bodyMedium": {
         "color": "#ff000000",
         "decoration": "none",
         "decorationColor": "#ff000000",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "bodySmall": {
         "color": "#ff000000",
         "decoration": "none",
         "decorationColor": "#ff000000",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "displayLarge": {
         "color": "#ff000000",
         "decoration": "none",
         "decorationColor": "#ff000000",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "displayMedium": {
         "color": "#ff000000",
         "decoration": "none",
         "decorationColor": "#ff000000",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "displaySmall": {
         "color": "#ff000000",
         "decoration": "none",
         "decorationColor": "#ff000000",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "headlineLarge": {
         "color": "#ff000000",
         "decoration": "none",
         "decorationColor": "#ff000000",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "headlineMedium": {
         "color": "#ff000000",
         "decoration": "none",
         "decorationColor": "#ff000000",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "headlineSmall": {
         "color": "#ff000000",
         "decoration": "none",
         "decorationColor": "#ff000000",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "labelLarge": {
         "color": "#ff000000",
         "decoration": "none",
         "decorationColor": "#ff000000",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "labelMedium": {
         "color": "#ff000000",
         "decoration": "none",
         "decorationColor": "#ff000000",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "labelSmall": {
         "color": "#ff000000",
         "decoration": "none",
         "decorationColor": "#ff000000",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "titleLarge": {
         "color": "#ff000000",
         "decoration": "none",
         "decorationColor": "#ff000000",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "titleMedium": {
         "color": "#ff000000",
         "decoration": "none",
         "decorationColor": "#ff000000",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "titleSmall": {
         "color": "#ff000000",
         "decoration": "none",
         "decorationColor": "#ff000000",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "fontFamily": "Segoe UI",
+        "inherit": false
       }
     },
     "dense": {
@@ -1001,109 +1001,109 @@
     },
     "white": {
       "bodyLarge": {
-        "color": "#fffde9e5",
+        "color": "#fffbf2b7",
         "decoration": "none",
-        "decorationColor": "#fffde9e5",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "decorationColor": "#fffbf2b7",
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "bodyMedium": {
-        "color": "#fffde9e5",
+        "color": "#fffbf2b7",
         "decoration": "none",
-        "decorationColor": "#fffde9e5",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "decorationColor": "#fffbf2b7",
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "bodySmall": {
-        "color": "#fffde9e5",
+        "color": "#fffbf2b7",
         "decoration": "none",
-        "decorationColor": "#fffde9e5",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "decorationColor": "#fffbf2b7",
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "displayLarge": {
-        "color": "#fffde9e5",
+        "color": "#fffbf2b7",
         "decoration": "none",
-        "decorationColor": "#fffde9e5",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "decorationColor": "#fffbf2b7",
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "displayMedium": {
-        "color": "#fffde9e5",
+        "color": "#fffbf2b7",
         "decoration": "none",
-        "decorationColor": "#fffde9e5",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "decorationColor": "#fffbf2b7",
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "displaySmall": {
-        "color": "#fffde9e5",
+        "color": "#fffbf2b7",
         "decoration": "none",
-        "decorationColor": "#fffde9e5",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "decorationColor": "#fffbf2b7",
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "headlineLarge": {
-        "color": "#fffde9e5",
+        "color": "#fffbf2b7",
         "decoration": "none",
-        "decorationColor": "#fffde9e5",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "decorationColor": "#fffbf2b7",
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "headlineMedium": {
-        "color": "#fffde9e5",
+        "color": "#fffbf2b7",
         "decoration": "none",
-        "decorationColor": "#fffde9e5",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "decorationColor": "#fffbf2b7",
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "headlineSmall": {
-        "color": "#fffde9e5",
+        "color": "#fffbf2b7",
         "decoration": "none",
-        "decorationColor": "#fffde9e5",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "decorationColor": "#fffbf2b7",
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "labelLarge": {
-        "color": "#fffde9e5",
+        "color": "#fffbf2b7",
         "decoration": "none",
-        "decorationColor": "#fffde9e5",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "decorationColor": "#fffbf2b7",
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "labelMedium": {
-        "color": "#fffde9e5",
+        "color": "#fffbf2b7",
         "decoration": "none",
-        "decorationColor": "#fffde9e5",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "decorationColor": "#fffbf2b7",
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "labelSmall": {
-        "color": "#fffde9e5",
+        "color": "#fffbf2b7",
         "decoration": "none",
-        "decorationColor": "#fffde9e5",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "decorationColor": "#fffbf2b7",
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "titleLarge": {
-        "color": "#fffde9e5",
+        "color": "#fffbf2b7",
         "decoration": "none",
-        "decorationColor": "#fffde9e5",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "decorationColor": "#fffbf2b7",
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "titleMedium": {
-        "color": "#fffde9e5",
+        "color": "#fffbf2b7",
         "decoration": "none",
-        "decorationColor": "#fffde9e5",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "decorationColor": "#fffbf2b7",
+        "fontFamily": "Segoe UI",
+        "inherit": false
       },
       "titleSmall": {
-        "color": "#fffde9e5",
+        "color": "#fffbf2b7",
         "decoration": "none",
-        "decorationColor": "#fffde9e5",
-        "fontFamily": ".AppleSystemUIFont",
-        "inherit": true
+        "decorationColor": "#fffbf2b7",
+        "fontFamily": "Segoe UI",
+        "inherit": false
       }
     }
   },

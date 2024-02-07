@@ -44,7 +44,7 @@ class Debug {
 
   void listen(void Function(LogRecord record) listener) =>
       _logger.onRecord.asBroadcastStream().listen(listener);
-  void fine(dynamic msg) => _logger.fine(msg);
   void warn(dynamic msg) => _logger.warning(msg);
+  void ohno(dynamic msg) => _logger.severe(msg);
   void info(dynamic msg) => _logger.info(msg);
 }

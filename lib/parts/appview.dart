@@ -29,12 +29,16 @@ class ThemedAppBundle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ThemeProvider(
-        themes: ThemeBlob.export(),
+        themes: <AppTheme>[
+          ...ThemeBlob.export,
+          ...ThemeBlob.intricateThemes
+        ],
         child: ThemeConsumer(
             child: Builder(
                 builder: (BuildContext
                         themeCtxt) => /*lol this is very scuffed XD i hope you can forgive me*/
-                    MultiProvider(providers: <SingleChildWidget>[                      ChangeNotifierProvider<ShowFPSMonitorModal>(
+                    MultiProvider(providers: <SingleChildWidget>[
+                      ChangeNotifierProvider<ShowFPSMonitorModal>(
                           create: (BuildContext _) =>
                               ShowFPSMonitorModal()),
                       ChangeNotifierProvider<ShowExperimentalModal>(
@@ -72,7 +76,6 @@ class IntermediateMaterialApp extends StatelessWidget {
               .show,
       debugShowCheckedModeBanner: false,
       theme: ThemeProvider.themeOf(context).data,
-      darkTheme: ThemeProvider.themeOf(context).data,
       home: ShowFPS(
           alignment: Alignment.topLeft,
           visible: ShowFPSMonitorModal.isShowingFPSMonitor(context),
@@ -237,9 +240,10 @@ class _AppViewState extends State<_AppView> {
     ];
     Future<void>.delayed(Duration.zero, () {
       if (ThemeClassifier.of(context) !=
-          UserTelemetry().currentModel.selectedTheme) {
-        setState(() => ThemeProvider.controllerOf(context).setTheme(
-            UserTelemetry().currentModel.selectedTheme.name));
+          AvaliableTheme.of(
+              UserTelemetry().currentModel.selectedTheme)) {
+        setState(() => ThemeProvider.controllerOf(context)
+            .setTheme(UserTelemetry().currentModel.selectedTheme));
       }
     });
     return Scaffold(
@@ -299,41 +303,48 @@ class _AppViewState extends State<_AppView> {
                           context: context,
                           builder: (BuildContext ctxt) {
                             return AlertDialog(
-                                title: const Text("Theme Select"),
-                                content: DropdownMenu<
-                                        AvaliableThemes>(
+                                title: const Text("Theme Picker"),
+                                content: DropdownMenu<AvaliableTheme>(
                                     initialSelection:
                                         ThemeClassifier.of(context),
                                     controller:
                                         _themeSelectorController,
                                     requestFocusOnTap: true,
                                     label: const Text("Theme Name"),
-                                    onSelected: (AvaliableThemes? theme) =>
-                                        setState(() {
-                                          if (theme != null) {
-                                            UserTelemetry()
-                                                    .currentModel
-                                                    .selectedTheme =
-                                                theme;
-                                            ThemeProvider
-                                                    .controllerOf(
-                                                        context)
-                                                .setTheme(theme.name);
-                                            Debug().info(
-                                                "Switched theme to ${theme.properName}");
-                                          }
-                                        }),
-                                    dropdownMenuEntries: AvaliableThemes
-                                        .values
-                                        .map<DropdownMenuEntry<AvaliableThemes>>(
-                                            (AvaliableThemes e) => DropdownMenuEntry<
-                                                    AvaliableThemes>(
+                                    onSelected:
+                                        (AvaliableTheme? theme) =>
+                                            setState(() {
+                                              if (theme != null) {
+                                                Debug().info(
+                                                    "Switched theme to ${theme.id}");
+
+                                                UserTelemetry()
+                                                        .currentModel
+                                                        .selectedTheme =
+                                                    theme.id;
+                                                ThemeProvider
+                                                        .controllerOf(
+                                                            context)
+                                                    .setTheme(
+                                                        theme.id);
+                                              }
+                                            }),
+                                    dropdownMenuEntries: AvaliableTheme
+                                        .export
+                                        .map<
+                                                DropdownMenuEntry<
+                                                    AvaliableTheme>>(
+                                            (AvaliableTheme e) => DropdownMenuEntry<
+                                                    AvaliableTheme>(
                                                 value: e,
                                                 label: e.properName,
-                                                leadingIcon: e.isDarkMode
-                                                    ? const Icon(
-                                                        Icons.nightlight_round)
-                                                    : const Icon(Icons.wb_sunny_rounded)))
+                                                leadingIcon: e.builtin
+                                                    ? e.isDarkMode
+                                                        ? const Icon(Icons
+                                                            .nightlight_round)
+                                                        : const Icon(Icons
+                                                            .wb_sunny_rounded)
+                                                    : Icon(e.icon!)))
                                         .toList()),
                                 actions: <Widget>[
                                   TextButton.icon(
@@ -345,7 +356,8 @@ class _AppViewState extends State<_AppView> {
                                                 .currentModel
                                                 .selectedTheme =
                                             ThemeClassifier.of(
-                                                context);
+                                                    context)
+                                                .id;
                                         await UserTelemetry().save();
                                       },
                                       icon: const Icon(

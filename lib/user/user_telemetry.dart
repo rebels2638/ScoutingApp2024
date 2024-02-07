@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:scouting_app_2024/debug.dart';
-import 'package:scouting_app_2024/parts/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part "user_telemetry.g.dart";
@@ -79,11 +78,12 @@ class UserTelemetry {
 @JsonSerializable(ignoreUnannotated: true, checked: true)
 class UserPrefModel {
   static final UserPrefModel defaultModel =
-      UserPrefModel(selectedTheme: AvaliableThemes.default_dark);
+      UserPrefModel(selectedTheme: "default_dark");
 
-  @JsonKey(
-      required: false, defaultValue: AvaliableThemes.default_dark)
-  AvaliableThemes selectedTheme;
+  // i hate hard coded values, but here we go down this rabbit hole again
+  // this should be a theme's id
+  @JsonKey(required: false, defaultValue: "default_dark")
+  String selectedTheme;
 
   @JsonKey(required: false, defaultValue: false)
   bool showConsole;

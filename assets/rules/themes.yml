@@ -1,0 +1,31 @@
+# all Intricate Theme definitions must specify the following attributes:
+# - Author:string
+# - Canonical Name:string
+# - ID:string
+# - Location (where it is in the assets folder):string
+# - Icon:special_string
+#
+# the icon must be in this format:
+# [community/flutter],[icon_name]
+# PLEASE TRY TO USE THE SAME ICONS AS MUCH AS POSSIBLE !!! IF YOU ARE GOING TO MAKE SURE TO UPDATE lib/extern/community_material_icons.dart OR lib/extern/flutter_icons.dart !!!!!!!! DART REFLECTION (mirror) DOES NOT WORK ON ALL PLATFORMS WHICH IS SO SADDDD
+# "community/flutter"
+#   1) community -> uses CommunityMaterialIcons (class)
+#   2) flutter -> uses Icons (class)
+# refer to here: https://pictogrammers.com/library/mdi/
+#
+#
+# "icon_name"
+#   1) the enum name of the icon to search for
+
+- canonical_name: "Halloween" # ;)
+  id: "yida_halloween"
+  author: "Aiden Pan"
+  location: "assets/themes/halloween.json"
+  icon: "community,halloween"
+
+
+- canonical_name: "Strawberry"
+  id: "yida_strawberry"
+  author: "Aiden Pan"
+  location: "assets/themes/strawberry.json"
+  icon: "community,fruit_cherries"
