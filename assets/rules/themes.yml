@@ -17,6 +17,31 @@
 # "icon_name"
 #   1) the enum name of the icon to search for
 
+
+- canonical_name: "Solarized"
+  id: "exoad_solarized"
+  author: "Jack Meng (exoad)"
+  location: "assets/themes/solarized.json"
+  icon: "flutter,beach_access_rounded"
+
+- canonical_name: "Lost"
+  id: "exoad_lost"
+  author: "Jack Meng (exoad)"
+  location: "assets/themes/lost.json"
+  icon: "community,alphabet_piqad"
+
+- canonical_name: "Caramel"
+  id: "exoad_caramel"
+  author: "Jack Meng (exoad)"
+  location: "assets/themes/caramel.json"
+  icon: "community,candycane"
+
+- canonical_name: "Aloe"
+  id: "exoad_aloe"
+  author: "Jack Meng (exoad)"
+  location: "assets/themes/aloe.json"
+  icon: "community,sprout"
+
 - canonical_name: "Brisk"
   id: "exoad_brisk"
   author: "Jack Meng (exoad)"

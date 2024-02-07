@@ -1,13 +1,16 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+import 'package:window_manager/window_manager.dart';
+
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/appview.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
-import 'package:window_manager/window_manager.dart';
 
 // no one change anything here please - exoad
 void main() async {
@@ -19,6 +22,7 @@ void main() async {
     Debug().warn("${details.summary} ${details.context}");
   };
   Debug().init();
+  Hive.initFlutter();
   // this is such a shit idea because we are using so many awaits lmao
   ThemeBlob.loadBuiltinThemes()
       .then((_) => ThemeBlob.loadIntricateThemes().then((_) {

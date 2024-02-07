@@ -10,7 +10,10 @@ enum CommunityMaterialIconsEnumMapper {
   halloween(CommunityMaterialIcons.halloween),
   washing_machine(CommunityMaterialIcons.washing_machine),
   fruit_cherries(CommunityMaterialIcons.fruit_cherries),
-  snowflake(CommunityMaterialIcons.snowflake)
+  snowflake(CommunityMaterialIcons.snowflake),
+  sprout(CommunityMaterialIcons.sprout),
+  alphabet_piqad(CommunityMaterialIcons.alphabet_piqad),
+  candycane(CommunityMaterialIcons.candycane),
   ;
 
   final IconData data;

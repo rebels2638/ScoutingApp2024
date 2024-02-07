@@ -19,6 +19,7 @@ dependencies:
   get: ^4.6.6
   get_storage: ^2.1.1
   hive: ^2.2.3
+  hive_flutter: ^1.1.0
   ionicons: ^0.2.2
   json_annotation: ^4.8.1
   json_serializable: ^6.7.1
@@ -32,7 +33,7 @@ dependencies:
   show_fps: ^1.0.6
   theme_provider: ^0.6.0
   url_launcher: ^6.2.3
-  uuid: ^3.0.7
+  uuid: ^4.3.3
   window_manager: ^0.3.8
   yaml: ^3.1.2
 
