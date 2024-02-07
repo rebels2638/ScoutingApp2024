@@ -97,14 +97,11 @@ class _AppView extends StatefulWidget {
 }
 
 class _AppViewState extends State<_AppView> {
-  /// delegates for all of the bottom nav bar items
-  late TextEditingController _themeSelectorController;
   int _bottomNavBarIndexer = 0;
 
   @override
   void initState() {
     super.initState();
-    _themeSelectorController = TextEditingController();
   }
 
   @override
@@ -308,7 +305,11 @@ class _AppViewState extends State<_AppView> {
                                     ?.themes ??
                                 <AppTheme>[];
                             return AlertDialog(
-                                title: const Text("Theme Picker"),
+                                title: Row(children: <Widget>[
+                                  const Icon(Icons.palette_rounded),
+                                  strut(width: 10),
+                                  const Text("Select a Theme")
+                                ]),
                                 content: SingleChildScrollView(
                                     child: Wrap(children: <Widget>[
                                   for (AppTheme e in appThemes)
@@ -354,10 +355,17 @@ class _AppViewState extends State<_AppView> {
                                                 e.id,
                                               ).icon),
                                               strut(height: 6),
-                                              if(e.data.brightness == Brightness.dark)
-                                                const Icon(Icons.nightlight_round, size: 14)
+                                              if (e.data.brightness ==
+                                                  Brightness.dark)
+                                                const Icon(
+                                                    Icons
+                                                        .nightlight_round,
+                                                    size: 14)
                                               else
-                                                const Icon(Icons.wb_sunny_rounded, size: 14)
+                                                const Icon(
+                                                    Icons
+                                                        .wb_sunny_rounded,
+                                                    size: 14)
                                             ],
                                           ),
                                           label: Text.rich(TextSpan(children: <InlineSpan>[

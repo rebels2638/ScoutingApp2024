@@ -26,8 +26,6 @@ Scouting App for the 2024 year built using the **Flutter Framework**.
 
 Head over to the <a href="https://github.com/rebels2638/ScoutingApp/actions"><kbd>**Actions**</kbd></a> tab and download from any of the target platforms on there.
 
-
-
 ## Building
 
 **Prerequisite**
@@ -65,12 +63,11 @@ First, follow the steps in [Building](#building), then just run `flutter run -d 
 
 **Helpers**
 
-* Aiden Pan
+* Aiden Pan ([noob822](https://github.com/noob822))
 * Aarav Minocha ([aaravmin](https://github.com/aaravmin))
 
 ## Building Remarks
 
-* [`/web/`](./web/) - Please reserve for development purposes only.
 * [`/legals/`](/legals/) - Do not modify unless you know what you are doing. This directory preserves external licenses that cannot be tracked by pub.
 * [`/repo/`](./repo/) - Strictly for the repository's display purposes, should NOT be linked to the base app in any way
 
@@ -92,4 +89,4 @@ First, follow the steps in [Building](#building), then just run `flutter run -d 
 **Tools**
 
 1. [Image Background Remover](https://www.remove.bg/)
-2. [Material 3 Theme Builder](https://m3.material.io/theme-builder)
+2. [Material 3 Theme Builder](https://appainter.dev/)
