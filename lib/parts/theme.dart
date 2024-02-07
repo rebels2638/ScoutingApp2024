@@ -168,7 +168,7 @@ final class ThemeBlob {
           data: data,
           description: id);
 
-  static Future<void> loadBuiltinThemes() async {
+  static Future<void> loadBuiltinThemes() async { // very critical function to call
     ThemeData? theme = ThemeDecoder.decodeThemeData(jsonDecode(
         await rootBundle.loadString("assets/default_dark.json")));
     if (theme != null) {

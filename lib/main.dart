@@ -9,6 +9,7 @@ import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
 import 'package:window_manager/window_manager.dart';
 
+// no one change anything here please - exoad
 void main() async {
   DateTime now = DateTime.now();
   // nothing should go above this comment besides the DateTime check
@@ -18,6 +19,7 @@ void main() async {
     Debug().warn("${details.summary} ${details.context}");
   };
   Debug().init();
+  // this is such a shit idea because we are using so many awaits lmao
   ThemeBlob.loadBuiltinThemes()
       .then((_) => ThemeBlob.loadIntricateThemes().then((_) {
             UserTelemetry().init().then((_) async {

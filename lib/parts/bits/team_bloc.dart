@@ -3,7 +3,6 @@ import 'package:bloc/bloc.dart';
 import 'package:scouting_app_2024/user/team_model.dart';
 
 // there is hella boilerplate written here
-
 sealed class ScoutingSessionStates extends Equatable {
   @override
   List<dynamic> get props => <dynamic>[];

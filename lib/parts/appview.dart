@@ -6,7 +6,6 @@ import 'package:provider/single_child_widget.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/bits/lock_in.dart';
-import 'package:scouting_app_2024/parts/bits/perf_overlay.dart';
 import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
 import 'package:scouting_app_2024/parts/bits/show_fps_monitor.dart';
@@ -52,11 +51,7 @@ class ThemedAppBundle extends StatelessWidget {
                               ThemeModeModal()),
                       ChangeNotifierProvider<ShowConsoleModal>(
                           create: (BuildContext _) =>
-                              ShowConsoleModal()),
-                      ChangeNotifierProvider<PerformanceOverlayModal>(
-                          create: (BuildContext _) =>
-                              PerformanceOverlayModal()),
-                      ChangeNotifierProvider<LockedInScoutingModal>(
+                              ShowConsoleModal()),                      ChangeNotifierProvider<LockedInScoutingModal>(
                           create: (BuildContext _) =>
                               LockedInScoutingModal())
                     ], child: const IntermediateMaterialApp()))));
@@ -71,9 +66,6 @@ class IntermediateMaterialApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      showPerformanceOverlay:
-          Provider.of<PerformanceOverlayModal>(context, listen: false)
-              .show,
       debugShowCheckedModeBanner: false,
       theme: ThemeProvider.themeOf(context).data,
       home: ShowFPS(

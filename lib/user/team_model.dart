@@ -11,6 +11,8 @@ enum TeamAlliance {
   const TeamAlliance(this.color);
 
   Color toColor() => Color(color);
+
+  
 }
 
 class TeamModelBlock {
@@ -46,7 +48,7 @@ enum Harmony { yes, no, failed }
 
 enum TrapScored { yes, no, missed }
 
-enum MicScored {yes, no, missed}
+enum MicScored { yes, no, missed }
 
 class HollisticMatchScoutingData {
   PrelimInfo preliminary;
@@ -63,6 +65,9 @@ class HollisticMatchScoutingData {
   }) {
     id = Shared.uuid.v1();
   }
+
+  String exportEphemeral() =>
+      "{\"prelim:\"{${preliminary.exportMap()}},\"auto\":{${auto.exportMap()}},\"teleop\":{${endgame.exportMap()}},\"id\":$id}";
 
   @override
   String toString() {
