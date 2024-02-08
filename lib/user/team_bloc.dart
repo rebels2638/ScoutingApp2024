@@ -333,11 +333,4 @@ class ScoutingSessionBloc
         "endgame": endgame,
         "misc": misc
       };
-
-  HollisticMatchScoutingData exportHollistic() =>
-      HollisticMatchScoutingData(
-          preliminary: prelim,
-          auto: auto,
-          teleop: teleop,
-          endgame: endgame);
 }

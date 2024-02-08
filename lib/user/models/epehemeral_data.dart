@@ -40,6 +40,18 @@ class EphemeralScoutingData extends HiveObject {
     }
   }
 
+  @override
+  Future<void> save() {
+    Debug().info("Saved ScoutingData$id");
+    return super.save();
+  }
+
+  @override
+  Future<void> delete() {
+    Debug().info("Deleting ScoutingData$id");
+    return super.delete();
+  }
+
   factory EphemeralScoutingData.fromHollistic(
       HollisticMatchScoutingData data) {
     return EphemeralScoutingData(data.id,
@@ -49,4 +61,8 @@ class EphemeralScoutingData extends HiveObject {
         endgame: data.endgame.breakDownComplex(),
         misc: data.misc.breakDownComplex());
   }
+
+  @override
+  String toString() =>
+      "Scouting$id{PrelimData=${prelim.toString()},AutoData=${auto.toString()},TeleOpData=${teleop.toString()},EndgameData=${endgame.toString()},MiscData=${misc.toString()}}";
 }

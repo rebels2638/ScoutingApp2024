@@ -20,6 +20,9 @@ class ScoutingTelemetry {
         "Finished loading the 'storedFinalizedMatches' box containing ${_storedFinalizedMatches.length} entries.");
   }
 
+  Future<void> put(EphemeralScoutingData data) =>
+      _storedFinalizedMatches.add(data);
+
   void forEach(void Function(EphemeralScoutingData? data) fx) {
     for (int i = 0; i < _storedFinalizedMatches.length; i++) {
       fx(_storedFinalizedMatches.getAt(i));

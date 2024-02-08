@@ -300,7 +300,7 @@ class _AppViewState extends State<_AppView> {
                                 title: Row(children: <Widget>[
                                   const Icon(Icons.palette_rounded),
                                   strut(width: 10),
-                                  const Text("Select a Theme")
+                                  const Text("Theme Library")
                                 ]),
                                 content: SingleChildScrollView(
                                     child: Wrap(children: <Widget>[
