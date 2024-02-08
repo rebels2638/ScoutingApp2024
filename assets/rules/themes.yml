@@ -24,6 +24,12 @@
   location: "assets/themes/solarized.json"
   icon: "flutter,beach_access_rounded"
 
+- canonical_name: "Halloween"
+  id: "yida_halloween"
+  author: "Aiden Pan"
+  location: "assets/themes/halloween.json"
+  icon: "community,halloween"
+  
 - canonical_name: "Lost"
   id: "exoad_lost"
   author: "Jack Meng (exoad)"
