@@ -7,10 +7,10 @@ import "package:scouting_app_2024/blobs/form_blob.dart";
 import "package:scouting_app_2024/blobs/inc_dec_blob.dart";
 import "package:scouting_app_2024/blobs/locale_blob.dart";
 import "package:scouting_app_2024/parts/bits/show_experimental.dart";
-import "package:scouting_app_2024/parts/bits/team_bloc.dart";
+import 'package:scouting_app_2024/user/models/team_bloc.dart';
 import "package:scouting_app_2024/parts/team.dart";
 import "package:scouting_app_2024/parts/views_delegate.dart";
-import "package:scouting_app_2024/user/team_model.dart";
+import 'package:scouting_app_2024/user/models/team_model.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 
@@ -197,7 +197,7 @@ class _ScoutingViewState extends State<ScoutingView>
                           context,
                           message: Text.rich(TextSpan(
                               text:
-                                  "RAW\n${jsonEncode(context.read<ScoutingSessionBloc>().exportMapDeep().toString())}\n\nHollistic\n${jsonEncode(context.read<ScoutingSessionBloc>().exportHollistic().toString())}\n\nHollistic_MAP\n${context.read<ScoutingSessionBloc>().exportHollistic().exportEphemeral()}")),
+                                  "RAW\n${jsonEncode(context.read<ScoutingSessionBloc>().exportMapDeep().toString())}\n\nHollistic\n${jsonEncode(context.read<ScoutingSessionBloc>().exportHollistic().toString())}\n")),
                           onConfirm: () {})),
               ], width: 12))),
           strut(height: 20),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scouting_app_2024/parts/bits/team_bloc.dart';
+import 'package:scouting_app_2024/user/models/team_bloc.dart';
 import 'package:scouting_app_2024/shared.dart';
 
 enum TeamAlliance {
@@ -11,8 +11,6 @@ enum TeamAlliance {
   const TeamAlliance(this.color);
 
   Color toColor() => Color(color);
-
-  
 }
 
 class TeamModelBlock {
@@ -55,19 +53,18 @@ class HollisticMatchScoutingData {
   AutoInfo auto;
   TeleOpInfo teleop;
   EndgameInfo endgame;
+  MiscInfo misc;
   late String id;
 
   HollisticMatchScoutingData({
     required this.preliminary,
+    required this.misc,
     required this.auto,
     required this.teleop,
     required this.endgame,
   }) {
     id = Shared.uuid.v1();
   }
-
-  String exportEphemeral() =>
-      "{\"prelim:\"{${preliminary.exportMap()}},\"auto\":{${auto.exportMap()}},\"teleop\":{${endgame.exportMap()}},\"id\":$id}";
 
   @override
   String toString() {

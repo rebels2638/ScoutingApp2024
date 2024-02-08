@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:bloc/bloc.dart';
-import 'package:scouting_app_2024/user/team_model.dart';
+import 'package:scouting_app_2024/user/models/team_model.dart';
 
 // there is hella boilerplate written here
 sealed class ScoutingSessionStates extends Equatable {
@@ -336,6 +336,7 @@ class ScoutingSessionBloc
 
   HollisticMatchScoutingData exportHollistic() =>
       HollisticMatchScoutingData(
+          misc: misc,
           preliminary: prelim,
           auto: auto,
           teleop: teleop,

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:scouting_app_2024/user/scouting_telemetry.dart';
 
 import 'package:window_manager/window_manager.dart';
 
@@ -22,21 +22,21 @@ void main() async {
     Debug().warn("${details.summary} ${details.context}");
   };
   Debug().init();
-  Hive.initFlutter();
-  // this is such a shit idea because we are using so many awaits lmao
-  ThemeBlob.loadBuiltinThemes()
-      .then((_) => ThemeBlob.loadIntricateThemes().then((_) {
-            UserTelemetry().init().then((_) async {
-              Bloc.observer = const DebugObserver();
-              const ThemedAppBundle app = ThemedAppBundle();
-              runApp(app);
-              if (Platform.isWindows) {
-                await WindowManager.instance.ensureInitialized();
-                await windowManager.setTitle(
-                    "2638 Scout \"$APP_CANONICAL_NAME\" (Build $REBEL_ROBOTICS_APP_VERSION)");
-              }
-              Debug().info(
-                  "Took ${DateTime.now().millisecondsSinceEpoch - now.millisecondsSinceEpoch} ms to launch the app...");
-            });
-          }));
+  ScoutingTelemetry.initDb().then((_) =>
+      // this is such a shit idea because we are using so many awaits lmao
+      ThemeBlob.loadBuiltinThemes()
+          .then((_) => ThemeBlob.loadIntricateThemes().then((_) {
+                UserTelemetry().init().then((_) async {
+                  Bloc.observer = const DebugObserver();
+                  const ThemedAppBundle app = ThemedAppBundle();
+                  runApp(app);
+                  if (Platform.isWindows) {
+                    await WindowManager.instance.ensureInitialized();
+                    await windowManager.setTitle(
+                        "2638 Scout \"$APP_CANONICAL_NAME\" (Build $REBEL_ROBOTICS_APP_VERSION)");
+                  }
+                  Debug().info(
+                      "Took ${DateTime.now().millisecondsSinceEpoch - now.millisecondsSinceEpoch} ms to launch the app...");
+                });
+              })));
 }
