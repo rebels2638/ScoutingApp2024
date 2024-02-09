@@ -1079,7 +1079,7 @@
       },
       "labelSmall": {
         "color": "#ffff9800",
-        "decoration": "none",
+        "decoration": "none", 
         "decorationColor": "#ffff9800",
         "fontFamily": "Segoe UI",
         "inherit": true

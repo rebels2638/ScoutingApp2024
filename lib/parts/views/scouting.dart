@@ -14,6 +14,7 @@ import "package:scouting_app_2024/parts/views_delegate.dart";
 import 'package:scouting_app_2024/user/models/team_model.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:community_material_icon/community_material_icon.dart';
+import "package:scouting_app_2024/user/scouting_telemetry.dart";
 
 typedef SectionId = ({String title, IconData icon});
 
@@ -182,7 +183,15 @@ class _ScoutingViewState extends State<ScoutingView>
                                     BorderRadius.circular(8)))),
                     icon: const Icon(Icons.save_rounded),
                     label: const Text("Save Session"),
-                    onPressed: () {}),
+                    onPressed: () {
+                      EphemeralScoutingData data =
+                          EphemeralScoutingData.fromHollistic(context
+                              .read<ScoutingSessionBloc>()
+                              .exportHollistic());
+                      ScoutingTelemetry().put(data);
+                      Debug().info(
+                          "Saved an entry of ${data.id}=${data.toString()}");
+                    }),
                 if (ShowExperimentalModal.isShowingExperimental(context))
                   FilledButton.icon(
                       style: ButtonStyle(

@@ -1,7 +1,10 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:scouting_app_2024/debug.dart';
+import 'package:scouting_app_2024/user/env.dart';
 import 'package:scouting_app_2024/user/models/epehemeral_data.dart';
 import 'package:scouting_app_2024/user/models/shared.dart';
+
+const String _BOX_NAME = "RebelsPastMatchesData";
 
 class ScoutingTelemetry {
   late final Box<EphemeralScoutingData> _storedFinalizedMatches;
@@ -10,14 +13,22 @@ class ScoutingTelemetry {
   factory ScoutingTelemetry() => _singleton;
   ScoutingTelemetry._();
 
-  static Future<void> initDb() async => await Hive.initFlutter();
+  static void initDb() async {
+    // docs dir or whatever it is guranteed to be loaded based on main.dart
+    Hive.initFlutter(DeviceEnv.documentsPath);
+  }
+
+  Future<void> deleteDisk() async {
+    Debug().warn("Deleting all past matches from disk...");
+    _storedFinalizedMatches.deleteFromDisk();
+  }
 
   Future<void> loadBoxes() async {
-    _storedFinalizedMatches =
-        await Hive.openBox<EphemeralScoutingData>(
-            "storedFinalizedMatches");
+    Hive.openBox<EphemeralScoutingData>(_BOX_NAME).then(
+        (Box<EphemeralScoutingData> b) =>
+            _storedFinalizedMatches = b);
     Debug().info(
-        "Finished loading the 'storedFinalizedMatches' box containing ${_storedFinalizedMatches.length} entries.");
+        "Finished loading the 'storedFinalizedMatches' box containing ${_storedFinalizedMatches.length} entries. Found ${validateAllEntriesVersion().failedIds.length} entries that had conflicting telemetry versions.");
   }
 
   Future<void> put(EphemeralScoutingData data) =>
@@ -27,6 +38,16 @@ class ScoutingTelemetry {
     for (int i = 0; i < _storedFinalizedMatches.length; i++) {
       fx(_storedFinalizedMatches.getAt(i));
     }
+  }
+
+  bool hasFailingTelemetryVersions() {
+    for (int i = 0; i < _storedFinalizedMatches.length; i++) {
+      if (_storedFinalizedMatches.getAt(i)!.telemetryVersion !=
+          EPHEMERAL_MODELS_VERSION) {
+        return true;
+      }
+    }
+    return false;
   }
 
   ({bool res, List<String> failedIds}) validateAllEntriesVersion() {
