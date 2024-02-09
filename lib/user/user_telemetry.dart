@@ -2,31 +2,52 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:scouting_app_2024/debug.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive/hive.dart';
 
 part "user_telemetry.g.dart";
 
+const String _USER_TELEMETRY_BOX_NAME = "user_preferences";
+
 /// User Telemetry storage is based on MVC patterning
 class UserTelemetry {
-  static SharedPreferences getPrefs() => UserTelemetry()._prefs;
+  late Box<String> userPrefsTelemetryBox;
 
-  late final SharedPreferences _prefs;
   static const String userDBName = "Rebels2638AppUserTelemetry";
   static final UserTelemetry _singleton = UserTelemetry._();
   factory UserTelemetry() => _singleton;
   UserTelemetry._();
 
-  void resetHard() => _prefs.setString(userDBName, "");
+  void resetHard() => userPrefsTelemetryBox.put(userDBName, "");
 
   static late UserPrefModel _currentModel;
 
   bool isEmpty() =>
-      _prefs.getString(userDBName) ==
+      userPrefsTelemetryBox.get(userDBName) ==
       null; // i feel like this is really bad
 
   UserPrefModel get currentModel => _currentModel;
 
-  Future<void> init() async => await SharedPreferences.getInstance()
+  set currentModel(UserPrefModel model) => _currentModel = model;
+
+  Future<void> init() async =>
+      await Hive.openBox<String>(_USER_TELEMETRY_BOX_NAME)
+          .then((Box<String> e) {
+        userPrefsTelemetryBox = e;
+        if (!userPrefsTelemetryBox.containsKey(userDBName) ||
+            userPrefsTelemetryBox.get(_USER_TELEMETRY_BOX_NAME) ==
+                null) {
+          reset();
+          save();
+        } else {
+          _currentModel = UserPrefModel.fromJson(jsonDecode(
+              userPrefsTelemetryBox.get(_USER_TELEMETRY_BOX_NAME)!));
+        }
+        Debug().info(
+            "Loaded the following contents for USER_PREF: ${_currentModel.toString()}");
+        Timer.periodic(const Duration(seconds: 8),
+            (Timer _) async => await save());
+      });
+  /*SharedPreferences.getInstance()
           .then((SharedPreferences e) {
         _prefs = e;
         try {
@@ -53,7 +74,7 @@ class UserTelemetry {
           await save();
         });
       });
-
+  */
   /// resets the model, but does not perform a save
   void reset() {
     _currentModel = UserPrefModel.defaultModel;
@@ -61,17 +82,8 @@ class UserTelemetry {
 
   Future<void> save() async {
     Debug().info("Saving User Telemetry...");
-    await _prefs
-        .setString(userDBName, jsonEncode(_currentModel.toJson()))
-        .then((bool success) {
-      if (success) {
-        Debug().info(
-            "UserTelemetry saved OK! Content: ${_currentModel.toJson()}");
-      } else {
-        Debug().warn(
-            "UserTelemetry save FAILED! Content: ${_currentModel.toJson()}");
-      }
-    });
+    await userPrefsTelemetryBox.put(
+        userDBName, jsonEncode(_currentModel.toJson()));
   }
 }
 
@@ -98,7 +110,7 @@ class UserPrefModel {
   @JsonKey(required: false, defaultValue: false)
   bool showFPSMonitor;
 
-  @JsonKey(required: false, defaultValue:  <String>[])
+  @JsonKey(required: false, defaultValue: <String>[])
   List<String> ephemeralPastMatches;
 
   // make sure to run flutter pub run build_runner build

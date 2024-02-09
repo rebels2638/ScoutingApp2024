@@ -1,22 +1,16 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:scouting_app_2024/debug.dart';
-import 'package:scouting_app_2024/user/env.dart';
 import 'package:scouting_app_2024/user/models/epehemeral_data.dart';
 import 'package:scouting_app_2024/user/models/shared.dart';
 
-const String _BOX_NAME = "RebelsPastMatchesData";
+const String _BOX_NAME = "Argus_PMD";
 
 class ScoutingTelemetry {
-  late final Box<EphemeralScoutingData> _storedFinalizedMatches;
+  late Box<EphemeralScoutingData> _storedFinalizedMatches;
 
   static final ScoutingTelemetry _singleton = ScoutingTelemetry._();
   factory ScoutingTelemetry() => _singleton;
   ScoutingTelemetry._();
-
-  static void initDb() async {
-    // docs dir or whatever it is guranteed to be loaded based on main.dart
-    Hive.initFlutter(DeviceEnv.documentsPath);
-  }
 
   Future<void> deleteDisk() async {
     Debug().warn("Deleting all past matches from disk...");
@@ -24,15 +18,22 @@ class ScoutingTelemetry {
   }
 
   Future<void> loadBoxes() async {
-    Hive.openBox<EphemeralScoutingData>(_BOX_NAME).then(
-        (Box<EphemeralScoutingData> b) =>
-            _storedFinalizedMatches = b);
+    try {
+      Hive.openBox<EphemeralScoutingData>(_BOX_NAME).then(
+          (Box<EphemeralScoutingData> value) =>
+              _storedFinalizedMatches = value);
+    } catch (e) {
+      Debug().warn(
+          "Failed to find the allocated Hive DB! Maybe this is the first time? Trying to set it manually...");
+      _storedFinalizedMatches =
+          Hive.box<EphemeralScoutingData>(_BOX_NAME);
+      _storedFinalizedMatches.flush();
+    }
     Debug().info(
         "Finished loading the 'storedFinalizedMatches' box containing ${_storedFinalizedMatches.length} entries. Found ${validateAllEntriesVersion().failedIds.length} entries that had conflicting telemetry versions.");
   }
 
-  Future<void> put(EphemeralScoutingData data) =>
-      _storedFinalizedMatches.add(data);
+  Future<void> put(EphemeralScoutingData data) async {}
 
   void forEach(void Function(EphemeralScoutingData? data) fx) {
     for (int i = 0; i < _storedFinalizedMatches.length; i++) {
