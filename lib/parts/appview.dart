@@ -81,7 +81,6 @@ class IntermediateMaterialApp extends StatelessWidget {
 
 class _AppView extends StatefulWidget {
   final PageController pageController = PageController();
-
   _AppView();
 
   @override
