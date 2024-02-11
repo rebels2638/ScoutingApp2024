@@ -265,134 +265,135 @@ class _AppViewState extends State<_AppView> {
                     }
                   }
                 },
-                icon: Icon(LockedInScoutingModal.isCasual(context)?Icons.lock_open_rounded:Icons.lock_rounded, color:ThemeProvider.themeOf(context).data.iconTheme.color),
+                icon: Icon(
+                    LockedInScoutingModal.isCasual(context)
+                        ? Icons.lock_open_rounded
+                        : Icons.lock_rounded,
+                    color: ThemeProvider.themeOf(context)
+                        .data
+                        .iconTheme
+                        .color),
               ),
               ActionButton(
-                onPressed: () {
-                  showDialog(
-                          context: context,
-                          builder: (BuildContext ctxt) {
-                            List<AppTheme> appThemes = context
-                                    .findAncestorWidgetOfExactType<
-                                        ThemeProvider>()
-                                    ?.themes ??
-                                <AppTheme>[];
-                            return AlertDialog(
-                                title: Row(children: <Widget>[
-                                  const Icon(Icons.palette_rounded),
-                                  strut(width: 10),
-                                  const Text("Theme Library")
-                                ]),
-                                content: SingleChildScrollView(
-                                    child: Wrap(children: <Widget>[
-                                  for (AppTheme e in appThemes)
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.all(8.0),
-                                      child: ElevatedButton.icon(
-                                          style: ButtonStyle(
-                                              visualDensity: VisualDensity
-                                                  .comfortable,
-                                              backgroundColor:
-                                                  MaterialStateProperty.all<Color>(e
-                                                      .data
-                                                      .primaryColor),
-                                              iconColor: MaterialStateProperty.all<Color>(
-                                                  e.data.iconTheme.color ??
-                                                      Colors.black),
-                                              foregroundColor:
-                                                  MaterialStateProperty.all<Color>(e
-                                                          .data
-                                                          .iconTheme
-                                                          .color ??
-                                                      Colors.black),
-                                              iconSize: MaterialStateProperty.all<double>(30),
-                                              shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                                              padding: MaterialStateProperty.all<EdgeInsetsGeometry>(const EdgeInsets.all(14))),
-                                          onPressed: () {
-                                            ThemeProvider
-                                                    .controllerOf(
-                                                        context)
-                                                .setTheme(e.id);
-                                            UserTelemetry()
-                                                    .currentModel
-                                                    .selectedTheme =
-                                                ThemeClassifier.of(
-                                                        context)
-                                                    .id;
-                                            UserTelemetry().save();
-                                          },
-                                          icon: Column(
-                                            children: <Widget>[
-                                              Icon(AvaliableTheme.of(
-                                                e.id,
-                                              ).icon),
-                                              strut(height: 6),
-                                              if (e.data.brightness ==
-                                                  Brightness.dark)
-                                                const Icon(
-                                                    Icons
-                                                        .nightlight_round,
-                                                    size: 14)
-                                              else
-                                                const Icon(
-                                                    Icons
-                                                        .wb_sunny_rounded,
-                                                    size: 14)
-                                            ],
-                                          ),
-                                          label: Text.rich(TextSpan(children: <InlineSpan>[
-                                            TextSpan(
-                                                text: AvaliableTheme
-                                                        .of(e.id)
-                                                    .properName,
-                                                style:
-                                                    const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight
-                                                                .bold,
-                                                        fontSize:
-                                                            18)),
-                                            const TextSpan(
-                                                text: "\nBy "),
-                                            TextSpan(
-                                                text: AvaliableTheme
-                                                        .of(e.id)
-                                                    .author,
-                                                style: const TextStyle(
-                                                    fontWeight:
-                                                        FontWeight
-                                                            .w400,
-                                                    fontSize: 12,
-                                                    fontStyle:
-                                                        FontStyle
-                                                            .italic))
-                                          ]))),
-                                    )
-                                ])),
-                                actions: <Widget>[
-                                  TextButton.icon(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                        UserTelemetry()
-                                                .currentModel
-                                                .selectedTheme =
-                                            ThemeClassifier.of(
-                                                    context)
-                                                .id;
-                                        UserTelemetry().save();
-                                      },
-                                      icon: const Icon(
-                                          Icons.check_rounded),
-                                      label: const Text("Set",
-                                          style: TextStyle(
-                                              fontWeight:
-                                                  FontWeight.bold)))
-                                ]);
-                          });
-                },
-                  icon: Icon(
-                      Icons.palette_rounded,
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext ctxt) {
+                          List<AppTheme> appThemes = context
+                                  .findAncestorWidgetOfExactType<
+                                      ThemeProvider>()
+                                  ?.themes ??
+                              <AppTheme>[];
+                          return AlertDialog(
+                              title: Row(children: <Widget>[
+                                const Icon(Icons.palette_rounded),
+                                strut(width: 10),
+                                const Text("Theme Library")
+                              ]),
+                              content: SingleChildScrollView(
+                                  child: Wrap(children: <Widget>[
+                                for (AppTheme e in appThemes)
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.all(8.0),
+                                    child: ElevatedButton.icon(
+                                        style: ButtonStyle(
+                                            visualDensity: VisualDensity
+                                                .comfortable,
+                                            backgroundColor: MaterialStateProperty.all<Color>(
+                                                e.data.primaryColor),
+                                            iconColor:
+                                                MaterialStateProperty.all<Color>(e
+                                                        .data
+                                                        .iconTheme
+                                                        .color ??
+                                                    Colors.black),
+                                            foregroundColor:
+                                                MaterialStateProperty.all<Color>(e
+                                                        .data
+                                                        .iconTheme
+                                                        .color ??
+                                                    Colors.black),
+                                            iconSize:
+                                                MaterialStateProperty.all<double>(30),
+                                            shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                                            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(const EdgeInsets.all(14))),
+                                        onPressed: () {
+                                          ThemeProvider.controllerOf(
+                                                  context)
+                                              .setTheme(e.id);
+                                          UserTelemetry()
+                                                  .currentModel
+                                                  .selectedTheme =
+                                              ThemeClassifier.of(
+                                                      context)
+                                                  .id;
+                                          UserTelemetry().save();
+                                        },
+                                        icon: Column(
+                                          children: <Widget>[
+                                            Icon(AvaliableTheme.of(
+                                              e.id,
+                                            ).icon),
+                                            strut(height: 6),
+                                            if (e.data.brightness ==
+                                                Brightness.dark)
+                                              const Icon(
+                                                  Icons
+                                                      .nightlight_round,
+                                                  size: 14)
+                                            else
+                                              const Icon(
+                                                  Icons
+                                                      .wb_sunny_rounded,
+                                                  size: 14)
+                                          ],
+                                        ),
+                                        label: Text.rich(TextSpan(children: <InlineSpan>[
+                                          TextSpan(
+                                              text: AvaliableTheme.of(
+                                                      e.id)
+                                                  .properName,
+                                              style: const TextStyle(
+                                                  fontWeight:
+                                                      FontWeight.bold,
+                                                  fontSize: 18)),
+                                          const TextSpan(
+                                              text: "\nBy "),
+                                          TextSpan(
+                                              text: AvaliableTheme.of(
+                                                      e.id)
+                                                  .author,
+                                              style: const TextStyle(
+                                                  fontWeight:
+                                                      FontWeight.w400,
+                                                  fontSize: 12,
+                                                  fontStyle: FontStyle
+                                                      .italic))
+                                        ]))),
+                                  )
+                              ])),
+                              actions: <Widget>[
+                                TextButton.icon(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      UserTelemetry()
+                                              .currentModel
+                                              .selectedTheme =
+                                          ThemeClassifier.of(context)
+                                              .id;
+                                      UserTelemetry().save();
+                                    },
+                                    icon: const Icon(
+                                        Icons.check_rounded),
+                                    label: const Text("Set",
+                                        style: TextStyle(
+                                            fontWeight:
+                                                FontWeight.bold)))
+                              ]);
+                        });
+                  },
+                  icon: Icon(Icons.palette_rounded,
                       color: ThemeProvider.themeOf(context)
                           .data
                           .iconTheme
@@ -415,6 +416,7 @@ class _AppViewState extends State<_AppView> {
               },
             )),
         appBar: AppBar(
+            forceMaterialTransparency: true,
             centerTitle: true, // i forgor
             title: LockedInScoutingModal.isCasual(context)
                 ? Center(
