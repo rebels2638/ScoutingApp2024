@@ -1,18 +1,23 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class ExpFabBlob extends StatefulWidget {
+  final bool? initialOpen;
+  final double distance;
+  final Widget closeWidget;
+  final Widget defaultWidget;
+  final List<Widget> children;
+
   const ExpFabBlob({
     super.key,
     this.initialOpen,
+    this.closeWidget = const Icon(Icons.close_rounded),
+    required this.defaultWidget,
     required this.distance,
     required this.children,
   });
-
-  final bool? initialOpen;
-  final double distance;
-  final List<Widget> children;
 
   @override
   State<ExpFabBlob> createState() => _ExpFabBlobState();
@@ -69,12 +74,8 @@ class _ExpFabBlobState extends State<ExpFabBlob>
                         : _controller.reverse();
                   }),
                   child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Icon(
-                      Icons.close,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
+                      padding: const EdgeInsets.all(8),
+                      child: widget.closeWidget),
                 ),
               ),
             ),
@@ -103,7 +104,7 @@ class _ExpFabBlobState extends State<ExpFabBlob>
                         ? _controller.forward()
                         : _controller.reverse();
                   }),
-                  child: const Icon(Icons.create),
+                  child: widget.defaultWidget,
                 ),
               ),
             ),
@@ -183,16 +184,15 @@ class ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
+    final ThemeData theme = ThemeProvider.themeOf(context).data;
     return Material(
       shape: const CircleBorder(),
       clipBehavior: Clip.antiAlias,
-      color: theme.colorScheme.secondary,
       elevation: 4,
-      child: IconButton(
+      color: theme.floatingActionButtonTheme.backgroundColor,
+      child: IconButton.filledTonal(
         onPressed: onPressed,
         icon: icon,
-        color: theme.colorScheme.onSecondary,
       ),
     );
   }

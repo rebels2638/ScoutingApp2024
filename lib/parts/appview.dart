@@ -17,6 +17,7 @@ import 'package:scouting_app_2024/parts/theme.dart';
 import 'package:scouting_app_2024/parts/views/views.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
 import 'package:show_fps/show_fps.dart';
+import 'package:scouting_app_2024/blobs/extended_fab_blob.dart';
 import "package:theme_provider/theme_provider.dart";
 import 'package:url_launcher/url_launcher.dart';
 
@@ -51,7 +52,8 @@ class ThemedAppBundle extends StatelessWidget {
                               ThemeModeModal()),
                       ChangeNotifierProvider<ShowConsoleModal>(
                           create: (BuildContext _) =>
-                              ShowConsoleModal()),                      ChangeNotifierProvider<LockedInScoutingModal>(
+                              ShowConsoleModal()),
+                      ChangeNotifierProvider<LockedInScoutingModal>(
                           create: (BuildContext _) =>
                               LockedInScoutingModal())
                     ], child: const IntermediateMaterialApp()))));
@@ -235,59 +237,39 @@ class _AppViewState extends State<_AppView> {
       }
     });
     return Scaffold(
-        bottomNavigationBar: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 600),
-            switchInCurve: Curves.easeInOut,
-            switchOutCurve: Curves.easeIn,
-            child: NavigationBar(
-              selectedIndex: _bottomNavBarIndexer,
-              destinations: bottomItems,
-              onDestinationSelected: (int i) {
-                Debug().info(
-                    "BottomNavBar -> PageView move to $i and was at ${widget.pageController.page} for builder length: ${bottomItems.length}");
-                widget.pageController.animateToPage(i,
-                    duration: const Duration(milliseconds: 200),
-                    curve: Curves.ease);
-                setState(() => _bottomNavBarIndexer = i);
-              },
-            )),
-        appBar: AppBar(
-            actions: <Widget>[
-              IconButton.filledTonal(
-                  onPressed: () {
-                    Provider.of<LockedInScoutingModal>(context,
-                            listen: false)
-                        .toggle();
-                    Debug().info(
-                        "BottomItems: ${bottomItems.length} and $_bottomNavBarIndexer for PageView length: ${pageViewWidgets.length}");
-                    // use a loop to find where the scouting view is
-                    for (int i = 0; i < bottomItems.length; i++) {
-                      if (bottomItems[i].label.contains("Scouting")) {
-                        Debug().info(
-                            "BottomNavBar -> Found Scouting view at $i");
-                        setState(() {
-                          _bottomNavBarIndexer = i;
-                          widget.pageController.animateToPage(
-                              _bottomNavBarIndexer,
-                              duration:
-                                  const Duration(milliseconds: 500),
-                              curve: Curves.ease);
-                        });
-                      }
+        floatingActionButton: ExpFabBlob(
+            defaultWidget:
+                const Icon(CommunityMaterialIcons.star_four_points),
+            distance: 80,
+            children: <Widget>[
+              ActionButton(
+                onPressed: () {
+                  Provider.of<LockedInScoutingModal>(context,
+                          listen: false)
+                      .toggle();
+                  Debug().info(
+                      "BottomItems: ${bottomItems.length} and $_bottomNavBarIndexer for PageView length: ${pageViewWidgets.length}");
+                  // use a loop to find where the scouting view is
+                  for (int i = 0; i < bottomItems.length; i++) {
+                    if (bottomItems[i].label.contains("Scouting")) {
+                      Debug().info(
+                          "BottomNavBar -> Found Scouting view at $i");
+                      setState(() {
+                        _bottomNavBarIndexer = i;
+                        widget.pageController.animateToPage(
+                            _bottomNavBarIndexer,
+                            duration:
+                                const Duration(milliseconds: 500),
+                            curve: Curves.ease);
+                      });
                     }
-                  },
-                  icon: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 500),
-                      child: LockedInScoutingModal.isCasual(context)
-                          ? const Icon(CommunityMaterialIcons
-                              .lock_open_variant)
-                          : const Icon(CommunityMaterialIcons.lock))),
-              strut(width: 10),
-              Padding(
-                padding: const EdgeInsets.only(right: 16),
-                child: IconButton.filledTonal(
-                    onPressed: () {
-                      showDialog(
+                  }
+                },
+                icon: Icon(LockedInScoutingModal.isCasual(context)?Icons.lock_open_rounded:Icons.lock_rounded, color:ThemeProvider.themeOf(context).data.iconTheme.color),
+              ),
+              ActionButton(
+                onPressed: () {
+                  showDialog(
                           context: context,
                           builder: (BuildContext ctxt) {
                             List<AppTheme> appThemes = context
@@ -408,16 +390,32 @@ class _AppViewState extends State<_AppView> {
                                                   FontWeight.bold)))
                                 ]);
                           });
-                    },
-                    icon: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 500),
-                      child: ThemeClassifier.of(context).isDarkMode
-                          ? const Icon(Icons.nightlight_round)
-                          : const Icon(Icons.wb_sunny_rounded),
-                    )),
-              )
-            ],
-            centerTitle: true,
+                },
+                  icon: Icon(
+                      Icons.palette_rounded,
+                      color: ThemeProvider.themeOf(context)
+                          .data
+                          .iconTheme
+                          .color))
+            ]),
+        bottomNavigationBar: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 600),
+            switchInCurve: Curves.easeInOut,
+            switchOutCurve: Curves.easeIn,
+            child: NavigationBar(
+              selectedIndex: _bottomNavBarIndexer,
+              destinations: bottomItems,
+              onDestinationSelected: (int i) {
+                Debug().info(
+                    "BottomNavBar -> PageView move to $i and was at ${widget.pageController.page} for builder length: ${bottomItems.length}");
+                widget.pageController.animateToPage(i,
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.ease);
+                setState(() => _bottomNavBarIndexer = i);
+              },
+            )),
+        appBar: AppBar(
+            centerTitle: true, // i forgor
             title: LockedInScoutingModal.isCasual(context)
                 ? Center(
                     child: Row(
