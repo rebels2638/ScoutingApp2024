@@ -38,12 +38,6 @@ class _PastMatchesViewState extends State<PastMatchesView> {
   void initState() {
     super.initState();
     loadMatches();
-    final QrCode qrCode = QrCode(
-      8,
-      QrErrorCorrectLevel.H,
-    )..addData("test sample data");
-
-    qrImage = QrImage(qrCode);
   }
 
 //this is all from team_model.dart
@@ -159,18 +153,54 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                           });
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                                content: Text(
-                                    "All past matches deleted.")),
+                                content: Text("All past matches deleted.")),
                           );
                         },
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.download),
-                      onPressed: () {
-                        // TODO: exports all matches?
-                      },
-                    ),
+  icon: const Icon(Icons.download),
+  onPressed: () async {
+    // Consolidate all match data into a single CSV string
+    String exportData = matches.map((match) => matchDataToCsv(match)).join("\n");
+
+    // Use a dialog to display the QR code with all match data
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Export All Matches QR Code"),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                // Display the QR code
+                PrettyQr(
+                  data: exportData,
+                  size: 200,
+                  elementColor: Colors.blue, // Adjust the QR code color as needed
+                  // Additional QR code customization here
+                ),
+                // Optionally add more details or instructions
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    // Debug log
+    Debug().info("PAST MATCHES: $exportData");
+  },
+),
+
                   ],
                 ),
               ],
@@ -206,6 +236,7 @@ class MatchTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: TeamAlliance.blue.toColor(),
       child: form_sec(
         context,
         backgroundColor: Colors.transparent,
@@ -307,7 +338,7 @@ class MatchTile extends StatelessWidget {
 String matchDataToCsv(PastMatchesOverViewData match) {
   // Convert match data to csv for QR code export
   String csv =
-      '${match.matchID},${match.matchType.name},${match.startingPosition.name},${match.endStatus.name},${match.autoPickup.name},${match.harmony.name},${match.trapScored.name},';
+      '${match.matchID},${match.matchType.name},${match.startingPosition.name},${match.endStatus.name},${match.autoPickup.name},${match.harmony.name},${match.trapScored.name} \n';
 
   return csv;
 }
