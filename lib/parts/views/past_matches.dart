@@ -161,40 +161,20 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                     IconButton(
                       icon: const Icon(Icons.download),
                       onPressed: () async {
-                        // Consolidate all match data into a single CSV string
                         String exportData = matches.map((match) => matchDataToCsv(match)).join("\n");
-
-                        // Use a dialog to display the QR code with all match data
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text("Export All Matches QR Code"),
-                              content: SingleChildScrollView(
-                                child: ListBody(
-                                  children: <Widget>[
-                                    PrettyQrView.data(
-                                      data: exportData,
-                                      errorCorrectLevel: QrErrorCorrectLevel.M, 
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: const Text('Close'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
-                            );
-                          },
+                        Widget qrWidget = createPrettyQrDataWidget(exportData);
+                        await launchConfirmDialog(
+                          showOkLabel: false,
+                          denyLabel: "Close",
+                          icon: const Icon(Icons.cloud_sync),
+                          title: "Export All Matches QR Code",
+                          context,
+                          message: qrWidget,
+                          onConfirm: () {},
                         );
-                        // Debug log
-                        Debug().info("PAST MATCHES: $exportData");
                       },
                     ),
+
                   ],
                 ),
               ],
@@ -273,7 +253,8 @@ class MatchTile extends StatelessWidget {
                         title: "Transfer Scouting Data via QR Code",
                         context,
                         message: qrWidget,
-                        onConfirm: () {},
+                        onConfirm: () => Debug().info(
+                            "PAST MATCHES: Popped QR Code Display for ${formalizeWord(match.matchType.name)} #${match.matchID}"),
                       );
                     },
                   ),
