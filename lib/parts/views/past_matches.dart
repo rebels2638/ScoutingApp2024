@@ -162,12 +162,15 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                       icon: const Icon(Icons.download),
                       onPressed: () async {
                         String exportData = matches.map((match) => matchDataToCsv(match)).join("\n");
-                        Widget qrWidget = createPrettyQrDataWidget(exportData);
+                        Widget qrWidget = createPrettyQrDataWidget(
+                          data: exportData,
+                          includeImage: false,
+                        );
                         await launchConfirmDialog(
                           showOkLabel: false,
                           denyLabel: "Close",
                           icon: const Icon(Icons.cloud_sync),
-                          title: "Export All Matches QR Code",
+                          title: "Transfer All Scouting Data via QR Code",
                           context,
                           message: qrWidget,
                           onConfirm: () {},
@@ -244,8 +247,10 @@ class MatchTile extends StatelessWidget {
                     child: const Text('Generate QR Code'),
                     onPressed: () async {
                       String matchData = matchDataToCsv(match);
-                      Widget qrWidget = createPrettyQrDataWidget(matchData);
-
+                      Widget qrWidget = createPrettyQrDataWidget(
+                        data: matchData,
+                        includeImage: true,
+                      );
                       await launchConfirmDialog(
                         showOkLabel: false,
                         denyLabel: "Close",
@@ -308,16 +313,23 @@ String matchDataToCsv(PastMatchesOverViewData match) {
   return csv;
 }
 
-Widget createPrettyQrDataWidget(String data) {
+Widget createPrettyQrDataWidget({
+  required String data,
+  bool includeImage = false,
+}) {
+  const PrettyQrDecoration decorationWithImage = PrettyQrDecoration(
+    shape: PrettyQrRoundedSymbol(color: Color(0xFFFFFFFF)),
+    image: PrettyQrDecorationImage(
+      image: AssetImage('assets/appicon_header.png'),
+      position: PrettyQrDecorationImagePosition.embedded,
+    ),
+  );
+  const PrettyQrDecoration decorationWithoutImage = PrettyQrDecoration(
+    shape: PrettyQrRoundedSymbol(color: Color(0xFFFFFFFF)),
+  );
   return PrettyQrView.data(
     data: data,
     errorCorrectLevel: QrErrorCorrectLevel.H,
-    decoration: const PrettyQrDecoration(
-      shape: PrettyQrRoundedSymbol(color: Color(0xFFFFFFFF)),
-      image: PrettyQrDecorationImage(
-        image: AssetImage('assets/appicon_header.png'),
-        position: PrettyQrDecorationImagePosition.embedded,
-      ),
-    ),
+    decoration: includeImage ? decorationWithImage : decorationWithoutImage,
   );
 }
