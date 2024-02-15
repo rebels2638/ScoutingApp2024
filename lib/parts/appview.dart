@@ -140,7 +140,7 @@ class _AppViewState extends State<_AppView> {
         String label,
         String tooltip
       }) item
-    }) gameMapView = const GameMapView().exportAppPageView();
+    }) gameInfoView = const GameInfoView().exportAppPageView();
     ({
       Widget child,
       ({
@@ -196,10 +196,10 @@ class _AppViewState extends State<_AppView> {
       if (LockedInScoutingModal.isCasual(context) &&
           ShowGameMapModal.isShowingConsole(context))
         NavigationDestination(
-            icon: gameMapView.item.icon,
-            label: gameMapView.item.label,
-            selectedIcon: gameMapView.item.activeIcon,
-            tooltip: gameMapView.item.tooltip),
+            icon: gameInfoView.item.icon,
+            label: gameInfoView.item.label,
+            selectedIcon: gameInfoView.item.activeIcon,
+            tooltip: gameInfoView.item.tooltip),
       if (LockedInScoutingModal.isCasual(context) &&
           ShowConsoleModal.isShowingConsole(context))
         NavigationDestination(
@@ -218,7 +218,7 @@ class _AppViewState extends State<_AppView> {
       if (LockedInScoutingModal.isCasual(context)) aboutAppView.child,
       if (LockedInScoutingModal.isCasual(context) &&
           ShowGameMapModal.isShowingConsole(context))
-        gameMapView.child,
+        gameInfoView.child,
       if (LockedInScoutingModal.isCasual(context) &&
           ShowConsoleModal.isShowingConsole(context))
         consoleView.child,

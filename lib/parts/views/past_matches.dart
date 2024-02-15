@@ -38,12 +38,6 @@ class _PastMatchesViewState extends State<PastMatchesView> {
   void initState() {
     super.initState();
     loadMatches();
-    final QrCode qrCode = QrCode(
-      8,
-      QrErrorCorrectLevel.H,
-    )..addData("test sample data");
-
-    qrImage = QrImage(qrCode);
   }
 
 //this is all from team_model.dart
@@ -159,18 +153,31 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                           });
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                                content: Text(
-                                    "All past matches deleted.")),
+                                content: Text("All past matches deleted.")),
                           );
                         },
                       ),
                     ),
                     IconButton(
                       icon: const Icon(Icons.download),
-                      onPressed: () {
-                        // TODO: exports all matches?
+                      onPressed: () async {
+                        String exportData = matches.map((match) => matchDataToCsv(match)).join("\n");
+                        Widget qrWidget = createPrettyQrDataWidget(
+                          data: exportData,
+                          includeImage: false,
+                        );
+                        await launchConfirmDialog(
+                          showOkLabel: false,
+                          denyLabel: "Close",
+                          icon: const Icon(Icons.cloud_sync),
+                          title: "Transfer All Scouting Data via QR Code",
+                          context,
+                          message: qrWidget,
+                          onConfirm: () {},
+                        );
                       },
                     ),
+
                   ],
                 ),
               ],
@@ -206,6 +213,7 @@ class MatchTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: TeamAlliance.blue.toColor(),
       child: form_sec(
         context,
         backgroundColor: Colors.transparent,
@@ -237,30 +245,23 @@ class MatchTile extends StatelessWidget {
                   ),
                   ElevatedButton(
                     child: const Text('Generate QR Code'),
-                    onPressed: () async => await launchConfirmDialog(
+                    onPressed: () async {
+                      String matchData = matchDataToCsv(match);
+                      Widget qrWidget = createPrettyQrDataWidget(
+                        data: matchData,
+                        includeImage: true,
+                      );
+                      await launchConfirmDialog(
                         showOkLabel: false,
                         denyLabel: "Close",
                         icon: const Icon(Icons.cloud_sync),
                         title: "Transfer Scouting Data via QR Code",
                         context,
-                        message: PrettyQrView.data(
-                          data: matchDataToCsv(match),
-                          errorCorrectLevel: QrErrorCorrectLevel.H,
-                          decoration: const PrettyQrDecoration(
-                            shape: PrettyQrRoundedSymbol(
-                              color: Color(0xFFFFFFFF),
-                            ),
-                            image: PrettyQrDecorationImage(
-                              image: AssetImage(
-                                  'assets/appicon_header.png'),
-                              position:
-                                  PrettyQrDecorationImagePosition
-                                      .embedded,
-                            ),
-                          ),
-                        ),
+                        message: qrWidget,
                         onConfirm: () => Debug().info(
-                            "PAST MATCHES: Popped QR Code Display for ${formalizeWord(match.matchType.name)} #${match.matchID}")),
+                            "PAST MATCHES: Popped QR Code Display for ${formalizeWord(match.matchType.name)} #${match.matchID}"),
+                      );
+                    },
                   ),
                   ElevatedButton(
                     onPressed: () async => await launchConfirmDialog(
@@ -307,7 +308,28 @@ class MatchTile extends StatelessWidget {
 String matchDataToCsv(PastMatchesOverViewData match) {
   // Convert match data to csv for QR code export
   String csv =
-      '${match.matchID},${match.matchType.name},${match.startingPosition.name},${match.endStatus.name},${match.autoPickup.name},${match.harmony.name},${match.trapScored.name},';
+      '${match.matchID},${match.matchType.name},${match.startingPosition.name},${match.endStatus.name},${match.autoPickup.name},${match.harmony.name},${match.trapScored.name} \n';
 
   return csv;
+}
+
+Widget createPrettyQrDataWidget({
+  required String data,
+  bool includeImage = false,
+}) {
+  const PrettyQrDecoration decorationWithImage = PrettyQrDecoration(
+    shape: PrettyQrRoundedSymbol(color: Color(0xFFFFFFFF)),
+    image: PrettyQrDecorationImage(
+      image: AssetImage('assets/appicon_header.png'),
+      position: PrettyQrDecorationImagePosition.embedded,
+    ),
+  );
+  const PrettyQrDecoration decorationWithoutImage = PrettyQrDecoration(
+    shape: PrettyQrRoundedSymbol(color: Color(0xFFFFFFFF)),
+  );
+  return PrettyQrView.data(
+    data: data,
+    errorCorrectLevel: QrErrorCorrectLevel.H,
+    decoration: includeImage ? decorationWithImage : decorationWithoutImage,
+  );
 }

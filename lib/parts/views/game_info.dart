@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 
-class GameMapView extends StatelessWidget implements AppPageViewExporter {
-  const GameMapView({super.key});
+class GameInfoView extends StatelessWidget implements AppPageViewExporter {
+  const GameInfoView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +32,7 @@ class GameMapView extends StatelessWidget implements AppPageViewExporter {
                   .toList(),
             ),
             const SizedBox(height: 20),
+            
             Text(
               'Game Locations',
               style: Theme.of(context).textTheme.titleLarge,
@@ -135,8 +136,8 @@ class GameMapView extends StatelessWidget implements AppPageViewExporter {
       item: (
         activeIcon: const Icon(Icons.map_rounded),
         icon: const Icon(Icons.map_outlined),
-        label: "Game Map",
-        tooltip: "View the Game Map"
+        label: "Game Info",
+        tooltip: "View Game Info"
       )
     );
   }
