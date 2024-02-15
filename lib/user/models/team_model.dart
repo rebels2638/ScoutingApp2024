@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2024/blobs/qr_converter_blob.dart';
 import 'package:scouting_app_2024/user/models/team_bloc.dart';
@@ -49,7 +52,9 @@ enum TrapScored { yes, no, missed }
 
 enum MicScored { yes, no, missed }
 
-class HollisticMatchScoutingData {
+class HollisticMatchScoutingData
+    extends QRCompatibleData<HollisticMatchScoutingData>
+    with QRCompressedCompatibleDataBlob<HollisticMatchScoutingData> {
   PrelimInfo preliminary;
   AutoInfo auto;
   TeleOpInfo teleop;
@@ -70,6 +75,46 @@ class HollisticMatchScoutingData {
   @override
   String toString() {
     return "ID: $id Preliminary: ${preliminary.exportMap().toString()}\nAuto: ${auto.exportMap().toString()}\nTeleop: ${teleop.exportMap().toString()}\nEndgame: ${endgame.exportMap().toString()}";
+  }
+
+  static HollisticMatchScoutingData fromCompatibleFormat(
+      String rawData) {
+    final Map<String, dynamic> data =
+        jsonDecode(rawData) as Map<String, dynamic>;
+    final Map<String, dynamic> innerData =
+        jsonDecode(data["data"].toString()) as Map<String, dynamic>;
+    return HollisticMatchScoutingData(
+      preliminary: PrelimInfo.fromCompatibleFormat(
+          innerData["preliminary"].toString()),
+      auto:
+          AutoInfo.fromCompatibleFormat(innerData["auto"].toString()),
+      teleop: TeleOpInfo.fromCompatibleFormat(
+          innerData["teleop"].toString()),
+      endgame: EndgameInfo.fromCompatibleFormat(
+          innerData["endgame"].toString()),
+      misc:
+          MiscInfo.fromCompatibleFormat(innerData["misc"].toString()),
+    );
+  }
+
+  static HollisticMatchScoutingData fromCompressedCompatibleFormat(
+      List<int> compressedData) {
+    return HollisticMatchScoutingData.fromCompatibleFormat(
+        utf8.decode(gzip.decode(compressedData)));
+  }
+
+  @override
+  String toCompatibleFormat() {
+    return <String, dynamic>{
+      "id": id,
+      "data": <String, dynamic>{
+        "preliminary": preliminary.toCompatibleFormat(),
+        "auto": auto.toCompatibleFormat(),
+        "teleop": teleop.toCompatibleFormat(),
+        "endgame": endgame.toCompatibleFormat(),
+        "misc": misc.toCompatibleFormat()
+      }
+    }.toString();
   }
 }
 

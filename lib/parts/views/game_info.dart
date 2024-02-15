@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 
 class GameInfoView extends StatelessWidget implements AppPageViewExporter {
@@ -32,7 +33,7 @@ class GameInfoView extends StatelessWidget implements AppPageViewExporter {
                   .toList(),
             ),
             const SizedBox(height: 20),
-            
+
             Text(
               'Game Locations',
               style: Theme.of(context).textTheme.titleLarge,
@@ -58,7 +59,7 @@ class GameInfoView extends StatelessWidget implements AppPageViewExporter {
       padding: const EdgeInsets.only(right: 8, top: 8),
       child: Container(
         constraints: const BoxConstraints(maxWidth: 200, maxHeight: 70),
-        child: FilledButton.tonalIcon(
+        child: preferTonalButton(
           onPressed: () => _showDetails(context, title),
           icon: Icon(isGameItem ? Icons.build : Icons.location_on_rounded),
           style: FilledButton.styleFrom(elevation: 2),

@@ -62,7 +62,7 @@ class SettingsView extends StatelessWidget
           Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                FilledButton.tonalIcon(
+                preferTonalButton(
                     style: ThemeBlob.exportBtnBlobStyle(),
                     onPressed: () {
                       UserTelemetry().reset();
@@ -90,7 +90,7 @@ class SettingsView extends StatelessWidget
                     icon: const Icon(Icons.replay_rounded),
                     label: const Text("Reset Settings")),
                 strut(width: 12),
-                FilledButton.tonalIcon(
+                preferTonalButton(
                     style: ThemeBlob.exportBtnBlobStyle(),
                     onPressed: () {
                       UserTelemetry().save();

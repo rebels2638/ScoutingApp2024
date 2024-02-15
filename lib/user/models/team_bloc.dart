@@ -34,8 +34,7 @@ class MiscInfo extends ScoutingInfo
         "breakdown": breakdown
       };
 
-  @override
-  MiscInfo fromCompatibleFormat(String csv) {
+  static MiscInfo fromCompatibleFormat(String csv) {
     final Map<String, dynamic> data =
         jsonDecode(csv) as Map<String, dynamic>;
     return MiscInfo(
@@ -96,8 +95,7 @@ class EndgameInfo extends ScoutingInfo
         "comments": comments
       };
 
-  @override
-  EndgameInfo fromCompatibleFormat(String csv) {
+  static EndgameInfo fromCompatibleFormat(String csv) {
     final Map<String, dynamic> data =
         jsonDecode(csv) as Map<String, dynamic>;
     return EndgameInfo(
@@ -185,8 +183,7 @@ class TeleOpInfo extends ScoutingInfo
         "driverRating": driverRating
       };
 
-  @override
-  TeleOpInfo fromCompatibleFormat(String csv) {
+  static TeleOpInfo fromCompatibleFormat(String csv) {
     final Map<String, dynamic> data =
         jsonDecode(csv) as Map<String, dynamic>;
     return TeleOpInfo(
@@ -276,8 +273,7 @@ class AutoInfo extends ScoutingInfo
         "comments": comments
       };
 
-  @override
-  AutoInfo fromCompatibleFormat(String rawData) {
+  static AutoInfo fromCompatibleFormat(String rawData) {
     final Map<String, dynamic> data =
         jsonDecode(rawData) as Map<String, dynamic>;
     final List<AutoPickup> notesPickedUp = <AutoPickup>[];
@@ -369,8 +365,7 @@ class PrelimInfo extends ScoutingInfo
         "startingPosition": startingPosition
       };
 
-  @override
-  PrelimInfo fromCompatibleFormat(String rawData) {
+  static PrelimInfo fromCompatibleFormat(String rawData) {
     final Map<String, dynamic> data =
         jsonDecode(rawData) as Map<String, dynamic>;
     return PrelimInfo(

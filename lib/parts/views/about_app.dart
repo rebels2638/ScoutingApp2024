@@ -252,7 +252,7 @@ class _AboutAppViewState extends State<AboutAppView> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: strutAll(<Widget>[
-              FilledButton.tonalIcon(
+              preferTonalButton(
                   onPressed: () async => await launchConfirmDialog(
                       context,
                       message: const Text(
@@ -262,7 +262,7 @@ class _AboutAppViewState extends State<AboutAppView> {
                               REBEL_ROBOTICS_APP_GITHUB_REPO_URL))),
                   label: const Text("Source Code"),
                   icon: const Icon(Icons.data_object_rounded)),
-              FilledButton.tonalIcon(
+              preferTonalButton(
                   onPressed: () => showLicensePage(
                       context: context,
                       applicationIcon: const Image(
@@ -275,7 +275,7 @@ class _AboutAppViewState extends State<AboutAppView> {
                       applicationName: REBEL_ROBOTICS_APP_NAME),
                   label: const Text("Open Source licenses"),
                   icon: const Icon(Icons.library_books_rounded)),
-              FilledButton.tonalIcon(
+              preferTonalButton(
                   onPressed: () async => await launchConfirmDialog(
                       context,
                       title: "Font \"IBM Plex\"",
@@ -313,7 +313,7 @@ class _AboutAppViewState extends State<AboutAppView> {
                           .info("Popped FONT_LICENSE View Screen")),
                   label: const Text("Font license"),
                   icon: const Icon(Icons.font_download_rounded)),
-              FilledButton.tonalIcon(
+              preferTonalButton(
                   onPressed: () async => await launchConfirmDialog(
                       context,
                       title: "BSD-4 License",

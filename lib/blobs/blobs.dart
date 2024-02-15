@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import 'package:flutter_svg_icons/flutter_svg_icons.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:scouting_app_2024/debug.dart';
+import 'package:scouting_app_2024/user/user_telemetry.dart';
 
 enum SwitchIconPosition {
   /// the icon will be placed on the thumb
@@ -138,6 +139,24 @@ Future<void> launchNumberPickerDialog(BuildContext context,
                             onChange: onChange),
                       ])),
                 ]));
+
+@pragma("vm:prefer-inline")
+Widget preferTonalButton(
+        {required void Function() onPressed,
+        required Widget label,
+        ButtonStyle? style,
+        required Widget icon}) =>
+    UserTelemetry().currentModel.preferTonal
+        ? FilledButton.tonalIcon(
+            onPressed: onPressed,
+            icon: icon,
+            style: style,
+            label: label)
+        : TextButton.icon(
+            onPressed: onPressed,
+            icon: icon,
+            style: style,
+            label: label);
 
 @pragma("vm:prefer-inline")
 SnackBar yummyWarningSnackBar(String message, [double width = 300]) =>

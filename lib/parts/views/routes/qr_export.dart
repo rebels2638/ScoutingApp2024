@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class QRExportOverlayRoute extends ModalRoute<void> {
   final String data;
@@ -29,20 +30,32 @@ class QRExportOverlayRoute extends ModalRoute<void> {
 
   @override
   Widget buildPage(BuildContext context, Animation<double> animation,
-          Animation<double> secondaryAnimation) =>
-      Material(
-          child: SafeArea(
-              child: Center(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-            const Row(children: <Widget>[
-              Icon(Icons.qr_code_rounded),
-              Text("Transfer Scouting Data via QR Code")
-            ]),
-            strut(height: 18),
-            PrettyQrView.data(data: "THISISMOCKDATA")
-          ]))));
+      Animation<double> secondaryAnimation) {
+    const PrettyQrDecorationImage imgDecor = PrettyQrDecorationImage(
+      image: AssetImage('assets/appicon_header.png'),
+      position: PrettyQrDecorationImagePosition.embedded,
+    );
+    return Material(
+        child: SafeArea(
+            child: Center(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+          const Row(children: <Widget>[
+            Icon(Icons.qr_code_rounded),
+            Text("Transfer Scouting Data via QR Code")
+          ]),
+          strut(height: 18),
+          PrettyQrView.data(
+              data: data,
+              decoration: PrettyQrDecoration(
+                  shape: PrettyQrRoundedSymbol(
+                      color: ThemeProvider.themeOf(context)
+                          .data
+                          .primaryColor),
+                  image: imgDecor))
+        ]))));
+  }
 
   @override
   bool get maintainState => false;
