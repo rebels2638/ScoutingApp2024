@@ -91,12 +91,7 @@ class _AppView extends StatefulWidget {
 
 class _AppViewState extends State<_AppView> {
   int _bottomNavBarIndexer = 0;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     ({
