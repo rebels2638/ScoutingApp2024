@@ -6,6 +6,7 @@ import 'package:provider/single_child_widget.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/bits/lock_in.dart';
+import 'package:scouting_app_2024/parts/bits/prefer_tonal.dart';
 import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
 import 'package:scouting_app_2024/parts/bits/show_fps_monitor.dart';
@@ -38,6 +39,9 @@ class ThemedAppBundle extends StatelessWidget {
                 builder: (BuildContext
                         themeCtxt) => /*lol this is very scuffed XD i hope you can forgive me*/
                     MultiProvider(providers: <SingleChildWidget>[
+                      ChangeNotifierProvider<PreferTonalModal>(
+                          create: (BuildContext _) =>
+                              PreferTonalModal()),
                       ChangeNotifierProvider<ShowFPSMonitorModal>(
                           create: (BuildContext _) =>
                               ShowFPSMonitorModal()),
@@ -91,7 +95,7 @@ class _AppView extends StatefulWidget {
 
 class _AppViewState extends State<_AppView> {
   int _bottomNavBarIndexer = 0;
-  
+
   @override
   Widget build(BuildContext context) {
     ({

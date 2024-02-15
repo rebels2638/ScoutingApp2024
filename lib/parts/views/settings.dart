@@ -2,6 +2,7 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
+import 'package:scouting_app_2024/parts/bits/prefer_tonal.dart';
 import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
 import 'package:scouting_app_2024/parts/bits/show_fps_monitor.dart';
@@ -26,30 +27,29 @@ class SettingsView extends StatelessWidget
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    if (icon != null) Icon(icon, size: 40),
-                    strut(width: 22),
-                    if (hint == null)
-                      Text(label,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold))
-                    else
-                      Text.rich(TextSpan(children: <InlineSpan>[
-                        TextSpan(
-                            text: "$label\n",
-                            style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold)),
-                        TextSpan(
-                            text: hint,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w300,
-                            ))
-                      ]))
-                  ]),
+              // this might need fixing if we ever need to support phones fully
+              Wrap(children: <Widget>[
+                if (icon != null) Icon(icon, size: 40),
+                strut(width: 22),
+                if (hint == null)
+                  Text(label,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold))
+                else
+                  Text.rich(TextSpan(children: <InlineSpan>[
+                    TextSpan(
+                        text: "$label\n",
+                        style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold)),
+                    TextSpan(
+                        text: hint,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w300,
+                        ))
+                  ]))
+              ]),
               child
             ]),
       );
@@ -123,6 +123,24 @@ class SettingsView extends StatelessWidget
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: strutAll(<Widget>[
+                    _labelIt(
+                        icon: CommunityMaterialIcons.material_design,
+                        label: "Prefer Tonal Components",
+                        hint:
+                            "Tries to use a less sharp color design.",
+                        child: BasicToggleSwitch(
+                            initialValue: UserTelemetry()
+                                .currentModel
+                                .preferTonal,
+                            onChanged: (bool val) {
+                              Provider.of<PreferTonalModal>(context,
+                                      listen: false)
+                                  .preferTonal = val;
+                              UserTelemetry()
+                                  .currentModel
+                                  .preferTonal = val;
+                              UserTelemetry().save();
+                            })),
                     _labelIt(
                         icon: Icons.terminal_rounded,
                         label: "Show Development Console",

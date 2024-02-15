@@ -110,11 +110,15 @@ class UserPrefModel {
   @JsonKey(required: false, defaultValue: false)
   bool showFPSMonitor;
 
+  @JsonKey(required: false, defaultValue: true)
+  bool preferTonal;
+
   // make sure to run flutter pub run build_runner build
   UserPrefModel(
       {required this.selectedTheme,
       this.showConsole = false,
       this.showGameMap = true,
+      this.preferTonal = true,
       this.showFPSMonitor = false,
       this.showExperimental = false});
 
