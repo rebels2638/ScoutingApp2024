@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scouting_app_2024/blobs/qr_converter_blob.dart';
 import 'package:scouting_app_2024/user/models/team_bloc.dart';
 import 'package:scouting_app_2024/shared.dart';
 

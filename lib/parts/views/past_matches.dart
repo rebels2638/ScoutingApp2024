@@ -125,7 +125,7 @@ class _PastMatchesViewState extends State<PastMatchesView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 const Row(
-                  children: [
+                  children: <Widget>[
                     Icon(Icons.calendar_month),
                     SizedBox(width: 8.0),
                     Text("Past Matches",
@@ -153,7 +153,8 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                           });
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                                content: Text("All past matches deleted.")),
+                                content: Text(
+                                    "All past matches deleted.")),
                           );
                         },
                       ),
@@ -161,7 +162,10 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                     IconButton(
                       icon: const Icon(Icons.download),
                       onPressed: () async {
-                        String exportData = matches.map((match) => matchDataToCsv(match)).join("\n");
+                        String exportData = matches
+                            .map((PastMatchesOverViewData match) =>
+                                matchDataToCsv(match))
+                            .join("\n");
                         Widget qrWidget = createPrettyQrDataWidget(
                           data: exportData,
                           includeImage: false,
@@ -170,14 +174,14 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                           showOkLabel: false,
                           denyLabel: "Close",
                           icon: const Icon(Icons.cloud_sync),
-                          title: "Transfer All Scouting Data via QR Code",
+                          title:
+                              "Transfer All Scouting Data via QR Code",
                           context,
                           message: qrWidget,
                           onConfirm: () {},
                         );
                       },
                     ),
-
                   ],
                 ),
               ],
@@ -324,12 +328,14 @@ Widget createPrettyQrDataWidget({
       position: PrettyQrDecorationImagePosition.embedded,
     ),
   );
-  const PrettyQrDecoration decorationWithoutImage = PrettyQrDecoration(
+  const PrettyQrDecoration decorationWithoutImage =
+      PrettyQrDecoration(
     shape: PrettyQrRoundedSymbol(color: Color(0xFFFFFFFF)),
   );
   return PrettyQrView.data(
     data: data,
     errorCorrectLevel: QrErrorCorrectLevel.H,
-    decoration: includeImage ? decorationWithImage : decorationWithoutImage,
+    decoration:
+        includeImage ? decorationWithImage : decorationWithoutImage,
   );
 }

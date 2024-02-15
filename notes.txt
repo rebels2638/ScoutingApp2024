@@ -1,0 +1,27 @@
+Data that has to be crunched:
+
+Auto:
+% of how many times they get movement point
+Average scored in speaker
+Average scored in amp
+% on how often they pick up each note (ie they get the left most one in our wing 20% of the time)
+% of where they start
+
+Teleop:
+Average amount of speaker
+Average amount of amp
+Average amount of pieces scored in general
+Under stage?
+Average Driver rating (subjective)
++Average amount scored while AMPed
+
+Endgame:
+Climb?
+Success rate when harmony is attempted
+% of times they scored in trap
+% of times they scored in trap when attempted
+
+Human player accuracy
+General:
+Predicted points of each alliance
+Win likelihood

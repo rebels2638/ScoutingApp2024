@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:bloc/bloc.dart';
+import 'package:scouting_app_2024/blobs/qr_converter_blob.dart';
 import 'package:scouting_app_2024/user/models/team_model.dart';
 
 // there is hella boilerplate written here
@@ -14,7 +17,8 @@ sealed class ScoutingInfo {
   Map<String, dynamic> exportMap();
 }
 
-class MiscInfo extends ScoutingInfo {
+class MiscInfo extends ScoutingInfo
+    implements QRCompatibleData<MiscInfo> {
   bool coopertition;
   bool breakdown;
 
@@ -29,6 +33,23 @@ class MiscInfo extends ScoutingInfo {
         "coopertition": coopertition,
         "breakdown": breakdown
       };
+
+  @override
+  MiscInfo fromCompatibleFormat(String csv) {
+    final Map<String, dynamic> data =
+        jsonDecode(csv) as Map<String, dynamic>;
+    return MiscInfo(
+        coopertition: data["coopertition"],
+        breakdown: data["breakdown"]);
+  }
+
+  @override
+  String toCompatibleFormat() {
+    return jsonEncode(<String, dynamic>{
+      "coopertition": coopertition,
+      "breakdown": breakdown
+    });
+  }
 }
 
 class MiscUpdateEvent extends ScoutingSessionEvents {}
@@ -38,7 +59,8 @@ class MiscState extends ScoutingSessionStates {
   MiscState(this.data);
 }
 
-class EndgameInfo extends ScoutingInfo {
+class EndgameInfo extends ScoutingInfo
+    implements QRCompatibleData<EndgameInfo> {
   bool onChain;
   Harmony harmony;
   TrapScored trapScored;
@@ -73,6 +95,29 @@ class EndgameInfo extends ScoutingInfo {
         "micScored": micScored,
         "comments": comments
       };
+
+  @override
+  EndgameInfo fromCompatibleFormat(String csv) {
+    final Map<String, dynamic> data =
+        jsonDecode(csv) as Map<String, dynamic>;
+    return EndgameInfo(
+        onChain: data["onChain"],
+        harmony: Harmony.values[data["harmony"]],
+        trapScored: TrapScored.values[data["trapScored"]],
+        micScored: MicScored.values[data["micScored"]],
+        comments: data["comments"]);
+  }
+
+  @override
+  String toCompatibleFormat() {
+    return jsonEncode(<String, dynamic>{
+      "onChain": onChain,
+      "harmony": harmony.index,
+      "trapScored": trapScored.index,
+      "micScored": micScored.index,
+      "comments": comments
+    });
+  }
 }
 
 class EndgameUpdateEvent extends ScoutingSessionEvents {}
@@ -82,7 +127,8 @@ class EndgameState extends ScoutingSessionStates {
   EndgameState(this.data);
 }
 
-class TeleOpInfo extends ScoutingInfo {
+class TeleOpInfo extends ScoutingInfo
+    implements QRCompatibleData<TeleOpInfo> {
   bool playsDefense;
   bool wasDefended;
   int scoredSpeaker;
@@ -138,6 +184,37 @@ class TeleOpInfo extends ScoutingInfo {
         "comments": comments,
         "driverRating": driverRating
       };
+
+  @override
+  TeleOpInfo fromCompatibleFormat(String csv) {
+    final Map<String, dynamic> data =
+        jsonDecode(csv) as Map<String, dynamic>;
+    return TeleOpInfo(
+        playsDefense: data["playsDefense"],
+        wasDefended: data["wasDefended"],
+        scoredSpeaker: data["scoredSpeaker"],
+        missedSpeaker: data["missedSpeaker"],
+        scoredAmp: data["scoredAmp"],
+        missedAmp: data["missedAmp"],
+        scoredWhileAmped: data["scoredWhileAmped"],
+        comments: data["comments"],
+        driverRating: data["driverRating"]);
+  }
+
+  @override
+  String toCompatibleFormat() {
+    return jsonEncode(<String, dynamic>{
+      "playsDefense": playsDefense,
+      "wasDefended": wasDefended,
+      "scoredSpeaker": scoredSpeaker,
+      "missedSpeaker": missedSpeaker,
+      "scoredAmp": scoredAmp,
+      "missedAmp": missedAmp,
+      "scoredWhileAmped": scoredWhileAmped,
+      "comments": comments,
+      "driverRating": driverRating
+    });
+  }
 }
 
 class TeleOpUpdateEvent extends ScoutingSessionEvents {}
@@ -147,7 +224,8 @@ class TeleOpState extends ScoutingSessionStates {
   TeleOpState(this.data);
 }
 
-class AutoInfo extends ScoutingInfo {
+class AutoInfo extends ScoutingInfo
+    implements QRCompatibleData<AutoInfo> {
   bool notePreloaded;
   List<AutoPickup> notesPickedUp;
   bool taxi;
@@ -197,6 +275,43 @@ class AutoInfo extends ScoutingInfo {
         "missedAmp": missedAmp,
         "comments": comments
       };
+
+  @override
+  AutoInfo fromCompatibleFormat(String rawData) {
+    final Map<String, dynamic> data =
+        jsonDecode(rawData) as Map<String, dynamic>;
+    final List<AutoPickup> notesPickedUp = <AutoPickup>[];
+    for (int element in data["notesPickedUp"]) {
+      notesPickedUp.add(AutoPickup.values[element]);
+    }
+    return AutoInfo(
+        notePreloaded: data["notePreloaded"],
+        notesPickedUp: notesPickedUp,
+        taxi: data["taxi"],
+        scoredSpeaker: data["scoredSpeaker"],
+        missedSpeaker: data["missedSpeaker"],
+        scoredAmp: data["scoredAmp"],
+        missedAmp: data["missedAmp"],
+        comments: data["comments"]);
+  }
+
+  @override
+  String toCompatibleFormat() {
+    final List<int> notesPickedUpIndexes = <int>[];
+    for (AutoPickup element in notesPickedUp) {
+      notesPickedUpIndexes.add(element.index);
+    }
+    return jsonEncode(<String, dynamic>{
+      "notePreloaded": notePreloaded,
+      "notesPickedUp": notesPickedUpIndexes,
+      "taxi": taxi,
+      "scoredSpeaker": scoredSpeaker,
+      "missedSpeaker": missedSpeaker,
+      "scoredAmp": scoredAmp,
+      "missedAmp": missedAmp,
+      "comments": comments
+    });
+  }
 }
 
 class AutoUpdateEvent extends ScoutingSessionEvents {}
@@ -206,7 +321,8 @@ class AutoState extends ScoutingSessionStates {
   AutoState(this.data);
 }
 
-class PrelimInfo extends ScoutingInfo {
+class PrelimInfo extends ScoutingInfo
+    implements QRCompatibleData<PrelimInfo> {
   int timeStamp; // this is in ms since epoch
   String scouters;
   int teamNumber;
@@ -252,6 +368,34 @@ class PrelimInfo extends ScoutingInfo {
         "alliance": alliance,
         "startingPosition": startingPosition
       };
+
+  @override
+  PrelimInfo fromCompatibleFormat(String rawData) {
+    final Map<String, dynamic> data =
+        jsonDecode(rawData) as Map<String, dynamic>;
+    return PrelimInfo(
+        timeStamp: data["timeStamp"],
+        scouters: data["scouters"],
+        teamNumber: data["teamNumber"],
+        matchNumber: data["matchNumber"],
+        matchType: MatchType.values[data["matchType"]],
+        alliance: TeamAlliance.values[data["alliance"]],
+        startingPosition:
+            MatchStartingPosition.values[data["startingPosition"]]);
+  }
+
+  @override
+  String toCompatibleFormat() {
+    return jsonEncode(<String, dynamic>{
+      "timeStamp": timeStamp,
+      "scouters": scouters,
+      "teamNumber": teamNumber,
+      "matchNumber": matchNumber,
+      "matchType": matchType.index,
+      "alliance": alliance.index,
+      "startingPosition": startingPosition.index
+    });
+  }
 }
 
 class PrelimUpdateEvent extends ScoutingSessionEvents {}
