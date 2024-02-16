@@ -25,6 +25,7 @@ class UserTelemetry {
       userPrefsTelemetryBox.get(userDBName) ==
       null; // i feel like this is really bad
 
+  // ignore: unnecessary_getters_setters
   UserPrefModel get currentModel => _currentModel;
 
   set currentModel(UserPrefModel model) => _currentModel = model;
@@ -33,17 +34,20 @@ class UserTelemetry {
       await Hive.openBox<String>(_USER_TELEMETRY_BOX_NAME)
           .then((Box<String> e) {
         userPrefsTelemetryBox = e;
-        if (!userPrefsTelemetryBox.containsKey(userDBName) ||
-            userPrefsTelemetryBox.get(_USER_TELEMETRY_BOX_NAME) ==
-                null) {
+        Debug().info(
+            "Loading User Telemetry. Box content is: ${userPrefsTelemetryBox.values.toString()}");
+        if (!userPrefsTelemetryBox.containsKey(userDBName)) {
+          Debug()
+              .warn("COULD NOT FIND USER_PREFS, CREATING NEW MODEL");
           reset();
           save();
         } else {
-          _currentModel = UserPrefModel.fromJson(jsonDecode(
-              userPrefsTelemetryBox.get(_USER_TELEMETRY_BOX_NAME)!));
+          Debug().info("FOUND USER_PREFS, LOADING MODEL");
+          _currentModel = UserPrefModel.fromJson(
+              jsonDecode(userPrefsTelemetryBox.get(userDBName)!));
         }
-        Debug().info(
-            "Loaded the following contents for USER_PREF: ${_currentModel.toString()}");
+        Debug().warn(
+            "Loaded the following contents for USER_PREF: ${_currentModel.toJson().toString()}");
         Timer.periodic(const Duration(seconds: 8),
             (Timer _) async => await save());
       });
@@ -81,7 +85,8 @@ class UserTelemetry {
   }
 
   Future<void> save() async {
-    Debug().info("Saving User Telemetry...");
+    Debug().info(
+        "Saving User Telemetry...Entries: ${_currentModel.toJson()}");
     await userPrefsTelemetryBox.put(
         userDBName, jsonEncode(_currentModel.toJson()));
   }

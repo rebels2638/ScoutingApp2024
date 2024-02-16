@@ -17,7 +17,7 @@ import 'package:scouting_app_2024/user/user_telemetry.dart';
 const bool fixThisShit = true;
 
 // no one change anything here please - exoad
-void main() async {
+void main() {
   DateTime now = DateTime.now();
   // nothing should go above this comment besides the DateTime check
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,10 +29,9 @@ void main() async {
   // I LOVE THE THEN FUNCTION OH MY GOD HOLY SHIT, I LOVE THIS FUNCTION, WE SHOULD MAKE EVERYTHING WITH THIS FUNCTION
   if (fixThisShit) {
     DeviceEnv.initItems().then((_) {
-      Debug().init();
       Debug().info(
-          "Loaded the Device Environment with: [DocPath=${DeviceEnv.documentsPath},CachePath=${DeviceEnv.cachePath}]");
-      Hive.init(DeviceEnv.documentsPath);
+          "Loaded the Device Environment with: [DocPath=${DeviceEnv.saveLocation.path},CachePath=${DeviceEnv.saveLocation.path}]");
+      Hive.init(DeviceEnv.saveLocation.path);
       ScoutingTelemetry().loadBoxes().then((_) =>
           // this is such a shit idea because we are using so many awaits lmao
           ThemeBlob.loadBuiltinThemes()
@@ -54,24 +53,13 @@ void main() async {
                   })));
     });
   } else {
-    await DeviceEnv.initItems();
-    DeviceEnv.initializeAppSaveLocale().then((_) async {
-      Debug().info(
-          "Loaded the Device Environment with: [DocPath=${DeviceEnv.documentsPath},CachePath=${DeviceEnv.cachePath}]");
-      await Hive.initFlutter(Shared.DEVICE_STORAGE_SUBDIR);
-      const String boxName = "AmogusBoxTest";
-      Hive.boxExists(boxName).then((bool v) async {
-        if (v) {
-          Debug().info("Exists");
-        } else {
-          Debug().info("Does not exist");
-          if (Hive.isBoxOpen(boxName)) {
-            Debug().info("Box is already opened");
-          } else {
-            Debug().info("Box is not opened");
-            await Hive.openBox(boxName);
-          }
-        }
+    DeviceEnv.initItems().then((_) {
+      DeviceEnv.initializeAppSaveLocale().then((_) {
+        Debug().info(
+            "Loaded the Device Environment with: [SavePath=${DeviceEnv.saveLocation.path}]");
+        Hive.init(DeviceEnv.saveLocation.path);
+        const String boxName = "AmogusBoxTest";
+        Hive.openBox(boxName);
       });
     });
   }
