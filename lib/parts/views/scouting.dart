@@ -510,7 +510,7 @@ class _ScoutingViewState extends State<ScoutingView>
                   form_sec(context,
                       backgroundColor: Colors.transparent,
                       header: (
-                        icon: Icons.accessibility,
+                        icon: Icons.accessibility_rounded,
                         title: "Tele-op"
                       ),
                       child: form_col(<Widget>[
@@ -663,7 +663,7 @@ class _ScoutingViewState extends State<ScoutingView>
                   form_sec(context,
                       backgroundColor: Colors.transparent,
                       header: (
-                        icon: Icons.accessibility,
+                        icon: Icons.flag_rounded,
                         title: "Endgame"
                       ),
                       child: form_col(<Widget>[
@@ -792,7 +792,7 @@ class _ScoutingViewState extends State<ScoutingView>
                   form_sec(context,
                       backgroundColor: Colors.transparent,
                       header: (
-                        icon: Icons.accessibility,
+                        icon: Icons.more_horiz_rounded,
                         title: "Other"
                       ),
                       child: form_col(<Widget>[
