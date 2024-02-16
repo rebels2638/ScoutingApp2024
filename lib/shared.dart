@@ -9,9 +9,13 @@ class Shared {
 
   static const String FONT_FAMILY_SANS = "IBM Plex Sans";
   static const Uuid uuid = Uuid();
+  static const String DEVICE_STORAGE_SUBDIR = "RebelsScoutingApp";
+  static const bool PREFER_DOCS_DIR =
+      true; // if false, then we use DeviceEnv.cachePath
 }
 
-final String TELEMETRY_SUBDIR_PATH = "$APP_CANONICAL_NAME${Platform.pathSeparator}";
+final String TELEMETRY_SUBDIR_PATH =
+    "$APP_CANONICAL_NAME${Platform.pathSeparator}";
 const String APP_CANONICAL_NAME = "Argus"; // be goofy with this :)
 const int REBEL_ROBOTICS_APP_VERSION = 0xb939c84d4;
 const String REBEL_ROBOTICS_APP_NAME =

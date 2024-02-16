@@ -19,14 +19,12 @@ class ScoutingTelemetry {
 
   Future<void> loadBoxes() async {
     try {
-      Hive.openBox<EphemeralScoutingData>(_BOX_NAME).then(
-          (Box<EphemeralScoutingData> value) =>
-              _storedFinalizedMatches = value);
+      _storedFinalizedMatches =
+          await Hive.openBox<EphemeralScoutingData>(_BOX_NAME);
     } catch (e) {
       Debug().warn(
-          "Failed to find the allocated Hive DB! Maybe this is the first time? Trying to set it manually...");
-      _storedFinalizedMatches =
-          Hive.box<EphemeralScoutingData>(_BOX_NAME);
+          "Failed to find the allocated Hive DB! Maybe this is the first time? Trying to set it manually [Fault: $e}]");
+      _storedFinalizedMatches = await Hive.openBox(_BOX_NAME);
       _storedFinalizedMatches.flush();
     }
     Debug().info(
