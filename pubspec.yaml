@@ -27,6 +27,7 @@ dependencies:
   logging: ^1.2.0
   numberpicker: ^2.1.2
   path_provider: ^2.1.2
+  permission_handler: ^11.3.0
   pretty_qr_code: ^3.1.0
   provider: ^6.1.1
   responsive_grid_list: ^1.4.0

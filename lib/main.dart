@@ -14,7 +14,7 @@ import 'package:scouting_app_2024/parts/theme.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
 
-const bool fixThisShit = false;
+const bool fixThisShit = true;
 
 // no one change anything here please - exoad
 void main() async {
