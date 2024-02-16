@@ -291,6 +291,7 @@ class MatchTile extends StatelessWidget {
             ),
             icon: const Icon(Icons.cell_tower),
           ),
+          /**
           const SizedBox(
             height: 15,
             child: Row(
@@ -302,6 +303,7 @@ class MatchTile extends StatelessWidget {
               ],
             ),
           ),
+          **/
         ]),
       ),
     );
