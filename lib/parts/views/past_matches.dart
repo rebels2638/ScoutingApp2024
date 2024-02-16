@@ -250,9 +250,8 @@ class MatchTile extends StatelessWidget {
                   ElevatedButton(
                     child: const Text('Generate QR Code'),
                     onPressed: () async {
-                      String matchData = matchDataToCsv(match);
                       Widget qrWidget = createPrettyQrDataWidget(
-                        data: matchData,
+                        data: matchDataToCsv(match),
                         includeImage: true,
                       );
                       await launchConfirmDialog(
