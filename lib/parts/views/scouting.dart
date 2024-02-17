@@ -18,6 +18,8 @@ import "package:scouting_app_2024/user/scouting_telemetry.dart";
 
 typedef SectionId = ({String title, IconData icon});
 
+
+
 // so much boilerplate bruh lmao
 class ScoutingSessionViewDelegate extends StatelessWidget
     implements AppPageViewExporter {

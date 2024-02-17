@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2024/blobs/qr_converter_blob.dart';
+import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/user/models/team_bloc.dart';
 import 'package:scouting_app_2024/shared.dart';
 
@@ -79,6 +80,7 @@ class HollisticMatchScoutingData
 
   static HollisticMatchScoutingData fromCompatibleFormat(
       String rawData) {
+    Debug().info("Decoding the hollistic match data... $rawData");
     final Map<String, dynamic> data =
         jsonDecode(rawData) as Map<String, dynamic>;
     final Map<String, dynamic> innerData =

@@ -233,6 +233,33 @@ Widget form_label(String text,
         ]);
 
 @pragma("vm:prefer-inline")
+Widget form_label_2(String text,
+        {TextStyle? style, required Widget child, Widget? icon}) =>
+    Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(children: <Widget>[
+            if (icon != null) icon,
+            if (icon != null) strut(width: 6),
+            Text(text,
+                style: style ??
+                    const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        overflow: TextOverflow.ellipsis)),
+            strut(width: _prompt_label_strut_width),
+          ]),
+          strut(height: 6),
+          Row(
+            children: <Widget>[
+              const SizedBox(
+                  width: 10), // fuck strut() its not compile const
+              child,
+            ],
+          )
+        ]);
+
+@pragma("vm:prefer-inline")
 Widget form_txt(String label, [TextStyle? style]) =>
     Text(label, style: style);
 
@@ -285,7 +312,8 @@ Widget form_grid_sec(BuildContext context,
 
 @pragma("vm:prefer-inline")
 Widget form_sec_2(BuildContext context,
-        {required SectionId header,
+        {required Icon headerIcon,
+        required Widget title,
         Color? iconColor,
         required Widget child,
         Color? backgroundColor,
@@ -305,11 +333,9 @@ Widget form_sec_2(BuildContext context,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Row(children: <Widget>[
-                  Icon(header.icon, size: 36, color: iconColor),
+                  headerIcon,
                   strut(width: 10),
-                  Text(header.title,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 18))
+                  title,
                 ]),
                 Padding(
                   padding: const EdgeInsets.all(16.0),

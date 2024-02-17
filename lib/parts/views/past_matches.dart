@@ -2,13 +2,15 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import "package:scouting_app_2024/blobs/form_blob.dart";
+import 'package:scouting_app_2024/user/models/team_bloc.dart';
 import 'package:scouting_app_2024/user/models/team_model.dart';
-import "package:scouting_app_2024/blobs/locale_blob.dart";
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/user/scouting_telemetry.dart';
 import 'package:theme_provider/theme_provider.dart';
+
+
 
 class PastMatchesView extends StatefulWidget
     implements AppPageViewExporter {
@@ -49,10 +51,12 @@ class _PastMatchesViewState extends State<PastMatchesView> {
     // todo, below just placeholder data
     Debug().info(
         "PAST_MATCHES: Loading ${ScoutingTelemetry().length} past matches");
-    ScoutingTelemetry()
-        .forEachHollistic((HollisticMatchScoutingData data) {
-      matches.add(data);
-    });
+    matches.add(HollisticMatchScoutingData(
+        preliminary: PrelimInfo.optional(),
+        misc: MiscInfo.optional(),
+        auto: AutoInfo.optional(),
+        teleop: TeleOpInfo.optional(),
+        endgame: EndgameInfo.optional()));
 
     setState(() {});
   }
@@ -211,14 +215,58 @@ class MatchTile extends StatelessWidget {
         context,
         backgroundColor: Colors.transparent,
         iconColor: TeamAlliance.blue.toColor(),
-        header: (
-          icon: Icons.flag_circle_rounded,
-          title:
-              "${formalizeWord(match.preliminary.matchType.name)} #${match.preliminary.matchNumber}: (Team X)" // remember to update
-        ),
-        child: form_col(<Widget>[
+        headerIcon: const Icon(Icons.flag_circle_rounded, size: 40),
+        title: const Text.rich(TextSpan(
+            text: "{MatchType} {MatchNumber} | {TeamNumber}\n",
+            style:
+                TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+            children: <InlineSpan>[
+              TextSpan(
+                  text: "{hh}:{mm} {MM}/{DD}/{YYYY}",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.italic,
+                      fontSize: 14)),
+            ])),
+        child: Column(children: <Widget>[
+          form_label_2("Overview",
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  fontStyle: FontStyle.italic,
+                  overflow: TextOverflow.ellipsis),
+              icon: const Icon(Icons.data_exploration_rounded),
+              child: const Text.rich(TextSpan(children: <InlineSpan>[
+                TextSpan(
+                    text: "Starting Position: ",
+                    style: TextStyle(
+                        height: 1.6, fontWeight: FontWeight.w700)),
+                TextSpan(
+                    text: "{X}\n",
+                    style: TextStyle(
+                        height: 1.6, fontWeight: FontWeight.w700)),
+                TextSpan(
+                    text: "Harmonized: ",
+                    style: TextStyle(
+                        height: 1.6, fontWeight: FontWeight.w700)),
+                TextSpan(
+                    text: "{X}\n",
+                    style: TextStyle(
+                        height: 1.6, fontWeight: FontWeight.w700)),
+                TextSpan(
+                    text: "Trap Scored: ",
+                    style: TextStyle(
+                        height: 1.6, fontWeight: FontWeight.w700)),
+                TextSpan(text: "{X}", style: TextStyle(height: 1.6)),
+              ]))),
+          const SizedBox(height: 8),
           form_label(
             'Transfer Options',
+            style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                fontStyle: FontStyle.italic,
+                overflow: TextOverflow.ellipsis),
             child: Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -280,8 +328,9 @@ class MatchTile extends StatelessWidget {
                 ], width: 6),
               ),
             ),
-            icon: const Icon(Icons.cell_tower),
+            icon: const Icon(Icons.cell_tower_rounded),
           ),
+
           /**
           const SizedBox(
             height: 15,

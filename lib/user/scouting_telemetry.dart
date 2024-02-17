@@ -22,9 +22,9 @@ class ScoutingTelemetry {
       void Function(HollisticMatchScoutingData data) cb) {
     for (EphemeralScoutingData data
         in _storedFinalizedMatches.values) {
+      Debug().info("Found scattered match data: ${data.id}");
       HollisticMatchScoutingData.fromCompatibleFormat(
           data.compressedFormat);
-      Debug().info("Found scattered match data: ${data.id}");
     }
   }
 
@@ -40,6 +40,11 @@ class ScoutingTelemetry {
     }
     Debug().info(
         "Finished loading the 'storedFinalizedMatches' box containing ${_storedFinalizedMatches.length} entries. Found ${validateAllEntriesVersion().failedIds.length} entries that had conflicting telemetry versions.");
+    for (EphemeralScoutingData element
+        in _storedFinalizedMatches.values) {
+      Debug().info(
+          "Found scattered match data: ${element.id} with version ${element.telemetryVersion} and ${element.compressedFormat.length} bytes. ");
+    }
   }
 
   int get length => _storedFinalizedMatches.length;
