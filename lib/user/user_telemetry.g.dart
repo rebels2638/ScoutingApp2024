@@ -20,6 +20,8 @@ UserPrefModel _$UserPrefModelFromJson(Map<String, dynamic> json) =>
               $checkedConvert('showGameMap', (v) => v as bool? ?? true),
           preferTonal:
               $checkedConvert('preferTonal', (v) => v as bool? ?? true),
+          preferCanonical:
+              $checkedConvert('preferCanonical', (v) => v as bool? ?? true),
           showFPSMonitor:
               $checkedConvert('showFPSMonitor', (v) => v as bool? ?? false),
           showExperimental:
@@ -37,4 +39,5 @@ Map<String, dynamic> _$UserPrefModelToJson(UserPrefModel instance) =>
       'showExperimental': instance.showExperimental,
       'showFPSMonitor': instance.showFPSMonitor,
       'preferTonal': instance.preferTonal,
+      'preferCanonical': instance.preferCanonical,
     };

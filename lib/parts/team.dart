@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/extern/color.dart';
+import 'package:scouting_app_2024/parts/bits/prefer_canonical.dart';
 import 'package:scouting_app_2024/user/models/team_model.dart';
 
 class TeamAllianceSwitch extends StatefulWidget {
@@ -40,7 +41,11 @@ class _TeamAllianceSwitchState extends State<TeamAllianceSwitch> {
               ? Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(2),
-                      color: TeamAlliance.red.toColor()),
+                      color:
+                          PreferCanonicalModal.isCanonicalPreferred(
+                                  context)
+                              ? TeamAlliance.red.toColor()
+                              : null),
                   child: const Padding(
                     padding: EdgeInsets.only(
                         top: 2, bottom: 2, left: 3, right: 3),
@@ -61,27 +66,50 @@ class _TeamAllianceSwitchState extends State<TeamAllianceSwitch> {
             message: "${_toggled ? "Blue" : "Red"} Alliance",
             child: Switch(
               value: _toggled,
-              trackColor: MaterialStateProperty.resolveWith<Color?>(
-                  (Set<MaterialState> states) => states
-                          .contains(MaterialState.selected)
-                      ? TeamAlliance.blue.toColor().withAlpha(0x80)
-                      : TeamAlliance.red.toColor().withAlpha(0x80)),
-              thumbColor: MaterialStateProperty.resolveWith<Color?>(
-                  (Set<MaterialState> states) =>
-                      states.contains(MaterialState.selected)
-                          ? TeamAlliance.blue.toColor()
-                          : TeamAlliance.red.toColor()),
-              overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                  (Set<MaterialState> states) => states
-                          .contains(MaterialState.selected)
-                      ? TeamAlliance.blue.toColor().withOpacity(0.42)
-                      : TeamAlliance.red.toColor().withOpacity(0.42)),
+              trackColor:
+                  PreferCanonicalModal.isCanonicalPreferred(context)
+                      ? MaterialStateProperty.resolveWith<Color?>(
+                          (Set<MaterialState> states) =>
+                              states.contains(MaterialState.selected)
+                                  ? TeamAlliance.blue
+                                      .toColor()
+                                      .withAlpha(0x80)
+                                  : TeamAlliance.red
+                                      .toColor()
+                                      .withAlpha(0x80))
+                      : null,
+              thumbColor:
+                  PreferCanonicalModal.isCanonicalPreferred(context)
+                      ? MaterialStateProperty.resolveWith<Color?>(
+                          (Set<MaterialState> states) =>
+                              states.contains(MaterialState.selected)
+                                  ? TeamAlliance.blue.toColor()
+                                  : TeamAlliance.red.toColor())
+                      : null,
+              overlayColor:
+                  PreferCanonicalModal.isCanonicalPreferred(context)
+                      ? MaterialStateProperty.resolveWith<Color?>(
+                          (Set<MaterialState> states) => states
+                                  .contains(MaterialState.selected)
+                              ? TeamAlliance.blue
+                                  .toColor()
+                                  .withOpacity(0.42)
+                              : TeamAlliance.red
+                                  .toColor()
+                                  .withOpacity(0.42))
+                      : null,
               trackOutlineColor:
-                  MaterialStateProperty.resolveWith<Color?>(
-                      (Set<MaterialState> states) => states
-                              .contains(MaterialState.selected)
-                          ? TeamAlliance.blue.toColor().addAll(200)
-                          : TeamAlliance.red.toColor().addAll(200)),
+                  PreferCanonicalModal.isCanonicalPreferred(context)
+                      ? MaterialStateProperty.resolveWith<Color?>(
+                          (Set<MaterialState> states) =>
+                              states.contains(MaterialState.selected)
+                                  ? TeamAlliance.blue
+                                      .toColor()
+                                      .addAll(200)
+                                  : TeamAlliance.red
+                                      .toColor()
+                                      .addAll(200))
+                      : null,
               onChanged: (bool e) {
                 setState(() => _toggled = !_toggled);
                 widget.onChanged
@@ -99,7 +127,11 @@ class _TeamAllianceSwitchState extends State<TeamAllianceSwitch> {
               ? Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(2),
-                      color: TeamAlliance.blue.toColor()),
+                      color:
+                          PreferCanonicalModal.isCanonicalPreferred(
+                                  context)
+                              ? TeamAlliance.blue.toColor()
+                              : null),
                   child: const Padding(
                     padding: EdgeInsets.only(
                         top: 2, bottom: 2, left: 3, right: 3),

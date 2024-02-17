@@ -18,27 +18,6 @@ enum TeamAlliance {
   Color toColor() => Color(color);
 }
 
-class TeamModelBlock {
-  TeamAlliance alliance;
-  int number;
-  DateTime timeStamp;
-  List<PastMatchesOverViewData> matchData;
-
-  TeamModelBlock(
-      {required this.alliance,
-      required this.number,
-      required this.matchData,
-      required this.timeStamp});
-
-  bool playedMatch(int id) {
-    bool r = false;
-    for (PastMatchesOverViewData element in matchData) {
-      r = element.matchID == id;
-    }
-    return r;
-  }
-}
-
 enum MatchType { practice, qualification, playoff }
 
 enum MatchStartingPosition { left, middle, right }
@@ -81,10 +60,10 @@ class HollisticMatchScoutingData
   static HollisticMatchScoutingData fromCompatibleFormat(
       String rawData) {
     Debug().info("Decoding the hollistic match data... $rawData");
-    final Map<String, dynamic> data =
-        jsonDecode(rawData) as Map<String, dynamic>;
-    final Map<String, dynamic> innerData =
-        jsonDecode(data["data"].toString()) as Map<String, dynamic>;
+    final Map<dynamic, dynamic> data =
+        jsonDecode(rawData) as Map<dynamic, dynamic>;
+    final Map<dynamic, dynamic> innerData =
+        jsonDecode(data["data"].toString()) as Map<dynamic, dynamic>;
     return HollisticMatchScoutingData(
       preliminary: PrelimInfo.fromCompatibleFormat(
           innerData["preliminary"].toString()),
@@ -107,9 +86,9 @@ class HollisticMatchScoutingData
 
   @override
   String toCompatibleFormat() {
-    return jsonEncode(<String, dynamic>{
+    return jsonEncode(<dynamic, dynamic>{
       "\"id\"": id,
-      "\"data\"": <String, dynamic>{
+      "\"data\"": <dynamic, dynamic>{
         "\"preliminary\"": preliminary.toCompatibleFormat(),
         "\"auto\"": auto.toCompatibleFormat(),
         "\"teleop\"": teleop.toCompatibleFormat(),
@@ -118,26 +97,4 @@ class HollisticMatchScoutingData
       }
     });
   }
-}
-
-//for past_matches.dart
-class PastMatchesOverViewData {
-  // not hollistic
-  int matchID;
-  MatchType matchType;
-  MatchStartingPosition startingPosition;
-  EndStatus endStatus;
-  AutoPickup autoPickup;
-  Harmony harmony;
-  TrapScored trapScored;
-
-  PastMatchesOverViewData({
-    required this.matchID,
-    required this.matchType,
-    required this.startingPosition,
-    required this.endStatus,
-    required this.autoPickup,
-    required this.harmony,
-    required this.trapScored,
-  });
 }

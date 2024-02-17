@@ -10,8 +10,6 @@ import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/user/scouting_telemetry.dart';
 import 'package:theme_provider/theme_provider.dart';
 
-
-
 class PastMatchesView extends StatefulWidget
     implements AppPageViewExporter {
   const PastMatchesView({super.key});
@@ -242,17 +240,13 @@ class MatchTile extends StatelessWidget {
                     style: TextStyle(
                         height: 1.6, fontWeight: FontWeight.w700)),
                 TextSpan(
-                    text: "{X}\n",
-                    style: TextStyle(
-                        height: 1.6, fontWeight: FontWeight.w700)),
+                    text: "{X}\n", style: TextStyle(height: 1.6)),
                 TextSpan(
                     text: "Harmonized: ",
                     style: TextStyle(
                         height: 1.6, fontWeight: FontWeight.w700)),
                 TextSpan(
-                    text: "{X}\n",
-                    style: TextStyle(
-                        height: 1.6, fontWeight: FontWeight.w700)),
+                    text: "{X}\n", style: TextStyle(height: 1.6)),
                 TextSpan(
                     text: "Trap Scored: ",
                     style: TextStyle(

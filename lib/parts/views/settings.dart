@@ -2,6 +2,7 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
+import 'package:scouting_app_2024/parts/bits/prefer_canonical.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_tonal.dart';
 import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
@@ -12,8 +13,24 @@ import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
 import 'package:theme_provider/theme_provider.dart';
 
-class SettingsView extends StatelessWidget
+class SettingsView extends StatefulWidget
     implements AppPageViewExporter {
+  @override
+  ({
+    Widget child,
+    ({Icon activeIcon, Icon icon, String label, String tooltip}) item
+  }) exportAppPageView() {
+    return (
+      child: this,
+      item: (
+        activeIcon: const Icon(Icons.settings_applications_rounded),
+        icon: const Icon(Icons.settings_applications_outlined),
+        label: "Settings",
+        tooltip: "Configure preferences for the application"
+      )
+    );
+  }
+
   const SettingsView({super.key});
 
   @pragma("vm:prefer-inline")
@@ -54,6 +71,11 @@ class SettingsView extends StatelessWidget
             ]),
       );
 
+  @override
+  State<SettingsView> createState() => _SettingsViewState();
+}
+
+class _SettingsViewState extends State<SettingsView> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -119,11 +141,12 @@ class SettingsView extends StatelessWidget
           SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Padding(
-              padding: const EdgeInsets.all(26.0),
+              padding: const EdgeInsets.only(
+                  top: 26.0, left: 26, right: 26, bottom: 64),
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: strutAll(<Widget>[
-                    _labelIt(
+                    SettingsView._labelIt(
                         icon: CommunityMaterialIcons.material_design,
                         label: "Prefer Tonal Components",
                         hint:
@@ -132,16 +155,36 @@ class SettingsView extends StatelessWidget
                             initialValue: UserTelemetry()
                                 .currentModel
                                 .preferTonal,
-                            onChanged: (bool val) {
-                              Provider.of<PreferTonalModal>(context,
-                                      listen: false)
-                                  .preferTonal = val;
-                              UserTelemetry()
-                                  .currentModel
-                                  .preferTonal = val;
-                              UserTelemetry().save();
-                            })),
-                    _labelIt(
+                            onChanged: (bool val) => setState(() {
+                                  Provider.of<PreferTonalModal>(
+                                          context,
+                                          listen: false)
+                                      .preferTonal = val;
+                                  UserTelemetry()
+                                      .currentModel
+                                      .preferTonal = val;
+                                  UserTelemetry().save();
+                                }))),
+                    SettingsView._labelIt(
+                        icon: CommunityMaterialIcons.material_design,
+                        label: "Use canonical components",
+                        hint:
+                            "Use team colors and other \"FRC\" related styling",
+                        child: BasicToggleSwitch(
+                            initialValue: UserTelemetry()
+                                .currentModel
+                                .preferCanonical,
+                            onChanged: (bool val) => setState(() {
+                                  Provider.of<PreferCanonicalModal>(
+                                          context,
+                                          listen: false)
+                                      .preferCanonical = val;
+                                  UserTelemetry()
+                                      .currentModel
+                                      .preferCanonical = val;
+                                  UserTelemetry().save();
+                                }))),
+                    SettingsView._labelIt(
                         icon: Icons.terminal_rounded,
                         label: "Show Development Console",
                         hint:
@@ -159,7 +202,7 @@ class SettingsView extends StatelessWidget
                                   .showConsole = val;
                               UserTelemetry().save();
                             })),
-                    _labelIt(
+                    SettingsView._labelIt(
                         icon: Icons.map,
                         label: "Show Game Map",
                         hint:
@@ -177,7 +220,7 @@ class SettingsView extends StatelessWidget
                                   .showGameMap = val;
                               UserTelemetry().save();
                             })),
-                    _labelIt(
+                    SettingsView._labelIt(
                         icon: CommunityMaterialIcons.chemical_weapon,
                         label: "Show Experimental Elements",
                         hint:
@@ -196,7 +239,7 @@ class SettingsView extends StatelessWidget
                                   .showExperimental = val;
                               UserTelemetry().save();
                             })),
-                    _labelIt(
+                    SettingsView._labelIt(
                         icon: Icons.numbers_rounded,
                         label: "Show FPS Monitor",
                         hint:
@@ -220,22 +263,6 @@ class SettingsView extends StatelessWidget
           ),
         ],
       ),
-    );
-  }
-
-  @override
-  ({
-    Widget child,
-    ({Icon activeIcon, Icon icon, String label, String tooltip}) item
-  }) exportAppPageView() {
-    return (
-      child: this,
-      item: (
-        activeIcon: const Icon(Icons.settings_applications_rounded),
-        icon: const Icon(Icons.settings_applications_outlined),
-        label: "Settings",
-        tooltip: "Configure preferences for the application"
-      )
     );
   }
 }
