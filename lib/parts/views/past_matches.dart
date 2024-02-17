@@ -242,7 +242,7 @@ class MatchTile extends StatelessWidget {
                       /*
                       String matchData = matchDataToCsv(match);
                       Widget qrWidget = createPrettyQrDataWidget(
-                        data: matchData,
+                        data: matchDataToCsv(match),
                         includeImage: true,
                       );
                       await launchConfirmDialog(
@@ -283,6 +283,7 @@ class MatchTile extends StatelessWidget {
             ),
             icon: const Icon(Icons.cell_tower),
           ),
+          /**
           const SizedBox(
             height: 15,
             child: Row(
@@ -294,6 +295,7 @@ class MatchTile extends StatelessWidget {
               ],
             ),
           ),
+          **/
         ]),
       ),
     );
