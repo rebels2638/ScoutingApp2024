@@ -487,105 +487,105 @@
         "decoration": "none",
         "decorationColor": "#ff111f36",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "bodyMedium": {
         "color": "#ff111f36",
         "decoration": "none",
         "decorationColor": "#ff111f36",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "bodySmall": {
         "color": "#ff111f36",
         "decoration": "none",
         "decorationColor": "#ff111f36",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "displayLarge": {
         "color": "#ff111f36",
         "decoration": "none",
         "decorationColor": "#ff111f36",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "displayMedium": {
         "color": "#ff111f36",
         "decoration": "none",
         "decorationColor": "#ff111f36",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "displaySmall": {
         "color": "#ff111f36",
         "decoration": "none",
         "decorationColor": "#ff111f36",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "headlineLarge": {
         "color": "#ff111f36",
         "decoration": "none",
         "decorationColor": "#ff111f36",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "headlineMedium": {
         "color": "#ff111f36",
         "decoration": "none",
         "decorationColor": "#ff111f36",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "headlineSmall": {
         "color": "#ff111f36",
         "decoration": "none",
         "decorationColor": "#ff111f36",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "labelLarge": {
         "color": "#ff111f36",
         "decoration": "none",
         "decorationColor": "#ff111f36",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "labelMedium": {
         "color": "#ff111f36",
         "decoration": "none",
         "decorationColor": "#ff111f36",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "labelSmall": {
         "color": "#ff111f36",
         "decoration": "none",
         "decorationColor": "#ff111f36",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "titleLarge": {
         "color": "#ff111f36",
         "decoration": "none",
         "decorationColor": "#ff111f36",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "titleMedium": {
         "color": "#ff111f36",
         "decoration": "none",
         "decorationColor": "#ff111f36",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "titleSmall": {
         "color": "#ff111f36",
         "decoration": "none",
         "decorationColor": "#ff111f36",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       }
     },
     "dense": {
@@ -1005,105 +1005,105 @@
         "decoration": "none",
         "decorationColor": "#ffffffff",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "bodyMedium": {
         "color": "#ffffffff",
         "decoration": "none",
         "decorationColor": "#ffffffff",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "bodySmall": {
         "color": "#ffffffff",
         "decoration": "none",
         "decorationColor": "#ffffffff",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "displayLarge": {
         "color": "#ffffffff",
         "decoration": "none",
         "decorationColor": "#ffffffff",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "displayMedium": {
         "color": "#ffffffff",
         "decoration": "none",
         "decorationColor": "#ffffffff",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "displaySmall": {
         "color": "#ffffffff",
         "decoration": "none",
         "decorationColor": "#ffffffff",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "headlineLarge": {
         "color": "#ffffffff",
         "decoration": "none",
         "decorationColor": "#ffffffff",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "headlineMedium": {
         "color": "#ffffffff",
         "decoration": "none",
         "decorationColor": "#ffffffff",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "headlineSmall": {
         "color": "#ffffffff",
         "decoration": "none",
         "decorationColor": "#ffffffff",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "labelLarge": {
         "color": "#ffffffff",
         "decoration": "none",
         "decorationColor": "#ffffffff",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "labelMedium": {
         "color": "#ffffffff",
         "decoration": "none",
         "decorationColor": "#ffffffff",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "labelSmall": {
         "color": "#ffffffff",
         "decoration": "none",
         "decorationColor": "#ffffffff",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "titleLarge": {
         "color": "#ffffffff",
         "decoration": "none",
         "decorationColor": "#ffffffff",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "titleMedium": {
         "color": "#ffffffff",
         "decoration": "none",
         "decorationColor": "#ffffffff",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       },
       "titleSmall": {
         "color": "#ffffffff",
         "decoration": "none",
         "decorationColor": "#ffffffff",
         "fontFamily": "Segoe UI",
-        "inherit": true
+        "inherit": false
       }
     }
   },

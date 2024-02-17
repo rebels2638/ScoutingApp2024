@@ -7,6 +7,7 @@ import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/bits/lock_in.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_canonical.dart';
+import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_tonal.dart';
 import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
@@ -40,6 +41,9 @@ class ThemedAppBundle extends StatelessWidget {
                 builder: (BuildContext
                         themeCtxt) => /*lol this is very scuffed XD i hope you can forgive me*/
                     MultiProvider(providers: <SingleChildWidget>[
+                      ChangeNotifierProvider<PreferCompactModal>(
+                          create: (BuildContext _) =>
+                              PreferCompactModal()),
                       ChangeNotifierProvider<PreferCanonicalModal>(
                           create: (BuildContext _) =>
                               PreferCanonicalModal()),
@@ -445,25 +449,39 @@ class _AppViewState extends State<_AppView> {
                               ),
                             ),
                           ),
-                          strut(width: 10),
-                          const Text(APP_CANONICAL_NAME,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500)),
-                          strut(width: 10),
-                          GestureDetector(
-                              onTap: () async =>
-                                  await launchConfirmDialog(
-                                      context,
-                                      message: const Text(
-                                          "You are about to visit the FRC Game Overview website"),
-                                      onConfirm: () async =>
-                                          await launchUrl(Uri.parse(
-                                              FIRSTCrescendoShared
-                                                  .website))),
-                              child: const Image(
-                                  height: 20,
-                                  image: ExactAssetImage(
-                                      "assets/crescendo/crescendo_header.png"))),
+                          AnimatedSwitcher(
+                              duration:
+                                  const Duration(milliseconds: 300),
+                              switchInCurve: Curves.ease,
+                              switchOutCurve: Curves.ease,
+                              transitionBuilder: (Widget child,
+                                  Animation<double> animation) {
+                                return ScaleTransition(
+                                  scale: animation,
+                                  child: child,
+                                );
+                              },
+                              child: Row(children: <Widget>[
+                                strut(width: 10),
+                                const Text(APP_CANONICAL_NAME,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500)),
+                                strut(width: 10),
+                                GestureDetector(
+                                    onTap: () async =>
+                                        await launchConfirmDialog(
+                                            context,
+                                            message: const Text(
+                                                "You are about to visit the FRC Game Overview website"),
+                                            onConfirm: () async =>
+                                                await launchUrl(Uri.parse(
+                                                    FIRSTCrescendoShared
+                                                        .website))),
+                                    child: const Image(
+                                        height: 20,
+                                        image: ExactAssetImage(
+                                            "assets/crescendo/crescendo_header.png")))
+                              ])),
                         ]),
                   )
                 : Container()) /*lmao */,

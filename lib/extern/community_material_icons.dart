@@ -11,10 +11,13 @@ enum CommunityMaterialIconsEnumMapper {
   washing_machine(CommunityMaterialIcons.washing_machine),
   fruit_cherries(CommunityMaterialIcons.fruit_cherries),
   snowflake(CommunityMaterialIcons.snowflake),
+  tea(CommunityMaterialIcons.tea),
   sprout(CommunityMaterialIcons.sprout),
   alphabet_piqad(CommunityMaterialIcons.alphabet_piqad),
   candycane(CommunityMaterialIcons.candycane),
-  ;
+  fruit_citrus(CommunityMaterialIcons.fruit_citrus),
+  incognito(CommunityMaterialIcons.incognito),
+  skull_scan(CommunityMaterialIcons.skull_scan);
 
   final IconData data;
 

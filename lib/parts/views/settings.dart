@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_canonical.dart';
+import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_tonal.dart';
 import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
@@ -84,59 +85,137 @@ class _SettingsViewState extends State<SettingsView> {
           Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                preferTonalButton(
-                    style: ThemeBlob.exportBtnBlobStyle(),
-                    onPressed: () {
-                      UserTelemetry().reset();
-                      UserTelemetry().resetHard();
-                      UserTelemetry().save();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          yummySnackBar(
-                              duration:
-                                  const Duration(milliseconds: 1500),
-                              margin: null,
-                              width: 300,
-                              icon: Icon(Icons.save_rounded,
-                                  color:
-                                      ThemeProvider.themeOf(context)
-                                          .data
-                                          .colorScheme
-                                          .background),
-                              backgroundColor:
-                                  ThemeProvider.themeOf(context)
-                                      .data
-                                      .colorScheme
-                                      .primary,
-                              message: "Settings Reset!"));
+                AnimatedSwitcher(
+                    transitionBuilder:
+                        (Widget child, Animation<double> animation) {
+                      return ScaleTransition(
+                          scale: animation, child: child);
                     },
-                    icon: const Icon(Icons.replay_rounded),
-                    label: const Text("Reset Settings")),
+                    duration: const Duration(milliseconds: 300),
+                    switchInCurve: Curves.ease,
+                    switchOutCurve: Curves.ease,
+                    child: !PreferCompactModal.isCompactPreferred(
+                            context)
+                        ? // i could reverse the values, but thats just too many ctrl+c ctrl+v
+                        preferTonalButton(
+                            onPressed: () {
+                              UserTelemetry().reset();
+                              UserTelemetry().resetHard();
+                              UserTelemetry().save();
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(yummySnackBar(
+                                      duration: const Duration(
+                                          milliseconds: 1500),
+                                      margin: null,
+                                      width: 300,
+                                      icon: Icon(Icons.save_rounded,
+                                          color:
+                                              ThemeProvider.themeOf(
+                                                      context)
+                                                  .data
+                                                  .colorScheme
+                                                  .background),
+                                      backgroundColor:
+                                          ThemeProvider.themeOf(
+                                                  context)
+                                              .data
+                                              .colorScheme
+                                              .primary,
+                                      message: "Settings Reset!"));
+                            },
+                            icon: const Icon(Icons.replay_rounded),
+                            label: const Text("Reset Settings"))
+                        : FilledButton(
+                            onPressed: () {
+                              UserTelemetry().reset();
+                              UserTelemetry().resetHard();
+                              UserTelemetry().save();
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(yummySnackBar(
+                                      duration: const Duration(
+                                          milliseconds: 1500),
+                                      margin: null,
+                                      width: 300,
+                                      icon: Icon(Icons.save_rounded,
+                                          color:
+                                              ThemeProvider.themeOf(
+                                                      context)
+                                                  .data
+                                                  .colorScheme
+                                                  .background),
+                                      backgroundColor:
+                                          ThemeProvider.themeOf(
+                                                  context)
+                                              .data
+                                              .colorScheme
+                                              .primary,
+                                      message: "Settings Reset!"));
+                            },
+                            child: const Icon(Icons.replay_rounded))),
                 strut(width: 12),
-                preferTonalButton(
-                    style: ThemeBlob.exportBtnBlobStyle(),
-                    onPressed: () {
-                      UserTelemetry().save();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          yummySnackBar(
-                              duration:
-                                  const Duration(milliseconds: 1500),
-                              margin: null,
-                              width: 300,
-                              icon: Icon(Icons.save_rounded,
-                                  color:
-                                      ThemeProvider.themeOf(context)
-                                          .data
-                                          .colorScheme
-                                          .background),
-                              backgroundColor:
-                                  ThemeProvider.themeOf(context)
-                                      .data
-                                      .colorScheme
-                                      .primary,
-                              message: "Settings Saved!"));
+                AnimatedSwitcher(
+                    transitionBuilder:
+                        (Widget child, Animation<double> animation) {
+                      return ScaleTransition(
+                          scale: animation, child: child);
                     },
-                    icon: const Icon(Icons.save_alt_rounded),
-                    label: const Text("Save Settings")),
+                    duration: const Duration(milliseconds: 300),
+                    switchInCurve: Curves.ease,
+                    switchOutCurve: Curves.ease,
+                    child: !PreferCompactModal.isCompactPreferred(
+                            context)
+                        ? preferTonalButton(
+                            onPressed: () {
+                              UserTelemetry().save();
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(yummySnackBar(
+                                      duration: const Duration(
+                                          milliseconds: 1500),
+                                      margin: null,
+                                      width: 300,
+                                      icon: Icon(Icons.save_rounded,
+                                          color:
+                                              ThemeProvider.themeOf(
+                                                      context)
+                                                  .data
+                                                  .colorScheme
+                                                  .background),
+                                      backgroundColor:
+                                          ThemeProvider.themeOf(
+                                                  context)
+                                              .data
+                                              .colorScheme
+                                              .primary,
+                                      message: "Settings Saved!"));
+                            },
+                            icon: const Icon(Icons.save_alt_rounded),
+                            label: const Text("Save Settings"))
+                        : FilledButton(
+                            onPressed: () {
+                              UserTelemetry().save();
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(yummySnackBar(
+                                      duration: const Duration(
+                                          milliseconds: 1500),
+                                      margin: null,
+                                      width: 300,
+                                      icon: Icon(Icons.save_rounded,
+                                          color:
+                                              ThemeProvider.themeOf(
+                                                      context)
+                                                  .data
+                                                  .colorScheme
+                                                  .background),
+                                      backgroundColor:
+                                          ThemeProvider.themeOf(
+                                                  context)
+                                              .data
+                                              .colorScheme
+                                              .primary,
+                                      message: "Settings Saved!"));
+                            },
+                            child:
+                                const Icon(Icons.save_alt_rounded))),
               ]),
           SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
@@ -166,7 +245,7 @@ class _SettingsViewState extends State<SettingsView> {
                                   UserTelemetry().save();
                                 }))),
                     SettingsView._labelIt(
-                        icon: CommunityMaterialIcons.material_design,
+                        icon: CommunityMaterialIcons.book_account,
                         label: "Use canonical components",
                         hint:
                             "Use team colors and other \"FRC\" related styling",
@@ -182,6 +261,25 @@ class _SettingsViewState extends State<SettingsView> {
                                   UserTelemetry()
                                       .currentModel
                                       .preferCanonical = val;
+                                  UserTelemetry().save();
+                                }))),
+                    SettingsView._labelIt(
+                        icon: CommunityMaterialIcons.nuke, // lmao
+                        label: "Compact layout",
+                        hint:
+                            "Some UI elements will be swapped out for icon only versions",
+                        child: BasicToggleSwitch(
+                            initialValue: UserTelemetry()
+                                .currentModel
+                                .preferCompact,
+                            onChanged: (bool val) => setState(() {
+                                  Provider.of<PreferCompactModal>(
+                                          context,
+                                          listen: false)
+                                      .preferCompact = val;
+                                  UserTelemetry()
+                                      .currentModel
+                                      .preferCompact = val;
                                   UserTelemetry().save();
                                 }))),
                     SettingsView._labelIt(

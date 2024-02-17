@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
+import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 class _BetterGridLayout extends SliverGridLayout {
@@ -98,26 +99,18 @@ class _NumPickBtn extends StatefulWidget {
   final int maxValue;
   final int minValue;
   final int itemCount;
-  final bool infiniteLoop;
-  final Axis? alignment;
   final void Function(int res) onChange;
   final String label;
   final Icon icon;
-  final Icon? headerIcon;
   final String headerMessage;
-  final String? comment;
 
   const _NumPickBtn(
       {required this.label,
       required this.icon,
-      this.headerIcon,
       required this.itemCount,
       required this.minValue,
       required this.maxValue,
-      this.infiniteLoop = true,
-      this.alignment = Axis.vertical,
       required this.headerMessage,
-      this.comment,
       required this.onChange});
 
   @override
@@ -136,22 +129,37 @@ class _NumPickBtnState extends State<_NumPickBtn> {
   @override
   Widget build(BuildContext context) {
     return Row(children: <Widget>[
-      FilledButton.icon(
-          icon: widget.icon,
-          label: Text(widget.label),
-          onPressed: () async => await launchNumberPickerDialog(
-                  context,
-                  maxValue: widget.maxValue.abs(),
-                  minValue: widget.minValue.abs(),
-                  headerIcon: widget.headerIcon,
-                  headerMessage: widget.headerMessage,
-                  alignment: widget.alignment,
-                  itemCount: widget.maxValue.abs().toString().length,
-                  infiniteLoop: widget.infiniteLoop,
-                  comment: widget.comment, onChange: (int value) {
-                setState(() => _initValue = value);
-                widget.onChange.call(value);
-              })),
+      if (PreferCompactModal.isCompactPreferred(context))
+        FilledButton.icon(
+            icon: widget.icon,
+            label: Text(widget.label),
+            onPressed: () async => await launchNumberPickerDialog(
+                    context,
+                    maxValue: widget.maxValue.abs(),
+                    minValue: widget.minValue.abs(),
+                    headerMessage: widget.headerMessage,
+                    itemCount: widget.maxValue
+                        .abs()
+                        .toString()
+                        .length, onChange: (int value) {
+                  setState(() => _initValue = value);
+                  widget.onChange.call(value);
+                }))
+      else
+        FilledButton(
+            child: widget.icon,
+            onPressed: () async => await launchNumberPickerDialog(
+                    context,
+                    maxValue: widget.maxValue.abs(),
+                    minValue: widget.minValue.abs(),
+                    headerMessage: widget.headerMessage,
+                    itemCount: widget.maxValue
+                        .abs()
+                        .toString()
+                        .length, onChange: (int value) {
+                  setState(() => _initValue = value);
+                  widget.onChange.call(value);
+                })),
       strut(width: 6),
       Text.rich(TextSpan(children: <InlineSpan>[
         const TextSpan(text: " = "),

@@ -1,5 +1,7 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
+import 'package:scouting_app_2024/parts/bits/prefer_tonal.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import "package:scouting_app_2024/blobs/form_blob.dart";
 import 'package:scouting_app_2024/user/models/team_bloc.dart';
@@ -49,6 +51,12 @@ class _PastMatchesViewState extends State<PastMatchesView> {
     // todo, below just placeholder data
     Debug().info(
         "PAST_MATCHES: Loading ${ScoutingTelemetry().length} past matches");
+    matches.add(HollisticMatchScoutingData(
+        preliminary: PrelimInfo.optional(),
+        misc: MiscInfo.optional(),
+        auto: AutoInfo.optional(),
+        teleop: TeleOpInfo.optional(),
+        endgame: EndgameInfo.optional()));
     matches.add(HollisticMatchScoutingData(
         preliminary: PrelimInfo.optional(),
         misc: MiscInfo.optional(),
@@ -146,66 +154,99 @@ class _PastMatchesViewState extends State<PastMatchesView> {
             ),
           ),
           Expanded(
-            child: matches.isEmpty
-                ? Center(
-                    child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(CommunityMaterialIcons.emoticon_sad,
-                          color: ThemeProvider.themeOf(context)
-                              .data
-                              .secondaryHeaderColor,
-                          size: 64),
-                      strut(height: 18),
-                      // this is so badly optimized because we are calling a non compile const ThemeProvider.themeOf
-                      Text.rich(
-                        TextSpan(children: <InlineSpan>[
-                          TextSpan(
-                              text: "No past matches found...\n\n",
-                              style: TextStyle(
-                                  color:
-                                      ThemeProvider.themeOf(context)
-                                          .data
-                                          .secondaryHeaderColor,
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.w600)),
-                          TextSpan(
-                              text:
-                                  "Hint: \"maybe go scout a team?\" ~ Jack",
-                              style: TextStyle(
-                                  color:
-                                      ThemeProvider.themeOf(context)
-                                          .data
-                                          .secondaryHeaderColor,
-                                  fontStyle: FontStyle.italic))
-                        ]),
-                        textAlign: TextAlign.center,
-                      )
-                    ],
-                  ))
-                : ListView.builder(
-                    itemCount: matches.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return MatchTile(
-                        match: matches[index],
-                        onDelete: removeMatch,
-                      );
-                    },
-                  ),
-          ),
+              child: matches.isEmpty
+                  ? Center(
+                      child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(CommunityMaterialIcons.emoticon_sad,
+                            color: ThemeProvider.themeOf(context)
+                                .data
+                                .secondaryHeaderColor,
+                            size: 64),
+                        strut(height: 18),
+                        // this is so badly optimized because we are calling a non compile const ThemeProvider.themeOf
+                        Text.rich(
+                          TextSpan(children: <InlineSpan>[
+                            TextSpan(
+                                text: "No past matches found...\n\n",
+                                style: TextStyle(
+                                    color:
+                                        ThemeProvider.themeOf(context)
+                                            .data
+                                            .secondaryHeaderColor,
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.w600)),
+                            TextSpan(
+                                text:
+                                    "Hint: \"maybe go scout a team?\" ~ Jack",
+                                style: TextStyle(
+                                    color:
+                                        ThemeProvider.themeOf(context)
+                                            .data
+                                            .secondaryHeaderColor,
+                                    fontStyle: FontStyle.italic))
+                          ]),
+                          textAlign: TextAlign.center,
+                        )
+                      ],
+                    ))
+                  : PreferCompactModal.isCompactPreferred(context)
+                      ? Builder(
+                          builder: (BuildContext context) {
+                            List<Widget> widgets = <Widget>[];
+                            for (HollisticMatchScoutingData match
+                                in matches) {
+                              Debug().info(
+                                  "PAST_MATCHES: Adding match ${match.id}");
+                              widgets.add(MatchTile(
+                                match: match,
+                                onDelete: removeMatch,
+                              ));
+                            }
+                            return form_grid_2(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 14,
+                              crossAxisSpacing: 14,
+                              children: widgets,
+                            );
+                          },
+                        )
+                      : ListView.builder(
+                          physics:
+                              const AlwaysScrollableScrollPhysics(
+                                  parent: BouncingScrollPhysics(
+                                      decelerationRate:
+                                          ScrollDecelerationRate
+                                              .normal)),
+                          padding: const EdgeInsets.only(bottom: 40),
+                          itemCount: matches.length,
+                          itemBuilder:
+                              (BuildContext context, int index) {
+                            return MatchTile(
+                              match: matches[index],
+                              onDelete: removeMatch,
+                            );
+                          },
+                        )),
         ],
       ),
     );
   }
 }
 
-class MatchTile extends StatelessWidget {
+class MatchTile extends StatefulWidget {
   final HollisticMatchScoutingData match;
   final Function(int) onDelete;
 
   const MatchTile(
       {super.key, required this.match, required this.onDelete});
 
+  @override
+  State<MatchTile> createState() => _MatchTileState();
+}
+
+class _MatchTileState extends State<MatchTile> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -224,6 +265,7 @@ class MatchTile extends StatelessWidget {
                   style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontStyle: FontStyle.italic,
+                      overflow: TextOverflow.ellipsis,
                       fontSize: 14)),
             ])),
         child: Column(children: <Widget>[
@@ -238,20 +280,33 @@ class MatchTile extends StatelessWidget {
                 TextSpan(
                     text: "Starting Position: ",
                     style: TextStyle(
-                        height: 1.6, fontWeight: FontWeight.w700)),
+                        overflow: TextOverflow.ellipsis,
+                        height: 1.6,
+                        fontWeight: FontWeight.w700)),
                 TextSpan(
                     text: "{X}\n", style: TextStyle(height: 1.6)),
                 TextSpan(
                     text: "Harmonized: ",
                     style: TextStyle(
-                        height: 1.6, fontWeight: FontWeight.w700)),
+                        overflow: TextOverflow.ellipsis,
+                        height: 1.6,
+                        fontWeight: FontWeight.w700)),
                 TextSpan(
-                    text: "{X}\n", style: TextStyle(height: 1.6)),
+                    text: "{X}\n",
+                    style: TextStyle(
+                        height: 1.6,
+                        overflow: TextOverflow.ellipsis)),
                 TextSpan(
                     text: "Trap Scored: ",
                     style: TextStyle(
-                        height: 1.6, fontWeight: FontWeight.w700)),
-                TextSpan(text: "{X}", style: TextStyle(height: 1.6)),
+                        height: 1.6,
+                        fontWeight: FontWeight.w700,
+                        overflow: TextOverflow.ellipsis)),
+                TextSpan(
+                    text: "{X}",
+                    style: TextStyle(
+                        height: 1.6,
+                        overflow: TextOverflow.ellipsis)),
               ]))),
           const SizedBox(height: 8),
           form_label(
@@ -265,54 +320,56 @@ class MatchTile extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: strutAll(<Widget>[
-                  FilledButton(
-                    child: const Text('Beam via Bluetooth'),
-                    onPressed: () async => await launchConfirmDialog(
-                        showOkLabel: false,
-                        denyLabel: "Close",
-                        icon: const Icon(Icons.warning_amber_rounded),
-                        title: "Warning",
-                        context,
-                        message: const Text(
-                            "Bluetooth feature not yet available!"),
-                        onConfirm: () {}),
-                  ),
-                  FilledButton(
-                    child: const Text('Generate QR Code'),
-                    onPressed: () async {
-                      /*
-                      String matchData = matchDataToCsv(match);
-                      Widget qrWidget = createPrettyQrDataWidget(
-                        data: matchDataToCsv(match),
-                        includeImage: true,
-                      );
-                      await launchConfirmDialog(
-                        showOkLabel: false,
-                        denyLabel: "Close",
-                        icon: const Icon(Icons.cloud_sync),
-                        title: "Transfer Scouting Data via QR Code",
-                        context,
-                        message: qrWidget,
-                        onConfirm: () => Debug().info(
-                            "PAST MATCHES: Popped QR Code Display for ${formalizeWord(match.matchType.name)} #${match.matchID}"),
-                      );
-                      */
-                    },
-                  ),
-                  FilledButton(
-                    onPressed: () async => await launchConfirmDialog(
-                      showOkLabel: true,
-                      okLabel: "Delete",
-                      denyLabel: "No",
-                      icon: const Icon(Icons.warning_amber_rounded),
-                      title: "Delete Past Match",
-                      context,
-                      message: const Text(
-                          "Are you sure you want to delete this match?"),
-                      onConfirm: () {} /*onDelete(match.matchID)*/,
-                    ),
-                    child: const Text('Delete'),
-                  ),
+                  if (PreferCompactModal.isCompactPreferred(context))
+                    FilledButton(
+                      child: const Icon(Icons.bluetooth_rounded),
+                      onPressed: () async => await launchConfirmDialog(
+                          showOkLabel: false,
+                          denyLabel: "Close",
+                          icon:
+                              const Icon(Icons.warning_amber_rounded),
+                          title: "Warning",
+                          context,
+                          message: const Text(
+                              "Bluetooth feature not yet available!"),
+                          onConfirm: () {}),
+                    )
+                  else
+                    FilledButton.icon(
+                        onPressed: () async => await launchConfirmDialog(
+                            showOkLabel: false,
+                            denyLabel: "Close",
+                            icon: const Icon(
+                                Icons.warning_amber_rounded),
+                            title: "Warning",
+                            context,
+                            message: const Text(
+                                "Bluetooth feature not yet available!"),
+                            onConfirm: () {}),
+                        icon: const Icon(Icons.bluetooth_rounded),
+                        label: const Text("Bluetooth Share")),
+                  if (PreferCompactModal.isCompactPreferred(context))
+                    FilledButton(
+                      child: const Icon(Icons.qr_code_rounded),
+                      onPressed: () {}, // TODO,
+                    )
+                  else
+                    FilledButton.icon(
+                        onPressed: () {}, // TODO,
+                        icon: const Icon(Icons.qr_code_rounded),
+                        label: const Text("QR Share")),
+                  if (PreferCompactModal.isCompactPreferred(context))
+                    FilledButton(
+                      child: const Icon(Icons.delete_forever_rounded),
+                      onPressed: () {},
+                    )
+                  else
+                    FilledButton.icon(
+                        onPressed: () {}, // TODO
+                        icon:
+                            const Icon(Icons.delete_forever_rounded),
+                        label: const Text("Delete")),
+
                   /*
                   ElevatedButton(
                     onPressed: () => onDelete(match.matchID),

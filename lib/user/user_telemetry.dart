@@ -121,11 +121,15 @@ class UserPrefModel {
   @JsonKey(required: false, defaultValue: true)
   bool preferCanonical;
 
+  @JsonKey(required: false, defaultValue: false)
+  bool preferCompact;
+
   // make sure to run flutter pub run build_runner build
   UserPrefModel(
       {required this.selectedTheme,
       this.showConsole = false,
       this.showGameMap = true,
+      this.preferCompact = false,
       this.preferTonal = true,
       this.preferCanonical = true,
       this.showFPSMonitor = false,

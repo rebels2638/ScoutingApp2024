@@ -4,7 +4,7 @@ import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
 
 class PreferCanonicalModal extends ChangeNotifier {
-  bool _preferCanonical = UserTelemetry().currentModel.preferTonal;
+  bool _preferCanonical = UserTelemetry().currentModel.preferCanonical;
 
   bool get preferCanonical => _preferCanonical;
 
