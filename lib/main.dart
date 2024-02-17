@@ -6,7 +6,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:scouting_app_2024/user/env.dart';
 import 'package:scouting_app_2024/user/models/ephemeral_data.dart';
 import 'package:scouting_app_2024/user/scouting_telemetry.dart';
-import 'package:scouting_app_2024/utils.dart';
 
 import 'package:window_manager/window_manager.dart';
 

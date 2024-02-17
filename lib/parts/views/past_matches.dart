@@ -2,7 +2,6 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import "package:scouting_app_2024/blobs/form_blob.dart";
-import 'package:scouting_app_2024/user/models/ephemeral_data.dart';
 import 'package:scouting_app_2024/user/models/team_model.dart';
 import "package:scouting_app_2024/blobs/locale_blob.dart";
 import 'package:pretty_qr_code/pretty_qr_code.dart';
