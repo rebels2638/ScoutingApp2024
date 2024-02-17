@@ -3,6 +3,7 @@ import 'package:logging/logging.dart';
 import 'package:scouting_app_2024/blobs/locale_blob.dart';
 import 'package:scouting_app_2024/parts/views/console.dart';
 import 'package:scouting_app_2024/shared.dart';
+import 'package:scouting_app_2024/utils.dart';
 
 class DebugObserver extends BlocObserver {
   const DebugObserver();
@@ -17,15 +18,26 @@ class DebugObserver extends BlocObserver {
 
 class Debug {
   Debug._();
+  String _lastPhase = "None";
   factory Debug() => _singleton;
   static final Debug _singleton = Debug._();
-  final Logger _logger = Logger("RebelRobotic2024");
+  late final Logger _logger;
   bool useStdIO = true;
+
+  void newPhase(String phaseName) {
+    final String diamonds = GenericUtils.repeatStr(
+        GenericUtils.HAZARD_DIAMOND,
+        Shared.HAZARD_PHASE_DIAMOND_REPS);
+    Debug().info("\n$diamonds  [ $_lastPhase->$phaseName ]  $diamonds");
+    _lastPhase = phaseName;
+  }
+
   String Function(LogRecord record) stdIOPrettifier = (LogRecord
           record) =>
       "${record.time} | ${stringClampFromRight(record.level.name, 4)}\t>>\t${record.message}";
 
   void init() {
+    _logger = Logger("Argus2638");
     if (useStdIO) {
       listen((LogRecord record) => print(
           "${record.time} | ${record.level} >> ${record.message}"));

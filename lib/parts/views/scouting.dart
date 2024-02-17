@@ -7,7 +7,7 @@ import "package:scouting_app_2024/blobs/form_blob.dart";
 import "package:scouting_app_2024/blobs/inc_dec_blob.dart";
 import "package:scouting_app_2024/blobs/locale_blob.dart";
 import "package:scouting_app_2024/parts/bits/show_experimental.dart";
-import "package:scouting_app_2024/user/models/epehemeral_data.dart";
+import "package:scouting_app_2024/user/models/ephemeral_data.dart";
 import 'package:scouting_app_2024/user/models/team_bloc.dart';
 import "package:scouting_app_2024/parts/team.dart";
 import "package:scouting_app_2024/parts/views_delegate.dart";
@@ -55,75 +55,71 @@ class _ScoutingSessionViewDelegate extends StatefulWidget {
 
 class _ScoutingSessionViewDelegateState
     extends State<_ScoutingSessionViewDelegate> {
-  late bool _showScoutingSession;
-
   @override
   void initState() {
     super.initState();
-    _showScoutingSession = false;
   }
 
   @override
   Widget build(BuildContext context) {
-    return _showScoutingSession
-        ? const ScoutingView()
-        : Center(
-            // i feel liek this useless
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: strutAll(<Widget>[
-                  const Text("Scouting Session",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 24)),
-                  ElevatedButton(
-                      style: ButtonStyle(
-                          shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(16)))),
-                      onPressed: () {
-                        Debug().info(
-                            "Moving from SCOUTING_SESSION_LAUNCHER to SCOUTING_SESSION");
-                        setState(() => _showScoutingSession = true);
-                      },
-                      child: Padding(
-                        // a lot of the constraints here come from here: https://m3.material.io/components/floating-action-button/specs
-                        // altho kind shitty lmao, fuck it
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                            mainAxisAlignment:
-                                MainAxisAlignment.center,
-                            children: <Widget>[
-                              const Icon(
-                                  Icons.pending_actions_rounded),
-                              strut(height: 14),
-                              const Text.rich(
-                                  TextSpan(children: <InlineSpan>[
-                                    TextSpan(
-                                        text: "New Session\n",
-                                        style: TextStyle(
-                                            fontWeight:
-                                                FontWeight.w600,
-                                            fontSize: 18)),
-                                    TextSpan(
-                                        text:
-                                            "Launch a new scouting form",
-                                        style: TextStyle(
-                                            fontWeight:
-                                                FontWeight.w400,
-                                            fontSize: 12))
-                                  ]),
-                                  textAlign: TextAlign.center)
+    return Center(
+      // i feel liek this useless
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: strutAll(<Widget>[
+            const Text("Scouting Session",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: 24)),
+            ElevatedButton(
+                style: ButtonStyle(
+                    shape: MaterialStateProperty.all<
+                            RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(16)))),
+                onPressed: () {
+                  Debug().info(
+                      "Moving from SCOUTING_SESSION_LAUNCHER to SCOUTING_SESSION");
+                  Navigator.of(context)
+                      .push(MaterialPageRoute<ScoutingView>(
+                          builder: (BuildContext _) => Material(
+                                  child: ScoutingView(
+                                context: context,
+                              ))));
+                },
+                child: Padding(
+                  // a lot of the constraints here come from here: https://m3.material.io/components/floating-action-button/specs
+                  // altho kind shitty lmao, fuck it
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        const Icon(Icons.pending_actions_rounded),
+                        strut(height: 14),
+                        const Text.rich(
+                            TextSpan(children: <InlineSpan>[
+                              TextSpan(
+                                  text: "New Session\n",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 18)),
+                              TextSpan(
+                                  text: "Launch a new scouting form",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12))
                             ]),
-                      )),
-                ], height: 78)),
-          );
+                            textAlign: TextAlign.center)
+                      ]),
+                )),
+          ], height: 78)),
+    );
   }
 }
 
 class ScoutingView extends StatefulWidget {
-  const ScoutingView({super.key});
+  final BuildContext context;
+  const ScoutingView({super.key, required this.context});
 
   @override
   State<ScoutingView> createState() => _ScoutingViewState();
@@ -152,7 +148,10 @@ class _ScoutingViewState extends State<ScoutingView>
                                     BorderRadius.circular(8)))),
                     icon: const Icon(Icons.exit_to_app_rounded),
                     label: const Text("Exit Session"),
-                    onPressed: () {}),
+                    onPressed: () async {
+                      // make ScoutingSessionViewDelegateState show the launcher again by using BuildContext
+                      Navigator.of(context).pop();
+                    }),
                 FilledButton.icon(
                     style: ButtonStyle(
                         shape: MaterialStateProperty.all<
@@ -185,7 +184,8 @@ class _ScoutingViewState extends State<ScoutingView>
                     label: const Text("Save Session"),
                     onPressed: () {
                       EphemeralScoutingData data =
-                          EphemeralScoutingData.fromHollistic(context
+                          EphemeralScoutingData.fromHollistic(widget
+                              .context
                               .read<ScoutingSessionBloc>()
                               .exportHollistic());
                       ScoutingTelemetry().put(data);

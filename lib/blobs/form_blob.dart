@@ -284,6 +284,41 @@ Widget form_grid_sec(BuildContext context,
         ));
 
 @pragma("vm:prefer-inline")
+Widget form_sec_2(BuildContext context,
+        {required SectionId header,
+        Color? iconColor,
+        required Widget child,
+        Color? backgroundColor,
+        Gradient? gradient}) =>
+    Container(
+        decoration: BoxDecoration(
+            gradient: gradient,
+            color: backgroundColor ??
+                ThemeProvider.themeOf(context)
+                    .data
+                    .colorScheme
+                    .onInverseSurface,
+            borderRadius: BorderRadius.circular(14)),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Row(children: <Widget>[
+                  Icon(header.icon, size: 36, color: iconColor),
+                  strut(width: 10),
+                  Text(header.title,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 18))
+                ]),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: child,
+                )
+              ]),
+        ));
+
+@pragma("vm:prefer-inline")
 Widget form_sec(BuildContext context,
         {required SectionId header,
         required Widget child,

@@ -105,16 +105,16 @@ class HollisticMatchScoutingData
 
   @override
   String toCompatibleFormat() {
-    return <String, dynamic>{
-      "id": id,
-      "data": <String, dynamic>{
-        "preliminary": preliminary.toCompatibleFormat(),
-        "auto": auto.toCompatibleFormat(),
-        "teleop": teleop.toCompatibleFormat(),
-        "endgame": endgame.toCompatibleFormat(),
-        "misc": misc.toCompatibleFormat()
+    return jsonEncode(<String, dynamic>{
+      "\"id\"": id,
+      "\"data\"": <String, dynamic>{
+        "\"preliminary\"": preliminary.toCompatibleFormat(),
+        "\"auto\"": auto.toCompatibleFormat(),
+        "\"teleop\"": teleop.toCompatibleFormat(),
+        "\"endgame\"": endgame.toCompatibleFormat(),
+        "\"misc\"": misc.toCompatibleFormat()
       }
-    }.toString();
+    });
   }
 }
 

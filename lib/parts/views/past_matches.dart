@@ -1,11 +1,15 @@
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import "package:scouting_app_2024/blobs/form_blob.dart";
+import 'package:scouting_app_2024/user/models/ephemeral_data.dart';
 import 'package:scouting_app_2024/user/models/team_model.dart';
 import "package:scouting_app_2024/blobs/locale_blob.dart";
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/debug.dart';
+import 'package:scouting_app_2024/user/scouting_telemetry.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class PastMatchesView extends StatefulWidget
     implements AppPageViewExporter {
@@ -32,7 +36,8 @@ class PastMatchesView extends StatefulWidget
 }
 
 class _PastMatchesViewState extends State<PastMatchesView> {
-  List<PastMatchesOverViewData> matches = <PastMatchesOverViewData>[];
+  List<HollisticMatchScoutingData> matches =
+      <HollisticMatchScoutingData>[];
 
   @override
   void initState() {
@@ -43,70 +48,20 @@ class _PastMatchesViewState extends State<PastMatchesView> {
 //this is all from team_model.dart
   void loadMatches() {
     // todo, below just placeholder data
-    matches = <PastMatchesOverViewData>[
-      PastMatchesOverViewData(
-        matchID: 1,
-        matchType: MatchType.practice,
-        startingPosition: MatchStartingPosition.left,
-        endStatus: EndStatus.parked,
-        autoPickup: AutoPickup.m,
-        harmony: Harmony.yes,
-        trapScored: TrapScored.missed,
-      ),
-      PastMatchesOverViewData(
-        matchID: 2,
-        matchType: MatchType.practice,
-        startingPosition: MatchStartingPosition.middle,
-        endStatus: EndStatus.parked,
-        autoPickup: AutoPickup.m,
-        harmony: Harmony.yes,
-        trapScored: TrapScored.missed,
-      ),
-      PastMatchesOverViewData(
-        matchID: 3,
-        matchType: MatchType.qualification,
-        startingPosition: MatchStartingPosition.right,
-        endStatus: EndStatus.parked,
-        autoPickup: AutoPickup.m,
-        harmony: Harmony.yes,
-        trapScored: TrapScored.missed,
-      ),
-      PastMatchesOverViewData(
-        matchID: 4,
-        matchType: MatchType.qualification,
-        startingPosition: MatchStartingPosition.left,
-        endStatus: EndStatus.parked,
-        autoPickup: AutoPickup.m,
-        harmony: Harmony.yes,
-        trapScored: TrapScored.missed,
-      ),
-      PastMatchesOverViewData(
-        matchID: 5,
-        matchType: MatchType.playoff,
-        startingPosition: MatchStartingPosition.middle,
-        endStatus: EndStatus.parked,
-        autoPickup: AutoPickup.m,
-        harmony: Harmony.yes,
-        trapScored: TrapScored.missed,
-      ),
-      PastMatchesOverViewData(
-        matchID: 6,
-        matchType: MatchType.playoff,
-        startingPosition: MatchStartingPosition.right,
-        endStatus: EndStatus.parked,
-        autoPickup: AutoPickup.m,
-        harmony: Harmony.yes,
-        trapScored: TrapScored.missed,
-      )
-    ];
+    Debug().info(
+        "PAST_MATCHES: Loading ${ScoutingTelemetry().length} past matches");
+    ScoutingTelemetry()
+        .forEachHollistic((HollisticMatchScoutingData data) {
+      matches.add(data);
+    });
 
     setState(() {});
   }
 
   void removeMatch(int matchID) {
     setState(() {
-      matches.removeWhere(
-          (PastMatchesOverViewData m) => m.matchID == matchID);
+      matches.removeWhere((HollisticMatchScoutingData m) =>
+          m.preliminary.matchNumber == matchID);
     });
   }
 
@@ -162,6 +117,7 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                     IconButton(
                       icon: const Icon(Icons.download),
                       onPressed: () async {
+                        /*
                         String exportData = matches
                             .map((PastMatchesOverViewData match) =>
                                 matchDataToCsv(match))
@@ -180,6 +136,7 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                           message: qrWidget,
                           onConfirm: () {},
                         );
+                        */
                       },
                     ),
                   ],
@@ -189,8 +146,42 @@ class _PastMatchesViewState extends State<PastMatchesView> {
           ),
           Expanded(
             child: matches.isEmpty
-                ? const Center(
-                    child: Text('No past matches available!'))
+                ? Center(
+                    child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(CommunityMaterialIcons.emoticon_sad,
+                          color: ThemeProvider.themeOf(context)
+                              .data
+                              .secondaryHeaderColor,
+                          size: 64),
+                      strut(height: 18),
+                      // this is so badly optimized because we are calling a non compile const ThemeProvider.themeOf
+                      Text.rich(
+                        TextSpan(children: <InlineSpan>[
+                          TextSpan(
+                              text: "No past matches found...\n\n",
+                              style: TextStyle(
+                                  color:
+                                      ThemeProvider.themeOf(context)
+                                          .data
+                                          .secondaryHeaderColor,
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.w600)),
+                          TextSpan(
+                              text:
+                                  "Hint: \"maybe go scout a team?\" ~ Jack",
+                              style: TextStyle(
+                                  color:
+                                      ThemeProvider.themeOf(context)
+                                          .data
+                                          .secondaryHeaderColor,
+                                  fontStyle: FontStyle.italic))
+                        ]),
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ))
                 : ListView.builder(
                     itemCount: matches.length,
                     itemBuilder: (BuildContext context, int index) {
@@ -208,7 +199,7 @@ class _PastMatchesViewState extends State<PastMatchesView> {
 }
 
 class MatchTile extends StatelessWidget {
-  final PastMatchesOverViewData match;
+  final HollisticMatchScoutingData match;
   final Function(int) onDelete;
 
   const MatchTile(
@@ -217,16 +208,14 @@ class MatchTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: TeamAlliance.blue.toColor(),
-      child: form_sec(
+      child: form_sec_2(
         context,
         backgroundColor: Colors.transparent,
+        iconColor: TeamAlliance.blue.toColor(),
         header: (
-          icon: (match.matchType == MatchType.practice)
-              ? Icons.flag_circle
-              : Icons.emoji_events,
+          icon: Icons.flag_circle_rounded,
           title:
-              "${formalizeWord(match.matchType.name)} #${match.matchID}: (Team X)" // remember to update
+              "${formalizeWord(match.preliminary.matchType.name)} #${match.preliminary.matchNumber}: (Team X)" // remember to update
         ),
         child: form_col(<Widget>[
           form_label(
@@ -235,7 +224,8 @@ class MatchTile extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: strutAll(<Widget>[
-                  ElevatedButton(
+                  FilledButton(
+                    child: const Text('Beam via Bluetooth'),
                     onPressed: () async => await launchConfirmDialog(
                         showOkLabel: false,
                         denyLabel: "Close",
@@ -245,11 +235,11 @@ class MatchTile extends StatelessWidget {
                         message: const Text(
                             "Bluetooth feature not yet available!"),
                         onConfirm: () {}),
-                    child: const Text('Beam via Bluetooth'),
                   ),
-                  ElevatedButton(
+                  FilledButton(
                     child: const Text('Generate QR Code'),
                     onPressed: () async {
+                      /*
                       String matchData = matchDataToCsv(match);
                       Widget qrWidget = createPrettyQrDataWidget(
                         data: matchData,
@@ -265,9 +255,10 @@ class MatchTile extends StatelessWidget {
                         onConfirm: () => Debug().info(
                             "PAST MATCHES: Popped QR Code Display for ${formalizeWord(match.matchType.name)} #${match.matchID}"),
                       );
+                      */
                     },
                   ),
-                  ElevatedButton(
+                  FilledButton(
                     onPressed: () async => await launchConfirmDialog(
                       showOkLabel: true,
                       okLabel: "Delete",
@@ -277,7 +268,7 @@ class MatchTile extends StatelessWidget {
                       context,
                       message: const Text(
                           "Are you sure you want to delete this match?"),
-                      onConfirm: () => onDelete(match.matchID),
+                      onConfirm: () {} /*onDelete(match.matchID)*/,
                     ),
                     child: const Text('Delete'),
                   ),
@@ -309,6 +300,7 @@ class MatchTile extends StatelessWidget {
   }
 }
 
+/*
 String matchDataToCsv(PastMatchesOverViewData match) {
   // Convert match data to csv for QR code export
   String csv =
@@ -316,6 +308,7 @@ String matchDataToCsv(PastMatchesOverViewData match) {
 
   return csv;
 }
+*/
 
 Widget createPrettyQrDataWidget({
   required String data,

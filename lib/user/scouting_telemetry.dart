@@ -1,7 +1,8 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:scouting_app_2024/debug.dart';
-import 'package:scouting_app_2024/user/models/epehemeral_data.dart';
+import 'package:scouting_app_2024/user/models/ephemeral_data.dart';
 import 'package:scouting_app_2024/user/models/shared.dart';
+import 'package:scouting_app_2024/user/models/team_model.dart';
 
 const String _BOX_NAME = "Argus_PMD";
 
@@ -15,6 +16,16 @@ class ScoutingTelemetry {
   Future<void> deleteDisk() async {
     Debug().warn("Deleting all past matches from disk...");
     _storedFinalizedMatches.deleteFromDisk();
+  }
+
+  void forEachHollistic(
+      void Function(HollisticMatchScoutingData data) cb) {
+    for (EphemeralScoutingData data
+        in _storedFinalizedMatches.values) {
+      HollisticMatchScoutingData.fromCompatibleFormat(
+          data.compressedFormat);
+      Debug().info("Found scattered match data: ${data.id}");
+    }
   }
 
   Future<void> loadBoxes() async {
@@ -31,7 +42,12 @@ class ScoutingTelemetry {
         "Finished loading the 'storedFinalizedMatches' box containing ${_storedFinalizedMatches.length} entries. Found ${validateAllEntriesVersion().failedIds.length} entries that had conflicting telemetry versions.");
   }
 
-  Future<void> put(EphemeralScoutingData data) async {}
+  int get length => _storedFinalizedMatches.length;
+
+  Future<void> put(EphemeralScoutingData data) async {
+    _storedFinalizedMatches.put(data.id, data).then(
+        (_) => Debug().warn("OK. Saved an entry for scouting..."));
+  }
 
   void forEach(void Function(EphemeralScoutingData? data) fx) {
     for (int i = 0; i < _storedFinalizedMatches.length; i++) {

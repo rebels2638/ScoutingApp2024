@@ -12,6 +12,7 @@ class Shared {
   static const String DEVICE_STORAGE_SUBDIR = "RebelsScoutingApp";
   static const bool PREFER_DOCS_DIR =
       true; // if false, then we use DeviceEnv.cachePath
+  static const int HAZARD_PHASE_DIAMOND_REPS = 22;
 }
 
 final String TELEMETRY_SUBDIR_PATH =
