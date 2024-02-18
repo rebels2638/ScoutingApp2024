@@ -78,4 +78,6 @@ extension UsefulColor on Color {
   }
 
   Color addAll(int rgb) => add(r: rgb, g: rgb, b: rgb);
+
+  String toHex() => value.toRadixString(16).padLeft(8, '0');
 }

@@ -17,6 +17,8 @@ enum CommunityMaterialIconsEnumMapper {
   candycane(CommunityMaterialIcons.candycane),
   fruit_citrus(CommunityMaterialIcons.fruit_citrus),
   incognito(CommunityMaterialIcons.incognito),
+  waves(CommunityMaterialIcons.waves),
+  drawing_box(CommunityMaterialIcons.drawing_box),
   skull_scan(CommunityMaterialIcons.skull_scan);
 
   final IconData data;

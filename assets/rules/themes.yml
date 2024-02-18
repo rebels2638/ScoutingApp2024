@@ -34,6 +34,18 @@
   location: "assets/themes/hacker.json"
   icon: "community,incognito"
 
+- canonical_name: "Coral"
+  id: "exoad_coral"
+  author: "Jack Meng (exoad)"
+  location: "assets/themes/coral.json"
+  icon: "community,waves"
+
+- canonical_name: "Pastel"
+  id: "exoad_pastel"
+  author: "Jack Meng (exoad)"
+  location: "assets/themes/pastel.json"
+  icon: "community,drawing_box"
+
 - canonical_name: "Zen"
   id: "exoad_zen"
   author: "Jack Meng (exoad)"

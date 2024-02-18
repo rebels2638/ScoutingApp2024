@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/debug.dart';
+import 'package:scouting_app_2024/extern/color.dart';
 import 'package:scouting_app_2024/parts/bits/lock_in.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_canonical.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
@@ -292,94 +293,201 @@ class _AppViewState extends State<_AppView> {
                                   ?.themes ??
                               <AppTheme>[];
                           return AlertDialog(
+                              scrollable: true,
                               title: Row(children: <Widget>[
                                 const Icon(Icons.palette_rounded),
                                 strut(width: 10),
                                 const Text("Theme Library")
                               ]),
                               content: SingleChildScrollView(
-                                  child: Wrap(children: <Widget>[
-                                for (AppTheme e in appThemes)
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.all(8.0),
-                                    child: ElevatedButton.icon(
-                                        style: ButtonStyle(
-                                            visualDensity: VisualDensity
-                                                .comfortable,
-                                            backgroundColor: MaterialStateProperty.all<Color>(
-                                                e.data.primaryColor),
-                                            iconColor:
-                                                MaterialStateProperty.all<Color>(e
-                                                        .data
-                                                        .iconTheme
-                                                        .color ??
-                                                    Colors.black),
-                                            foregroundColor:
-                                                MaterialStateProperty.all<Color>(e
-                                                        .data
-                                                        .iconTheme
-                                                        .color ??
-                                                    Colors.black),
-                                            iconSize:
-                                                MaterialStateProperty.all<double>(30),
-                                            shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                                            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(const EdgeInsets.all(14))),
-                                        onPressed: () {
-                                          ThemeProvider.controllerOf(
-                                                  context)
-                                              .setTheme(e.id);
-                                          UserTelemetry()
-                                                  .currentModel
-                                                  .selectedTheme =
-                                              ThemeClassifier.of(
-                                                      context)
-                                                  .id;
-                                          UserTelemetry().save();
-                                        },
-                                        icon: Column(
-                                          children: <Widget>[
-                                            Icon(AvaliableTheme.of(
-                                              e.id,
-                                            ).icon),
-                                            strut(height: 6),
-                                            if (e.data.brightness ==
-                                                Brightness.dark)
-                                              const Icon(
-                                                  Icons
-                                                      .nightlight_round,
-                                                  size: 14)
-                                            else
-                                              const Icon(
-                                                  Icons
-                                                      .wb_sunny_rounded,
-                                                  size: 14)
-                                          ],
-                                        ),
-                                        label: Text.rich(TextSpan(children: <InlineSpan>[
-                                          TextSpan(
-                                              text: AvaliableTheme.of(
-                                                      e.id)
-                                                  .properName,
-                                              style: const TextStyle(
-                                                  fontWeight:
-                                                      FontWeight.bold,
-                                                  fontSize: 18)),
-                                          const TextSpan(
-                                              text: "\nBy "),
-                                          TextSpan(
-                                              text: AvaliableTheme.of(
-                                                      e.id)
-                                                  .author,
-                                              style: const TextStyle(
-                                                  fontWeight:
-                                                      FontWeight.w400,
-                                                  fontSize: 12,
-                                                  fontStyle: FontStyle
-                                                      .italic))
-                                        ]))),
-                                  )
-                              ])),
+                                  child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Text.rich(
+                                      TextSpan(children: <InlineSpan>[
+                                        TextSpan(
+                                            text: AvaliableTheme.of(
+                                                    ThemeClassifier.of(
+                                                            context)
+                                                        .id)
+                                                .properName,
+                                            style: const TextStyle(
+                                                fontWeight:
+                                                    FontWeight.bold)),
+                                        TextSpan(
+                                            text:
+                                                ", a Material ${ThemeProvider.themeOf(context).data.useMaterial3 ? "3" : "2"} theme")
+                                      ]),
+                                      style: const TextStyle(
+                                          fontSize: 18)),
+                                  strut(height: 10),
+                                  Wrap(children: <Widget>[
+                                    for (AppTheme e in appThemes)
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.all(8.0),
+                                        child: e.id !=
+                                                ThemeClassifier.of(context)
+                                                    .id
+                                            ? ElevatedButton.icon(
+                                                style: ButtonStyle(
+                                                    visualDensity:
+                                                        VisualDensity
+                                                            .comfortable,
+                                                    backgroundColor:
+                                                        MaterialStateProperty.all<Color>(e
+                                                            .data
+                                                            .primaryColor),
+                                                    iconColor: MaterialStateProperty.all<Color>(e
+                                                            .data
+                                                            .iconTheme
+                                                            .color ??
+                                                        Colors.black),
+                                                    foregroundColor:
+                                                        MaterialStateProperty.all<Color>(
+                                                            e.data.iconTheme.color ?? Colors.black),
+                                                    iconSize: MaterialStateProperty.all<double>(30),
+                                                    shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                                                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(const EdgeInsets.all(14))),
+                                                onPressed: () {
+                                                  ThemeProvider
+                                                          .controllerOf(
+                                                              context)
+                                                      .setTheme(e.id);
+                                                  UserTelemetry()
+                                                          .currentModel
+                                                          .selectedTheme =
+                                                      ThemeClassifier.of(
+                                                              context)
+                                                          .id;
+                                                  UserTelemetry()
+                                                      .save();
+                                                },
+                                                icon: Column(
+                                                  children: <Widget>[
+                                                    Icon(
+                                                        AvaliableTheme
+                                                            .of(
+                                                      e.id,
+                                                    ).icon),
+                                                    strut(height: 6),
+                                                    if (e.data
+                                                            .brightness ==
+                                                        Brightness
+                                                            .dark)
+                                                      const Icon(
+                                                          Icons
+                                                              .nightlight_round,
+                                                          size: 14)
+                                                    else
+                                                      const Icon(
+                                                          Icons
+                                                              .wb_sunny_rounded,
+                                                          size: 14)
+                                                  ],
+                                                ),
+                                                label: Text.rich(TextSpan(children: <InlineSpan>[
+                                                  TextSpan(
+                                                      text: AvaliableTheme
+                                                              .of(e
+                                                                  .id)
+                                                          .properName,
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight
+                                                                  .bold,
+                                                          fontSize:
+                                                              18)),
+                                                  const TextSpan(
+                                                      text: "\nBy "),
+                                                  TextSpan(
+                                                      text: AvaliableTheme
+                                                              .of(e
+                                                                  .id)
+                                                          .author,
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight
+                                                                  .w400,
+                                                          fontSize:
+                                                              12,
+                                                          fontStyle:
+                                                              FontStyle
+                                                                  .italic))
+                                                ])))
+                                            : OutlinedButton.icon(
+                                                style: ButtonStyle(visualDensity: VisualDensity.comfortable, iconColor: MaterialStateProperty.all<Color>(e.data.iconTheme.color ?? Colors.black), foregroundColor: MaterialStateProperty.all<Color>(e.data.iconTheme.color ?? Colors.black), iconSize: MaterialStateProperty.all<double>(30), shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))), padding: MaterialStateProperty.all<EdgeInsetsGeometry>(const EdgeInsets.all(14))),
+                                                onPressed: () {
+                                                  ThemeProvider
+                                                          .controllerOf(
+                                                              context)
+                                                      .setTheme(e.id);
+                                                  UserTelemetry()
+                                                          .currentModel
+                                                          .selectedTheme =
+                                                      ThemeClassifier.of(
+                                                              context)
+                                                          .id;
+                                                  UserTelemetry()
+                                                      .save();
+                                                },
+                                                icon: Column(
+                                                  children: <Widget>[
+                                                    Icon(
+                                                        AvaliableTheme
+                                                            .of(
+                                                      e.id,
+                                                    ).icon),
+                                                    strut(height: 6),
+                                                    if (e.data
+                                                            .brightness ==
+                                                        Brightness
+                                                            .dark)
+                                                      const Icon(
+                                                          Icons
+                                                              .nightlight_round,
+                                                          size: 14)
+                                                    else
+                                                      const Icon(
+                                                          Icons
+                                                              .wb_sunny_rounded,
+                                                          size: 14)
+                                                  ],
+                                                ),
+                                                label: Text.rich(TextSpan(children: <InlineSpan>[
+                                                  TextSpan(
+                                                      text: AvaliableTheme
+                                                              .of(e
+                                                                  .id)
+                                                          .properName,
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight
+                                                                  .bold,
+                                                          fontSize:
+                                                              18)),
+                                                  const TextSpan(
+                                                      text: "\nBy "),
+                                                  TextSpan(
+                                                      text: AvaliableTheme
+                                                              .of(e
+                                                                  .id)
+                                                          .author,
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight
+                                                                  .w400,
+                                                          fontSize:
+                                                              12,
+                                                          fontStyle:
+                                                              FontStyle
+                                                                  .italic))
+                                                ]))),
+                                      )
+                                  ]),
+                                ],
+                              )),
                               actions: <Widget>[
                                 TextButton.icon(
                                     onPressed: () {
@@ -427,62 +535,86 @@ class _AppViewState extends State<_AppView> {
             centerTitle: true, // i forgor
             title: LockedInScoutingModal.isCasual(context)
                 ? Center(
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          GestureDetector(
-                            onTap: () async => await launchConfirmDialog(
-                                context,
-                                message: const Text(
-                                    "You are about to visit the Rebel Robotics' website"),
-                                onConfirm: () async =>
-                                    await launchUrl(Uri.parse(
-                                        RebelRoboticsShared
-                                            .website))),
-                            child: const Hero(
-                              tag: "RebelsLogo",
-                              child: Image(
-                                image: ExactAssetImage(
-                                    "assets/appicon_header.png"),
-                                width: 52,
-                                height: 52,
-                              ),
-                            ),
-                          ),
-                          AnimatedSwitcher(
-                              duration:
-                                  const Duration(milliseconds: 300),
-                              switchInCurve: Curves.ease,
-                              switchOutCurve: Curves.ease,
-                              transitionBuilder: (Widget child,
-                                  Animation<double> animation) {
-                                return ScaleTransition(
-                                  scale: animation,
-                                  child: child,
-                                );
-                              },
-                              child: Row(children: <Widget>[
-                                strut(width: 10),
-                                const Text(APP_CANONICAL_NAME,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500)),
-                                strut(width: 10),
-                                GestureDetector(
-                                    onTap: () async =>
-                                        await launchConfirmDialog(
-                                            context,
-                                            message: const Text(
-                                                "You are about to visit the FRC Game Overview website"),
-                                            onConfirm: () async =>
-                                                await launchUrl(Uri.parse(
-                                                    FIRSTCrescendoShared
-                                                        .website))),
-                                    child: const Image(
-                                        height: 20,
-                                        image: ExactAssetImage(
-                                            "assets/crescendo/crescendo_header.png")))
-                              ])),
-                        ]),
+                    child: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 300),
+                        switchInCurve: Curves.ease,
+                        switchOutCurve: Curves.ease,
+                        transitionBuilder: (Widget child,
+                            Animation<double> animation) {
+                          return SlideTransition(
+                            position: Tween<Offset>(
+                                    begin: const Offset(0, 0.5),
+                                    end: const Offset(0, 0))
+                                .animate(animation),
+                            child: child,
+                          );
+                        },
+                        child: PreferCompactModal.isCompactPreferred(
+                                context)
+                            ? GestureDetector(
+                                onTap: () async =>
+                                    await launchConfirmDialog(context,
+                                        message: const Text(
+                                            "You are about to visit the Rebel Robotics' website"),
+                                        onConfirm: () async =>
+                                            await launchUrl(Uri.parse(
+                                                RebelRoboticsShared
+                                                    .website))),
+                                child: const Hero(
+                                  tag: "RebelsLogo",
+                                  child: Image(
+                                    image: ExactAssetImage(
+                                        "assets/appicon_header.png"),
+                                    width: 52,
+                                    height: 52,
+                                  ),
+                                ),
+                              )
+                            : Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.center,
+                                children: <Widget>[
+                                    GestureDetector(
+                                      onTap: () async =>
+                                          await launchConfirmDialog(
+                                              context,
+                                              message: const Text(
+                                                  "You are about to visit the Rebel Robotics' website"),
+                                              onConfirm: () async =>
+                                                  await launchUrl(Uri.parse(
+                                                      RebelRoboticsShared
+                                                          .website))),
+                                      child: const Hero(
+                                        tag: "RebelsLogo",
+                                        child: Image(
+                                          image: ExactAssetImage(
+                                              "assets/appicon_header.png"),
+                                          width: 52,
+                                          height: 52,
+                                        ),
+                                      ),
+                                    ),
+                                    strut(width: 10),
+                                    const Text(APP_CANONICAL_NAME,
+                                        style: TextStyle(
+                                            fontWeight:
+                                                FontWeight.w500)),
+                                    strut(width: 10),
+                                    GestureDetector(
+                                        onTap: () async =>
+                                            await launchConfirmDialog(
+                                                context,
+                                                message: const Text(
+                                                    "You are about to visit the FRC Game Overview website"),
+                                                onConfirm: () async =>
+                                                    await launchUrl(Uri.parse(
+                                                        FIRSTCrescendoShared
+                                                            .website))),
+                                        child: const Image(
+                                            height: 20,
+                                            image: ExactAssetImage(
+                                                "assets/crescendo/crescendo_header.png"))),
+                                  ])),
                   )
                 : Container()) /*lmao */,
         body: Padding(
