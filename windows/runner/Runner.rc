@@ -93,7 +93,7 @@ BEGIN
             VALUE "FileDescription", "scouting_app_2024" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "scouting_app_2024" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2024 com.rebelrobotics. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2024 Jack Meng (exoad). All rights reserved." "\0"
             VALUE "OriginalFilename", "scouting_app_2024.exe" "\0"
             VALUE "ProductName", "scouting_app_2024" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
