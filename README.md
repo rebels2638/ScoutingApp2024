@@ -22,7 +22,7 @@ Scouting App for the 2024 year built using the **Flutter Framework**.
 ## Snapshot Releases
 
 **Snapshots**
-[![build windows](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder3.yml/badge.svg)](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder3.yml)
+[![build windows](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder3.yml/badge.svg)](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder3.yml) [![build android (apk)](https://github.com/rebels2638/ScoutingApp2024/actions/workflows/builder_android.yml/badge.svg)](https://github.com/rebels2638/ScoutingApp2024/actions/workflows/builder_android.yml)
 
 Head over to the <a href="https://github.com/rebels2638/ScoutingApp/actions"><kbd>**Actions**</kbd></a> tab and download from any of the target platforms on there.
 
