@@ -24,7 +24,15 @@ Scouting App for the 2024 year built using the **Flutter Framework**.
 **Snapshots**
 [![build windows](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder3.yml/badge.svg)](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder3.yml) [![build android (apk)](https://github.com/rebels2638/ScoutingApp2024/actions/workflows/builder_android.yml/badge.svg)](https://github.com/rebels2638/ScoutingApp2024/actions/workflows/builder_android.yml)
 
-Head over to the <a href="https://github.com/rebels2638/ScoutingApp/actions"><kbd>**Actions**</kbd></a> tab and download from any of the target platforms on there.
+![](https://img.shields.io/github/repo-size/rebels2638/ScoutingApp2024?style=for-the-badge)
+
+> [!CAUTION]
+> Use snapshot releases at your own risk
+
+
+**Last Snapshot** ![](https://img.shields.io/github/release-date-pre/rebels2638/ScoutingApp2024)
+
+They can be found under the <a href="https://github.com/rebels2638/ScoutingApp2024/releases"><kbd>Releases</kbd></a> tab and labelled "Snapshot" (aka Preleases).
 
 ## Building
 
