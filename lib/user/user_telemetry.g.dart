@@ -18,6 +18,8 @@ UserPrefModel _$UserPrefModelFromJson(Map<String, dynamic> json) =>
               $checkedConvert('showConsole', (v) => v as bool? ?? false),
           showGameMap:
               $checkedConvert('showGameMap', (v) => v as bool? ?? true),
+          usedTimeHours: $checkedConvert(
+              'usedTimeHours', (v) => (v as num?)?.toDouble() ?? 0),
           preferCompact:
               $checkedConvert('preferCompact', (v) => v as bool? ?? false),
           preferTonal:
@@ -43,4 +45,5 @@ Map<String, dynamic> _$UserPrefModelToJson(UserPrefModel instance) =>
       'preferTonal': instance.preferTonal,
       'preferCanonical': instance.preferCanonical,
       'preferCompact': instance.preferCompact,
+      'usedTimeHours': instance.usedTimeHours,
     };

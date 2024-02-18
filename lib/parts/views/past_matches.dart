@@ -23,8 +23,8 @@ class PastMatchesView extends StatefulWidget
     return (
       child: this,
       item: (
-        activeIcon: const Icon(Icons.history),
-        icon: const Icon(Icons.history),
+        activeIcon: const Icon(Icons.history_rounded),
+        icon: const Icon(Icons.history_outlined),
         label: "History",
         tooltip: "View data collected from past matches"
       )

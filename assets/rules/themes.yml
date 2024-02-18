@@ -64,18 +64,6 @@
   location: "assets/themes/lost.json"
   icon: "community,alphabet_piqad"
 
-- canonical_name: "Caramel"
-  id: "exoad_caramel"
-  author: "Jack Meng (exoad)"
-  location: "assets/themes/caramel.json"
-  icon: "community,candycane"
-
-- canonical_name: "Aloe"
-  id: "exoad_aloe"
-  author: "Jack Meng (exoad)"
-  location: "assets/themes/aloe.json"
-  icon: "community,sprout"
-
 - canonical_name: "Brisk"
   id: "exoad_brisk"
   author: "Jack Meng (exoad)"
@@ -93,9 +81,3 @@
   author: "Jack Meng (exoad)"
   location: "assets/themes/rustic_2.json"
   icon: "community,washing_machine"
-
-- canonical_name: "Berry"
-  id: "exoad_berry"
-  author: "Jack Meng (exoad)"
-  location: "assets/themes/berry.json"
-  icon: "community,fruit_cherries"

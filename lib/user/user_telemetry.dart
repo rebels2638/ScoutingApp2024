@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:hive/hive.dart';
+import 'package:scouting_app_2024/shared.dart';
 
 part "user_telemetry.g.dart";
 
@@ -48,7 +49,8 @@ class UserTelemetry {
         }
         Debug().warn(
             "Loaded the following contents for USER_PREF: ${_currentModel.toJson().toString()}");
-        Timer.periodic(const Duration(seconds: 8),
+        Timer.periodic(
+            const Duration(seconds: Shared.USER_TELEMETRY_SAVE_CYCLE),
             (Timer _) async => await save());
       });
   /*SharedPreferences.getInstance()
@@ -124,11 +126,15 @@ class UserPrefModel {
   @JsonKey(required: false, defaultValue: false)
   bool preferCompact;
 
+  @JsonKey(required: false, defaultValue: 0)
+  double usedTimeHours;
+
   // make sure to run flutter pub run build_runner build
   UserPrefModel(
       {required this.selectedTheme,
       this.showConsole = false,
       this.showGameMap = true,
+      this.usedTimeHours = 0,
       this.preferCompact = false,
       this.preferTonal = true,
       this.preferCanonical = true,

@@ -34,6 +34,16 @@ class _TeamAllianceSwitchState extends State<TeamAllianceSwitch> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         AnimatedSwitcher(
+          transitionBuilder:
+              (Widget child, Animation<double> animation) {
+            return SlideTransition(
+              position: Tween<Offset>(
+                      begin: const Offset(0, 1),
+                      end: const Offset(0, 0))
+                  .animate(animation),
+              child: child,
+            );
+          },
           duration: const Duration(milliseconds: 300),
           switchInCurve: Curves.ease,
           switchOutCurve: Curves.ease,
@@ -120,6 +130,16 @@ class _TeamAllianceSwitchState extends State<TeamAllianceSwitch> {
         ),
         strut(width: 12),
         AnimatedSwitcher(
+          transitionBuilder:
+              (Widget child, Animation<double> animation) {
+            return SlideTransition(
+              position: Tween<Offset>(
+                      begin: const Offset(0, 1),
+                      end: const Offset(0, 0))
+                  .animate(animation),
+              child: child,
+            );
+          },
           duration: const Duration(milliseconds: 300),
           switchInCurve: Curves.ease,
           switchOutCurve: Curves.ease,

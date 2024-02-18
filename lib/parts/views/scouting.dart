@@ -6,6 +6,7 @@ import "package:scouting_app_2024/blobs/blobs.dart";
 import "package:scouting_app_2024/blobs/form_blob.dart";
 import "package:scouting_app_2024/blobs/inc_dec_blob.dart";
 import "package:scouting_app_2024/blobs/locale_blob.dart";
+import "package:scouting_app_2024/parts/bits/show_console.dart";
 import "package:scouting_app_2024/parts/bits/show_experimental.dart";
 import "package:scouting_app_2024/user/models/ephemeral_data.dart";
 import 'package:scouting_app_2024/user/models/team_bloc.dart';
@@ -217,8 +218,7 @@ class _ScoutingViewState extends State<ScoutingView>
                       Debug().info(
                           "Saved an entry of ${data.id}=${data.toString()}");
                     }),
-                if (ShowExperimentalModal.isShowingExperimental(
-                    context))
+                if (ShowConsoleModal.isShowingConsole(context))
                   FilledButton.icon(
                       style: ButtonStyle(
                           shape: MaterialStateProperty.all<
