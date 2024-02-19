@@ -46,11 +46,23 @@
   location: "assets/themes/pastel.json"
   icon: "community,drawing_box"
 
+- canonical_name: "Emerald Noir"
+  id: "exoad_emerald_noir"
+  author: "Jack Meng (exoad)"
+  location: "assets/themes/emerald_noir.json"
+  icon: "community,drama_masks"
+
 - canonical_name: "Lemon Berry"
   id: "exoad_lemon_berry"
   author: "Jack Meng (exoad)"
   location: "assets/themes/lemon_berry.json"
   icon: "community,delete_variant"
+
+- canonical_name: "Solarized 2"
+  id: "exoad_solarized_2"
+  author: "Jack Meng (exoad)"
+  location: "assets/themes/solarized_2.json"
+  icon: "community,beach_access_rounded"
 
 - canonical_name: "Zen"
   id: "exoad_zen"
