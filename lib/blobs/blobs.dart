@@ -72,7 +72,7 @@ class _InternalNumberPickerState
     return Column(
       children: <Widget>[
         Text("Number ${_combineDigits()}"),
-        strut(height: 16),
+        const SizedBox(height: 16),
         Row(
           children: <Widget>[
             for (int i = 0; i < widget.itemCount; i++)
@@ -202,7 +202,7 @@ SnackBar yummySnackBar(
           message: message,
           child: Row(children: <Widget>[
             if (icon != null) icon,
-            strut(width: 30),
+            const SizedBox(width: 30),
             Text(message,
                 style: textStyle, overflow: TextOverflow.ellipsis)
           ]),
@@ -274,11 +274,6 @@ class _BasicToggleSwitchState extends State<BasicToggleSwitch> {
   }
 }
 
-/// creates a strut, aka a sizedbox
-@pragma("vm:prefer-inline")
-Widget strut({double? width, double? height}) =>
-    SizedBox(width: width, height: height);
-
 @pragma("vm:prefer-inline")
 Widget roundPadContainer(
         {required Widget child,
@@ -306,7 +301,7 @@ List<Widget> strutAll(List<Widget> children,
   for (int i = 0; i < children.length; i++) {
     result.add(children[i]);
     if (i < children.length - 1) {
-      result.add(strut(width: width, height: height));
+      result.add(SizedBox(width: width, height: height));
     }
   }
   return result;

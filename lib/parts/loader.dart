@@ -1,8 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:scouting_app_2024/blobs/animate_blob.dart';
 import 'package:scouting_app_2024/main.dart';
 import 'package:scouting_app_2024/parts/appview.dart';
-import 'package:theme_provider/theme_provider.dart';
 import 'package:scouting_app_2024/debug.dart';
 
 class LoadingAppViewScreen extends StatefulWidget {
@@ -26,8 +28,6 @@ class _LoadingAppViewScreenState extends State<LoadingAppViewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Debug().warn(
-        "Current Loaded Theme ${ThemeProvider.themeOf(context).id}");
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: AnimatedSwitcher(
@@ -42,17 +42,67 @@ class _LoadingAppViewScreenState extends State<LoadingAppViewScreen> {
                       ConnectionState.done) {
                     Debug().warn(
                         "Took ${DateTime.now().difference(APP_START_TIME).inMilliseconds}ms to load the app.");
-                    return const IntermediateMaterialApp();
+                    return const ThemedAppBundle(
+                        child: IntermediateMaterialApp());
                   } else {
-                    return const Scaffold(
-                        body: Center(
-                            child: SpinBlob(
-                                child: Text("Loading :D",
-                                    style: TextStyle(
-                                        fontSize: 24,
-                                        fontWeight:
-                                            FontWeight.w600)))));
+                    return Scaffold(
+                        body: Container(
+                      decoration:
+                          BoxDecoration(color: Colors.grey[900]),
+                      child: const Center(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SpinBlob(
+                              child: Image(
+                            image: ExactAssetImage(
+                                "assets/appicon_header.png"),
+                            width: 148,
+                            height: 148,
+                          )),
+                          SizedBox(height: 30),
+                          _UpdaterPhaseString()
+                        ],
+                      )),
+                    ));
                   }
                 })));
+  }
+}
+
+class _UpdaterPhaseString extends StatefulWidget {
+  const _UpdaterPhaseString();
+
+  @override
+  State<_UpdaterPhaseString> createState() =>
+      _UpdaterPhaseStringState();
+}
+
+class _UpdaterPhaseStringState extends State<_UpdaterPhaseString> {
+  String _message = "Awaiting...";
+  late StreamSubscription<LogRecord>
+      _sub; // so we dont get memory leaks lol
+  @override
+  void initState() {
+    super.initState();
+    _sub = Debug().listen((LogRecord record) {
+      if (!Debug.isPhase(record)) {
+        setState(() => _message = record.message);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _sub.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      _message,
+      style: const TextStyle(color: Colors.white, fontSize: 18),
+    );
   }
 }

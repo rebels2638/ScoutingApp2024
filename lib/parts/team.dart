@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/extern/color.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_canonical.dart';
 import 'package:scouting_app_2024/user/models/team_model.dart';
@@ -70,7 +69,7 @@ class _TeamAllianceSwitchState extends State<TeamAllianceSwitch> {
                       style: TextStyle(fontWeight: FontWeight.w500)),
                 ),
         ),
-        strut(width: 12),
+        const SizedBox(width: 12),
         RepaintBoundary(
           child: Tooltip(
             message: "${_toggled ? "Blue" : "Red"} Alliance",
@@ -128,7 +127,7 @@ class _TeamAllianceSwitchState extends State<TeamAllianceSwitch> {
             ),
           ),
         ),
-        strut(width: 12),
+        const SizedBox(width: 12),
         AnimatedSwitcher(
           transitionBuilder:
               (Widget child, Animation<double> animation) {

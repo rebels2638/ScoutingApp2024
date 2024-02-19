@@ -47,7 +47,7 @@ class SettingsView extends StatefulWidget
               // this might need fixing if we ever need to support phones fully
               Wrap(children: <Widget>[
                 if (icon != null) Icon(icon, size: 40),
-                strut(width: 22),
+                const SizedBox(width: 22),
                 if (hint == null)
                   Text(label,
                       style: const TextStyle(
@@ -164,7 +164,7 @@ class _SettingsViewState extends State<SettingsView> {
                                 }),
                             child: const Icon(Icons.replay_rounded))),
                 if (ShowConsoleModal.isShowingConsole(context))
-                  strut(width: 12),
+                  const SizedBox(width: 12),
                 if (ShowConsoleModal.isShowingConsole(context))
                   AnimatedSwitcher(
                       transitionBuilder: (Widget child,
@@ -228,7 +228,7 @@ class _SettingsViewState extends State<SettingsView> {
                               },
                               child: const Icon(
                                   Icons.save_alt_rounded))),
-                strut(width: 12),
+                const SizedBox(width: 12),
                 AnimatedSwitcher(
                     transitionBuilder:
                         (Widget child, Animation<double> animation) {

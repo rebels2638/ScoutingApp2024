@@ -160,7 +160,7 @@ class _NumPickBtnState extends State<_NumPickBtn> {
                   setState(() => _initValue = value);
                   widget.onChange.call(value);
                 })),
-      strut(width: 6),
+      const SizedBox(width: 6),
       Text.rich(TextSpan(children: <InlineSpan>[
         const TextSpan(text: " = "),
         TextSpan(
@@ -219,7 +219,7 @@ Widget form_label(String text,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 if (icon != null) icon,
-                if (icon != null) strut(width: 6),
+                if (icon != null) const SizedBox(width: 6),
                 if (expandLabel)
                   Expanded(
                       child: Text(text,
@@ -235,7 +235,7 @@ Widget form_label(String text,
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
                               overflow: TextOverflow.ellipsis)),
-                strut(width: _prompt_label_strut_width),
+                const SizedBox(width: _prompt_label_strut_width),
               ]),
           child
         ]);
@@ -248,20 +248,21 @@ Widget form_label_2(String text,
         children: <Widget>[
           Row(children: <Widget>[
             if (icon != null) icon,
-            if (icon != null) strut(width: 6),
+            if (icon != null) const SizedBox(width: 6),
             Text(text,
                 style: style ??
                     const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
                         overflow: TextOverflow.ellipsis)),
-            strut(width: _prompt_label_strut_width),
+            const SizedBox(width: _prompt_label_strut_width),
           ]),
-          strut(height: 6),
+          const SizedBox(height: 6),
           Row(
             children: <Widget>[
               const SizedBox(
-                  width: 10), // fuck strut() its not compile const
+                  width:
+                      10), // fuck const SizedBox() its not compile const
               child,
             ],
           )
@@ -306,7 +307,7 @@ Widget form_grid_sec(BuildContext context,
               children: <Widget>[
                 Row(children: <Widget>[
                   Icon(header.icon, size: 36),
-                  strut(width: 10),
+                  const SizedBox(width: 10),
                   Text(header.title,
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 18))
@@ -342,7 +343,7 @@ Widget form_sec_2(BuildContext context,
               children: <Widget>[
                 Row(children: <Widget>[
                   headerIcon,
-                  strut(width: 10),
+                  const SizedBox(width: 10),
                   title,
                 ]),
                 Padding(
@@ -374,7 +375,7 @@ Widget form_sec(BuildContext context,
               children: <Widget>[
                 Row(children: <Widget>[
                   Icon(header.icon, size: 36),
-                  strut(width: 10),
+                  const SizedBox(width: 10),
                   Text(header.title,
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 18))

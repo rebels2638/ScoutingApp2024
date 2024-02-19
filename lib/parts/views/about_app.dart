@@ -104,7 +104,7 @@ class _AboutAppViewState extends State<AboutAppView> {
                 child: SingleChildScrollView(
                   controller: _scroller,
                   child: Column(children: <Widget>[
-                    strut(height: 30),
+                    const SizedBox(height: 30),
                     ...contentBase(context)
                   ]),
                 )),
@@ -294,15 +294,15 @@ class _AboutAppViewState extends State<AboutAppView> {
                             }
                             if (byteData.hasError ||
                                 !byteData.hasData) {
-                              return Column(
+                              return const Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.center,
                                   crossAxisAlignment:
                                       CrossAxisAlignment.center,
                                   children: <Widget>[
-                                    const Icon(Icons.warning_rounded),
-                                    strut(width: 10),
-                                    const Text(
+                                    Icon(Icons.warning_rounded),
+                                    SizedBox(width: 10),
+                                    Text(
                                         "There was an error retrieving...")
                                   ]);
                             }
@@ -332,15 +332,15 @@ class _AboutAppViewState extends State<AboutAppView> {
                             }
                             if (byteData.hasError ||
                                 !byteData.hasData) {
-                              return Column(
+                              return const Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.center,
                                   crossAxisAlignment:
                                       CrossAxisAlignment.center,
                                   children: <Widget>[
-                                    const Icon(Icons.warning_rounded),
-                                    strut(width: 10),
-                                    const Text(
+                                    Icon(Icons.warning_rounded),
+                                    SizedBox(width: 10),
+                                    Text(
                                         "There was an error retrieving...")
                                   ]);
                             }

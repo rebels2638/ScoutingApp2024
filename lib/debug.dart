@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logging/logging.dart';
 import 'package:scouting_app_2024/blobs/locale_blob.dart';
@@ -17,8 +19,10 @@ class DebugObserver extends BlocObserver {
 }
 
 class Debug {
+  @pragma("vm:prefer-inline")
+  static bool isPhase(LogRecord record) => record.level == Level.FINE;
   Debug._();
-  String _lastPhase = "None";
+  String _lastPhase = "Init";
   factory Debug() => _singleton;
   static final Debug _singleton = Debug._();
   late final Logger _logger;
@@ -28,7 +32,8 @@ class Debug {
     final String diamonds = GenericUtils.repeatStr(
         GenericUtils.HAZARD_DIAMOND,
         Shared.HAZARD_PHASE_DIAMOND_REPS);
-    Debug().info("\n$diamonds  [ $_lastPhase->$phaseName ]  $diamonds");
+    _logger
+        .fine("\n$diamonds  [ $_lastPhase->$phaseName ]  $diamonds");
     _lastPhase = phaseName;
   }
 
@@ -54,7 +59,8 @@ class Debug {
     });
   }
 
-  void listen(void Function(LogRecord record) listener) =>
+  StreamSubscription<LogRecord> listen(
+          void Function(LogRecord record) listener) =>
       _logger.onRecord.asBroadcastStream().listen(listener);
   void warn(dynamic msg) => _logger.warning(msg);
   void ohno(dynamic msg) => _logger.severe(msg);

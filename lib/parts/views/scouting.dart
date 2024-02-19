@@ -82,57 +82,62 @@ class _ScoutingSessionViewDelegateState
             child: _currBloc == null
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: strutAll(<Widget>[
-                      const Text("Scouting Session",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24)),
-                      ElevatedButton(
-                          style: ButtonStyle(
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(
-                                              16)))),
-                          onPressed: () {
-                            setState(() {
-                              _currBloc ??= ScoutingSessionBloc();
-                              Debug().warn(
-                                  "Pushed a new scouting session");
-                            });
-                          },
-                          child: Padding(
-                            // a lot of the constraints here come from here: https://m3.material.io/components/floating-action-button/specs
-                            // altho kind shitty lmao, fuck it
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.center,
-                                children: <Widget>[
-                                  const Icon(
-                                      Icons.pending_actions_rounded),
-                                  strut(height: 14),
-                                  const Text.rich(
-                                      TextSpan(children: <InlineSpan>[
+                    children: <Widget>[
+                        const Text("Scouting Session",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24)),
+                        const SizedBox(height: 34),
+                        ElevatedButton(
+                            style: ButtonStyle(
+                                shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(
+                                                16)))),
+                            onPressed: () {
+                              setState(() {
+                                _currBloc ??= ScoutingSessionBloc();
+                                Debug().warn(
+                                    "Pushed a new scouting session");
+                              });
+                            },
+                            child: const Padding(
+                              // a lot of the constraints here come from here: https://m3.material.io/components/floating-action-button/specs
+                              // altho kind shitty lmao, fuck it
+                              padding: EdgeInsets.all(16.0),
+                              child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Icon(Icons
+                                        .pending_actions_rounded),
+                                    SizedBox(height: 14),
+                                    Text.rich(
                                         TextSpan(
-                                            text: "New Session\n",
-                                            style: TextStyle(
-                                                fontWeight:
-                                                    FontWeight.w600,
-                                                fontSize: 18)),
-                                        TextSpan(
-                                            text:
-                                                "Launch a new scouting form",
-                                            style: TextStyle(
-                                                fontWeight:
-                                                    FontWeight.w400,
-                                                fontSize: 12))
-                                      ]),
-                                      textAlign: TextAlign.center)
-                                ]),
-                          )),
-                    ], height: 78))
+                                            children: <InlineSpan>[
+                                              TextSpan(
+                                                  text:
+                                                      "New Session\n",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight
+                                                              .w600,
+                                                      fontSize: 18)),
+                                              TextSpan(
+                                                  text:
+                                                      "Launch a new scouting form",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight
+                                                              .w400,
+                                                      fontSize: 12))
+                                            ]),
+                                        textAlign: TextAlign.center)
+                                  ]),
+                            )),
+                      ])
                 : BlocProvider<ScoutingSessionBloc>(
                     create: (BuildContext _) => _currBloc!,
                     child: const ScoutingView()));
@@ -261,7 +266,7 @@ class _ScoutingViewState extends State<ScoutingView>
                               ),
                               onConfirm: () {})),
               ], width: 12))),
-          strut(height: 20),
+          const SizedBox(height: 20),
           Flexible(
             child: form_grid_2(
                 crossAxisCount: 2,

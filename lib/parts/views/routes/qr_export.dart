@@ -45,7 +45,7 @@ class QRExportOverlayRoute extends ModalRoute<void> {
             Icon(Icons.qr_code_rounded),
             Text("Transfer Scouting Data via QR Code")
           ]),
-          strut(height: 18),
+          const SizedBox(height: 18),
           PrettyQrView.data(
               data: data,
               decoration: PrettyQrDecoration(

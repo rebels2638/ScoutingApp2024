@@ -15,7 +15,7 @@ class Shared {
   static const int HAZARD_PHASE_DIAMOND_REPS = 20;
   static const int USER_USAGE_TIME_PROBE_PERIODIC = 30; //seconds
   static const bool SAVE_ON_PROBE = false;
-  static const int USER_TELEMETRY_SAVE_CYCLE = 8; // seconds
+  static const int USER_TELEMETRY_SAVE_CYCLE = 50; // seconds
 }
 
 final String TELEMETRY_SUBDIR_PATH =

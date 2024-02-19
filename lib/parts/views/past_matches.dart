@@ -163,7 +163,7 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                                 .data
                                 .secondaryHeaderColor,
                             size: 64),
-                        strut(height: 18),
+                        const SizedBox(height: 18),
                         // this is so badly optimized because we are calling a non compile const ThemeProvider.themeOf
                         Text.rich(
                           TextSpan(children: <InlineSpan>[

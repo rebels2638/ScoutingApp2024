@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:scouting_app_2024/parts/loader.dart';
 import 'package:scouting_app_2024/user/env.dart';
 import 'package:scouting_app_2024/user/models/ephemeral_data.dart';
 import 'package:scouting_app_2024/user/scouting_telemetry.dart';
@@ -10,7 +11,6 @@ import 'package:scouting_app_2024/user/scouting_telemetry.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'package:scouting_app_2024/debug.dart';
-import 'package:scouting_app_2024/parts/appview.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
@@ -20,13 +20,16 @@ Future<void> _prepareAppLaunch() async {
   await DeviceEnv.initItems();
   Debug().info(
       "Loaded the Device Environment with: [DocPath=${DeviceEnv.saveLocation.path},CachePath=${DeviceEnv.saveLocation.path}]");
+  Debug().newPhase("LOAD_THEMES");
+  // this is such a shit idea because we are using so many awaits lmao
+  await ThemeBlob.loadBuiltinThemes();
+  await ThemeBlob.loadIntricateThemes();
   Debug().newPhase("INIT_BACKEND");
   Hive.init(DeviceEnv.saveLocation.path);
   Hive.registerAdapter(EphemeralScoutingDataAdapter());
   await ScoutingTelemetry().loadBoxes();
   Debug().newPhase("LOAD_USER_TELEMETRY");
   await UserTelemetry().init();
-
   Debug().newPhase("APP_LAUNCH");
   Timer.periodic(
       const Duration(seconds: Shared.USER_USAGE_TIME_PROBE_PERIODIC),
@@ -56,12 +59,8 @@ void main() async {
     FlutterError.presentError.call(details);
     Debug().warn("${details.summary} ${details.context}");
   };
-  Debug().newPhase("LOAD_THEMES");
-  // this is such a shit idea because we are using so many awaits lmao
-  await ThemeBlob.loadBuiltinThemes();
-  await ThemeBlob.loadIntricateThemes();
   // I LOVE THE THEN FUNCTION OH MY GOD HOLY SHIT, I LOVE THIS FUNCTION, WE SHOULD MAKE EVERYTHING WITH THIS FUNCTION
-  runApp(ThemedAppBundle.loadingScreen(_prepareAppLaunch()));
+  runApp(LoadingAppViewScreen(task: _prepareAppLaunch()));
   if (Platform.isWindows) {
     // ig we only support windows, so extern/platform.dart is fucking useless LMAO
     await WindowManager.instance.ensureInitialized();

@@ -14,7 +14,6 @@ import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
 import 'package:scouting_app_2024/parts/bits/show_fps_monitor.dart';
 import 'package:scouting_app_2024/parts/bits/show_game_map.dart';
 import 'package:scouting_app_2024/parts/bits/theme_mode.dart';
-import 'package:scouting_app_2024/parts/loader.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/shared.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
@@ -32,15 +31,6 @@ class ThemedAppBundle extends StatelessWidget {
   final Widget child;
 
   const ThemedAppBundle({super.key, required this.child});
-
-  factory ThemedAppBundle.noLoadingScreen() {
-    return const ThemedAppBundle(child: IntermediateMaterialApp());
-  }
-
-  factory ThemedAppBundle.loadingScreen(Future<void> futures) {
-    return ThemedAppBundle(
-        child: LoadingAppViewScreen(task: futures));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -311,10 +301,10 @@ class _AppViewState extends State<_AppView> {
                               <AppTheme>[];
                           return AlertDialog(
                               scrollable: true,
-                              title: Row(children: <Widget>[
-                                const Icon(Icons.palette_rounded),
-                                strut(width: 10),
-                                const Text("Theme Library")
+                              title: const Row(children: <Widget>[
+                                 Icon(Icons.palette_rounded),
+                                 SizedBox(width: 10),
+                                 Text("Theme Library")
                               ]),
                               content: SingleChildScrollView(
                                   child: Column(
@@ -338,7 +328,7 @@ class _AppViewState extends State<_AppView> {
                                       ]),
                                       style: const TextStyle(
                                           fontSize: 18)),
-                                  strut(height: 10),
+                                  const SizedBox(height: 10),
                                   Wrap(children: <Widget>[
                                     for (AppTheme e in appThemes)
                                       Padding(
@@ -388,7 +378,7 @@ class _AppViewState extends State<_AppView> {
                                                             .of(
                                                       e.id,
                                                     ).icon),
-                                                    strut(height: 6),
+                                                    const SizedBox(height: 6),
                                                     if (e.data
                                                             .brightness ==
                                                         Brightness
@@ -456,7 +446,7 @@ class _AppViewState extends State<_AppView> {
                                                             .of(
                                                       e.id,
                                                     ).icon),
-                                                    strut(height: 6),
+                                                    const SizedBox(height: 6),
                                                     if (e.data
                                                             .brightness ==
                                                         Brightness
@@ -508,7 +498,8 @@ class _AppViewState extends State<_AppView> {
                               actions: <Widget>[
                                 TextButton.icon(
                                     onPressed: () {
-                                      Navigator.of(ctxt).pop(); // i debugged this shit a fuck ton, it kept closing the scaffold. reaosn? it was using the original build(BuildContext) which was already gone lmao, fuck they should have nested shadowing rules
+                                      Navigator.of(ctxt)
+                                          .pop(); // i debugged this shit a fuck ton, it kept closing the scaffold. reaosn? it was using the original build(BuildContext) which was already gone lmao, fuck they should have nested shadowing rules
                                       UserTelemetry()
                                               .currentModel
                                               .selectedTheme =
@@ -611,12 +602,12 @@ class _AppViewState extends State<_AppView> {
                                         ),
                                       ),
                                     ),
-                                    strut(width: 10),
+                                    const SizedBox(width: 10),
                                     const Text(APP_CANONICAL_NAME,
                                         style: TextStyle(
                                             fontWeight:
                                                 FontWeight.w500)),
-                                    strut(width: 10),
+                                    const SizedBox(width: 10),
                                     GestureDetector(
                                         onTap: () async =>
                                             await launchConfirmDialog(
