@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:bloc/bloc.dart';
 import 'package:scouting_app_2024/blobs/qr_converter_blob.dart';
 import 'package:scouting_app_2024/user/models/team_model.dart';
+import 'package:uuid/uuid.dart';
 
 // there is hella boilerplate written here
 sealed class ScoutingSessionStates extends Equatable {
@@ -408,6 +409,7 @@ class ScoutingSessionBloc
   TeleOpInfo teleop;
   EndgameInfo endgame;
   MiscInfo misc;
+  late final String id;
 
   ScoutingSessionBloc()
       : prelim = PrelimInfo.optional(),
@@ -416,6 +418,8 @@ class ScoutingSessionBloc
         endgame = EndgameInfo.optional(),
         misc = MiscInfo.optional(),
         super(PrelimState(PrelimInfo.optional())) {
+    id = const Uuid()
+        .v1(); // generatate UUID using v1 which is time based
     on<PrelimUpdateEvent>((PrelimUpdateEvent event,
         Emitter<ScoutingSessionStates> emit) {
       prelim = PrelimInfo.optional();
@@ -475,6 +479,7 @@ class ScoutingSessionBloc
 
   HollisticMatchScoutingData exportHollistic() =>
       HollisticMatchScoutingData(
+          id: id,
           misc: misc,
           preliminary: prelim,
           auto: auto,

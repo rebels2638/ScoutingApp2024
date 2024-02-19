@@ -1,10 +1,7 @@
 import 'dart:math';
 
 import 'package:confetti/confetti.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/blobs/obfs_blob.dart';
 import 'package:scouting_app_2024/debug.dart';
@@ -66,24 +63,25 @@ class _AboutAppViewState extends State<AboutAppView> {
         offset: Offset(
             0, _scroller.hasClients ? -_scroller.offset / 3 : 0),
         child: ObfsBlob(
-          sigmaX: 8,
-          sigmaY: 8,
+          sigmaX: 6,
+          sigmaY: 6,
           child: Center(
-            child: Stack(
-              fit: StackFit.expand,
-              children: <Widget>[
-                RepaintBoundary(
-                  child: Padding(
-                    padding: const EdgeInsets.all(14.0),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  top: 60, bottom: 20, left: 20, right: 20),
+              child: Stack(
+                fit: StackFit.expand,
+                children: <Widget>[
+                  RepaintBoundary(
                     child: Image.asset(
                       "assets/2324_teampic.jpg",
                       alignment: Alignment.center,
                       fit: BoxFit.cover,
                     ),
                   ),
-                ),
-                ColoredBox(color: Colors.black.withOpacity(0.4)),
-              ],
+                  ColoredBox(color: Colors.black.withOpacity(0.4)),
+                ],
+              ),
             ),
           ),
         ),
@@ -117,7 +115,8 @@ class _AboutAppViewState extends State<AboutAppView> {
                                   alignment: Alignment.centerLeft,
                                   child: ConfettiWidget(
                                     blastDirection: 0,
-                                    minBlastForce: 7, // OMG IS THAT AN ODD NUMBER IN THE UI??? WTFFFFF!!!!?!?!?!?!1111!?!?!
+                                    minBlastForce:
+                                        7, // OMG IS THAT AN ODD NUMBER IN THE UI??? WTFFFFF!!!!?!?!?!?!1111!?!?!
                                     shouldLoop: false,
                                     confettiController:
                                         _confettiController,
@@ -147,8 +146,8 @@ class _AboutAppViewState extends State<AboutAppView> {
                                   alignment: Alignment.center,
                                   child: Image.asset(
                                       "assets/2324_teampic.jpg",
-                                      width: 450,
-                                      height: 350),
+                                      width: 530,
+                                      height: 430),
                                 ),
                               ]))),
                     ),
@@ -291,6 +290,7 @@ class _AboutAppViewState extends State<AboutAppView> {
                     ),
                   ]),
               style: TextStyle(color: Colors.white),
+              textAlign: TextAlign.center,
               softWrap: true),
         ),
         IntrinsicWidth(

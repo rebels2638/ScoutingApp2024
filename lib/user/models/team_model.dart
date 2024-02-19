@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:scouting_app_2024/blobs/qr_converter_blob.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/user/models/team_bloc.dart';
-import 'package:scouting_app_2024/shared.dart';
+import 'package:uuid/uuid.dart';
 
 enum TeamAlliance {
   blue(0xFF2463B0),
@@ -42,15 +42,25 @@ class HollisticMatchScoutingData
   MiscInfo misc;
   late String id;
 
-  HollisticMatchScoutingData({
+  HollisticMatchScoutingData.idOptional({
     required this.preliminary,
     required this.misc,
     required this.auto,
     required this.teleop,
     required this.endgame,
   }) {
-    id = Shared.uuid.v1();
+    Debug().warn("DEVELOPMENT FUNCTIONALITY IN PRODUCTION CODE");
+
+    id = const Uuid().v1();
   }
+
+  HollisticMatchScoutingData(
+      {required this.preliminary,
+      required this.misc,
+      required this.auto,
+      required this.teleop,
+      required this.endgame,
+      required this.id});
 
   @override
   String toString() {
@@ -75,6 +85,7 @@ class HollisticMatchScoutingData
           innerData["endgame"].toString()),
       misc:
           MiscInfo.fromCompatibleFormat(innerData["misc"].toString()),
+      id: data["id"].toString(),
     );
   }
 

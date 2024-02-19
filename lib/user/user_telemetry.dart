@@ -53,36 +53,10 @@ class UserTelemetry {
             const Duration(seconds: Shared.USER_TELEMETRY_SAVE_CYCLE),
             (Timer _) async => await save());
       });
-  /*SharedPreferences.getInstance()
-          .then((SharedPreferences e) {
-        _prefs = e;
-        try {
-          if (_prefs.getString(userDBName) == null) {
-            reset();
-            save();
-          } else {
-            _currentModel = UserPrefModel.fromJson(
-                jsonDecode(_prefs.getString(userDBName)!));
-          }
-        } catch (e) {
-          Debug().ohno("Caught $e");
-          _prefs.clear();
-          reset();
-          save();
-        }
-        Debug().info(
-            "${jsonDecode(_prefs.getString(userDBName)!).runtimeType} with the following content: ${_prefs.getString(userDBName)}");
-        Debug().info(
-            "Model ready with the following content: ${_currentModel.toJson().toString()}");
-        Timer.periodic(const Duration(seconds: 10),
-            (Timer timer) async {
-          // this is kinda bad since we dont check if the objects are the same and if it already persists in storage lmao, its just wasting cpu time saving for no reason, whatever
-          await save();
-        });
-      });
-  */
+
   /// resets the model, but does not perform a save
   void reset() {
+    Debug().warn("Reset User Telemetry");
     _currentModel = UserPrefModel.defaultModel;
   }
 

@@ -51,13 +51,13 @@ class _PastMatchesViewState extends State<PastMatchesView> {
     // todo, below just placeholder data
     Debug().info(
         "PAST_MATCHES: Loading ${ScoutingTelemetry().length} past matches");
-    matches.add(HollisticMatchScoutingData(
+    matches.add(HollisticMatchScoutingData.idOptional(
         preliminary: PrelimInfo.optional(),
         misc: MiscInfo.optional(),
         auto: AutoInfo.optional(),
         teleop: TeleOpInfo.optional(),
         endgame: EndgameInfo.optional()));
-    matches.add(HollisticMatchScoutingData(
+    matches.add(HollisticMatchScoutingData.idOptional(
         preliminary: PrelimInfo.optional(),
         misc: MiscInfo.optional(),
         auto: AutoInfo.optional(),
@@ -257,152 +257,158 @@ class MatchTile extends StatefulWidget {
 class _MatchTileState extends State<MatchTile> {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: form_sec_rigid(
-        context,
-        iconColor: TeamAlliance.blue.toColor(),
-        headerIcon: const Icon(Icons.flag_circle_rounded, size: 40),
-        title: const Text.rich(TextSpan(
-            text: "{MatchType} {MatchNumber} | {TeamNumber}\n",
-            style:
-                TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
-            children: <InlineSpan>[
-              TextSpan(
-                  text: "{hh}:{mm} {MM}/{DD}/{YYYY}",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontStyle: FontStyle.italic,
-                      overflow: TextOverflow.ellipsis,
-                      fontSize: 14)),
-            ])),
-        child: Column(children: <Widget>[
-          form_label_2("Overview",
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0, right: 8, bottom: 4),
+      child: Card(
+        child: form_sec_rigid(
+          context,
+          iconColor: TeamAlliance.blue.toColor(),
+          headerIcon: const Icon(Icons.flag_circle_rounded, size: 40),
+          title: Text.rich(TextSpan(
+              text: "{MatchType} {MatchNumber} | {TeamNumber}\n",
               style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  fontStyle: FontStyle.italic,
-                  overflow: TextOverflow.ellipsis),
-              icon: const Icon(Icons.data_exploration_rounded),
-              child: const Text.rich(TextSpan(children: <InlineSpan>[
-                TextSpan(
-                    text: "Starting Position: ",
+                  fontWeight: FontWeight.w700, fontSize: 20),
+              children: <InlineSpan>[
+                const TextSpan(
+                    text: "{hh}:{mm} {MM}/{DD}/{YYYY}",
                     style: TextStyle(
+                        fontWeight: FontWeight.w500,
                         overflow: TextOverflow.ellipsis,
-                        height: 1.6,
-                        fontWeight: FontWeight.w700)),
+                        fontSize: 14)),
                 TextSpan(
-                    text: "{X}\n", style: TextStyle(height: 1.6)),
-                TextSpan(
-                    text: "Harmonized: ",
-                    style: TextStyle(
+                    text: "\n${widget.match.id}",
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w300,
                         overflow: TextOverflow.ellipsis,
-                        height: 1.6,
-                        fontWeight: FontWeight.w700)),
-                TextSpan(
-                    text: "{X}\n",
-                    style: TextStyle(
-                        height: 1.6,
-                        overflow: TextOverflow.ellipsis)),
-                TextSpan(
-                    text: "Trap Scored: ",
-                    style: TextStyle(
-                        height: 1.6,
-                        fontWeight: FontWeight.w700,
-                        overflow: TextOverflow.ellipsis)),
-                TextSpan(
-                    text: "{X}",
-                    style: TextStyle(
-                        height: 1.6,
-                        overflow: TextOverflow.ellipsis)),
-              ]))),
-          const SizedBox(height: 8),
-          form_label_rigid(
-            'Transfer Options',
-            style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-                fontStyle: FontStyle.italic,
-                overflow: TextOverflow.ellipsis),
-            child: Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: strutAll(<Widget>[
-                  if (PreferCompactModal.isCompactPreferred(context))
-                    FilledButton(
-                      child: const Icon(Icons.bluetooth_rounded),
-                      onPressed: () async => await launchConfirmDialog(
-                          showOkLabel: false,
-                          denyLabel: "Close",
-                          icon:
-                              const Icon(Icons.warning_amber_rounded),
-                          title: "Warning",
-                          context,
-                          message: const Text(
-                              "Bluetooth feature not yet available!"),
-                          onConfirm: () {}),
-                    )
-                  else
-                    FilledButton.icon(
-                        onPressed: () async => await launchConfirmDialog(
-                            showOkLabel: false,
-                            denyLabel: "Close",
-                            icon: const Icon(
-                                Icons.warning_amber_rounded),
-                            title: "Warning",
-                            context,
-                            message: const Text(
-                                "Bluetooth feature not yet available!"),
-                            onConfirm: () {}),
-                        icon: const Icon(Icons.bluetooth_rounded),
-                        label: const Text("Bluetooth Share")),
-                  if (PreferCompactModal.isCompactPreferred(context))
-                    FilledButton(
-                      child: const Icon(Icons.qr_code_rounded),
-                      onPressed: () {}, // TODO,
-                    )
-                  else
-                    FilledButton.icon(
-                        onPressed: () {}, // TODO,
-                        icon: const Icon(Icons.qr_code_rounded),
-                        label: const Text("QR Share")),
-                  if (PreferCompactModal.isCompactPreferred(context))
-                    FilledButton(
-                      child: const Icon(Icons.delete_forever_rounded),
-                      onPressed: () {},
-                    )
-                  else
-                    FilledButton.icon(
-                        onPressed: () {}, // TODO
-                        icon:
-                            const Icon(Icons.delete_forever_rounded),
-                        label: const Text("Delete")),
-
-                  /*
-                  ElevatedButton(
-                    onPressed: () => onDelete(match.matchID),
-                    child: const Text('Delete'),
-                  ),
-                  */
-                ], width: 6),
-              ),
-            ),
-            icon: const Icon(Icons.cell_tower_rounded),
-          ),
-
-          /**
-          const SizedBox(
-            height: 15,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        fontSize: 12))
+              ])),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Text('Placeholder Text 1'),
-                Text('Placeholder Text 2'),
-                Text('Placeholder Text 3')
-              ],
-            ),
-          ),
-          **/
-        ]),
+                form_label_2("Overview",
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        fontStyle: FontStyle.italic,
+                        overflow: TextOverflow.ellipsis),
+                    icon: const Icon(Icons.data_exploration_rounded),
+                    child: const Text.rich(
+                        TextSpan(children: <InlineSpan>[
+                      TextSpan(
+                          text: "Starting Position: ",
+                          style: TextStyle(
+                              overflow: TextOverflow.ellipsis,
+                              height: 1.6,
+                              fontWeight: FontWeight.w700)),
+                      TextSpan(
+                          text: "{X}\n",
+                          style: TextStyle(height: 1.6)),
+                      TextSpan(
+                          text: "Harmonized: ",
+                          style: TextStyle(
+                              overflow: TextOverflow.ellipsis,
+                              height: 1.6,
+                              fontWeight: FontWeight.w700)),
+                      TextSpan(
+                          text: "{X}\n",
+                          style: TextStyle(
+                              height: 1.6,
+                              overflow: TextOverflow.ellipsis)),
+                      TextSpan(
+                          text: "Trap Scored: ",
+                          style: TextStyle(
+                              height: 1.6,
+                              fontWeight: FontWeight.w700,
+                              overflow: TextOverflow.ellipsis)),
+                      TextSpan(
+                          text: "{X}",
+                          style: TextStyle(
+                              height: 1.6,
+                              overflow: TextOverflow.ellipsis)),
+                    ]))),
+                const SizedBox(height: 8),
+                form_label_rigid(
+                  'Transfer Options',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      fontStyle: FontStyle.italic,
+                      overflow: TextOverflow.ellipsis),
+                  child: Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: strutAll(<Widget>[
+                        if (PreferCompactModal.isCompactPreferred(
+                            context))
+                          FilledButton(
+                            child:
+                                const Icon(Icons.bluetooth_rounded),
+                            onPressed: () async =>
+                                await launchConfirmDialog(
+                                    showOkLabel: false,
+                                    denyLabel: "Close",
+                                    icon: const Icon(
+                                        Icons.warning_amber_rounded),
+                                    title: "Warning",
+                                    context,
+                                    message: const Text(
+                                        "Bluetooth feature not yet available!"),
+                                    onConfirm: () {}),
+                          )
+                        else
+                          FilledButton.icon(
+                              onPressed: () async =>
+                                  await launchConfirmDialog(
+                                      showOkLabel: false,
+                                      denyLabel: "Close",
+                                      icon: const Icon(Icons
+                                          .warning_amber_rounded),
+                                      title: "Warning",
+                                      context,
+                                      message: const Text(
+                                          "Bluetooth feature not yet available!"),
+                                      onConfirm: () {}),
+                              icon:
+                                  const Icon(Icons.bluetooth_rounded),
+                              label: const Text("Bluetooth Share")),
+                        if (PreferCompactModal.isCompactPreferred(
+                            context))
+                          FilledButton(
+                            child: const Icon(Icons.qr_code_rounded),
+                            onPressed: () {}, // TODO,
+                          )
+                        else
+                          FilledButton.icon(
+                              onPressed: () {}, // TODO,
+                              icon: const Icon(Icons.qr_code_rounded),
+                              label: const Text("QR Share")),
+                        if (PreferCompactModal.isCompactPreferred(
+                            context))
+                          FilledButton(
+                            child: const Icon(
+                                Icons.delete_forever_rounded),
+                            onPressed: () {},
+                          )
+                        else
+                          FilledButton.icon(
+                              onPressed: () {}, // TODO
+                              icon: const Icon(
+                                  Icons.delete_forever_rounded),
+                              label: const Text("Delete")),
+
+                        /*
+                    ElevatedButton(
+                      onPressed: () => onDelete(match.matchID),
+                      child: const Text('Delete'),
+                    ),
+                    */
+                      ], width: 6),
+                    ),
+                  ),
+                  icon: const Icon(Icons.cell_tower_rounded),
+                ),
+              ]),
+        ),
       ),
     );
   }
