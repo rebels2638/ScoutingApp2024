@@ -5,6 +5,8 @@ import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
 import 'package:theme_provider/theme_provider.dart';
 
+import 'basic_toggle_switch.dart';
+
 class _BetterGridLayout extends SliverGridLayout {
   final int crossAxisCount;
   final double dim;

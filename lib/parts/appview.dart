@@ -2,18 +2,14 @@ import 'dart:io';
 import 'package:community_material_icon/community_material_icon.dart';
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
-import 'package:provider/single_child_widget.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/bits/lock_in.dart';
-import 'package:scouting_app_2024/parts/bits/prefer_canonical.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
-import 'package:scouting_app_2024/parts/bits/prefer_tonal.dart';
 import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
 import 'package:scouting_app_2024/parts/bits/show_fps_monitor.dart';
 import 'package:scouting_app_2024/parts/bits/show_game_map.dart';
-import 'package:scouting_app_2024/parts/bits/theme_mode.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/shared.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
@@ -24,60 +20,11 @@ import 'package:scouting_app_2024/blobs/extended_fab_blob.dart';
 import "package:theme_provider/theme_provider.dart";
 import 'package:url_launcher/url_launcher.dart';
 
+import 'theme_classifier.dart';
+import 'views/scouting_session_view_delegate.dart' as rr;
+
 GlobalKey<ScaffoldState> _globalScaffoldKey =
     GlobalKey<ScaffoldState>();
-
-class ThemedAppBundle extends StatelessWidget {
-  final Widget child;
-
-  const ThemedAppBundle({super.key, required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    Debug().info("ThemesLoaded: ${<AppTheme>[
-      ...ThemeBlob.export,
-      ...ThemeBlob.intricateThemes
-    ].length}");
-    return ThemeProvider(
-        themes: <AppTheme>[
-          ...ThemeBlob.export,
-          ...ThemeBlob.intricateThemes
-        ],
-        child: ThemeConsumer(
-            child: Builder(
-                builder: (BuildContext
-                        themeCtxt) => /*lol this is very scuffed XD i hope you can forgive me*/
-                    MultiProvider(providers: <SingleChildWidget>[
-                      ChangeNotifierProvider<PreferCompactModal>(
-                          create: (BuildContext _) =>
-                              PreferCompactModal()),
-                      ChangeNotifierProvider<PreferCanonicalModal>(
-                          create: (BuildContext _) =>
-                              PreferCanonicalModal()),
-                      ChangeNotifierProvider<PreferTonalModal>(
-                          create: (BuildContext _) =>
-                              PreferTonalModal()),
-                      ChangeNotifierProvider<ShowFPSMonitorModal>(
-                          create: (BuildContext _) =>
-                              ShowFPSMonitorModal()),
-                      ChangeNotifierProvider<ShowExperimentalModal>(
-                          create: (BuildContext _) =>
-                              ShowExperimentalModal()),
-                      ChangeNotifierProvider<ShowGameMapModal>(
-                          create: (BuildContext _) =>
-                              ShowGameMapModal()),
-                      ChangeNotifierProvider<ThemeModeModal>(
-                          create: (BuildContext _) =>
-                              ThemeModeModal()),
-                      ChangeNotifierProvider<ShowConsoleModal>(
-                          create: (BuildContext _) =>
-                              ShowConsoleModal()),
-                      ChangeNotifierProvider<LockedInScoutingModal>(
-                          create: (BuildContext _) =>
-                              LockedInScoutingModal())
-                    ], child: child))));
-  }
-}
 
 class IntermediateMaterialApp extends StatelessWidget {
   const IntermediateMaterialApp({
@@ -132,7 +79,7 @@ class _AppViewState extends State<_AppView> {
       }) item
       // this is the only delegate that formally implements this feature where the view is not directly shown but through a delegate that can forward operations
     }) scoutingView =
-        const ScoutingSessionViewDelegate().exportAppPageView();
+        const rr.ScoutingSessionViewDelegate().exportAppPageView();
     ({
       Widget child,
       ({

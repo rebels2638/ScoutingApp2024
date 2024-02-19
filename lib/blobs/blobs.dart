@@ -3,6 +3,8 @@ import 'package:numberpicker/numberpicker.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
 
+import 'basic_toggle_switch.dart';
+
 enum SwitchIconPosition {
   /// the icon will be placed on the thumb
   onSwitch,
@@ -190,71 +192,7 @@ SnackBar yummySnackBar(
           ]),
         ));
 
-class BasicToggleSwitch extends StatefulWidget {
-  final void Function(bool res) onChanged;
-  final bool initialValue;
-  final Icon? offIcon;
-  final Icon? onIcon;
-  final SwitchIconPosition position;
 
-  const BasicToggleSwitch(
-      {super.key,
-      required this.onChanged,
-      this.initialValue = false,
-      this.position = SwitchIconPosition.onSwitch,
-      this.offIcon = const Icon(Icons.close_rounded),
-      this.onIcon = const Icon(Icons.check_rounded)});
-
-  @override
-  State<BasicToggleSwitch> createState() => _BasicToggleSwitchState();
-}
-
-class _BasicToggleSwitchState extends State<BasicToggleSwitch> {
-  late bool _toggleState;
-
-  @override
-  void initState() {
-    super.initState();
-    _toggleState = widget.initialValue;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return widget.onIcon != null &&
-            widget.offIcon != null &&
-            widget.position == SwitchIconPosition.aroundSwitch
-        ? Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: strutAll(<Widget>[
-              widget.offIcon!,
-              Switch(
-                  value: _toggleState,
-                  onChanged: (bool result) {
-                    setState(() => _toggleState = !_toggleState);
-                    widget.onChanged.call(result);
-                  }),
-              widget.onIcon!,
-            ], width: 8))
-        : widget.position == SwitchIconPosition.onSwitch
-            ? Switch(
-                thumbIcon: MaterialStateProperty.resolveWith(
-                    (Set<MaterialState> states) =>
-                        states.contains(MaterialState.selected)
-                            ? widget.onIcon
-                            : widget.offIcon),
-                value: _toggleState,
-                onChanged: (bool result) {
-                  setState(() => _toggleState = !_toggleState);
-                  widget.onChanged.call(result);
-                })
-            : Switch(
-                value: _toggleState,
-                onChanged: (bool result) {
-                  setState(() => _toggleState = !_toggleState);
-                  widget.onChanged.call(result);
-                });
-  }
-}
 
 @pragma("vm:prefer-inline")
 List<Widget> strutAll(List<Widget> children,

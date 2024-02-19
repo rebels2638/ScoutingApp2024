@@ -11,20 +11,6 @@ import 'package:scouting_app_2024/utils.dart';
 import 'package:theme_provider/theme_provider.dart';
 import 'package:yaml/yaml.dart';
 
-// this file has caused me great pain... ~ exoad (2/6/2024)
-
-class ThemeClassifier {
-  static AvaliableTheme of(BuildContext context) {
-    String name = ThemeProvider.themeOf(context).id;
-    for (AvaliableTheme e in AvaliableTheme.export) {
-      if (e.id == name) {
-        return e;
-      }
-    }
-    return AvaliableTheme.export[0];
-  }
-}
-
 class AvaliableTheme {
   final String properName;
   final bool isDarkMode;

@@ -7,6 +7,8 @@ import 'package:scouting_app_2024/main.dart';
 import 'package:scouting_app_2024/parts/appview.dart';
 import 'package:scouting_app_2024/debug.dart';
 
+import 'themed_app_bundle.dart';
+
 class LoadingAppViewScreen extends StatefulWidget {
   final Future<void> task;
 

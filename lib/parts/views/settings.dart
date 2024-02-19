@@ -13,6 +13,8 @@ import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
 import 'package:theme_provider/theme_provider.dart';
 
+import '../../blobs/basic_toggle_switch.dart';
+
 class SettingsView extends StatefulWidget
     implements AppPageViewExporter {
   @override
@@ -97,8 +99,8 @@ class _SettingsViewState extends State<SettingsView> {
                             context)
                         ? // i could reverse the values, but thats just too many ctrl+c ctrl+v
                         preferTonalButton(
-                            onPressed: ()  =>
-                                 launchConfirmDialog(context,
+                            onPressed: () => launchConfirmDialog(
+                                    context,
                                     message: const Text(
                                         "Are you sure you want to reset all user telemetry? This means all of your usage statistics will be removed. However, your scouting data will not be."),
                                     onConfirm: () {
@@ -131,8 +133,8 @@ class _SettingsViewState extends State<SettingsView> {
                             icon: const Icon(Icons.replay_rounded),
                             label: const Text("Reset Telemetry"))
                         : FilledButton(
-                            onPressed: ()  =>
-                                 launchConfirmDialog(context,
+                            onPressed: () => launchConfirmDialog(
+                                    context,
                                     message: const Text(
                                         "Are you sure you want to reset all user telemetry? This means all of your usage statistics will be removed. However, your scouting data will not be."),
                                     onConfirm: () {
