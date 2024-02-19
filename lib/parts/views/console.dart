@@ -63,6 +63,8 @@ class ConsoleStateComponent extends State<_ConsoleComponent> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          const _FlashingWarning(),
+          const SizedBox(height: 14),
           Wrap(children: <Widget>[
             TextButton.icon(
                 onPressed: () =>
@@ -233,8 +235,7 @@ class ConsoleStateComponent extends State<_ConsoleComponent> {
                               const EdgeInsets.only(bottom: 10),
                           child: Container(
                               decoration: BoxDecoration(
-                                color: ThemeProvider.themeOf(
-                                                context)
+                                color: ThemeProvider.themeOf(context)
                                             .data
                                             .colorScheme
                                             .brightness ==
@@ -255,9 +256,8 @@ class ConsoleStateComponent extends State<_ConsoleComponent> {
                                 child: Text(t,
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
-                                        color: ThemeProvider
-                                                        .themeOf(
-                                                            context)
+                                        color: ThemeProvider.themeOf(
+                                                        context)
                                                     .data
                                                     .colorScheme
                                                     .brightness ==
@@ -272,8 +272,7 @@ class ConsoleStateComponent extends State<_ConsoleComponent> {
                                                 .data
                                                 .colorScheme
                                                 .onInverseSurface,
-                                        fontFamily:
-                                            "IBM Plex Mono")),
+                                        fontFamily: "IBM Plex Mono")),
                               )),
                         )
                     ]),
@@ -281,5 +280,89 @@ class ConsoleStateComponent extends State<_ConsoleComponent> {
             ),
           )
         ]);
+  }
+}
+
+class _FlashingWarning extends StatefulWidget {
+  const _FlashingWarning();
+
+  @override
+  State<_FlashingWarning> createState() => _FlashingWarningState();
+}
+
+class _FlashingWarningState extends State<_FlashingWarning>
+    with TickerProviderStateMixin {
+  late AnimationController _controller1;
+  late AnimationController _controller2;
+  late Animation<Color?> _colorAnimation1;
+  late Animation<Color?> _colorAnimation2;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller1 = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 2500),
+    )..repeat(reverse: true);
+    _controller2 = AnimationController(
+      vsync: this,
+
+      duration: const Duration(milliseconds: 1800),
+    )..repeat(reverse: true);
+    _colorAnimation1 = ColorTween(
+      begin: Colors.amber[600],
+      end: Colors.black,
+    ).animate(_controller1);
+    _colorAnimation2 = ColorTween(
+      begin: Colors.black,
+      end: Colors.amber[600],
+    ).animate(_controller2);
+  }
+
+  @override
+  void dispose() {
+    _controller1.dispose();
+    _controller2.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8, right: 8),
+      child: AnimatedBuilder(
+        animation: Listenable.merge(
+            <Listenable?>[_controller1, _controller2]),
+        builder: (BuildContext context, Widget? child) {
+          return Container(
+            decoration: BoxDecoration(
+              color: _colorAnimation1.value,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.warning_rounded,
+                    size: 64,
+                    color: _colorAnimation2.value,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    "THIS IS FOR DEVELOPMENT PURPOSES ONLY. USE AT YOUR OWN RISK",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16,
+                      color: _colorAnimation2.value,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
 }

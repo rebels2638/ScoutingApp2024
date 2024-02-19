@@ -22,6 +22,18 @@
   location: "assets/themes/solarized.json"
   icon: "flutter,beach_access_rounded"
 
+- canonical_name: "Cascades"
+  id: "exoad_cascades"
+  author: "Jack Meng (exoad)"
+  location: "assets/themes/cascades.json"
+  icon: "flutter,layers"
+
+- canonical_name: "Classic Blue"
+  id: "exoad_classic_blue"
+  author: "Jack Meng (exoad)"
+  location: "assets/themes/classic_blue.json"
+  icon: "flutter,android"
+
 - canonical_name: "Sepia"
   id: "exoad_sepia"
   author: "Jack Meng (exoad)"

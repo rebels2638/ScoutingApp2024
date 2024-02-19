@@ -7,6 +7,8 @@ enum FlutterIconEnumMapper {
   factory_rounded(Icons.factory_rounded),
   factory_outlined(Icons.factory_outlined),
   eco_rounded(Icons.eco_rounded),
+  android(Icons.android_rounded),
+  layers(Icons.layers_rounded),
   nights_stay_rounded(Icons.nights_stay_rounded);
 
   final IconData data;

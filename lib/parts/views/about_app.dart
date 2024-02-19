@@ -8,6 +8,7 @@ import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/shared.dart';
+import 'package:theme_provider/theme_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const String _DIVIDER = "\n\n";
@@ -162,10 +163,10 @@ class _AboutAppViewState extends State<AboutAppView> {
   List<Widget> contentBase(BuildContext context) {
     return strutAll(
       <Widget>[
-        const Center(
+        Center(
           // lets gooo its const
           child: Text.rich(
-              TextSpan(
+              const TextSpan(
                   //text: "asdawfsuiunnnnnnnnnnnnnnnnnnnn\n",
                   children: <TextSpan>[
                     TextSpan(
@@ -289,7 +290,14 @@ class _AboutAppViewState extends State<AboutAppView> {
                       ),
                     ),
                   ]),
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white, shadows: <Shadow>[
+                Shadow(
+                    color: ThemeProvider.themeOf(context)
+                        .data
+                        .shadowColor,
+                    blurRadius: 2,
+                    offset: const Offset(1, 1))
+              ]),
               textAlign: TextAlign.center,
               softWrap: true),
         ),
@@ -396,7 +404,8 @@ class _AboutAppViewState extends State<AboutAppView> {
                       onConfirm: () => Debug().info(
                           "Popped SOFTWARE_LICENSE View Screen")),
                   label: const Text("Software license"),
-                  icon: const Icon(Icons.library_books_rounded))
+                  icon: const Icon(Icons.library_books_rounded)),
+              const SizedBox(height: 30),
             ], height: 16),
           ),
         )

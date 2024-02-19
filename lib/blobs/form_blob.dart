@@ -208,6 +208,9 @@ Widget form_grid_2(
         double minimumItemWidth = 500,
         required List<Widget> children}) =>
     ResponsiveGridList(
+        listViewBuilderOptions: ListViewBuilderOptions(
+            physics: const AlwaysScrollableScrollPhysics(
+                parent: BouncingScrollPhysics())),
         maxItemsPerRow: crossAxisCount,
         verticalGridSpacing: crossAxisSpacing,
         horizontalGridSpacing: mainAxisSpacing,
