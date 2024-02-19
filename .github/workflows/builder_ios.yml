@@ -35,4 +35,4 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: iOS_Build
-          path: ./build/ios/
+          path: ./build/ios
