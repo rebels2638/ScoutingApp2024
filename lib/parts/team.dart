@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2024/extern/color.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_canonical.dart';
+import 'package:scouting_app_2024/parts/bits/use_alt_layout.dart';
 import 'package:scouting_app_2024/user/models/team_model.dart';
 
 class TeamAllianceSwitch extends StatefulWidget {
@@ -30,7 +31,11 @@ class _TeamAllianceSwitchState extends State<TeamAllianceSwitch> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment:
+          UseAlternativeLayoutModal.isAlternativeLayoutPreferred(
+                  context)
+              ? MainAxisAlignment.center
+              : MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         AnimatedSwitcher(
           transitionBuilder:

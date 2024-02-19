@@ -126,6 +126,9 @@ class UserPrefModel {
   @JsonKey(required: false, defaultValue: false)
   bool preferCompact;
 
+  @JsonKey(required: false, defaultValue: false)
+  bool useAltLayout;
+
   @JsonKey(required: false, defaultValue: 0)
   double usedTimeHours;
 
@@ -134,6 +137,7 @@ class UserPrefModel {
       {required this.selectedTheme,
       this.showConsole = false,
       this.showGameMap = true,
+      this.useAltLayout = false,
       this.usedTimeHours = 0,
       this.preferCompact = false,
       this.preferTonal = true,

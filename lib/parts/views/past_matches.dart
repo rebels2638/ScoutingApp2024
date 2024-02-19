@@ -249,9 +249,8 @@ class _MatchTileState extends State<MatchTile> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: form_sec_2(
+      child: form_sec_rigid(
         context,
-        backgroundColor: Colors.transparent,
         iconColor: TeamAlliance.blue.toColor(),
         headerIcon: const Icon(Icons.flag_circle_rounded, size: 40),
         title: const Text.rich(TextSpan(
@@ -268,7 +267,7 @@ class _MatchTileState extends State<MatchTile> {
                       fontSize: 14)),
             ])),
         child: Column(children: <Widget>[
-          form_label_2("Overview",
+          form_label_1("Overview",
               style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,

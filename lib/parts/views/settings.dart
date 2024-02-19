@@ -9,6 +9,7 @@ import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
 import 'package:scouting_app_2024/parts/bits/show_fps_monitor.dart';
 import 'package:scouting_app_2024/parts/bits/show_game_map.dart';
+import 'package:scouting_app_2024/parts/bits/use_alt_layout.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
 import 'package:theme_provider/theme_provider.dart';
@@ -329,6 +330,25 @@ class _SettingsViewState extends State<SettingsView> {
                                   UserTelemetry()
                                       .currentModel
                                       .preferCompact = val;
+                                  UserTelemetry().save();
+                                }))),
+                    SettingsView._labelIt(
+                        icon: CommunityMaterialIcons.layers_outline,
+                        label: "Use Alternative Layout",
+                        hint:
+                            "Certain UI elements will be laid out differently",
+                        child: BasicToggleSwitch(
+                            initialValue: UserTelemetry()
+                                .currentModel
+                                .useAltLayout,
+                            onChanged: (bool val) => setState(() {
+                                  Provider.of<UseAlternativeLayoutModal>(
+                                          context,
+                                          listen: false)
+                                      .useAlt = val;
+                                  UserTelemetry()
+                                      .currentModel
+                                      .useAltLayout = val;
                                   UserTelemetry().save();
                                 }))),
                     SettingsView._labelIt(

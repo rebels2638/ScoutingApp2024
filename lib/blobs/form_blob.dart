@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
+import 'package:scouting_app_2024/user/user_telemetry.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 import 'basic_toggle_switch.dart';
@@ -130,46 +131,51 @@ class _NumPickBtnState extends State<_NumPickBtn> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: <Widget>[
-      if (PreferCompactModal.isCompactPreferred(context))
-        FilledButton.icon(
-            icon: widget.icon,
-            label: Text(widget.label),
-            onPressed: () async => await launchNumberPickerDialog(
-                    context,
-                    maxValue: widget.maxValue.abs(),
-                    minValue: widget.minValue.abs(),
-                    headerMessage: widget.headerMessage,
-                    itemCount: widget.maxValue
-                        .abs()
-                        .toString()
-                        .length, onChange: (int value) {
-                  setState(() => _initValue = value);
-                  widget.onChange.call(value);
-                }))
-      else
-        FilledButton(
-            child: widget.icon,
-            onPressed: () async => await launchNumberPickerDialog(
-                    context,
-                    maxValue: widget.maxValue.abs(),
-                    minValue: widget.minValue.abs(),
-                    headerMessage: widget.headerMessage,
-                    itemCount: widget.maxValue
-                        .abs()
-                        .toString()
-                        .length, onChange: (int value) {
-                  setState(() => _initValue = value);
-                  widget.onChange.call(value);
-                })),
-      const SizedBox(width: 6),
-      Text.rich(TextSpan(children: <InlineSpan>[
-        const TextSpan(text: " = "),
-        TextSpan(
-            text: _initValue == -1 ? "Unset" : _initValue.toString(),
-            style: const TextStyle(fontWeight: FontWeight.bold))
-      ]))
-    ]);
+    return Row(
+        mainAxisAlignment: UserTelemetry().currentModel.useAltLayout
+            ? MainAxisAlignment.center
+            : MainAxisAlignment.start,
+        children: <Widget>[
+          if (PreferCompactModal.isCompactPreferred(context))
+            IconButton.filled(
+                icon: widget.icon,
+                onPressed: () async => await launchNumberPickerDialog(
+                        context,
+                        maxValue: widget.maxValue.abs(),
+                        minValue: widget.minValue.abs(),
+                        headerMessage: widget.headerMessage,
+                        itemCount: widget.maxValue
+                            .abs()
+                            .toString()
+                            .length, onChange: (int value) {
+                      setState(() => _initValue = value);
+                      widget.onChange.call(value);
+                    }))
+          else
+            FilledButton(
+                child: widget.icon,
+                onPressed: () async => await launchNumberPickerDialog(
+                        context,
+                        maxValue: widget.maxValue.abs(),
+                        minValue: widget.minValue.abs(),
+                        headerMessage: widget.headerMessage,
+                        itemCount: widget.maxValue
+                            .abs()
+                            .toString()
+                            .length, onChange: (int value) {
+                      setState(() => _initValue = value);
+                      widget.onChange.call(value);
+                    })),
+          const SizedBox(width: 6),
+          Text.rich(TextSpan(children: <InlineSpan>[
+            const TextSpan(text: " = "),
+            TextSpan(
+                text: _initValue == -1
+                    ? "Unset"
+                    : _initValue.toString(),
+                style: const TextStyle(fontWeight: FontWeight.bold))
+          ]))
+        ]);
   }
 }
 
@@ -214,33 +220,47 @@ Widget form_label(String text,
         required Widget child,
         bool expandLabel = false,
         Widget? icon}) =>
-    Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                if (icon != null) icon,
-                if (icon != null) const SizedBox(width: 6),
-                if (expandLabel)
-                  Expanded(
-                      child: Text(text,
+    UserTelemetry().currentModel.useAltLayout
+        ? Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+                Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      if (icon != null) icon,
+                      if (icon != null) const SizedBox(width: 6),
+                      Text(text,
                           style: style ??
                               const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
-                                  overflow: TextOverflow.ellipsis)))
-                else
-                  Text(text,
-                      style: style ??
-                          const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              overflow: TextOverflow.ellipsis)),
-                const SizedBox(width: _prompt_label_strut_width),
-              ]),
-          child
-        ]);
+                                  overflow: TextOverflow.ellipsis)),
+                      const SizedBox(
+                          width: _prompt_label_strut_width),
+                    ]),
+                child,
+              ])
+        : Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      if (icon != null) icon,
+                      if (icon != null) const SizedBox(width: 6),
+                      Text(text,
+                          style: style ??
+                              const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  overflow: TextOverflow.ellipsis)),
+                      const SizedBox(
+                          width: _prompt_label_strut_width),
+                    ]),
+                child
+              ]);
 
 @pragma("vm:prefer-inline")
 Widget form_label_2(String text,
@@ -289,7 +309,6 @@ Widget form_grid_1(
 Widget form_grid_sec(BuildContext context,
         {required SectionId header,
         Gradient? gradient,
-        Color? color,
         required Widget child}) =>
     Container(
         margin: const EdgeInsets.all(12),
@@ -297,23 +316,31 @@ Widget form_grid_sec(BuildContext context,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16)),
             gradient: gradient,
-            color: color ??
-                ThemeProvider.themeOf(context)
-                    .data
-                    .colorScheme
-                    .onInverseSurface),
+            color: ThemeProvider.themeOf(context)
+                .data
+                .navigationBarTheme
+                .surfaceTintColor),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment:
+                  UserTelemetry().currentModel.useAltLayout
+                      ? MainAxisAlignment.center
+                      : MainAxisAlignment.start,
               children: <Widget>[
-                Row(children: <Widget>[
-                  Icon(header.icon, size: 36),
-                  const SizedBox(width: 10),
-                  Text(header.title,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 18))
-                ]),
+                Row(
+                    mainAxisAlignment:
+                        UserTelemetry().currentModel.useAltLayout
+                            ? MainAxisAlignment.center
+                            : MainAxisAlignment.start,
+                    children: <Widget>[
+                      Icon(header.icon, size: 36),
+                      const SizedBox(width: 10),
+                      Text(header.title,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18))
+                    ]),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: child,
@@ -322,32 +349,70 @@ Widget form_grid_sec(BuildContext context,
         ));
 
 @pragma("vm:prefer-inline")
+Widget form_sec_rigid(BuildContext context,
+        {required Icon headerIcon,
+        required Widget title,
+        Color? iconColor,
+        required Widget child,
+        Gradient? gradient}) =>
+    Container(
+        decoration: BoxDecoration(
+            gradient: gradient,
+            color: ThemeProvider.themeOf(context)
+                .data
+                .navigationBarTheme
+                .surfaceTintColor,
+            borderRadius: BorderRadius.circular(14)),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(children: <Widget>[
+            Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  headerIcon,
+                  const SizedBox(width: 10),
+                  title,
+                ]),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: child,
+            )
+          ]),
+        ));
+
+@pragma("vm:prefer-inline")
 Widget form_sec_2(BuildContext context,
         {required Icon headerIcon,
         required Widget title,
         Color? iconColor,
         required Widget child,
-        Color? backgroundColor,
         Gradient? gradient}) =>
     Container(
         decoration: BoxDecoration(
             gradient: gradient,
-            color: backgroundColor ??
-                ThemeProvider.themeOf(context)
-                    .data
-                    .colorScheme
-                    .onInverseSurface,
+            color: ThemeProvider.themeOf(context)
+                .data
+                .navigationBarTheme
+                .surfaceTintColor,
             borderRadius: BorderRadius.circular(14)),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment:
+                  UserTelemetry().currentModel.useAltLayout
+                      ? MainAxisAlignment.center
+                      : MainAxisAlignment.start,
               children: <Widget>[
-                Row(children: <Widget>[
-                  headerIcon,
-                  const SizedBox(width: 10),
-                  title,
-                ]),
+                Row(
+                    mainAxisAlignment:
+                        UserTelemetry().currentModel.useAltLayout
+                            ? MainAxisAlignment.center
+                            : MainAxisAlignment.start,
+                    children: <Widget>[
+                      headerIcon,
+                      const SizedBox(width: 10),
+                      title,
+                    ]),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: child,
@@ -555,15 +620,16 @@ Widget form_txtin({
   String? label,
   Icon? prefixIcon,
   Icon? suffixIcon,
-  double dim = 100,
   void Function(String)? onChanged,
   TextInputType? inputType,
 }) =>
-    Flexible(
+    SizedBox(
+      width: 300,
       child: TextFormField(
         onChanged: (String e) => onChanged?.call(e),
         keyboardType: inputType,
         decoration: InputDecoration(
+          isDense: true,
           prefixIcon: prefixIcon,
           suffix: suffixIcon,
           labelText: label,

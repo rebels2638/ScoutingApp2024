@@ -11,6 +11,7 @@ import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
 import 'package:scouting_app_2024/parts/bits/show_fps_monitor.dart';
 import 'package:scouting_app_2024/parts/bits/show_game_map.dart';
 import 'package:scouting_app_2024/parts/bits/theme_mode.dart';
+import 'package:scouting_app_2024/parts/bits/use_alt_layout.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
 import 'package:theme_provider/theme_provider.dart';
 
@@ -38,6 +39,10 @@ class ThemedAppBundle extends StatelessWidget {
                       ChangeNotifierProvider<PreferCompactModal>(
                           create: (BuildContext _) =>
                               PreferCompactModal()),
+                      ChangeNotifierProvider<
+                              UseAlternativeLayoutModal>(
+                          create: (BuildContext _) =>
+                              UseAlternativeLayoutModal()),
                       ChangeNotifierProvider<PreferCanonicalModal>(
                           create: (BuildContext _) =>
                               PreferCanonicalModal()),

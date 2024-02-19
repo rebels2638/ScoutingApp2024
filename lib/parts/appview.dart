@@ -576,6 +576,7 @@ class _AppViewState extends State<_AppView> {
             padding: const EdgeInsets.all(10.0),
             child: RepaintBoundary(
               child: PageView(
+                physics: const NeverScrollableScrollPhysics(),
                 // this keeps the bottom nav bar index and the page view index in sync. this is kind of unoptimized in the sense of setState
                 onPageChanged: (int pageNow) =>
                     setState(() => _bottomNavBarIndexer = pageNow),
