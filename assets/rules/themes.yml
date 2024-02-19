@@ -22,6 +22,12 @@
   location: "assets/themes/solarized.json"
   icon: "flutter,beach_access_rounded"
 
+- canonical_name: "Sepia"
+  id: "exoad_sepia"
+  author: "Jack Meng (exoad)"
+  location: "assets/themes/sepia.json"
+  icon: "community,script"
+
 - canonical_name: "Orange"
   id: "exoad_orange"
   author: "Jack Meng (exoad)"
@@ -33,6 +39,12 @@
   author: "Jack Meng (exoad)"
   location: "assets/themes/hacker.json"
   icon: "community,incognito"
+
+- canonical_name: "Vibrant AMOLED"
+  id: "exoad_vibrant_amoled"
+  author: "Jack Meng (exoad)"
+  location: "assets/themes/amoled_vibrancy.json"
+  icon: "community,tea"
 
 - canonical_name: "Coral"
   id: "exoad_coral"
