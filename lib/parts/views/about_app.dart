@@ -1,9 +1,16 @@
+import 'dart:math';
+
+import 'package:confetti/confetti.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/blobs/obfs_blob.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:scouting_app_2024/shared.dart';
+import 'package:scouting_app_2024/user/shared.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const String _DIVIDER = "\n\n";
@@ -34,83 +41,122 @@ class AboutAppView extends StatefulWidget
 
 class _AboutAppViewState extends State<AboutAppView> {
   late final ScrollController _scroller;
+  late final ConfettiController _confettiController;
 
   @override
   void initState() {
     super.initState();
     _scroller = ScrollController();
+    _confettiController = ConfettiController(
+      duration: const Duration(seconds: 1),
+    );
+  }
+
+  @override
+  void dispose() {
+    _scroller.dispose();
+    _confettiController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Stack(fit: StackFit.expand, children: <Widget>[
-      Padding(
-        padding: const EdgeInsets.only(top: 10),
-        child: Transform.translate(
-          offset: Offset(
-              0, _scroller.hasClients ? -_scroller.offset / 3 : 0),
-          child: Padding(
-            padding: const EdgeInsets.all(4),
-            child: ObfsBlob(
-              sigmaX: 8,
-              sigmaY: 8,
-              child: Center(
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: <Widget>[
-                    Image.asset("assets/2324_teampic.jpg",
-                        alignment: Alignment.center,
-                        fit: BoxFit.cover,
-                        width: MediaQuery.of(context).size.width),
-                    ColoredBox(color: Colors.black.withOpacity(0.4)),
-                  ],
+      Transform.translate(
+        offset: Offset(
+            0, _scroller.hasClients ? -_scroller.offset / 3 : 0),
+        child: ObfsBlob(
+          sigmaX: 8,
+          sigmaY: 8,
+          child: Center(
+            child: Stack(
+              fit: StackFit.expand,
+              children: <Widget>[
+                RepaintBoundary(
+                  child: Padding(
+                    padding: const EdgeInsets.all(14.0),
+                    child: Image.asset(
+                      "assets/2324_teampic.jpg",
+                      alignment: Alignment.center,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
-              ),
+                ColoredBox(color: Colors.black.withOpacity(0.4)),
+              ],
             ),
           ),
         ),
       ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Flexible(
+      NotificationListener<ScrollNotification>(
+          onNotification: (ScrollNotification notif) {
+            setState(() {});
+            return false;
+          },
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(
+                parent: BouncingScrollPhysics()),
+            controller: _scroller,
             child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                          blurStyle: BlurStyle.outer,
-                          color: Colors.black.withOpacity(0.8),
-                          blurRadius: 8,
-                          spreadRadius: 10)
-                    ]),
-                child: Padding(
-                  padding: const EdgeInsets.all(6),
-                  child: Image.asset("assets/2324_teampic.jpg",
-                      width: 500, height: 400),
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: NotificationListener<ScrollNotification>(
-                onNotification: (ScrollNotification notif) {
-                  setState(() {});
-                  return false;
-                },
-                child: SingleChildScrollView(
-                  controller: _scroller,
-                  child: Column(children: <Widget>[
-                    const SizedBox(height: 30),
+              padding: const EdgeInsets.only(bottom: 20),
+              child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Flexible(
+                      child: Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: GestureDetector(
+                              onTap: () {
+                                setState(
+                                    () => _confettiController.play());
+                                Debug().info("Confetti_EE: Played");
+                              },
+                              child: Stack(children: <Widget>[
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: ConfettiWidget(
+                                    blastDirection: 0,
+                                    minBlastForce: 7, // OMG IS THAT AN ODD NUMBER IN THE UI??? WTFFFFF!!!!?!?!?!?!1111!?!?!
+                                    shouldLoop: false,
+                                    confettiController:
+                                        _confettiController,
+                                    colors: const <Color>[
+                                      RebelRoboticsShared.REBELS_BLUE,
+                                      RebelRoboticsShared
+                                          .REBELS_ORANGE
+                                    ],
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: ConfettiWidget(
+                                    blastDirection: pi,
+                                    shouldLoop: false,
+                                    minBlastForce: 7,
+                                    confettiController:
+                                        _confettiController,
+                                    colors: const <Color>[
+                                      RebelRoboticsShared.REBELS_BLUE,
+                                      RebelRoboticsShared
+                                          .REBELS_ORANGE
+                                    ],
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Image.asset(
+                                      "assets/2324_teampic.jpg",
+                                      width: 450,
+                                      height: 350),
+                                ),
+                              ]))),
+                    ),
+                    const SizedBox(height: 18),
                     ...contentBase(context)
                   ]),
-                )),
-          ),
-        ],
-      ),
+            ),
+          )),
     ]);
   }
 

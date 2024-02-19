@@ -36,6 +36,7 @@ class PastMatchesView extends StatefulWidget
 }
 
 class _PastMatchesViewState extends State<PastMatchesView> {
+  late QrImage qrImage;
   List<HollisticMatchScoutingData> matches =
       <HollisticMatchScoutingData>[];
 
@@ -73,9 +74,6 @@ class _PastMatchesViewState extends State<PastMatchesView> {
     });
   }
 
-  @protected
-  late QrImage qrImage;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,13 +94,16 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                   ],
                 ),
                 Row(
-                  children: <Widget>[
-                    IconButton(
+                  children: strutAll(<Widget>[
+                    IconButton.filledTonal(
+                        onPressed: () {},
+                        icon: const Icon(Icons.refresh_rounded)),
+                    IconButton.filledTonal(
                       icon: const Icon(Icons.delete_forever),
                       onPressed: () async =>
                           await launchConfirmDialog(
                         // deletes all matches
-                        okLabel: "Delete",
+                        okLabel: "Delete All",
                         denyLabel: "Cancel",
                         icon: const Icon(Icons.warning_amber_rounded),
                         title: "Confirm Deletion",
@@ -122,7 +123,7 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                         },
                       ),
                     ),
-                    IconButton(
+                    IconButton.filledTonal(
                       icon: const Icon(Icons.download),
                       onPressed: () async {
                         /*
@@ -147,7 +148,7 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                         */
                       },
                     ),
-                  ],
+                  ], width: 14),
                 ),
               ],
             ),
@@ -211,22 +212,30 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                             );
                           },
                         )
-                      : ListView.builder(
-                          physics:
-                              const AlwaysScrollableScrollPhysics(
-                                  parent: BouncingScrollPhysics(
-                                      decelerationRate:
-                                          ScrollDecelerationRate
-                                              .normal)),
-                          padding: const EdgeInsets.only(bottom: 40),
-                          itemCount: matches.length,
-                          itemBuilder:
-                              (BuildContext context, int index) {
-                            return MatchTile(
-                              match: matches[index],
-                              onDelete: removeMatch,
-                            );
-                          },
+                      : RefreshIndicator(
+                          onRefresh: () async =>
+                              await Future<void>.delayed(
+                                  const Duration(milliseconds: 750),
+                                  () => loadMatches()),
+                          displacement: 20,
+                          child: ListView.builder(
+                            physics:
+                                const AlwaysScrollableScrollPhysics(
+                                    parent: BouncingScrollPhysics(
+                                        decelerationRate:
+                                            ScrollDecelerationRate
+                                                .normal)),
+                            padding:
+                                const EdgeInsets.only(bottom: 40),
+                            itemCount: matches.length,
+                            itemBuilder:
+                                (BuildContext context, int index) {
+                              return MatchTile(
+                                match: matches[index],
+                                onDelete: removeMatch,
+                              );
+                            },
+                          ),
                         )),
         ],
       ),

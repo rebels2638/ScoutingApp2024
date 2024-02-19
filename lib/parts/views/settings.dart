@@ -82,6 +82,8 @@ class _SettingsViewState extends State<SettingsView> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: const AlwaysScrollableScrollPhysics(
+          parent: BouncingScrollPhysics()),
       child: Column(
         children: <Widget>[
           Row(

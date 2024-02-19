@@ -753,44 +753,15 @@ class _ScoutingViewState extends State<ScoutingView>
                     })),
           ])),
     ];
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Column(
-        children: <Widget>[
-          Flexible(
-              flex: 0,
-              child: Wrap(
-                  children: strutAll(<Widget>[
-                if (PreferCompactModal.isCompactPreferred(context))
-                  IconButton.filledTonal(
-                      onPressed: () async =>
-                          await launchConfirmDialog(context,
-                              title: "Are you sure you want to exit?",
-                              message: const Text(
-                                  "The current session datawill be lost."),
-                              onConfirm: () {
-                            context
-                                .findAncestorStateOfType<
-                                    _ScoutingSessionViewDelegateState>()!
-                                .setState(() {
-                              _currBloc = null;
-                              Debug().warn(
-                                  "Exited the current scouting session");
-                            });
-                          }),
-                      icon: const Icon(Icons.exit_to_app_rounded))
-                else
-                  FilledButton.icon(
-                      style: ButtonStyle(
-                          shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(8)))),
-                      icon: const Icon(Icons.exit_to_app_rounded),
-                      label: const Text("Exit Session"),
-                      onPressed: () async {
-                        // make ScoutingSessionViewDelegateState show the launcher again by using BuildContext
+    return Column(
+      children: <Widget>[
+        Flexible(
+            flex: 0,
+            child: Wrap(
+                children: strutAll(<Widget>[
+              if (PreferCompactModal.isCompactPreferred(context))
+                IconButton.filledTonal(
+                    onPressed: () async =>
                         await launchConfirmDialog(context,
                             title: "Are you sure you want to exit?",
                             message: const Text(
@@ -804,24 +775,145 @@ class _ScoutingViewState extends State<ScoutingView>
                             Debug().warn(
                                 "Exited the current scouting session");
                           });
+                        }),
+                    icon: const Icon(Icons.exit_to_app_rounded))
+              else
+                FilledButton.icon(
+                    style: ButtonStyle(
+                        shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(8)))),
+                    icon: const Icon(Icons.exit_to_app_rounded),
+                    label: const Text("Exit Session"),
+                    onPressed: () async {
+                      // make ScoutingSessionViewDelegateState show the launcher again by using BuildContext
+                      await launchConfirmDialog(context,
+                          title: "Are you sure you want to exit?",
+                          message: const Text(
+                              "The current session datawill be lost."),
+                          onConfirm: () {
+                        context
+                            .findAncestorStateOfType<
+                                _ScoutingSessionViewDelegateState>()!
+                            .setState(() {
+                          _currBloc = null;
+                          Debug().warn(
+                              "Exited the current scouting session");
                         });
-                      }),
-                if (PreferCompactModal.isCompactPreferred(context))
-                  IconButton.filledTonal(
-                      onPressed: () async =>
-                          await launchConfirmDialog(
-                              showOkLabel: false,
-                              denyLabel: "Close",
-                              icon: const Icon(
-                                  Icons.warning_amber_rounded),
-                              title: "Warning",
-                              context,
-                              message: const Text("Unavaliable..."),
-                              onConfirm: () {}),
-                      icon: const Icon(
-                          Icons.bluetooth_connected_rounded))
-                else
-                  FilledButton.icon(
+                      });
+                    }),
+              if (PreferCompactModal.isCompactPreferred(context))
+                IconButton.filledTonal(
+                    onPressed: () async =>
+                        await launchConfirmDialog(
+                            showOkLabel: false,
+                            denyLabel: "Close",
+                            icon: const Icon(
+                                Icons.warning_amber_rounded),
+                            title: "Warning",
+                            context,
+                            message: const Text("Unavaliable..."),
+                            onConfirm: () {}),
+                    icon: const Icon(
+                        Icons.bluetooth_connected_rounded))
+              else
+                FilledButton.icon(
+                  style: ButtonStyle(
+                      shape: MaterialStateProperty.all<
+                              RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(8)))),
+                  icon:
+                      const Icon(Icons.bluetooth_connected_rounded),
+                  label: const Text("Beam Session"),
+                  onPressed: () async => await launchConfirmDialog(
+                      showOkLabel: false,
+                      denyLabel: "Close",
+                      icon: const Icon(Icons.warning_amber_rounded),
+                      title: "Warning",
+                      context,
+                      message: const Text("Unavaliable..."),
+                      onConfirm: () {}),
+                ),
+              if (PreferCompactModal.isCompactPreferred(context))
+                IconButton.filledTonal(
+                    onPressed: () {},
+                    icon: const Icon(CommunityMaterialIcons.qrcode))
+              else
+                FilledButton.icon(
+                    style: ButtonStyle(
+                        shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(8)))),
+                    icon: const Icon(CommunityMaterialIcons.qrcode),
+                    label: const Text("Export Session"),
+                    onPressed: () {}),
+              if (PreferCompactModal.isCompactPreferred(context))
+                IconButton.filledTonal(
+                    onPressed: () {
+                      EphemeralScoutingData data =
+                          EphemeralScoutingData.fromHollistic(
+                              context
+                                  .read<ScoutingSessionBloc>()
+                                  .exportHollistic());
+                      ScoutingTelemetry().put(data);
+                      Debug().info(
+                          "Saved an entry of ${data.id}=${data.toString()}");
+                      launchConfirmDialog(context,
+                          message: const Text(
+                              "Saved this scouting entry to persistent storage!"),
+                          onConfirm: () {
+                        context
+                            .findAncestorStateOfType<
+                                _ScoutingSessionViewDelegateState>()!
+                            .setState(() {
+                          _currBloc = null;
+                          Debug().warn(
+                              "Exited the current scouting session");
+                        });
+                      });
+                    },
+                    icon: const Icon(Icons.save_rounded))
+              else
+                FilledButton.icon(
+                    style: ButtonStyle(
+                        shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(8)))),
+                    icon: const Icon(Icons.save_rounded),
+                    label: const Text("Save Session"),
+                    onPressed: () {
+                      EphemeralScoutingData data =
+                          EphemeralScoutingData.fromHollistic(
+                              context
+                                  .read<ScoutingSessionBloc>()
+                                  .exportHollistic());
+                      ScoutingTelemetry().put(data);
+                      Debug().info(
+                          "Saved an entry of ${data.id}=${data.toString()}");
+                      launchConfirmDialog(context,
+                          message: const Text(
+                              "Saved this scouting entry to persistent storage!"),
+                          onConfirm: () {
+                        context
+                            .findAncestorStateOfType<
+                                _ScoutingSessionViewDelegateState>()!
+                            .setState(() {
+                          _currBloc = null;
+                          Debug().warn(
+                              "Exited the current scouting session");
+                        });
+                      });
+                    }),
+              if (ShowConsoleModal.isShowingConsole(context))
+                FilledButton.icon(
                     style: ButtonStyle(
                         shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(
@@ -829,136 +921,41 @@ class _ScoutingViewState extends State<ScoutingView>
                                 borderRadius:
                                     BorderRadius.circular(8)))),
                     icon:
-                        const Icon(Icons.bluetooth_connected_rounded),
-                    label: const Text("Beam Session"),
-                    onPressed: () async => await launchConfirmDialog(
-                        showOkLabel: false,
-                        denyLabel: "Close",
-                        icon: const Icon(Icons.warning_amber_rounded),
-                        title: "Warning",
-                        context,
-                        message: const Text("Unavaliable..."),
-                        onConfirm: () {}),
-                  ),
-                if (PreferCompactModal.isCompactPreferred(context))
-                  IconButton.filledTonal(
-                      onPressed: () {},
-                      icon: const Icon(CommunityMaterialIcons.qrcode))
-                else
-                  FilledButton.icon(
-                      style: ButtonStyle(
-                          shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(8)))),
-                      icon: const Icon(CommunityMaterialIcons.qrcode),
-                      label: const Text("Export Session"),
-                      onPressed: () {}),
-                if (PreferCompactModal.isCompactPreferred(context))
-                  IconButton.filledTonal(
-                      onPressed: () {
-                        EphemeralScoutingData data =
-                            EphemeralScoutingData.fromHollistic(
-                                context
-                                    .read<ScoutingSessionBloc>()
-                                    .exportHollistic());
-                        ScoutingTelemetry().put(data);
-                        Debug().info(
-                            "Saved an entry of ${data.id}=${data.toString()}");
-                        launchConfirmDialog(context,
-                            message: const Text(
-                                "Saved this scouting entry to persistent storage!"),
-                            onConfirm: () {
-                          context
-                              .findAncestorStateOfType<
-                                  _ScoutingSessionViewDelegateState>()!
-                              .setState(() {
-                            _currBloc = null;
-                            Debug().warn(
-                                "Exited the current scouting session");
-                          });
-                        });
-                      },
-                      icon: const Icon(Icons.save_rounded))
-                else
-                  FilledButton.icon(
-                      style: ButtonStyle(
-                          shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(8)))),
-                      icon: const Icon(Icons.save_rounded),
-                      label: const Text("Save Session"),
-                      onPressed: () {
-                        EphemeralScoutingData data =
-                            EphemeralScoutingData.fromHollistic(
-                                context
-                                    .read<ScoutingSessionBloc>()
-                                    .exportHollistic());
-                        ScoutingTelemetry().put(data);
-                        Debug().info(
-                            "Saved an entry of ${data.id}=${data.toString()}");
-                        launchConfirmDialog(context,
-                            message: const Text(
-                                "Saved this scouting entry to persistent storage!"),
-                            onConfirm: () {
-                          context
-                              .findAncestorStateOfType<
-                                  _ScoutingSessionViewDelegateState>()!
-                              .setState(() {
-                            _currBloc = null;
-                            Debug().warn(
-                                "Exited the current scouting session");
-                          });
-                        });
-                      }),
-                if (ShowConsoleModal.isShowingConsole(context))
-                  FilledButton.icon(
-                      style: ButtonStyle(
-                          shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(8)))),
-                      icon:
-                          const Icon(Icons.spatial_tracking_rounded),
-                      label: const Text("View Raw"),
-                      onPressed: () async =>
-                          await launchConfirmDialog(context,
-                              message: SingleChildScrollView(
-                                physics: const BouncingScrollPhysics(
-                                    parent:
-                                        AlwaysScrollableScrollPhysics()),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 10, bottom: 10),
-                                  child: Text.rich(TextSpan(
-                                      text:
-                                          "RAW\n${jsonEncode(context.read<ScoutingSessionBloc>().exportMapDeep().toString())}\n\nHollistic\n${jsonEncode(context.read<ScoutingSessionBloc>().exportHollistic().toString())}\n\nEphemeral\n${EphemeralScoutingData.fromHollistic(context.read<ScoutingSessionBloc>().exportHollistic())}")),
-                                ),
+                        const Icon(Icons.spatial_tracking_rounded),
+                    label: const Text("View Raw"),
+                    onPressed: () async =>
+                        await launchConfirmDialog(context,
+                            message: SingleChildScrollView(
+                              physics: const BouncingScrollPhysics(
+                                  parent:
+                                      AlwaysScrollableScrollPhysics()),
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 10, bottom: 10),
+                                child: Text.rich(TextSpan(
+                                    text:
+                                        "RAW\n${jsonEncode(context.read<ScoutingSessionBloc>().exportMapDeep().toString())}\n\nHollistic\n${jsonEncode(context.read<ScoutingSessionBloc>().exportHollistic().toString())}\n\nEphemeral\n${EphemeralScoutingData.fromHollistic(context.read<ScoutingSessionBloc>().exportHollistic())}")),
                               ),
-                              onConfirm: () {})),
-              ], width: 12))),
-          const SizedBox(height: 20),
-          Flexible(
-              child: UseAlternativeLayoutModal
-                      .isAlternativeLayoutPreferred(context)
-                  ? SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(
-                          parent: BouncingScrollPhysics()),
-                      child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: bruh))
-                  : form_grid_2(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 16,
-                      crossAxisSpacing: 16,
-                      children: bruh))
-        ],
-      ),
+                            ),
+                            onConfirm: () {})),
+            ], width: 12))),
+        const SizedBox(height: 20),
+        Flexible(
+            child: UseAlternativeLayoutModal
+                    .isAlternativeLayoutPreferred(context)
+                ? SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(
+                        parent: BouncingScrollPhysics()),
+                    child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: bruh))
+                : form_grid_2(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 16,
+                    crossAxisSpacing: 16,
+                    children: bruh))
+      ],
     );
   }
 

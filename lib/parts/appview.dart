@@ -41,21 +41,33 @@ class IntermediateMaterialApp extends StatelessWidget {
           showChart: true,
           borderRadius: const BorderRadius.only(
               bottomRight: Radius.circular(8)),
-          child: _AppView()),
+          child: const _AppView()),
     );
   }
 }
 
 class _AppView extends StatefulWidget {
-  final PageController pageController = PageController();
-  _AppView();
+  const _AppView();
 
   @override
   State<_AppView> createState() => _AppViewState();
 }
 
 class _AppViewState extends State<_AppView> {
+  late final PageController pageController;
   int _bottomNavBarIndexer = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -217,7 +229,7 @@ class _AppViewState extends State<_AppView> {
                           "BottomNavBar -> Found Scouting view at $i");
                       setState(() {
                         _bottomNavBarIndexer = i;
-                        widget.pageController.animateToPage(
+                        pageController.animateToPage(
                             _bottomNavBarIndexer,
                             duration:
                                 const Duration(milliseconds: 500),
@@ -478,8 +490,8 @@ class _AppViewState extends State<_AppView> {
               destinations: bottomItems,
               onDestinationSelected: (int i) {
                 Debug().info(
-                    "BottomNavBar -> PageView move to $i and was at ${widget.pageController.page} for builder length: ${bottomItems.length}");
-                widget.pageController.animateToPage(i,
+                    "BottomNavBar -> PageView move to $i and was at ${pageController.page} for builder length: ${bottomItems.length}");
+                pageController.animateToPage(i,
                     duration: const Duration(milliseconds: 200),
                     curve: Curves.ease);
                 setState(() => _bottomNavBarIndexer = i);
@@ -572,20 +584,18 @@ class _AppViewState extends State<_AppView> {
                                   ])),
                   )
                 : Container()) /*lmao */,
-        body: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: RepaintBoundary(
-              child: PageView(
-                physics: const NeverScrollableScrollPhysics(),
-                // this keeps the bottom nav bar index and the page view index in sync. this is kind of unoptimized in the sense of setState
-                onPageChanged: (int pageNow) =>
-                    setState(() => _bottomNavBarIndexer = pageNow),
-                scrollDirection: Axis.horizontal,
-                allowImplicitScrolling:
-                    false, // prevent users from accidentally swiping
-                controller: widget.pageController,
-                children: pageViewWidgets,
-              ),
-            )));
+        body: RepaintBoundary(
+          child: PageView(
+            physics: const NeverScrollableScrollPhysics(),
+            // this keeps the bottom nav bar index and the page view index in sync. this is kind of unoptimized in the sense of setState
+            onPageChanged: (int pageNow) =>
+                setState(() => _bottomNavBarIndexer = pageNow),
+            scrollDirection: Axis.horizontal,
+            allowImplicitScrolling:
+                false, // prevent users from accidentally swiping
+            controller: pageController,
+            children: pageViewWidgets,
+          ),
+        ));
   }
 }

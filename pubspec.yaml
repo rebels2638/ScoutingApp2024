@@ -10,6 +10,7 @@ dependencies:
   bloc: ^8.1.2
   build_runner: ^2.4.8
   community_material_icon: ^5.9.55
+  confetti: ^0.7.0
   equatable: ^2.0.5
   flutter:
     sdk: flutter
