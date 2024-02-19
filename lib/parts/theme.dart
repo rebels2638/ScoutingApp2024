@@ -78,18 +78,15 @@ final class ThemeBlob {
   static Future<void> loadIntricateThemes() async {
     // get all .json files in the assets/themes folder
     // for each file, load the json and create a new AppTheme
-
     _intricateThemes = <AppTheme>[];
     dynamic rule = loadYaml(
         await rootBundle.loadString("assets/rules/themes.yml"));
     int i = 0;
     int f = 0;
-    if (rule.runtimeType == YamlList && rule.length > 0) {
-      for (dynamic x in rule) {
+    if (rule.runtimeType == YamlList && rule.isNotEmpty) {
+      await Future.forEach(rule, (dynamic x) async {
         if (x is YamlMap) {
           try {
-            Debug().info(
-                "Loading Theme: ${x['id']} made by ${x['author']}");
             ThemeData? theme = ThemeDecoder.decodeThemeData(
                 jsonDecode(
                     await rootBundle.loadString(x['location'])));
@@ -156,9 +153,9 @@ final class ThemeBlob {
           Debug().ohno(
               "Cannot proceed with $x because typeof($x) != YamlMap. Instead it is ${x.runtimeType}.");
         }
-      }
-      Debug().info("Loaded $i themes. Failed $f themes");
+      });
     }
+    Debug().info("Loaded $i themes. Failed $f themes");
   }
 
   static AppTheme _gen(
@@ -168,7 +165,8 @@ final class ThemeBlob {
           data: data,
           description: id);
 
-  static Future<void> loadBuiltinThemes() async { // very critical function to call
+  static Future<void> loadBuiltinThemes() async {
+    // very critical function to call
     ThemeData? theme = ThemeDecoder.decodeThemeData(jsonDecode(
         await rootBundle.loadString("assets/default_dark.json")));
     if (theme != null) {

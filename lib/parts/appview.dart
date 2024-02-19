@@ -14,6 +14,7 @@ import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
 import 'package:scouting_app_2024/parts/bits/show_fps_monitor.dart';
 import 'package:scouting_app_2024/parts/bits/show_game_map.dart';
 import 'package:scouting_app_2024/parts/bits/theme_mode.dart';
+import 'package:scouting_app_2024/parts/loader.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/shared.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
@@ -27,7 +28,19 @@ import 'package:url_launcher/url_launcher.dart';
 GlobalKey<NavigatorState> globalNavKey = GlobalKey<NavigatorState>();
 
 class ThemedAppBundle extends StatelessWidget {
-  const ThemedAppBundle({super.key});
+  final Widget child;
+
+  const ThemedAppBundle({super.key, required this.child});
+
+  factory ThemedAppBundle.noLoadingScreen() {
+    return const ThemedAppBundle(child: IntermediateMaterialApp());
+  }
+
+  factory ThemedAppBundle.loadingScreen(Future<void> futures) {
+    return ThemedAppBundle(
+        child: LoadingAppViewScreen(
+            task: futures));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +81,7 @@ class ThemedAppBundle extends StatelessWidget {
                       ChangeNotifierProvider<LockedInScoutingModal>(
                           create: (BuildContext _) =>
                               LockedInScoutingModal())
-                    ], child: const IntermediateMaterialApp()))));
+                    ], child: child))));
   }
 }
 

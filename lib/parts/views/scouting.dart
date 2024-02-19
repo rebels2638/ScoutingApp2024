@@ -66,60 +66,77 @@ class _ScoutingSessionViewDelegateState
     return Center(
       // i feel liek this useless
       child: Builder(builder: (BuildContext context) {
-        if (_currBloc == null) {
-          return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: strutAll(<Widget>[
-                const Text("Scouting Session",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 24)),
-                ElevatedButton(
-                    style: ButtonStyle(
-                        shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(16)))),
-                    onPressed: () {
-                      setState(() {
-                        _currBloc ??= ScoutingSessionBloc();
-                        Debug().warn("Pushed a new scouting session");
-                      });
-                    },
-                    child: Padding(
-                      // a lot of the constraints here come from here: https://m3.material.io/components/floating-action-button/specs
-                      // altho kind shitty lmao, fuck it
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            const Icon(Icons.pending_actions_rounded),
-                            strut(height: 14),
-                            const Text.rich(
-                                TextSpan(children: <InlineSpan>[
-                                  TextSpan(
-                                      text: "New Session\n",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 18)),
-                                  TextSpan(
-                                      text:
-                                          "Launch a new scouting form",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 12))
+        return AnimatedSwitcher(
+            duration: const Duration(milliseconds: 500),
+            switchInCurve: Curves.easeIn,
+            switchOutCurve: Curves.easeOut,
+            transitionBuilder:
+                (Widget child, Animation<double> animation) {
+              return SlideTransition(
+                position: Tween<Offset>(
+                        begin: const Offset(0, 1),
+                        end: const Offset(0, 0))
+                    .animate(animation),
+                child: child,
+              );
+            },
+            child: _currBloc == null
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: strutAll(<Widget>[
+                      const Text("Scouting Session",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24)),
+                      ElevatedButton(
+                          style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(
+                                              16)))),
+                          onPressed: () {
+                            setState(() {
+                              _currBloc ??= ScoutingSessionBloc();
+                              Debug().warn(
+                                  "Pushed a new scouting session");
+                            });
+                          },
+                          child: Padding(
+                            // a lot of the constraints here come from here: https://m3.material.io/components/floating-action-button/specs
+                            // altho kind shitty lmao, fuck it
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.center,
+                                children: <Widget>[
+                                  const Icon(
+                                      Icons.pending_actions_rounded),
+                                  strut(height: 14),
+                                  const Text.rich(
+                                      TextSpan(children: <InlineSpan>[
+                                        TextSpan(
+                                            text: "New Session\n",
+                                            style: TextStyle(
+                                                fontWeight:
+                                                    FontWeight.w600,
+                                                fontSize: 18)),
+                                        TextSpan(
+                                            text:
+                                                "Launch a new scouting form",
+                                            style: TextStyle(
+                                                fontWeight:
+                                                    FontWeight.w400,
+                                                fontSize: 12))
+                                      ]),
+                                      textAlign: TextAlign.center)
                                 ]),
-                                textAlign: TextAlign.center)
-                          ]),
-                    )),
-              ], height: 78));
-        } else {
-          Debug().info(
-              "Moving from SCOUTING_SESSION_LAUNCHER to SCOUTING_SESSION");
-          return BlocProvider<ScoutingSessionBloc>(
-              create: (BuildContext _) => _currBloc!,
-              child: const ScoutingView());
-        }
+                          )),
+                    ], height: 78))
+                : BlocProvider<ScoutingSessionBloc>(
+                    create: (BuildContext _) => _currBloc!,
+                    child: const ScoutingView()));
       }),
     );
   }
