@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import 'package:flutter_svg_icons/flutter_svg_icons.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
@@ -11,23 +10,6 @@ enum SwitchIconPosition {
   /// the icon will be placed around the switch using a row
   aroundSwitch
 }
-
-@pragma("vm:prefer-inline")
-Widget material3ExtFabLook(
-        {required void Function() onTap,
-        Color? color,
-        required Widget child}) =>
-    GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16), color: color),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: child,
-        ),
-      ),
-    );
 
 // there is no much boilerplate shitty code for this number picker thing, just look below, there are like 2 delegate functions for this lmfao
 class _InternalNumberPicker extends StatefulWidget {
@@ -273,26 +255,6 @@ class _BasicToggleSwitchState extends State<BasicToggleSwitch> {
                 });
   }
 }
-
-@pragma("vm:prefer-inline")
-Widget roundPadContainer(
-        {required Widget child,
-        required double factor,
-        Color? color,
-        Gradient? gradient,
-        List<BoxShadow>? boxShadow}) =>
-    Padding(
-        padding: EdgeInsets.all(factor),
-        child: Container(
-            decoration: BoxDecoration(
-                color: color,
-                gradient: gradient,
-                boxShadow: boxShadow,
-                borderRadius: BorderRadius.circular(factor)),
-            child: child));
-
-@pragma("vm:prefer-inline")
-Widget svgIcon(String url) => SvgIcon(icon: SvgIconData(url));
 
 @pragma("vm:prefer-inline")
 List<Widget> strutAll(List<Widget> children,

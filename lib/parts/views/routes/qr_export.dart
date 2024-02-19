@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
-import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 class QRExportOverlayRoute extends ModalRoute<void> {
