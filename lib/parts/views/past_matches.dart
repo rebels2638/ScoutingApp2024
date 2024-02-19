@@ -267,7 +267,7 @@ class _MatchTileState extends State<MatchTile> {
                       fontSize: 14)),
             ])),
         child: Column(children: <Widget>[
-          form_label_1("Overview",
+          form_label_2("Overview",
               style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
