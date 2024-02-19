@@ -46,6 +46,12 @@
   location: "assets/themes/pastel.json"
   icon: "community,drawing_box"
 
+- canonical_name: "Lemon Berry"
+  id: "exoad_lemon_berry"
+  author: "Jack Meng (exoad)"
+  location: "assets/themes/lemon_berry.json"
+  icon: "community,delete_variant"
+
 - canonical_name: "Zen"
   id: "exoad_zen"
   author: "Jack Meng (exoad)"

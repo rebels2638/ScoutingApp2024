@@ -3,16 +3,6 @@ import 'package:numberpicker/numberpicker.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
 
-import 'basic_toggle_switch.dart';
-
-enum SwitchIconPosition {
-  /// the icon will be placed on the thumb
-  onSwitch,
-
-  /// the icon will be placed around the switch using a row
-  aroundSwitch
-}
-
 // there is no much boilerplate shitty code for this number picker thing, just look below, there are like 2 delegate functions for this lmfao
 class _InternalNumberPicker extends StatefulWidget {
   final int maxValue;

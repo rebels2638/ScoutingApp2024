@@ -19,6 +19,7 @@ enum CommunityMaterialIconsEnumMapper {
   incognito(CommunityMaterialIcons.incognito),
   waves(CommunityMaterialIcons.waves),
   drawing_box(CommunityMaterialIcons.drawing_box),
+  delete_variant(CommunityMaterialIcons.delete_variant),
   skull_scan(CommunityMaterialIcons.skull_scan);
 
   final IconData data;

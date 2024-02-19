@@ -2,6 +2,7 @@ import "dart:convert";
 
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
+import "package:scouting_app_2024/blobs/basic_toggle_switch.dart";
 import "package:scouting_app_2024/blobs/blobs.dart";
 import "package:scouting_app_2024/blobs/form_blob.dart";
 import "package:scouting_app_2024/blobs/inc_dec_blob.dart";
@@ -10,27 +11,51 @@ import "package:scouting_app_2024/parts/bits/show_console.dart";
 import "package:scouting_app_2024/user/models/ephemeral_data.dart";
 import 'package:scouting_app_2024/user/models/team_bloc.dart';
 import "package:scouting_app_2024/parts/team.dart";
+import "package:scouting_app_2024/parts/views_delegate.dart";
 import 'package:scouting_app_2024/user/models/team_model.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import "package:scouting_app_2024/user/scouting_telemetry.dart";
 
-import "../../blobs/basic_toggle_switch.dart";
-
 typedef SectionId = ({String title, IconData icon});
 
 ScoutingSessionBloc? _currBloc;
 
-class ScoutingSessionViewDelegate extends StatefulWidget {
+// so much boilerplate bruh lmao
+class ScoutingSessionViewDelegate extends StatelessWidget
+    implements AppPageViewExporter {
   const ScoutingSessionViewDelegate({super.key});
 
   @override
-  State<ScoutingSessionViewDelegate> createState() =>
+  Widget build(BuildContext context) {
+    return _ScoutingSessionViewDelegate();
+  }
+
+  @override
+  ({
+    Widget child,
+    ({Icon activeIcon, Icon icon, String label, String tooltip}) item
+  }) exportAppPageView() {
+    return (
+      child: this,
+      item: (
+        activeIcon: const Icon(Icons.data_thresholding_rounded),
+        icon: const Icon(Icons.data_thresholding_outlined),
+        label: "Scouting",
+        tooltip: "Data collection screen for observing matches"
+      )
+    );
+  }
+}
+
+class _ScoutingSessionViewDelegate extends StatefulWidget {
+  @override
+  State<_ScoutingSessionViewDelegate> createState() =>
       _ScoutingSessionViewDelegateState();
 }
 
 class _ScoutingSessionViewDelegateState
-    extends State<ScoutingSessionViewDelegate> {
+    extends State<_ScoutingSessionViewDelegate> {
   @override
   void initState() {
     super.initState();

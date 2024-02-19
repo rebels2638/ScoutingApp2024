@@ -21,7 +21,6 @@ import "package:theme_provider/theme_provider.dart";
 import 'package:url_launcher/url_launcher.dart';
 
 import 'theme_classifier.dart';
-import 'views/scouting_session_view_delegate.dart' as rr;
 
 GlobalKey<ScaffoldState> _globalScaffoldKey =
     GlobalKey<ScaffoldState>();
@@ -79,7 +78,7 @@ class _AppViewState extends State<_AppView> {
       }) item
       // this is the only delegate that formally implements this feature where the view is not directly shown but through a delegate that can forward operations
     }) scoutingView =
-        const rr.ScoutingSessionViewDelegate().exportAppPageView();
+        const ScoutingSessionViewDelegate().exportAppPageView();
     ({
       Widget child,
       ({
@@ -249,9 +248,9 @@ class _AppViewState extends State<_AppView> {
                           return AlertDialog(
                               scrollable: true,
                               title: const Row(children: <Widget>[
-                                 Icon(Icons.palette_rounded),
-                                 SizedBox(width: 10),
-                                 Text("Theme Library")
+                                Icon(Icons.palette_rounded),
+                                SizedBox(width: 10),
+                                Text("Theme Library")
                               ]),
                               content: SingleChildScrollView(
                                   child: Column(
@@ -299,8 +298,7 @@ class _AppViewState extends State<_AppView> {
                                                             .color ??
                                                         Colors.black),
                                                     foregroundColor:
-                                                        MaterialStateProperty.all<Color>(
-                                                            e.data.iconTheme.color ?? Colors.black),
+                                                        MaterialStateProperty.all<Color>(e.data.iconTheme.color ?? Colors.black),
                                                     iconSize: MaterialStateProperty.all<double>(30),
                                                     shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
                                                     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(const EdgeInsets.all(14))),
@@ -325,7 +323,8 @@ class _AppViewState extends State<_AppView> {
                                                             .of(
                                                       e.id,
                                                     ).icon),
-                                                    const SizedBox(height: 6),
+                                                    const SizedBox(
+                                                        height: 6),
                                                     if (e.data
                                                             .brightness ==
                                                         Brightness
@@ -393,7 +392,8 @@ class _AppViewState extends State<_AppView> {
                                                             .of(
                                                       e.id,
                                                     ).icon),
-                                                    const SizedBox(height: 6),
+                                                    const SizedBox(
+                                                        height: 6),
                                                     if (e.data
                                                             .brightness ==
                                                         Brightness

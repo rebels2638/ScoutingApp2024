@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 
+import 'switch_icon_position.dart';
+
 class BasicToggleSwitch extends StatefulWidget {
   final void Function(bool res) onChanged;
   final bool initialValue;
