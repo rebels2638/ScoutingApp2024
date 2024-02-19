@@ -1,6 +1,7 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
+import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import "package:scouting_app_2024/blobs/form_blob.dart";
 import 'package:scouting_app_2024/user/models/team_bloc.dart';
@@ -23,8 +24,8 @@ class PastMatchesView extends StatefulWidget
     return (
       child: this,
       item: (
-        activeIcon: const Icon(Icons.history_rounded),
-        icon: const Icon(Icons.history_outlined),
+        activeIcon: const Icon(Icons.receipt_rounded),
+        icon: const Icon(Icons.receipt_outlined),
         label: "History",
         tooltip: "View data collected from past matches"
       )
@@ -338,25 +339,13 @@ class _MatchTileState extends State<MatchTile> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: strutAll(<Widget>[
-                        if (PreferCompactModal.isCompactPreferred(
-                            context))
-                          FilledButton(
-                            child:
-                                const Icon(Icons.bluetooth_rounded),
-                            onPressed: () async =>
-                                await launchConfirmDialog(
-                                    showOkLabel: false,
-                                    denyLabel: "Close",
-                                    icon: const Icon(
-                                        Icons.warning_amber_rounded),
-                                    title: "Warning",
-                                    context,
-                                    message: const Text(
-                                        "Bluetooth feature not yet available!"),
-                                    onConfirm: () {}),
-                          )
-                        else
-                          FilledButton.icon(
+                        if (ShowExperimentalModal
+                            .isShowingExperimental(context))
+                          if (PreferCompactModal.isCompactPreferred(
+                              context))
+                            FilledButton(
+                              child:
+                                  const Icon(Icons.bluetooth_rounded),
                               onPressed: () async =>
                                   await launchConfirmDialog(
                                       showOkLabel: false,
@@ -368,9 +357,23 @@ class _MatchTileState extends State<MatchTile> {
                                       message: const Text(
                                           "Bluetooth feature not yet available!"),
                                       onConfirm: () {}),
-                              icon:
-                                  const Icon(Icons.bluetooth_rounded),
-                              label: const Text("Bluetooth Share")),
+                            )
+                          else
+                            FilledButton.icon(
+                                onPressed: () async =>
+                                    await launchConfirmDialog(
+                                        showOkLabel: false,
+                                        denyLabel: "Close",
+                                        icon: const Icon(Icons
+                                            .warning_amber_rounded),
+                                        title: "Warning",
+                                        context,
+                                        message: const Text(
+                                            "Bluetooth feature not yet available!"),
+                                        onConfirm: () {}),
+                                icon: const Icon(
+                                    Icons.bluetooth_rounded),
+                                label: const Text("Bluetooth Share")),
                         if (PreferCompactModal.isCompactPreferred(
                             context))
                           FilledButton(

@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/blobs/locale_blob.dart';
+import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
+import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
 import 'package:theme_provider/theme_provider.dart';
 
@@ -41,10 +43,18 @@ class _ConsoleComponent extends StatefulWidget {
 
 class ConsoleStateComponent extends State<_ConsoleComponent> {
   static final List<String> internalConsoleBuffer = <String>[];
+  late ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -184,68 +194,89 @@ class ConsoleStateComponent extends State<_ConsoleComponent> {
                     const Icon(Icons.security_update_warning_rounded),
                 label: const Text("THROW_NOW",
                     style: TextStyle(fontWeight: FontWeight.bold))),
+            FilledButton.tonal(
+                onPressed: () {
+                  _scrollController.animateTo(
+                      _scrollController.position.maxScrollExtent,
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.easeOut);
+                },
+                child: const Text("Scroll to Bottom")),
+            FilledButton.tonal(
+                onPressed: () {
+                  Debug().info(
+                      "BUFFER_USAGE: ${internalConsoleBuffer.length} of ${Shared.MAX_LOG_LENGTH} (${(internalConsoleBuffer.length / Shared.MAX_LOG_LENGTH) * 100}%)");
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      showCloseIcon: true,
+                      behavior: SnackBarBehavior.fixed,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      content: Center(
+                        child: Text(
+                            "${internalConsoleBuffer.length} of ${Shared.MAX_LOG_LENGTH} (${(internalConsoleBuffer.length / Shared.MAX_LOG_LENGTH) * 100}%)"),
+                      )));
+                },
+                child: const Text("Display buffer usage"))
           ]),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(14.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(14)),
-                child: SingleChildScrollView(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        for (String t in internalConsoleBuffer)
-                          Padding(
-                            padding: // shitty way to do a strut lol
-                                const EdgeInsets.only(bottom: 10),
-                            child: Container(
-                                decoration: BoxDecoration(
-                                  color: ThemeProvider.themeOf(
-                                                  context)
-                                              .data
-                                              .colorScheme
-                                              .brightness ==
-                                          Brightness.dark
-                                      ? ThemeProvider.themeOf(context)
-                                          .data
-                                          .colorScheme
-                                          .onSurface
-                                      : ThemeProvider.themeOf(context)
-                                          .data
-                                          .colorScheme
-                                          .onInverseSurface,
-                                  borderRadius:
-                                      BorderRadius.circular(8),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(t,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          color: ThemeProvider
-                                                          .themeOf(
-                                                              context)
-                                                      .data
-                                                      .colorScheme
-                                                      .brightness ==
-                                                  Brightness.light
-                                              ? ThemeProvider.themeOf(
-                                                      context)
-                                                  .data
-                                                  .colorScheme
-                                                  .onSurface
-                                              : ThemeProvider.themeOf(
-                                                      context)
-                                                  .data
-                                                  .colorScheme
-                                                  .onInverseSurface,
-                                          fontFamily:
-                                              "IBM Plex Mono")),
-                                )),
-                          )
-                      ]),
-                ),
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(14)),
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      for (String t in internalConsoleBuffer)
+                        Padding(
+                          padding: // shitty way to do a strut lol
+                              const EdgeInsets.only(bottom: 10),
+                          child: Container(
+                              decoration: BoxDecoration(
+                                color: ThemeProvider.themeOf(
+                                                context)
+                                            .data
+                                            .colorScheme
+                                            .brightness ==
+                                        Brightness.dark
+                                    ? ThemeProvider.themeOf(context)
+                                        .data
+                                        .colorScheme
+                                        .onSurface
+                                    : ThemeProvider.themeOf(context)
+                                        .data
+                                        .colorScheme
+                                        .onInverseSurface,
+                                borderRadius:
+                                    BorderRadius.circular(8),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(t,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        color: ThemeProvider
+                                                        .themeOf(
+                                                            context)
+                                                    .data
+                                                    .colorScheme
+                                                    .brightness ==
+                                                Brightness.light
+                                            ? ThemeProvider.themeOf(
+                                                    context)
+                                                .data
+                                                .colorScheme
+                                                .onSurface
+                                            : ThemeProvider.themeOf(
+                                                    context)
+                                                .data
+                                                .colorScheme
+                                                .onInverseSurface,
+                                        fontFamily:
+                                            "IBM Plex Mono")),
+                              )),
+                        )
+                    ]),
               ),
             ),
           )

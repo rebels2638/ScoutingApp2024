@@ -168,6 +168,70 @@ class _SettingsViewState extends State<SettingsView> {
                                               "Settings Reset!"));
                                 }),
                             child: const Icon(Icons.replay_rounded))),
+                const SizedBox(width: 12),
+                AnimatedSwitcher(
+                    transitionBuilder:
+                        (Widget child, Animation<double> animation) {
+                      return ScaleTransition(
+                          scale: animation, child: child);
+                    },
+                    duration: const Duration(milliseconds: 300),
+                    switchInCurve: Curves.ease,
+                    switchOutCurve: Curves.ease,
+                    child: !PreferCompactModal.isCompactPreferred(
+                            context)
+                        ? preferTonalButton(
+                            onPressed: () {
+                              UserTelemetry().save();
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(yummySnackBar(
+                                      duration: const Duration(
+                                          milliseconds: 1500),
+                                      margin: null,
+                                      width: 300,
+                                      icon: Icon(Icons.save_rounded,
+                                          color:
+                                              ThemeProvider.themeOf(
+                                                      context)
+                                                  .data
+                                                  .colorScheme
+                                                  .background),
+                                      backgroundColor:
+                                          ThemeProvider.themeOf(
+                                                  context)
+                                              .data
+                                              .colorScheme
+                                              .primary,
+                                      message: "Settings Saved!"));
+                            },
+                            icon: const Icon(Icons.save_alt_rounded),
+                            label: const Text("Save Settings"))
+                        : FilledButton(
+                            onPressed: () {
+                              UserTelemetry().save();
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(yummySnackBar(
+                                      duration: const Duration(
+                                          milliseconds: 1500),
+                                      margin: null,
+                                      width: 300,
+                                      icon: Icon(Icons.save_rounded,
+                                          color:
+                                              ThemeProvider.themeOf(
+                                                      context)
+                                                  .data
+                                                  .colorScheme
+                                                  .background),
+                                      backgroundColor:
+                                          ThemeProvider.themeOf(
+                                                  context)
+                                              .data
+                                              .colorScheme
+                                              .primary,
+                                      message: "Settings Saved!"));
+                            },
+                            child:
+                                const Icon(Icons.save_alt_rounded))),
                 if (ShowConsoleModal.isShowingConsole(context))
                   const SizedBox(width: 12),
                 if (ShowConsoleModal.isShowingConsole(context))
@@ -183,91 +247,28 @@ class _SettingsViewState extends State<SettingsView> {
                       child: !PreferCompactModal.isCompactPreferred(
                               context)
                           ? preferTonalButton(
-                              onPressed: () {
-                                UserTelemetry().save();
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(yummySnackBar(
-                                        duration: const Duration(
-                                            milliseconds: 1500),
-                                        margin: null,
-                                        width: 300,
-                                        icon: Icon(Icons.save_rounded,
-                                            color: ThemeProvider
-                                                    .themeOf(context)
-                                                .data
-                                                .colorScheme
-                                                .background),
-                                        backgroundColor:
-                                            ThemeProvider.themeOf(
-                                                    context)
-                                                .data
-                                                .colorScheme
-                                                .primary,
-                                        message: "Settings Saved!"));
+                              onPressed: () async {
+                                await launchConfirmDialog(context,
+                                    message: Text(UserTelemetry()
+                                        .currentModel
+                                        .toJson()
+                                        .toString()),
+                                    onConfirm: () {});
                               },
-                              icon:
-                                  const Icon(Icons.save_alt_rounded),
-                              label: const Text("Save Settings"))
+                              icon: const Icon(
+                                  Icons.developer_mode_rounded),
+                              label: const Text("DEV_VIEW_RAW"))
                           : FilledButton(
-                              onPressed: () {
-                                UserTelemetry().save();
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(yummySnackBar(
-                                        duration: const Duration(
-                                            milliseconds: 1500),
-                                        margin: null,
-                                        width: 300,
-                                        icon: Icon(Icons.save_rounded,
-                                            color: ThemeProvider
-                                                    .themeOf(context)
-                                                .data
-                                                .colorScheme
-                                                .background),
-                                        backgroundColor:
-                                            ThemeProvider.themeOf(
-                                                    context)
-                                                .data
-                                                .colorScheme
-                                                .primary,
-                                        message: "Settings Saved!"));
+                              onPressed: () async {
+                                await launchConfirmDialog(context,
+                                    message: Text(UserTelemetry()
+                                        .currentModel
+                                        .toJson()
+                                        .toString()),
+                                    onConfirm: () {});
                               },
                               child: const Icon(
-                                  Icons.save_alt_rounded))),
-                const SizedBox(width: 12),
-                AnimatedSwitcher(
-                    transitionBuilder:
-                        (Widget child, Animation<double> animation) {
-                      return ScaleTransition(
-                          scale: animation, child: child);
-                    },
-                    duration: const Duration(milliseconds: 300),
-                    switchInCurve: Curves.ease,
-                    switchOutCurve: Curves.ease,
-                    child: !PreferCompactModal.isCompactPreferred(
-                            context)
-                        ? preferTonalButton(
-                            onPressed: () async {
-                              await launchConfirmDialog(context,
-                                  message: Text(UserTelemetry()
-                                      .currentModel
-                                      .toJson()
-                                      .toString()),
-                                  onConfirm: () {});
-                            },
-                            icon: const Icon(
-                                Icons.developer_mode_rounded),
-                            label: const Text("DEV_VIEW_RAW"))
-                        : FilledButton(
-                            onPressed: () async {
-                              await launchConfirmDialog(context,
-                                  message: Text(UserTelemetry()
-                                      .currentModel
-                                      .toJson()
-                                      .toString()),
-                                  onConfirm: () {});
-                            },
-                            child: const Icon(
-                                Icons.developer_mode_rounded)))
+                                  Icons.developer_mode_rounded)))
               ]),
           SingleChildScrollView(
             physics: const BouncingScrollPhysics(),

@@ -9,6 +9,7 @@ import "package:scouting_app_2024/blobs/inc_dec_blob.dart";
 import "package:scouting_app_2024/blobs/locale_blob.dart";
 import "package:scouting_app_2024/parts/bits/prefer_compact.dart";
 import "package:scouting_app_2024/parts/bits/show_console.dart";
+import "package:scouting_app_2024/parts/bits/show_experimental.dart";
 import "package:scouting_app_2024/parts/bits/use_alt_layout.dart";
 import "package:scouting_app_2024/user/models/ephemeral_data.dart";
 import 'package:scouting_app_2024/user/models/team_bloc.dart';
@@ -761,8 +762,8 @@ class _ScoutingViewState extends State<ScoutingView>
                 children: strutAll(<Widget>[
               if (PreferCompactModal.isCompactPreferred(context))
                 IconButton.filledTonal(
-                    onPressed: () async =>
-                        await launchConfirmDialog(context,
+                    onPressed: () async => await launchConfirmDialog(
+                            context,
                             title: "Are you sure you want to exit?",
                             message: const Text(
                                 "The current session datawill be lost."),
@@ -804,40 +805,42 @@ class _ScoutingViewState extends State<ScoutingView>
                         });
                       });
                     }),
-              if (PreferCompactModal.isCompactPreferred(context))
-                IconButton.filledTonal(
-                    onPressed: () async =>
-                        await launchConfirmDialog(
-                            showOkLabel: false,
-                            denyLabel: "Close",
-                            icon: const Icon(
-                                Icons.warning_amber_rounded),
-                            title: "Warning",
-                            context,
-                            message: const Text("Unavaliable..."),
-                            onConfirm: () {}),
-                    icon: const Icon(
-                        Icons.bluetooth_connected_rounded))
-              else
-                FilledButton.icon(
-                  style: ButtonStyle(
-                      shape: MaterialStateProperty.all<
-                              RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(8)))),
-                  icon:
-                      const Icon(Icons.bluetooth_connected_rounded),
-                  label: const Text("Beam Session"),
-                  onPressed: () async => await launchConfirmDialog(
-                      showOkLabel: false,
-                      denyLabel: "Close",
-                      icon: const Icon(Icons.warning_amber_rounded),
-                      title: "Warning",
-                      context,
-                      message: const Text("Unavaliable..."),
-                      onConfirm: () {}),
-                ),
+              if (ShowExperimentalModal.isShowingExperimental(
+                  context))
+                if (PreferCompactModal.isCompactPreferred(context))
+                  IconButton.filledTonal(
+                      onPressed: () async =>
+                          await launchConfirmDialog(
+                              showOkLabel: false,
+                              denyLabel: "Close",
+                              icon: const Icon(
+                                  Icons.warning_amber_rounded),
+                              title: "Warning",
+                              context,
+                              message: const Text("Unavaliable..."),
+                              onConfirm: () {}),
+                      icon: const Icon(
+                          Icons.bluetooth_connected_rounded))
+                else
+                  FilledButton.icon(
+                    style: ButtonStyle(
+                        shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(8)))),
+                    icon:
+                        const Icon(Icons.bluetooth_connected_rounded),
+                    label: const Text("Beam Session"),
+                    onPressed: () async => await launchConfirmDialog(
+                        showOkLabel: false,
+                        denyLabel: "Close",
+                        icon: const Icon(Icons.warning_amber_rounded),
+                        title: "Warning",
+                        context,
+                        message: const Text("Unavaliable..."),
+                        onConfirm: () {}),
+                  ),
               if (PreferCompactModal.isCompactPreferred(context))
                 IconButton.filledTonal(
                     onPressed: () {},
@@ -857,10 +860,9 @@ class _ScoutingViewState extends State<ScoutingView>
                 IconButton.filledTonal(
                     onPressed: () {
                       EphemeralScoutingData data =
-                          EphemeralScoutingData.fromHollistic(
-                              context
-                                  .read<ScoutingSessionBloc>()
-                                  .exportHollistic());
+                          EphemeralScoutingData.fromHollistic(context
+                              .read<ScoutingSessionBloc>()
+                              .exportHollistic());
                       ScoutingTelemetry().put(data);
                       Debug().info(
                           "Saved an entry of ${data.id}=${data.toString()}");
@@ -891,10 +893,9 @@ class _ScoutingViewState extends State<ScoutingView>
                     label: const Text("Save Session"),
                     onPressed: () {
                       EphemeralScoutingData data =
-                          EphemeralScoutingData.fromHollistic(
-                              context
-                                  .read<ScoutingSessionBloc>()
-                                  .exportHollistic());
+                          EphemeralScoutingData.fromHollistic(context
+                              .read<ScoutingSessionBloc>()
+                              .exportHollistic());
                       ScoutingTelemetry().put(data);
                       Debug().info(
                           "Saved an entry of ${data.id}=${data.toString()}");
@@ -920,8 +921,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.circular(8)))),
-                    icon:
-                        const Icon(Icons.spatial_tracking_rounded),
+                    icon: const Icon(Icons.spatial_tracking_rounded),
                     label: const Text("View Raw"),
                     onPressed: () async =>
                         await launchConfirmDialog(context,

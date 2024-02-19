@@ -8,7 +8,8 @@ import 'package:scouting_app_2024/utils.dart';
 
 class Debug {
   @pragma("vm:prefer-inline")
-  static bool isPhase(LogRecord record) => record.level == Level.FINE;
+  static bool isPhase(LogRecord record) =>
+      record.message.contains(GenericUtils.HAZARD_DIAMOND);
   Debug._();
   String _lastPhase = "Init";
   factory Debug() => _singleton;
@@ -21,7 +22,7 @@ class Debug {
         GenericUtils.HAZARD_DIAMOND,
         Shared.HAZARD_PHASE_DIAMOND_REPS);
     _logger
-        .fine("\n$diamonds  [ $_lastPhase->$phaseName ]  $diamonds");
+        .info("\n$diamonds  [ $_lastPhase->$phaseName ]  $diamonds");
     _lastPhase = phaseName;
   }
 
