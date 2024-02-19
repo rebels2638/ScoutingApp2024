@@ -25,3 +25,6 @@ Human player accuracy
 General:
 Predicted points of each alliance
 Win likelihood
+
+
+

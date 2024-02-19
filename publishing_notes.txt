@@ -1,0 +1,38 @@
+Building for iOS with CodeMagic:
+
+If you face errors at any point, you can probably consult this document: https://blog.codemagic.io/how-to-build-and-distribute-ios-apps-without-mac-with-flutter-codemagic/
+
+Make an account at https://codemagic.io/ (you can do whichever signup method you want and make sure to choose "Personal Account").
+
+Then:
+
+[Add Application]
+      -> [Other]
+            -> [Next: Add repository]
+                  -> Repository URL put "git@github.com:rebels2638/ScoutingApp2024.git"
+                  -> Check [Public Repository]
+                  -> Project Type: [Flutter (via Workflow Editor)]
+                  -> [Finish: Add application]
+
+When you are in the build page, you should see [Build Triggers],[Environment Variables], and others.
+You want to go to
+
+[Distribution]
+      -> [iOS code signing]
+            -> [Automatic]
+            -> [Go to settings]
+                  -> Developer Portal "Connect"
+
+You will be asked to fill out "App Store Connect API key name," "Issuer ID", etc.. Look at their docs on how to fill it out: https://docs.codemagic.io/flutter-code-signing/ios-code-signing/#step-1-creating-an-app-store-api-key-for-codemagic/?utm_source=app&utm_campaign=app-store-connect-integration
+
+^I am not too sure about how to code sign
+
+Once you saved it, head over to "Apps" (on the left side toolbar) and click on the repository you imported, it should be labelled "ScoutingApp2024" and click into it. The menu should be the same as you first launched it.
+
+Uncheck "Android" and check "iOS"
+
+Click "Start your first build" followed by "Start new build" on the dialog that opened up.
+
+Wait for a bit...
+
+Once it is done, on the left side, there should be a new section for "Artifacts", download the respective artifacts, this should be all.

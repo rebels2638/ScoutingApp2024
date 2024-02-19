@@ -70,5 +70,6 @@ void main() async {
     await WindowManager.instance.ensureInitialized();
     await windowManager.setTitle(
         "2638 Scout \"$APP_CANONICAL_NAME\" (Build $REBEL_ROBOTICS_APP_VERSION)");
+    await windowManager.setSize(const Size(2732/2,2048/2));
   }
 }
