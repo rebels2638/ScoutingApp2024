@@ -20,21 +20,14 @@ Future<void> _prepareAppLaunch() async {
   await DeviceEnv.initItems();
   Debug().info(
       "Loaded the Device Environment with: [DocPath=${DeviceEnv.saveLocation.path},CachePath=${DeviceEnv.saveLocation.path}]");
-
   Debug().newPhase("INIT_BACKEND");
   Hive.init(DeviceEnv.saveLocation.path);
   Hive.registerAdapter(EphemeralScoutingDataAdapter());
   await ScoutingTelemetry().loadBoxes();
-
-  Debug().newPhase("LOAD_THEMES");
-  // this is such a shit idea because we are using so many awaits lmao
-  await ThemeBlob.loadBuiltinThemes();
-  await ThemeBlob.loadIntricateThemes();
-
   Debug().newPhase("LOAD_USER_TELEMETRY");
   await UserTelemetry().init();
-  Debug().newPhase("APP_LAUNCH");
 
+  Debug().newPhase("APP_LAUNCH");
   Timer.periodic(
       const Duration(seconds: Shared.USER_USAGE_TIME_PROBE_PERIODIC),
       (Timer _) async {
@@ -51,9 +44,11 @@ Future<void> _prepareAppLaunch() async {
   });
 }
 
+late final DateTime APP_START_TIME;
+
 // no one change anything here please - exoad
 void main() async {
-  DateTime now = DateTime.now();
+  APP_START_TIME = DateTime.now();
   // nothing should go above this comment besides the DateTime check
   WidgetsFlutterBinding.ensureInitialized();
   Debug().init(); // ! no change this position
@@ -61,10 +56,12 @@ void main() async {
     FlutterError.presentError.call(details);
     Debug().warn("${details.summary} ${details.context}");
   };
+  Debug().newPhase("LOAD_THEMES");
+  // this is such a shit idea because we are using so many awaits lmao
+  await ThemeBlob.loadBuiltinThemes();
+  await ThemeBlob.loadIntricateThemes();
   // I LOVE THE THEN FUNCTION OH MY GOD HOLY SHIT, I LOVE THIS FUNCTION, WE SHOULD MAKE EVERYTHING WITH THIS FUNCTION
   runApp(ThemedAppBundle.loadingScreen(_prepareAppLaunch()));
-  Debug().info(
-      "Took ${DateTime.now().millisecondsSinceEpoch - now.millisecondsSinceEpoch} ms to launch the app...");
   if (Platform.isWindows) {
     // ig we only support windows, so extern/platform.dart is fucking useless LMAO
     await WindowManager.instance.ensureInitialized();

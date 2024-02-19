@@ -70,7 +70,7 @@ final class ThemeBlob {
               borderRadius: BorderRadius.circular(8))));
   static const String THEME_LOCATION = "assets/themes/";
 
-  static late List<AppTheme> _intricateThemes;
+  static List<AppTheme> _intricateThemes = <AppTheme>[];
 
   static List<AppTheme> get intricateThemes => _intricateThemes;
 
@@ -166,21 +166,32 @@ final class ThemeBlob {
           description: id);
 
   static Future<void> loadBuiltinThemes() async {
-    // very critical function to call
-    ThemeData? theme = ThemeDecoder.decodeThemeData(jsonDecode(
-        await rootBundle.loadString("assets/default_dark.json")));
-    if (theme != null) {
-      ThemeData better = theme.copyWith(
-        textTheme: theme.textTheme
-            .apply(fontFamily: Shared.FONT_FAMILY_SANS),
-        primaryTextTheme: theme.primaryTextTheme
-            .apply(fontFamily: Shared.FONT_FAMILY_SANS),
-      );
-      export.add(_gen(id: "Default Dark", data: better));
-      AvaliableTheme.export.add(AvaliableTheme("Default Dark",
-          "default_dark", Icons.palette_rounded, "Builtin", true));
-    } else {
-      throw "BUG WITH LOADING DEFAULT THEME! 049";
+    const List<String> builtinThemes = <String>[
+      "Default Dark",
+      "Default Dark 2",
+      "Default Light",
+      "Default Light 2"
+    ];
+    int i = 0;
+    for (String r2 in builtinThemes) {
+      String r = r2.toLowerCase().replaceAll(" ", "_");
+      ThemeData? theme = ThemeDecoder.decodeThemeData(
+          jsonDecode(await rootBundle.loadString("assets/$r.json")));
+      if (theme != null) {
+        ThemeData better = theme.copyWith(
+          textTheme: theme.textTheme
+              .apply(fontFamily: Shared.FONT_FAMILY_SANS),
+          primaryTextTheme: theme.primaryTextTheme
+              .apply(fontFamily: Shared.FONT_FAMILY_SANS),
+        );
+        export.add(_gen(id: r, data: better));
+        AvaliableTheme.export.add(AvaliableTheme(
+            r2, r, Icons.palette_rounded, "Builtin", true));
+      } else {
+        throw "BUG WITH LOADING DEFAULT THEME! 049_$i";
+      }
+      i++;
+      Debug().info("Loaded builtin theme: $r");
     }
   }
 

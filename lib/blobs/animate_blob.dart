@@ -5,7 +5,7 @@ class SpinBlob extends StatefulWidget {
   final int period;
 
   const SpinBlob(
-      {super.key, required this.child, this.period = 2000});
+      {super.key, required this.child, this.period = 600});
 
   @override
   State<SpinBlob> createState() => _SpinBlobState();
@@ -24,9 +24,16 @@ class _SpinBlobState extends State<SpinBlob>
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return RotationTransition(
       turns: _controller,
+      filterQuality: FilterQuality.high,
       child: widget.child,
     );
   }

@@ -25,7 +25,8 @@ import 'package:scouting_app_2024/blobs/extended_fab_blob.dart';
 import "package:theme_provider/theme_provider.dart";
 import 'package:url_launcher/url_launcher.dart';
 
-GlobalKey<NavigatorState> globalNavKey = GlobalKey<NavigatorState>();
+GlobalKey<ScaffoldState> _globalScaffoldKey =
+    GlobalKey<ScaffoldState>();
 
 class ThemedAppBundle extends StatelessWidget {
   final Widget child;
@@ -38,12 +39,15 @@ class ThemedAppBundle extends StatelessWidget {
 
   factory ThemedAppBundle.loadingScreen(Future<void> futures) {
     return ThemedAppBundle(
-        child: LoadingAppViewScreen(
-            task: futures));
+        child: LoadingAppViewScreen(task: futures));
   }
 
   @override
   Widget build(BuildContext context) {
+    Debug().info("ThemesLoaded: ${<AppTheme>[
+      ...ThemeBlob.export,
+      ...ThemeBlob.intricateThemes
+    ].length}");
     return ThemeProvider(
         themes: <AppTheme>[
           ...ThemeBlob.export,
@@ -257,6 +261,7 @@ class _AppViewState extends State<_AppView> {
       }
     });
     return Scaffold(
+        key: _globalScaffoldKey,
         floatingActionButton: ExpFabBlob(
             defaultWidget:
                 const Icon(CommunityMaterialIcons.star_four_points),
@@ -503,7 +508,7 @@ class _AppViewState extends State<_AppView> {
                               actions: <Widget>[
                                 TextButton.icon(
                                     onPressed: () {
-                                      Navigator.of(context).pop();
+                                      Navigator.of(ctxt).pop(); // i debugged this shit a fuck ton, it kept closing the scaffold. reaosn? it was using the original build(BuildContext) which was already gone lmao, fuck they should have nested shadowing rules
                                       UserTelemetry()
                                               .currentModel
                                               .selectedTheme =

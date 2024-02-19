@@ -61,7 +61,9 @@ flutter:
     - assets/themes/
     - assets/rules/
     - assets/default_dark.json
-
+    - assets/default_dark_2.json
+    - assets/default_light.json
+    - assets/default_light_2.json
   fonts:
     - family: IBM Plex Sans
       fonts:
