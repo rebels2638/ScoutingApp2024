@@ -73,7 +73,7 @@ class _BetterGridLayout extends SliverGridLayout {
 
 class _BetterGridDelegate extends SliverGridDelegate {
   final double dim;
-  _BetterGridDelegate({required this.dim});
+  const _BetterGridDelegate({required this.dim});
 
   @override
   SliverGridLayout getLayout(SliverConstraints constraints) {

@@ -170,7 +170,19 @@ class _AboutAppViewState extends State<AboutAppView> {
                   //text: "asdawfsuiunnnnnnnnnnnnnnnnnnnn\n",
                   children: <TextSpan>[
                     TextSpan(
-                      text: "2638 Scouting App\n",
+                      children: <InlineSpan>[
+                        TextSpan(
+                            text: "26",
+                            style: TextStyle(
+                                color:
+                                    RebelRoboticsShared.REBELS_BLUE)),
+                        TextSpan(
+                            text: "38",
+                            style: TextStyle(
+                                color: RebelRoboticsShared
+                                    .REBELS_ORANGE)),
+                        TextSpan(text: " Scouting App\n")
+                      ],
                       style: TextStyle(
                         fontWeight: FontWeight.w800,
                         fontSize: 21,
