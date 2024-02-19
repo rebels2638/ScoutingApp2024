@@ -215,6 +215,31 @@ Widget form_grid_2(
         children: children);
 
 @pragma("vm:prefer-inline")
+Widget form_label_rigid(String text,
+        {TextStyle? style,
+        required Widget child,
+        bool expandLabel = false,
+        Widget? icon}) =>
+    Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                if (icon != null) icon,
+                if (icon != null) const SizedBox(width: 6),
+                Text(text,
+                    style: style ??
+                        const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            overflow: TextOverflow.ellipsis)),
+                const SizedBox(width: _prompt_label_strut_width),
+              ]),
+          child
+        ]);
+
+@pragma("vm:prefer-inline")
 Widget form_label(String text,
         {TextStyle? style,
         required Widget child,
@@ -392,8 +417,7 @@ Widget form_sec_2(BuildContext context,
             gradient: gradient,
             color: ThemeProvider.themeOf(context)
                 .data
-                .navigationBarTheme
-                .surfaceTintColor,
+                .secondaryHeaderColor,
             borderRadius: BorderRadius.circular(14)),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -432,8 +456,7 @@ Widget form_sec(BuildContext context,
             color: backgroundColor ??
                 ThemeProvider.themeOf(context)
                     .data
-                    .colorScheme
-                    .onInverseSurface,
+                    .secondaryHeaderColor,
             borderRadius: BorderRadius.circular(14)),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -445,7 +468,7 @@ Widget form_sec(BuildContext context,
                   const SizedBox(width: 10),
                   Text(header.title,
                       style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 18))
+                          fontWeight: FontWeight.bold, fontSize: 20))
                 ]),
                 Padding(
                   padding: const EdgeInsets.all(16.0),

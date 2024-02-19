@@ -307,7 +307,7 @@ class _MatchTileState extends State<MatchTile> {
                         overflow: TextOverflow.ellipsis)),
               ]))),
           const SizedBox(height: 8),
-          form_label(
+          form_label_rigid(
             'Transfer Options',
             style: const TextStyle(
                 fontWeight: FontWeight.bold,
