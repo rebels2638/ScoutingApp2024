@@ -12,6 +12,8 @@ Scouting App for the 2024 year built using the **Flutter Framework**.
         <h3>Preview</h3>
     </summary>
     <img src="./repo/assets/Screenshot.png" />
+    <br/>
+    <img src="./repo/assets/Screenshot_2.png" />
 
 > **Please note this is a development screenshot!**
 
