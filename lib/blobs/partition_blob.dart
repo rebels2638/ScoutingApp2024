@@ -1,5 +1,6 @@
 import 'package:scouting_app_2024/debug.dart';
 import "package:scouting_app_2024/blobs/locale_blob.dart";
+import "package:scouting_app_2024/extern/string.dart";
 import "package:theme_provider/theme_provider.dart";
 import "package:flutter/material.dart";
 
@@ -65,7 +66,7 @@ class _PartitionedBlobState<T extends Enum>
                     "PartitionedBlob_$hashCode got $index to be toggled");
                 setState(() => toggled = index);
               },
-              child: Text(formalizeWord(widget.values[index].name)));
+              child: Text(widget.values[index].name.formalize));
         },
       ),
     );

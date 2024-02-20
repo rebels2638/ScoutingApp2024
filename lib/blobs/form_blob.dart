@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
+import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
 import 'package:theme_provider/theme_provider.dart';
@@ -536,6 +537,8 @@ class _MSegSingleBtnState<T> extends State<_MSegSingleBtn<T>> {
   void initState() {
     super.initState();
     _selection = widget.initialSelection;
+    Debug().info(
+        "MSegButton$hashCode has initial selection $_selection");
   }
 
   @override
@@ -554,6 +557,7 @@ class _MSegSingleBtnState<T> extends State<_MSegSingleBtn<T>> {
       selected: _selection,
       style: widget.style,
       showSelectedIcon: false,
+      multiSelectionEnabled: true,
       onSelectionChanged: (Set<T> values) {
         setState(() => _selection = values);
         widget.onSelect.call(values.toList());

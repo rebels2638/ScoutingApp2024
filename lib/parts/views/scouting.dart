@@ -7,7 +7,7 @@ import "package:scouting_app_2024/blobs/basic_toggle_switch.dart";
 import "package:scouting_app_2024/blobs/blobs.dart";
 import "package:scouting_app_2024/blobs/form_blob.dart";
 import "package:scouting_app_2024/blobs/inc_dec_blob.dart";
-import "package:scouting_app_2024/blobs/locale_blob.dart";
+import "package:scouting_app_2024/extern/string.dart";
 import "package:scouting_app_2024/parts/bits/appbar_celebrate.dart";
 import "package:scouting_app_2024/parts/bits/prefer_compact.dart";
 import "package:scouting_app_2024/parts/bits/show_console.dart";
@@ -170,7 +170,11 @@ class _ScoutingSessionViewDelegateState
                             )),
                       ])
                 : BlocProvider<ScoutingSessionBloc>(
-                    create: (BuildContext _) => _currBloc!,
+                    create: (BuildContext _) {
+                      Debug().info(
+                          "Dispatched SCOUING_SESSION_BLOC ${_currBloc.hashCode}");
+                      return _currBloc!;
+                    },
                     child: const ScoutingView()));
       }),
     );
@@ -219,7 +223,6 @@ class _ScoutingViewState extends State<ScoutingView>
                   maxValue: 999,
                   headerMessage: "Match Number",
                   onChange: (int number) {
-                Debug().info("UPDATE match number to $number");
                 context
                     .read<ScoutingSessionBloc>()
                     .prelim
@@ -240,18 +243,16 @@ class _ScoutingViewState extends State<ScoutingView>
                                   MatchType value
                                 })>(
                             (MatchType e) => (
-                                  label: formalizeWord(e.name),
+                                  label: e.name.formalize,
                                   icon: null,
                                   value: e
                                 ))
                         .toList(),
-                    initialSelection: context
-                        .read<ScoutingSessionBloc>()
-                        .prelim
-                        .matchType,
+                    initialSelection:
+                        BlocProvider.of<ScoutingSessionBloc>(context)
+                            .prelim
+                            .matchType,
                     onSelect: (MatchType e) {
-                      Debug()
-                          .info("Switched match type to ${e.name}");
                       context
                           .read<ScoutingSessionBloc>()
                           .prelim
@@ -277,7 +278,6 @@ class _ScoutingViewState extends State<ScoutingView>
                     maxValue: 9999,
                     headerMessage: "Team Number",
                     onChange: (int number) {
-                  Debug().info("UPDATE team number to $number");
                   context
                       .read<ScoutingSessionBloc>()
                       .prelim
@@ -296,8 +296,6 @@ class _ScoutingViewState extends State<ScoutingView>
                             .alliance ==
                         TeamAlliance.blue,
                     onChanged: (TeamAlliance alliance) {
-                      Debug()
-                          .info("[TEAM] Alliance: ${alliance.name}");
                       context
                           .read<ScoutingSessionBloc>()
                           .prelim
@@ -317,18 +315,16 @@ class _ScoutingViewState extends State<ScoutingView>
                                   MatchStartingPosition value
                                 })>(
                             (MatchStartingPosition e) => (
-                                  label: formalizeWord(e.name),
+                                  label: e.name.formalize,
                                   icon: null,
                                   value: e
                                 ))
                         .toList(),
-                    initialSelection: context
-                        .read<ScoutingSessionBloc>()
-                        .prelim
-                        .startingPosition,
+                    initialSelection:
+                        BlocProvider.of<ScoutingSessionBloc>(context)
+                            .prelim
+                            .startingPosition,
                     onSelect: (MatchStartingPosition e) {
-                      Debug().info(
-                          "[TEAM] Switched starting position to ${e.name}");
                       context
                           .read<ScoutingSessionBloc>()
                           .prelim
@@ -348,12 +344,11 @@ class _ScoutingViewState extends State<ScoutingView>
             form_label("Note preloaded?",
                 icon: const Icon(Icons.trip_origin),
                 child: BasicToggleSwitch(
-                    initialValue: context
-                        .read<ScoutingSessionBloc>()
-                        .auto
-                        .notePreloaded,
+                    initialValue:
+                        BlocProvider.of<ScoutingSessionBloc>(context)
+                            .auto
+                            .notePreloaded,
                     onChanged: (bool e) {
-                      Debug().info("[AUTO] Note preloaded: $e");
                       context
                           .read<ScoutingSessionBloc>()
                           .auto
@@ -362,7 +357,7 @@ class _ScoutingViewState extends State<ScoutingView>
                           .read<ScoutingSessionBloc>()
                           .add(AutoUpdateEvent());
                     })),
-            form_label("Picked up Note?",
+            form_label("Note(s) picked up",
                 icon: const Icon(Icons.trip_origin),
                 child: form_seg_btn_2(
                     segments: AutoPickup.values
@@ -373,19 +368,17 @@ class _ScoutingViewState extends State<ScoutingView>
                                   AutoPickup value
                                 })>(
                             (AutoPickup e) => (
-                                  label: formalizeWord(e.name),
+                                  label: e.name.formalize,
                                   icon: null,
                                   value: e
                                 ))
                         .toList(),
-                    initialSelection: context
-                        .read<ScoutingSessionBloc>()
-                        .auto
-                        .notesPickedUp
-                        .toSet(),
+                    initialSelection:
+                        BlocProvider.of<ScoutingSessionBloc>(context)
+                            .auto
+                            .notesPickedUp
+                            .toSet(),
                     onSelect: (List<AutoPickup> e) {
-                      Debug().info(
-                          "[AUTO] Picked up note: ${e.toString()}");
                       context
                           .read<ScoutingSessionBloc>()
                           .auto
@@ -398,11 +391,13 @@ class _ScoutingViewState extends State<ScoutingView>
                 icon: const Icon(Icons.local_taxi_rounded),
                 child: BasicToggleSwitch(
                     initialValue:
-                        context.read<ScoutingSessionBloc>().auto.taxi,
+                        BlocProvider.of<ScoutingSessionBloc>(context)
+                            .auto
+                            .taxi,
                     onChanged: (bool e) {
-                      Debug().info("[AUTO] Taxis: $e");
-                      context.read<ScoutingSessionBloc>().auto.taxi =
-                          e;
+                      BlocProvider.of<ScoutingSessionBloc>(context)
+                          .auto
+                          .taxi = e;
                       context
                           .read<ScoutingSessionBloc>()
                           .add(AutoUpdateEvent());
@@ -415,13 +410,10 @@ class _ScoutingViewState extends State<ScoutingView>
                       .auto
                       .scoredSpeaker,
                   onValueChanged: (int value) {
-                    Debug().info("[AUTO] Scored in Speaker: $value");
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .auto
                         .scoredSpeaker = value;
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .add(AutoUpdateEvent());
                   },
                 )),
@@ -433,14 +425,10 @@ class _ScoutingViewState extends State<ScoutingView>
                       .auto
                       .missedSpeaker,
                   onValueChanged: (int value) {
-                    Debug()
-                        .info("[AUTO] Missed Speaker Shots: $value");
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .auto
                         .missedSpeaker = value;
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .add(AutoUpdateEvent());
                   },
                 )),
@@ -452,13 +440,10 @@ class _ScoutingViewState extends State<ScoutingView>
                       .auto
                       .scoredAmp,
                   onValueChanged: (int value) {
-                    Debug().info("[AUTO] Scored in AMP: $value");
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .auto
                         .scoredAmp = value;
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .add(AutoUpdateEvent());
                   },
                 )),
@@ -470,13 +455,10 @@ class _ScoutingViewState extends State<ScoutingView>
                       .auto
                       .missedAmp,
                   onValueChanged: (int value) {
-                    Debug().info("[AUTO] Missed AMP Shots: $value");
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .auto
                         .missedAmp = value;
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .add(AutoUpdateEvent());
                   },
                 )),
@@ -486,13 +468,10 @@ class _ScoutingViewState extends State<ScoutingView>
                   hint: "Enter your comments here",
                   label: "Comments",
                   onChanged: (String value) {
-                    Debug().info("[AUTO] Comments: $value");
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .auto
                         .comments = value;
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .add(AutoUpdateEvent());
                   },
                   inputType: TextInputType.multiline,
@@ -508,12 +487,11 @@ class _ScoutingViewState extends State<ScoutingView>
             form_label("Plays Defense",
                 icon: const Icon(Icons.shield),
                 child: BasicToggleSwitch(
-                    initialValue: context
-                        .read<ScoutingSessionBloc>()
-                        .teleop
-                        .playsDefense,
+                    initialValue:
+                        BlocProvider.of<ScoutingSessionBloc>(context)
+                            .teleop
+                            .playsDefense,
                     onChanged: (bool e) {
-                      Debug().info("[TELE-OP] Plays defense: $e");
                       context
                           .read<ScoutingSessionBloc>()
                           .teleop
@@ -525,12 +503,11 @@ class _ScoutingViewState extends State<ScoutingView>
             form_label("Was Defended?",
                 icon: const Icon(Icons.verified_user),
                 child: BasicToggleSwitch(
-                    initialValue: context
-                        .read<ScoutingSessionBloc>()
-                        .teleop
-                        .wasDefended,
+                    initialValue:
+                        BlocProvider.of<ScoutingSessionBloc>(context)
+                            .teleop
+                            .wasDefended,
                     onChanged: (bool e) {
-                      Debug().info("[TELE-OP] Was Defended: $e");
                       context
                           .read<ScoutingSessionBloc>()
                           .teleop
@@ -547,14 +524,10 @@ class _ScoutingViewState extends State<ScoutingView>
                       .teleop
                       .scoredSpeaker,
                   onValueChanged: (int value) {
-                    Debug()
-                        .info("[TELE-OP] Scored in Speaker: $value");
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .teleop
                         .scoredSpeaker = value;
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .add(TeleOpUpdateEvent());
                   },
                 )),
@@ -566,14 +539,10 @@ class _ScoutingViewState extends State<ScoutingView>
                       .teleop
                       .scoredWhileAmped,
                   onValueChanged: (int value) {
-                    Debug()
-                        .info("[TELE-OP] Scored during AMP: $value");
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .teleop
                         .scoredWhileAmped = value;
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .add(TeleOpUpdateEvent());
                   },
                 )),
@@ -585,14 +554,10 @@ class _ScoutingViewState extends State<ScoutingView>
                       .teleop
                       .missedSpeaker,
                   onValueChanged: (int value) {
-                    Debug().info(
-                        "[TELE-OP] Missed Speaker Shots: $value");
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .teleop
                         .missedSpeaker = value;
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .add(TeleOpUpdateEvent());
                   },
                 )),
@@ -604,13 +569,10 @@ class _ScoutingViewState extends State<ScoutingView>
                       .auto
                       .scoredAmp,
                   onValueChanged: (int value) {
-                    Debug().info("[TELE-OP] Scored in AMP: $value");
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .teleop
                         .scoredAmp = value;
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .add(TeleOpUpdateEvent());
                   },
                 )),
@@ -622,14 +584,10 @@ class _ScoutingViewState extends State<ScoutingView>
                       .teleop
                       .missedAmp,
                   onValueChanged: (int value) {
-                    Debug()
-                        .info("[TELE-OP] Missed AMP Shots: $value");
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .teleop
                         .missedAmp = value;
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .add(TeleOpUpdateEvent());
                   },
                 )),
@@ -641,14 +599,10 @@ class _ScoutingViewState extends State<ScoutingView>
                       .teleop
                       .driverRating,
                   onValueChanged: (int value) {
-                    Debug().info(
-                        "[TELE-OP] Driver Rating: ${value > 0 ? "$value" : "Reset to 0"}");
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .teleop
                         .driverRating = value;
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .add(TeleOpUpdateEvent());
                   },
                 )),
@@ -658,13 +612,10 @@ class _ScoutingViewState extends State<ScoutingView>
                   hint: "Enter your comments here",
                   label: "Comments",
                   onChanged: (String value) {
-                    Debug().info("[TELE-OP] Comments: $value");
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .teleop
                         .comments = value;
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .add(TeleOpUpdateEvent());
                   },
                   inputType: TextInputType.multiline,
@@ -677,12 +628,11 @@ class _ScoutingViewState extends State<ScoutingView>
             form_label("On chain",
                 icon: const Icon(Icons.link),
                 child: BasicToggleSwitch(
-                    initialValue: context
-                        .read<ScoutingSessionBloc>()
-                        .endgame
-                        .onChain,
+                    initialValue:
+                        BlocProvider.of<ScoutingSessionBloc>(context)
+                            .endgame
+                            .onChain,
                     onChanged: (bool e) {
-                      Debug().info("[ENDGAME] On chain: $e");
                       context
                           .read<ScoutingSessionBloc>()
                           .endgame
@@ -702,17 +652,16 @@ class _ScoutingViewState extends State<ScoutingView>
                                   Harmony value
                                 })>(
                             (Harmony e) => (
-                                  label: formalizeWord(e.name),
+                                  label: e.name.formalize,
                                   icon: null,
                                   value: e
                                 ))
                         .toList(),
-                    initialSelection: context
-                        .read<ScoutingSessionBloc>()
-                        .endgame
-                        .harmony,
+                    initialSelection:
+                        BlocProvider.of<ScoutingSessionBloc>(context)
+                            .endgame
+                            .harmony,
                     onSelect: (Harmony e) {
-                      Debug().info("[ENDGAME] Harmony: ${e.name}");
                       context
                           .read<ScoutingSessionBloc>()
                           .endgame
@@ -732,18 +681,16 @@ class _ScoutingViewState extends State<ScoutingView>
                                   TrapScored value
                                 })>(
                             (TrapScored e) => (
-                                  label: formalizeWord(e.name),
+                                  label: e.name.formalize,
                                   icon: null,
                                   value: e
                                 ))
                         .toList(),
-                    initialSelection: context
-                        .read<ScoutingSessionBloc>()
-                        .endgame
-                        .trapScored,
+                    initialSelection:
+                        BlocProvider.of<ScoutingSessionBloc>(context)
+                            .endgame
+                            .trapScored,
                     onSelect: (TrapScored e) {
-                      Debug().info(
-                          "[ENDGAME] Scored in trap: ${e.name}");
                       context
                           .read<ScoutingSessionBloc>()
                           .endgame
@@ -763,18 +710,16 @@ class _ScoutingViewState extends State<ScoutingView>
                                   MicScored value
                                 })>(
                             (MicScored e) => (
-                                  label: formalizeWord(e.name),
+                                  label: e.name.formalize,
                                   icon: null,
                                   value: e
                                 ))
                         .toList(),
-                    initialSelection: context
-                        .read<ScoutingSessionBloc>()
-                        .endgame
-                        .micScored,
+                    initialSelection:
+                        BlocProvider.of<ScoutingSessionBloc>(context)
+                            .endgame
+                            .micScored,
                     onSelect: (MicScored e) {
-                      Debug()
-                          .info("[ENDGAME] Scored on mic: ${e.name}");
                       context
                           .read<ScoutingSessionBloc>()
                           .endgame
@@ -789,13 +734,10 @@ class _ScoutingViewState extends State<ScoutingView>
                   hint: "Enter your comments here",
                   label: "Comments",
                   onChanged: (String value) {
-                    Debug().info("[ENDGAME] Comments: $value");
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .endgame
                         .comments = value;
-                    context
-                        .read<ScoutingSessionBloc>()
+                    BlocProvider.of<ScoutingSessionBloc>(context)
                         .add(EndgameUpdateEvent());
                   },
                   inputType: TextInputType.multiline,
@@ -810,13 +752,10 @@ class _ScoutingViewState extends State<ScoutingView>
                 child: BasicToggleSwitch(
                     initialValue: false,
                     onChanged: (bool e) {
-                      Debug().info("[OTHER] Coopertition: $e");
-                      context
-                          .read<ScoutingSessionBloc>()
+                      BlocProvider.of<ScoutingSessionBloc>(context)
                           .misc
                           .coopertition = e;
-                      context
-                          .read<ScoutingSessionBloc>()
+                      BlocProvider.of<ScoutingSessionBloc>(context)
                           .add(MiscUpdateEvent());
                     })),
             form_label("Breakdown",
@@ -824,7 +763,6 @@ class _ScoutingViewState extends State<ScoutingView>
                 child: BasicToggleSwitch(
                     initialValue: false,
                     onChanged: (bool e) {
-                      Debug().info("[OTHER] Breakdown: $e");
                       context
                           .read<ScoutingSessionBloc>()
                           .misc
@@ -950,14 +888,15 @@ class _ScoutingViewState extends State<ScoutingView>
                       launchInformDialog(context,
                           message: Text.rich(TextSpan(
                               text:
-                                  "Saved match ${context.read<ScoutingSessionBloc>().prelim.matchNumber}!\n",
+                                  "Saved match ${BlocProvider.of<ScoutingSessionBloc>(context).prelim.matchNumber}!\n",
                               children: <InlineSpan>[
                                 const TextSpan(
                                   text:
                                       "Head over to [Past Matches] to view all saved entries\n",
                                 ),
                                 TextSpan(
-                                    text: data.id,
+                                    text:
+                                        "${data.id} - ${BlocProvider.of<ScoutingSessionBloc>(context).hashCode}",
                                     style: const TextStyle(
                                         fontWeight: FontWeight.w300,
                                         fontSize: 10))
@@ -991,12 +930,13 @@ class _ScoutingViewState extends State<ScoutingView>
                               .read<ScoutingSessionBloc>()
                               .exportHollistic());
                       ScoutingTelemetry().put(data);
+
                       Debug().info(
                           "Saved an entry of ${data.id}=${data.toString()}");
                       launchInformDialog(context,
                           message: Text.rich(TextSpan(
                               text:
-                                  "Saved match ${context.read<ScoutingSessionBloc>().prelim.matchNumber}!\n",
+                                  "Saved match ${BlocProvider.of<ScoutingSessionBloc>(context).prelim.matchNumber}!\n",
                               children: <InlineSpan>[
                                 const TextSpan(
                                     text:
@@ -1040,7 +980,7 @@ class _ScoutingViewState extends State<ScoutingView>
                                     top: 10, bottom: 10),
                                 child: Text.rich(TextSpan(
                                     text:
-                                        "RAW\n${jsonEncode(context.read<ScoutingSessionBloc>().exportMapDeep().toString())}\n\nHollistic\n${jsonEncode(context.read<ScoutingSessionBloc>().exportHollistic().toString())}\n\nEphemeral\n${EphemeralScoutingData.fromHollistic(context.read<ScoutingSessionBloc>().exportHollistic())}")),
+                                        "RAW\n${jsonEncode(BlocProvider.of<ScoutingSessionBloc>(context).exportMapDeep().toString())}\n\nHollistic\n${jsonEncode(BlocProvider.of<ScoutingSessionBloc>(context).exportHollistic().toString())}\n\nEphemeral\n${EphemeralScoutingData.fromHollistic(BlocProvider.of<ScoutingSessionBloc>(context).exportHollistic())}")),
                               ),
                             ),
                             onConfirm: () {})),
