@@ -16,6 +16,7 @@ class Shared {
   static const int USER_USAGE_TIME_PROBE_PERIODIC = 30; //seconds
   static const bool SAVE_ON_PROBE = false;
   static const int USER_TELEMETRY_SAVE_CYCLE = 50; // seconds
+  static const String GENERAL_TIME_FORMAT = "HH:mm MM/dd/yyyy";
 }
 
 final String TELEMETRY_SUBDIR_PATH =

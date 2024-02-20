@@ -21,6 +21,7 @@ dependencies:
   get_storage: ^2.1.1
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  intl: ^0.19.0
   ionicons: ^0.2.2
   json_annotation: ^4.8.1
   json_serializable: ^6.7.1

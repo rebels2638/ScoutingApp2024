@@ -69,22 +69,18 @@ class HollisticMatchScoutingData
 
   static HollisticMatchScoutingData fromCompatibleFormat(
       String rawData) {
-    Debug().info("Decoding the hollistic match data... $rawData");
+    Debug().info("Decoding a hollistic match scouting data...");
     final Map<dynamic, dynamic> data =
         jsonDecode(rawData) as Map<dynamic, dynamic>;
-    final Map<dynamic, dynamic> innerData =
-        jsonDecode(data["data"].toString()) as Map<dynamic, dynamic>;
     return HollisticMatchScoutingData(
       preliminary: PrelimInfo.fromCompatibleFormat(
-          innerData["preliminary"].toString()),
-      auto:
-          AutoInfo.fromCompatibleFormat(innerData["auto"].toString()),
-      teleop: TeleOpInfo.fromCompatibleFormat(
-          innerData["teleop"].toString()),
+          data["preliminary"].toString()),
+      auto: AutoInfo.fromCompatibleFormat(data["auto"].toString()),
+      teleop:
+          TeleOpInfo.fromCompatibleFormat(data["teleop"].toString()),
       endgame: EndgameInfo.fromCompatibleFormat(
-          innerData["endgame"].toString()),
-      misc:
-          MiscInfo.fromCompatibleFormat(innerData["misc"].toString()),
+          data["endgame"].toString()),
+      misc: MiscInfo.fromCompatibleFormat(data["misc"].toString()),
       id: data["id"].toString(),
     );
   }
@@ -98,14 +94,12 @@ class HollisticMatchScoutingData
   @override
   String toCompatibleFormat() {
     return jsonEncode(<dynamic, dynamic>{
-      "\"id\"": id,
-      "\"data\"": <dynamic, dynamic>{
-        "\"preliminary\"": preliminary.toCompatibleFormat(),
-        "\"auto\"": auto.toCompatibleFormat(),
-        "\"teleop\"": teleop.toCompatibleFormat(),
-        "\"endgame\"": endgame.toCompatibleFormat(),
-        "\"misc\"": misc.toCompatibleFormat()
-      }
+      "id": id,
+      "preliminary": preliminary.toCompatibleFormat(),
+      "auto": auto.toCompatibleFormat(),
+      "teleop": teleop.toCompatibleFormat(),
+      "endgame": endgame.toCompatibleFormat(),
+      "misc": misc.toCompatibleFormat()
     });
   }
 }

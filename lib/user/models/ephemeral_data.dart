@@ -8,7 +8,7 @@ part "ephemeral_data.g.dart";
 @HiveType(typeId: 0)
 class EphemeralScoutingData extends HiveObject {
   @HiveField(0)
-  String _compressedFormat;
+  String compressedFormat;
 
   @HiveField(1)
   int telemetryVersion; // i highly strongly of the utmost do not recommend changing this programmatically unless it is for migration
@@ -16,22 +16,9 @@ class EphemeralScoutingData extends HiveObject {
   @HiveField(2)
   String id;
 
-  String get compressedFormat {
-    if (_compressedFormat.contains("\\\"")) {
-      _compressedFormat = _sanitize(_compressedFormat);
-    }
-    return _compressedFormat;
-  }
-
-  static String _sanitize(String r) => r.replaceAll("\\\"", "");
-
   EphemeralScoutingData(this.id,
-      {required String compressedFormat,
-      this.telemetryVersion = EPHEMERAL_MODELS_VERSION})
-      : _compressedFormat = compressedFormat {
-    if (_compressedFormat.contains("\\\"")) {
-      _compressedFormat = _sanitize(_compressedFormat);
-    }
+      {required this.compressedFormat,
+      this.telemetryVersion = EPHEMERAL_MODELS_VERSION}) {
     if (EPHEMERAL_MODELS_VERSION != telemetryVersion) {
       Debug().warn(
           "MatchData#$id was loaded with version $telemetryVersion which does not match $EPHEMERAL_MODELS_VERSION which can cause conflicts!");

@@ -338,16 +338,17 @@ class PrelimInfo extends ScoutingInfo
       required this.startingPosition});
 
   factory PrelimInfo.optional(
-          {int timeStamp = 0,
+          {int? timeStamp,
           String scouters = "",
           int teamNumber = 0,
           int matchNumber = 0,
           MatchType matchType = MatchType.qualification,
           TeamAlliance alliance = TeamAlliance.red,
           MatchStartingPosition startingPosition =
-              MatchStartingPosition.left}) =>
+              MatchStartingPosition.middle}) =>
       PrelimInfo(
-          timeStamp: timeStamp,
+          timeStamp:
+              timeStamp ?? DateTime.now().millisecondsSinceEpoch,
           scouters: scouters,
           teamNumber: teamNumber,
           matchNumber: matchNumber,

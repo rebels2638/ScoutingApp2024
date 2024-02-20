@@ -1,16 +1,19 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:scouting_app_2024/parts/bits/prefer_canonical.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
 import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import "package:scouting_app_2024/blobs/form_blob.dart";
-import 'package:scouting_app_2024/user/models/team_bloc.dart';
+import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/models/team_model.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/user/scouting_telemetry.dart';
 import 'package:theme_provider/theme_provider.dart';
+import 'package:intl/intl.dart';
 
 class PastMatchesView extends StatefulWidget
     implements AppPageViewExporter {
@@ -40,6 +43,7 @@ class _PastMatchesViewState extends State<PastMatchesView> {
   late QrImage qrImage;
   List<HollisticMatchScoutingData> matches =
       <HollisticMatchScoutingData>[];
+  final List<String> _matchIdsCache = <String>[];
 
   @override
   void initState() {
@@ -52,27 +56,26 @@ class _PastMatchesViewState extends State<PastMatchesView> {
     // todo, below just placeholder data
     Debug().info(
         "PAST_MATCHES: Loading ${ScoutingTelemetry().length} past matches");
-    matches.add(HollisticMatchScoutingData.idOptional(
-        preliminary: PrelimInfo.optional(),
-        misc: MiscInfo.optional(),
-        auto: AutoInfo.optional(),
-        teleop: TeleOpInfo.optional(),
-        endgame: EndgameInfo.optional()));
-    matches.add(HollisticMatchScoutingData.idOptional(
-        preliminary: PrelimInfo.optional(),
-        misc: MiscInfo.optional(),
-        auto: AutoInfo.optional(),
-        teleop: TeleOpInfo.optional(),
-        endgame: EndgameInfo.optional()));
-
+    ScoutingTelemetry()
+        .forEachHollistic((HollisticMatchScoutingData match) {
+      if (!_matchIdsCache.contains(match.id)) {
+        Debug().info("PAST_MATCHES: Adding match ${match.id}");
+        matches.add(match);
+        _matchIdsCache.add(match.id);
+      } else {
+        Debug().warn(
+            "PAST_MATCHES: Match ${match.id} already exists! Ignoring it");
+      }
+    });
     setState(() {});
   }
 
-  void removeMatch(int matchID) {
+  void removeMatch(String id) {
     setState(() {
-      matches.removeWhere((HollisticMatchScoutingData m) =>
-          m.preliminary.matchNumber == matchID);
+      matches
+          .removeWhere((HollisticMatchScoutingData m) => m.id == id);
     });
+    _matchIdsCache.removeWhere((String m) => m == id);
   }
 
   @override
@@ -97,38 +100,29 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                 Row(
                   children: strutAll(<Widget>[
                     IconButton.filledTonal(
-                        onPressed: () {},
+                        onPressed: () => loadMatches(),
                         icon: const Icon(Icons.refresh_rounded)),
                     IconButton.filledTonal(
-                      icon: const Icon(Icons.delete_forever),
-                      onPressed: () async =>
-                          await launchConfirmDialog(
-                        // deletes all matches
-                        okLabel: "Delete All",
-                        denyLabel: "Cancel",
-                        icon: const Icon(Icons.warning_amber_rounded),
-                        title: "Confirm Deletion",
-                        context,
-                        message: const Text(
-                            "Are you sure you want to delete all past matches? This action cannot be undone."),
-                        onConfirm: () async =>
-                            // TODO: delete all past matches from backend
+                        icon: const Icon(Icons.delete_forever),
+                        onPressed: () async =>
                             await launchAssuredConfirmDialog(context,
                                 message:
-                                    "Are you sure you want to DELETE ALL entries?",
-                                title: "Delete all entries",
+                                    "Are you sure you want to DELETE ALL ${matches.length} entries?",
+                                title:
+                                    "Delete ${matches.length} entries",
                                 onConfirm: () {
-                          setState(() {
-                            matches.clear();
-                          });
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text(
-                                    "All past matches deleted.")),
-                          );
-                        }),
-                      ),
-                    ),
+                              setState(() {
+                                matches.clear();
+                              });
+                              _matchIdsCache.clear();
+                              ScoutingTelemetry().clear();
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(
+                                const SnackBar(
+                                    content: Text(
+                                        "All past matches deleted. Cleare")),
+                              );
+                            })),
                     IconButton.filledTonal(
                       icon: const Icon(Icons.download),
                       onPressed: () async {
@@ -168,33 +162,31 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                         Icon(CommunityMaterialIcons.emoticon_sad,
                             color: ThemeProvider.themeOf(context)
                                 .data
-                                .secondaryHeaderColor,
+                                .appBarTheme
+                                .foregroundColor,
                             size: 64),
                         const SizedBox(height: 18),
                         // this is so badly optimized because we are calling a non compile const ThemeProvider.themeOf
                         Text.rich(
-                          TextSpan(children: <InlineSpan>[
-                            TextSpan(
-                                text: "No past matches found...\n\n",
-                                style: TextStyle(
-                                    color:
-                                        ThemeProvider.themeOf(context)
-                                            .data
-                                            .secondaryHeaderColor,
-                                    fontSize: 28,
-                                    fontWeight: FontWeight.w600)),
-                            TextSpan(
-                                text:
-                                    "Hint: \"maybe go scout a team?\" ~ Jack",
-                                style: TextStyle(
-                                    color:
-                                        ThemeProvider.themeOf(context)
-                                            .data
-                                            .secondaryHeaderColor,
-                                    fontStyle: FontStyle.italic))
-                          ]),
-                          textAlign: TextAlign.center,
-                        )
+                            const TextSpan(children: <InlineSpan>[
+                              TextSpan(
+                                  text:
+                                      "No past matches found...\n\n",
+                                  style: TextStyle(
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.w600)),
+                              TextSpan(
+                                  text:
+                                      "Hint: \"maybe go scout a team?\" ~ Jack",
+                                  style: TextStyle(
+                                      fontStyle: FontStyle.italic))
+                            ]),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: ThemeProvider.themeOf(context)
+                                    .data
+                                    .appBarTheme
+                                    .foregroundColor))
                       ],
                     ))
                   : PreferCompactModal.isCompactPreferred(context)
@@ -251,7 +243,7 @@ class _PastMatchesViewState extends State<PastMatchesView> {
 
 class MatchTile extends StatefulWidget {
   final HollisticMatchScoutingData match;
-  final Function(int) onDelete;
+  final void Function(String id) onDelete;
 
   const MatchTile(
       {super.key, required this.match, required this.onDelete});
@@ -268,16 +260,23 @@ class _MatchTileState extends State<MatchTile> {
       child: Card(
         child: form_sec_rigid(
           context,
-          iconColor: TeamAlliance.blue.toColor(),
-          headerIcon: const Icon(Icons.flag_circle_rounded, size: 40),
+          headerIcon: Icon(Icons.flag_circle_rounded,
+              size: 40,
+              color:
+                  PreferCanonicalModal.isCanonicalPreferred(context)
+                      ? widget.match.preliminary.alliance.toColor()
+                      : null),
           title: Text.rich(TextSpan(
-              text: "{MatchType} {MatchNumber} | {TeamNumber}\n",
+              text:
+                  "${widget.match.preliminary.matchType.name.capitalizeFirst} #${widget.match.preliminary.matchNumber} | Team ${widget.match.preliminary.teamNumber} | ${widget.match.preliminary.alliance.name.capitalizeFirst}\n",
               style: const TextStyle(
                   fontWeight: FontWeight.w700, fontSize: 20),
               children: <InlineSpan>[
-                const TextSpan(
-                    text: "{hh}:{mm} {MM}/{DD}/{YYYY}",
-                    style: TextStyle(
+                TextSpan(
+                    text: DateFormat(Shared.GENERAL_TIME_FORMAT)
+                        .format(DateTime.fromMillisecondsSinceEpoch(
+                            widget.match.preliminary.timeStamp)),
+                    style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         overflow: TextOverflow.ellipsis,
                         fontSize: 14)),
@@ -298,41 +297,42 @@ class _MatchTileState extends State<MatchTile> {
                         fontStyle: FontStyle.italic,
                         overflow: TextOverflow.ellipsis),
                     icon: const Icon(Icons.data_exploration_rounded),
-                    child: const Text.rich(
-                        TextSpan(children: <InlineSpan>[
-                      TextSpan(
+                    child: Text.rich(TextSpan(children: <InlineSpan>[
+                      const TextSpan(
                           text: "Starting Position: ",
                           style: TextStyle(
                               overflow: TextOverflow.ellipsis,
                               height: 1.6,
                               fontWeight: FontWeight.w700)),
                       TextSpan(
-                          text: "{X}\n",
-                          style: TextStyle(height: 1.6)),
-                      TextSpan(
+                          text:
+                              "${widget.match.preliminary.startingPosition.name.capitalizeFirst}\n",
+                          style: const TextStyle(height: 1.6)),
+                      const TextSpan(
                           text: "Harmonized: ",
                           style: TextStyle(
                               overflow: TextOverflow.ellipsis,
                               height: 1.6,
                               fontWeight: FontWeight.w700)),
                       TextSpan(
-                          text: "{X}\n",
-                          style: TextStyle(
+                          text:
+                              "${widget.match.endgame.harmony.name.capitalizeFirst}\n",
+                          style: const TextStyle(
                               height: 1.6,
                               overflow: TextOverflow.ellipsis)),
-                      TextSpan(
+                      const TextSpan(
                           text: "Trap Scored: ",
                           style: TextStyle(
                               height: 1.6,
                               fontWeight: FontWeight.w700,
                               overflow: TextOverflow.ellipsis)),
                       TextSpan(
-                          text: "{X}",
-                          style: TextStyle(
+                          text:
+                              "${widget.match.endgame.trapScored.name.capitalizeFirst}\n",
+                          style: const TextStyle(
                               height: 1.6,
                               overflow: TextOverflow.ellipsis)),
                     ]))),
-                const SizedBox(height: 8),
                 form_label_rigid(
                   'Transfer Options',
                   style: const TextStyle(
@@ -402,19 +402,14 @@ class _MatchTileState extends State<MatchTile> {
                               onPressed: () async =>
                                   await launchAssuredConfirmDialog(
                                       context,
-                                      onConfirm: () {},
+                                      onConfirm: () => widget.onDelete
+                                          .call(widget.match.id),
                                       message:
                                           "Are you sure want to delete THIS entry?",
                                       title: "Delete entry"), // TODO
                               icon: const Icon(
                                   Icons.delete_forever_rounded),
                               label: const Text("Delete")),
-                        /*
-                    ElevatedButton(
-                      onPressed: () => onDelete(match.matchID),
-                      child: const Text('Delete'),
-                    ),
-                    */
                       ], width: 6),
                     ),
                   ),

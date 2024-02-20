@@ -11,7 +11,7 @@ class TeamAllianceSwitch extends StatefulWidget {
   const TeamAllianceSwitch({
     super.key,
     required this.onChanged,
-    this.initialValue = false,
+    this.initialValue = false, // false = red, true = blue
   });
 
   @override

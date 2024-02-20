@@ -23,8 +23,8 @@ class ScoutingTelemetry {
     for (EphemeralScoutingData data
         in _storedFinalizedMatches.values) {
       Debug().info("Found scattered match data: ${data.id}");
-      HollisticMatchScoutingData.fromCompatibleFormat(
-          data.compressedFormat);
+      cb.call(HollisticMatchScoutingData.fromCompatibleFormat(
+          data.compressedFormat));
     }
   }
 

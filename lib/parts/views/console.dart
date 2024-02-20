@@ -216,13 +216,11 @@ class ConsoleStateComponent extends State<_ConsoleComponent> {
                   });
                   await launchConfirmDialog(context,
                       message: SingleChildScrollView(
-                          child: Text.rich(
-                              TextSpan(children: <InlineSpan>[
-                        for (String pm in pms)
-                          TextSpan(
-                              text:
-                                  "${pm.replaceAll("\\\"", "")}\n\n")
-                      ]))),
+                          child: Text.rich(TextSpan(
+                              children: <InlineSpan>[
+                            for (String pm in pms)
+                              TextSpan(text: "$pm\n\n")
+                          ]))),
                       onConfirm: () {});
                 },
                 icon: const Icon(Icons.list_rounded),
