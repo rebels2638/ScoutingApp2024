@@ -1,9 +1,12 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:confetti/confetti.dart';
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/debug.dart';
+import 'package:scouting_app_2024/parts/bits/appbar_celebrate.dart';
 import 'package:scouting_app_2024/parts/bits/lock_in.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
 import 'package:scouting_app_2024/parts/bits/show_console.dart';
@@ -55,17 +58,24 @@ class _AppView extends StatefulWidget {
 
 class _AppViewState extends State<_AppView> {
   late final PageController pageController;
+  late ConfettiController _confettiController;
   int _bottomNavBarIndexer = 0;
 
   @override
   void initState() {
     super.initState();
     pageController = PageController();
+    _confettiController =
+        ConfettiController(duration: const Duration(seconds: 1));
   }
 
   @override
   void dispose() {
     pageController.dispose();
+    _confettiController.dispose();
+    context
+        .watch<AppBarCelebrationModal>()
+        .addListener(() => _confettiController.play());
     super.dispose();
   }
 
@@ -500,57 +510,52 @@ class _AppViewState extends State<_AppView> {
         appBar: AppBar(
             forceMaterialTransparency: true,
             centerTitle: true, // i forgor
-            title: LockedInScoutingModal.isCasual(context)
-                ? Center(
-                    child: AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 300),
-                        switchInCurve: Curves.ease,
-                        switchOutCurve: Curves.ease,
-                        transitionBuilder: (Widget child,
-                            Animation<double> animation) {
-                          return SlideTransition(
-                            position: Tween<Offset>(
-                                    begin: const Offset(0, 0.5),
-                                    end: const Offset(0, 0))
-                                .animate(animation),
-                            child: child,
-                          );
-                        },
-                        child: PreferCompactModal.isCompactPreferred(
-                                context)
-                            ? GestureDetector(
-                                onTap: () async =>
-                                    await launchConfirmDialog(context,
-                                        message: const Text(
-                                            "You are about to visit the Rebel Robotics' website"),
-                                        onConfirm: () async =>
-                                            await launchUrl(Uri.parse(
-                                                RebelRoboticsShared
-                                                    .website))),
-                                child: const Hero(
-                                  tag: "RebelsLogo",
-                                  child: Image(
-                                    image: ExactAssetImage(
-                                        "assets/appicon_header.png"),
-                                    width: 52,
-                                    height: 52,
-                                  ),
-                                ),
-                              )
-                            : FittedBox(
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                      onTap: () async => await launchConfirmDialog(
-                                          context,
-                                          message: const Text(
-                                              "You are about to visit the Rebel Robotics' website"),
-                                          onConfirm: () async =>
-                                              await launchUrl(Uri.parse(
-                                                  RebelRoboticsShared
-                                                      .website))),
+            title: ConfettiWidget(
+              confettiController: _confettiController,
+              minBlastForce: 20,
+              numberOfParticles: 15,
+              gravity: 0.5,
+              maxBlastForce: 25,
+              blastDirectionality: BlastDirectionality.explosive,
+              blastDirection: (4 * pi) / 3, //
+              child: ConfettiWidget(
+                  confettiController: _confettiController,
+                  minBlastForce: 20,
+                  numberOfParticles: 15,
+                  gravity: 0.5,
+                  maxBlastForce: 25,
+                  blastDirectionality: BlastDirectionality.explosive,
+                  blastDirection:
+                      (5 * pi) / 3, // i know my unit circle mom!!!!!
+                  child: LockedInScoutingModal.isCasual(context)
+                      ? Center(
+                          child: AnimatedSwitcher(
+                              duration:
+                                  const Duration(milliseconds: 300),
+                              switchInCurve: Curves.ease,
+                              switchOutCurve: Curves.ease,
+                              transitionBuilder: (Widget child,
+                                  Animation<double> animation) {
+                                return SlideTransition(
+                                  position: Tween<Offset>(
+                                          begin: const Offset(0, 0.5),
+                                          end: const Offset(0, 0))
+                                      .animate(animation),
+                                  child: child,
+                                );
+                              },
+                              child: PreferCompactModal
+                                      .isCompactPreferred(context)
+                                  ? GestureDetector(
+                                      onTap: () async =>
+                                          await launchConfirmDialog(
+                                              context,
+                                              message: const Text(
+                                                  "You are about to visit the Rebel Robotics' website"),
+                                              onConfirm: () async =>
+                                                  await launchUrl(Uri.parse(
+                                                      RebelRoboticsShared
+                                                          .website))),
                                       child: const Hero(
                                         tag: "RebelsLogo",
                                         child: Image(
@@ -560,38 +565,67 @@ class _AppViewState extends State<_AppView> {
                                           height: 52,
                                         ),
                                       ),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    Text(APP_CANONICAL_NAME,
-                                        style: TextStyle(
-                                            color: ThemeProvider
-                                                    .themeOf(
-                                                        context)
-                                                .data
-                                                .textTheme
-                                                .labelSmall
-                                                ?.color,
-                                            fontWeight:
-                                                FontWeight.w600,
-                                            fontSize: 22)),
-                                    const SizedBox(width: 10),
-                                    GestureDetector(
-                                        onTap: () async => await launchConfirmDialog(
-                                            context,
-                                            message: const Text(
-                                                "You are about to visit the FRC Game Overview website"),
-                                            onConfirm: () async =>
-                                                await launchUrl(Uri.parse(
-                                                    FIRSTCrescendoShared
-                                                        .website))),
-                                        child: const Image(
-                                            height: 20,
-                                            image: ExactAssetImage(
-                                                "assets/crescendo/crescendo_header.png"))),
-                                  ]),
-                            )),
-                  )
-                : Container()) /*lmao */,
+                                    )
+                                  : FittedBox(
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .center,
+                                          children: <Widget>[
+                                            GestureDetector(
+                                              onTap: () async => await launchConfirmDialog(
+                                                  context,
+                                                  message: const Text(
+                                                      "You are about to visit the Rebel Robotics' website"),
+                                                  onConfirm: () async =>
+                                                      await launchUrl(
+                                                          Uri.parse(
+                                                              RebelRoboticsShared
+                                                                  .website))),
+                                              child: const Hero(
+                                                tag: "RebelsLogo",
+                                                child: Image(
+                                                  image: ExactAssetImage(
+                                                      "assets/appicon_header.png"),
+                                                  width: 52,
+                                                  height: 52,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 10),
+                                            Text(APP_CANONICAL_NAME,
+                                                style: TextStyle(
+                                                    color: ThemeProvider
+                                                            .themeOf(
+                                                                context)
+                                                        .data
+                                                        .textTheme
+                                                        .labelSmall
+                                                        ?.color,
+                                                    fontWeight:
+                                                        FontWeight
+                                                            .w600,
+                                                    fontSize: 22)),
+                                            const SizedBox(width: 10),
+                                            GestureDetector(
+                                                onTap: () async => await launchConfirmDialog(
+                                                    context,
+                                                    message: const Text(
+                                                        "You are about to visit the FRC Game Overview website"),
+                                                    onConfirm: () async =>
+                                                        await launchUrl(
+                                                            Uri.parse(
+                                                                FIRSTCrescendoShared
+                                                                    .website))),
+                                                child: const Image(
+                                                    height: 20,
+                                                    image: ExactAssetImage(
+                                                        "assets/crescendo/crescendo_header.png"))),
+                                          ]),
+                                    )),
+                        )
+                      : Container()),
+            )) /*lmao */,
         body: RepaintBoundary(
           child: PageView(
             physics: const NeverScrollableScrollPhysics(),

@@ -111,8 +111,13 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                         context,
                         message: const Text(
                             "Are you sure you want to delete all past matches? This action cannot be undone."),
-                        onConfirm: () {
-                          // TODO: delete all past matches from backend
+                        onConfirm: () async =>
+                            // TODO: delete all past matches from backend
+                            await launchAssuredConfirmDialog(context,
+                                message:
+                                    "Are you sure you want to DELETE ALL entries?",
+                                title: "Delete all entries",
+                                onConfirm: () {
                           setState(() {
                             matches.clear();
                           });
@@ -121,7 +126,7 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                                 content: Text(
                                     "All past matches deleted.")),
                           );
-                        },
+                        }),
                       ),
                     ),
                     IconButton.filledTonal(
@@ -394,11 +399,16 @@ class _MatchTileState extends State<MatchTile> {
                           )
                         else
                           FilledButton.icon(
-                              onPressed: () {}, // TODO
+                              onPressed: () async =>
+                                  await launchAssuredConfirmDialog(
+                                      context,
+                                      onConfirm: () {},
+                                      message:
+                                          "Are you sure want to delete THIS entry?",
+                                      title: "Delete entry"), // TODO
                               icon: const Icon(
                                   Icons.delete_forever_rounded),
                               label: const Text("Delete")),
-
                         /*
                     ElevatedButton(
                       onPressed: () => onDelete(match.matchID),

@@ -7,6 +7,8 @@ import 'package:scouting_app_2024/blobs/locale_blob.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:scouting_app_2024/shared.dart';
+import 'package:scouting_app_2024/user/models/ephemeral_data.dart';
+import 'package:scouting_app_2024/user/scouting_telemetry.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
 import 'package:theme_provider/theme_provider.dart';
 
@@ -191,10 +193,40 @@ class ConsoleStateComponent extends State<_ConsoleComponent> {
                 label: const Text("CONFIRM_DIALOG",
                     style: TextStyle(fontWeight: FontWeight.bold))),
             TextButton.icon(
+                onPressed: () async =>
+                    await launchAssuredConfirmDialog(context,
+                        message: "TEST",
+                        title: "TEST",
+                        onConfirm: () {}),
+                icon: const Icon(Icons.add_box_rounded),
+                label: const Text("AssureInfBox",
+                    style: TextStyle(fontWeight: FontWeight.bold))),
+            TextButton.icon(
                 onPressed: () => throw "Debug Error box.",
                 icon:
                     const Icon(Icons.security_update_warning_rounded),
                 label: const Text("THROW_NOW",
+                    style: TextStyle(fontWeight: FontWeight.bold))),
+            TextButton.icon(
+                onPressed: () async {
+                  List<String> pms = <String>[];
+                  ScoutingTelemetry()
+                      .forEach((EphemeralScoutingData? data) {
+                    pms.add(data?.compressedFormat ?? "null");
+                  });
+                  await launchConfirmDialog(context,
+                      message: SingleChildScrollView(
+                          child: Text.rich(
+                              TextSpan(children: <InlineSpan>[
+                        for (String pm in pms)
+                          TextSpan(
+                              text:
+                                  "${pm.replaceAll("\\\"", "")}\n\n")
+                      ]))),
+                      onConfirm: () {});
+                },
+                icon: const Icon(Icons.list_rounded),
+                label: const Text("PMs",
                     style: TextStyle(fontWeight: FontWeight.bold))),
             FilledButton.tonal(
                 onPressed: () {
@@ -306,7 +338,6 @@ class _FlashingWarningState extends State<_FlashingWarning>
     )..repeat(reverse: true);
     _controller2 = AnimationController(
       vsync: this,
-
       duration: const Duration(milliseconds: 1800),
     )..repeat(reverse: true);
     _colorAnimation1 = ColorTween(

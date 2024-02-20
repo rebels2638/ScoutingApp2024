@@ -7,6 +7,7 @@ import 'package:scouting_app_2024/parts/loader.dart';
 import 'package:scouting_app_2024/user/env.dart';
 import 'package:scouting_app_2024/user/models/ephemeral_data.dart';
 import 'package:scouting_app_2024/user/scouting_telemetry.dart';
+import 'package:scouting_app_2024/utils.dart';
 
 import 'package:window_manager/window_manager.dart';
 
@@ -24,6 +25,8 @@ Future<void> _prepareAppLaunch() async {
   // this is such a shit idea because we are using so many awaits lmao
   await ThemeBlob.loadBuiltinThemes();
   await ThemeBlob.loadIntricateThemes();
+  Debug().newPhase("LOAD_LOCALE");
+  LocaleUtils.loadWordsRules();
   Debug().newPhase("INIT_BACKEND");
   Hive.init(DeviceEnv.saveLocation.path);
   Hive.registerAdapter(EphemeralScoutingDataAdapter());
@@ -34,6 +37,7 @@ Future<void> _prepareAppLaunch() async {
   WidgetsBinding.instance.addObserver(AppLifecycleListener(
       onStateChange: (AppLifecycleState value) =>
           Debug().warn("{APP_LIFE_CYCLE} => $value")));
+
   Debug().newPhase("APP_LAUNCH");
   Timer.periodic(
       const Duration(seconds: Shared.USER_USAGE_TIME_PROBE_PERIODIC),

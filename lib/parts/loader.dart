@@ -104,7 +104,12 @@ class _UpdaterPhaseStringState extends State<_UpdaterPhaseString> {
   Widget build(BuildContext context) {
     return Text(
       _message,
-      style: const TextStyle(color: Colors.white, fontSize: 18),
+      textAlign: TextAlign.center,
+      softWrap: true,
+      style: const TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          overflow: TextOverflow.ellipsis),
     );
   }
 }

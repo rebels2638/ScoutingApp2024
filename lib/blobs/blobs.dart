@@ -1,7 +1,11 @@
+import 'dart:math';
+
 import "package:flutter/material.dart";
 import 'package:numberpicker/numberpicker.dart';
+import 'package:scouting_app_2024/blobs/assured_dialog.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
+import 'package:scouting_app_2024/utils.dart';
 
 // there is no much boilerplate shitty code for this number picker thing, just look below, there are like 2 delegate functions for this lmfao
 class _InternalNumberPicker extends StatefulWidget {
@@ -182,8 +186,6 @@ SnackBar yummySnackBar(
           ]),
         ));
 
-
-
 @pragma("vm:prefer-inline")
 List<Widget> strutAll(List<Widget> children,
     {double? width, double? height}) {
@@ -196,6 +198,28 @@ List<Widget> strutAll(List<Widget> children,
   }
   return result;
 }
+
+@pragma("vm:prefer-inline")
+Future<void> launchInformDialog(BuildContext context,
+        {required Widget message,
+        Icon? icon,
+        required String title,
+        void Function()? onExit}) async =>
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+                icon: icon ?? const Icon(Icons.info_outline_rounded),
+                title: Text(title),
+                content: message,
+                actions: <Widget>[
+                  TextButton.icon(
+                      icon: const Icon(Icons.thumb_up_rounded),
+                      label: const Text("OK"),
+                      onPressed: () {
+                        onExit?.call();
+                        Navigator.of(context).pop();
+                      }),
+                ]));
 
 /// generic confirmation dialog
 @pragma("vm:prefer-inline")
@@ -227,7 +251,7 @@ Future<void> launchConfirmDialog(BuildContext context,
                       onConfirm.call();
                       Navigator.of(context).pop();
                       Debug().info(
-                          "CONFIRM_DIALOG ${message.hashCode} ended with CONFIRM");
+                          "CONFIRM_DIALOG [${message.hashCode}] ended with CONFIRM");
                     },
                   ),
                 TextButton.icon(
@@ -239,8 +263,39 @@ Future<void> launchConfirmDialog(BuildContext context,
                     onDeny?.call();
                     Navigator.of(context).pop();
                     Debug().info(
-                        "CONFIRM_DIALOG ${message.key} ended with DENY");
+                        "CONFIRM_DIALOG [${message.hashCode}] ended with DENY");
                   },
                 )
               ]));
+}
+
+Future<void> launchAssuredConfirmDialog(BuildContext context,
+    {required String message,
+    required String title,
+    Icon icon = const Icon(Icons.warning_amber_rounded),
+    void Function()? onCancel,
+    required void Function() onConfirm}) async {
+  Debug().info(
+      "Launching a ASSURED_CONFIRM_DIALOG with [$message] for ${message.hashCode}");
+  final String requiredWord = LocaleUtils.RANDOM_WORDS
+      .elementAt(Random().nextInt(LocaleUtils.RANDOM_WORDS.length));
+  await showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) =>
+          AssuredConfirmDialogViewInput(
+              message: message,
+              title: title,
+              icon: icon,
+              requiredWord: requiredWord,
+              onCancel: () {
+                Debug().info(
+                    "ASSURED_CONFIRM_DIALOG [${message.hashCode}] ended with DENY");
+                onCancel?.call();
+              },
+              onConfirm: () {
+                Debug().info(
+                    "ASSURED_CONFIRM_DIALOG [${message.hashCode}] ended with CONFIRM");
+                onConfirm.call();
+              }));
 }

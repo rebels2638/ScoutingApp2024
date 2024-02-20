@@ -1,3 +1,6 @@
+import 'package:flutter/services.dart';
+import 'package:scouting_app_2024/debug.dart';
+
 typedef pair<A, B> = (A first, B second);
 
 class GenericUtils {
@@ -28,4 +31,18 @@ class GenericUtils {
   }
 
   static const String HAZARD_DIAMOND = "◢◤";
+}
+
+class LocaleUtils {
+  static late final Set<String> RANDOM_WORDS;
+
+  static void loadWordsRules() async {
+    Debug().info("Loading RANDOM_WORDS_RULE");
+    RANDOM_WORDS = <String>{};
+    for (String word
+        in (await rootBundle.loadString("assets/rules/words.txt"))
+            .split("\n")) {
+      RANDOM_WORDS.add(word.toLowerCase().trim());
+    }
+  }
 }

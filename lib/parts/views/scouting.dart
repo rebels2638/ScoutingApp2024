@@ -1,12 +1,13 @@
 import "dart:convert";
-
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
+import "package:provider/provider.dart";
 import "package:scouting_app_2024/blobs/basic_toggle_switch.dart";
 import "package:scouting_app_2024/blobs/blobs.dart";
 import "package:scouting_app_2024/blobs/form_blob.dart";
 import "package:scouting_app_2024/blobs/inc_dec_blob.dart";
 import "package:scouting_app_2024/blobs/locale_blob.dart";
+import "package:scouting_app_2024/parts/bits/appbar_celebrate.dart";
 import "package:scouting_app_2024/parts/bits/prefer_compact.dart";
 import "package:scouting_app_2024/parts/bits/show_console.dart";
 import "package:scouting_app_2024/parts/bits/show_experimental.dart";
@@ -766,7 +767,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             context,
                             title: "Are you sure you want to exit?",
                             message: const Text(
-                                "The current session datawill be lost."),
+                                "The current session data will be lost."),
                             onConfirm: () {
                           context
                               .findAncestorStateOfType<
@@ -866,18 +867,31 @@ class _ScoutingViewState extends State<ScoutingView>
                       ScoutingTelemetry().put(data);
                       Debug().info(
                           "Saved an entry of ${data.id}=${data.toString()}");
-                      launchConfirmDialog(context,
-                          message: const Text(
-                              "Saved this scouting entry to persistent storage!"),
-                          onConfirm: () {
+                      launchInformDialog(context,
+                          message: Text.rich(TextSpan(
+                              text:
+                                  "Saved match ${context.read<ScoutingSessionBloc>().prelim.matchNumber}!\n",
+                              children: <InlineSpan>[
+                                const TextSpan(
+                                  text:
+                                      "Head over to [Past Matches] to view all saved entries\n",
+                                ),
+                                TextSpan(
+                                    text: data.id,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 10))
+                              ])),
+                          title: "Saved!", onExit: () {
+                        Provider.of<AppBarCelebrationModal>(context,
+                                listen: false)
+                            .toggle();
                         context
                             .findAncestorStateOfType<
                                 _ScoutingSessionViewDelegateState>()!
-                            .setState(() {
-                          _currBloc = null;
-                          Debug().warn(
-                              "Exited the current scouting session");
-                        });
+                            .setState(() => _currBloc = null);
+                        Debug().warn(
+                            "Exited & SAVED the current scouting session");
                       });
                     },
                     icon: const Icon(Icons.save_rounded))
@@ -899,18 +913,30 @@ class _ScoutingViewState extends State<ScoutingView>
                       ScoutingTelemetry().put(data);
                       Debug().info(
                           "Saved an entry of ${data.id}=${data.toString()}");
-                      launchConfirmDialog(context,
-                          message: const Text(
-                              "Saved this scouting entry to persistent storage!"),
-                          onConfirm: () {
+                      launchInformDialog(context,
+                          message: Text.rich(TextSpan(
+                              text:
+                                  "Saved match ${context.read<ScoutingSessionBloc>().prelim.matchNumber}!\n",
+                              children: <InlineSpan>[
+                                const TextSpan(
+                                    text:
+                                        "Head over to [Past Matches] to view all saved entries\n"),
+                                TextSpan(
+                                    text: data.id,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 10))
+                              ])),
+                          title: "Saved!", onExit: () {
+                        Provider.of<AppBarCelebrationModal>(context,
+                                listen: false)
+                            .toggle();
                         context
                             .findAncestorStateOfType<
                                 _ScoutingSessionViewDelegateState>()!
-                            .setState(() {
-                          _currBloc = null;
-                          Debug().warn(
-                              "Exited the current scouting session");
-                        });
+                            .setState(() => _currBloc = null);
+                        Debug().warn(
+                            "Exited & SAVED the current scouting session");
                       });
                     }),
               if (ShowConsoleModal.isShowingConsole(context))
