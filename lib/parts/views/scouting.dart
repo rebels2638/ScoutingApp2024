@@ -604,16 +604,29 @@ class _ScoutingViewState extends State<ScoutingView>
           header: (icon: Icons.flag_rounded, title: "Endgame"),
           child: form_col(<Widget>[
             form_label("On chain",
-                child: BasicToggleSwitch(
-                    initialValue:
+                child: form_seg_btn_1(
+                    segments: EndStatus.values
+                        .map<
+                                ({
+                                  Icon? icon,
+                                  String label,
+                                  EndStatus value
+                                })>(
+                            (EndStatus e) => (
+                                  label: e.name.formalize,
+                                  icon: null,
+                                  value: e
+                                ))
+                        .toList(),
+                    initialSelection:
                         BlocProvider.of<ScoutingSessionBloc>(context)
                             .endgame
-                            .onChain,
-                    onChanged: (bool e) {
+                            .endState,
+                    onSelect: (EndStatus e) {
                       context
                           .read<ScoutingSessionBloc>()
                           .endgame
-                          .onChain = e;
+                          .endState = e;
                       context
                           .read<ScoutingSessionBloc>()
                           .add(EndgameUpdateEvent());
@@ -848,40 +861,54 @@ class _ScoutingViewState extends State<ScoutingView>
                     onPressed: () {}),
               if (PreferCompactModal.isCompactPreferred(context))
                 IconButton.filledTonal(
-                    onPressed: () {
-                      EphemeralScoutingData data =
-                          EphemeralScoutingData.fromHollistic(context
-                              .read<ScoutingSessionBloc>()
-                              .exportHollistic());
-                      ScoutingTelemetry().put(data);
-                      Debug().info(
-                          "Saved an entry of ${data.id}=${data.toString()}");
-                      launchInformDialog(context,
-                          message: Text.rich(TextSpan(
-                              text:
-                                  "Saved match ${BlocProvider.of<ScoutingSessionBloc>(context).prelim.matchNumber}!\n",
+                    onPressed: () async {
+                      await launchConfirmDialog(context,
+                          callAfter: true,
+                          message: const Text.rich(TextSpan(
+                              text: "Are you sure you want to save?",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
                               children: <InlineSpan>[
-                                const TextSpan(
-                                  text:
-                                      "Head over to [Past Matches] to view all saved entries\n",
-                                ),
                                 TextSpan(
                                     text:
-                                        "${data.id} - ${BlocProvider.of<ScoutingSessionBloc>(context).hashCode}",
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 10))
-                              ])),
-                          title: "Saved!", onExit: () {
-                        Provider.of<AppBarCelebrationModal>(context,
-                                listen: false)
-                            .toggle();
-                        context
-                            .findAncestorStateOfType<
-                                _ScoutingSessionViewDelegateState>()!
-                            .setState(() => _currBloc = null);
-                        Debug().warn(
-                            "Exited & SAVED the current scouting session");
+                                        "\nYou CANNOT make changes after!")
+                              ])), onConfirm: () {
+                        EphemeralScoutingData data =
+                            EphemeralScoutingData.fromHollistic(
+                                context
+                                    .read<ScoutingSessionBloc>()
+                                    .exportHollistic());
+                        ScoutingTelemetry().put(data);
+                        Debug().info(
+                            "Saved an entry of ${data.id}=${data.toString()}");
+                        launchInformDialog(context,
+                            message: Text.rich(TextSpan(
+                                text:
+                                    "Saved match ${BlocProvider.of<ScoutingSessionBloc>(context).prelim.matchNumber}!\n",
+                                children: <InlineSpan>[
+                                  const TextSpan(
+                                    text:
+                                        "Head over to [Past Matches] to view all saved entries\n",
+                                  ),
+                                  TextSpan(
+                                      text:
+                                          "${data.id} - ${BlocProvider.of<ScoutingSessionBloc>(context).hashCode}",
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 10))
+                                ])),
+                            title: "Saved!", onExit: () {
+                          Provider.of<AppBarCelebrationModal>(context,
+                                  listen: false)
+                              .toggle();
+                          context
+                              .findAncestorStateOfType<
+                                  _ScoutingSessionViewDelegateState>()!
+                              .setState(() => _currBloc = null);
+                          Debug().warn(
+                              "Exited & SAVED the current scouting session");
+                        });
                       });
                     },
                     icon: const Icon(Icons.save_rounded))

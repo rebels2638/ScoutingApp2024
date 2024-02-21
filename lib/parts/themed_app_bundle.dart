@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/bits/appbar_celebrate.dart';
+import 'package:scouting_app_2024/parts/bits/duc_bit.dart';
 import 'package:scouting_app_2024/parts/bits/lock_in.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_canonical.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
@@ -13,6 +14,7 @@ import 'package:scouting_app_2024/parts/bits/show_fps_monitor.dart';
 import 'package:scouting_app_2024/parts/bits/theme_mode.dart';
 import 'package:scouting_app_2024/parts/bits/use_alt_layout.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
+import 'package:scouting_app_2024/user/duc_telemetry.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 class ThemedAppBundle extends StatelessWidget {
@@ -36,6 +38,10 @@ class ThemedAppBundle extends StatelessWidget {
                 builder: (BuildContext
                         themeCtxt) => /*lol this is very scuffed XD i hope you can forgive me*/
                     MultiProvider(providers: <SingleChildWidget>[
+                      ChangeNotifierProvider<DucBaseBit>(
+                          create: (BuildContext _) => DucBaseBit(
+                              DucTelemetry()
+                                  .allHollisticEntries)), // loaded cuz fuck yes >:)
                       ChangeNotifierProvider<AppBarCelebrationModal>(
                           create: (BuildContext _) =>
                               AppBarCelebrationModal()),

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:scouting_app_2024/parts/loader.dart';
+import 'package:scouting_app_2024/user/duc_telemetry.dart';
 import 'package:scouting_app_2024/user/env.dart';
 import 'package:scouting_app_2024/user/models/ephemeral_data.dart';
 import 'package:scouting_app_2024/user/scouting_telemetry.dart';
@@ -21,7 +22,7 @@ Future<void> _prepareAppLaunch() async {
   Debug().info(
       "Loaded the Device Environment with: [DocPath=${DeviceEnv.saveLocation.path},CachePath=${DeviceEnv.saveLocation.path}]");
   Debug().newPhase("LOAD_THEMES");
-  // this is such a shit idea because we are using so many awaits lmao
+  // this is such a shit idea because we are using so many awaits lmao, who gives a fuck amirite? all ik is that it works "fine" and you shouldnt touch this shitty piece of code unless some cosmic ray flips some bit that fucks this up, so cha cha real smooth, keep your hands off of this
   await ThemeBlob.loadBuiltinThemes();
   await ThemeBlob.loadIntricateThemes();
   Debug().newPhase("LOAD_LOCALE");
@@ -30,7 +31,10 @@ Future<void> _prepareAppLaunch() async {
   Hive.init(DeviceEnv.saveLocation.path);
   Hive.registerAdapter(EphemeralScoutingDataAdapter());
   await ScoutingTelemetry().loadBoxes();
+  await DucTelemetry()
+      .loadBoxes(); // lol DucTelemetry is a carbon copy of ScoutingTelemetry
   Debug().newPhase("VALIDATE_BOXES");
+  // eval all scouting stuffs
   ({bool res, List<String> failedIds}) r =
       ScoutingTelemetry().validateAllEntriesVersion();
   Debug().info("Current model version: $EPHEMERAL_MODELS_VERSION");
@@ -40,6 +44,17 @@ Future<void> _prepareAppLaunch() async {
     Debug().warn(
         "[RMF] version_not_compatible -> $rr ($rr =/= $EPHEMERAL_MODELS_VERSION)");
     ScoutingTelemetry().deleteID(rr);
+  }
+  // eval all duc stuffs
+  ({bool res, List<String> failedIds}) r2 =
+      DucTelemetry().validateAllEntriesVersion();
+  Debug().info("Current model version: $EPHEMERAL_MODELS_VERSION");
+  Debug().warn(
+      "[DUC_BOX] Check validation for boxes is good? ${r2.res} with ${r2.failedIds.length} failed");
+  for (String rr in r2.failedIds) {
+    Debug().warn(
+        "[DUC_BOX RMF] version_not_compatible -> $rr ($rr =/= $EPHEMERAL_MODELS_VERSION)");
+    DucTelemetry().deleteID(rr);
   }
   Debug().newPhase("LOAD_USER_TELEMETRY");
   await UserTelemetry().init();

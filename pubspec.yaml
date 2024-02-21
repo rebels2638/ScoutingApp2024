@@ -7,7 +7,6 @@ environment:
   sdk: ">=3.2.5 <4.0.0"
 
 dependencies:
-  barcode_scan2: ^4.3.0
   bloc: ^8.1.2
   build_runner: ^2.4.8
   community_material_icon: ^5.9.55
@@ -28,6 +27,7 @@ dependencies:
   json_serializable: ^6.7.1
   json_theme: ^6.4.0
   logging: ^1.2.0
+  mobile_scanner: ^4.0.0
   numberpicker: ^2.1.2
   path_provider: ^2.1.2
   permission_handler: ^11.3.0

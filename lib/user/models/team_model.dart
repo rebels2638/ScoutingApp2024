@@ -22,7 +22,7 @@ enum MatchType { practice, qualification, playoff }
 
 enum MatchStartingPosition { left, middle, right }
 
-enum EndStatus { parked, onstage, failed }
+enum EndStatus { on_chain, on_stage, failed }
 
 enum AutoPickup { l, m, r, no }
 
@@ -120,13 +120,13 @@ class HollisticMatchScoutingData
     final Map<dynamic, dynamic> data =
         jsonDecode(rawData) as Map<dynamic, dynamic>;
     return HollisticMatchScoutingData(
-      preliminary: PrelimInfo.fromCompatibleFormat(
-          data["preliminary"].toString()),
+      preliminary:
+          PrelimInfo.fromCompatibleFormat(data["prelim"].toString()),
       auto: AutoInfo.fromCompatibleFormat(data["auto"].toString()),
       teleop:
-          TeleOpInfo.fromCompatibleFormat(data["teleop"].toString()),
-      endgame: EndgameInfo.fromCompatibleFormat(
-          data["endgame"].toString()),
+          TeleOpInfo.fromCompatibleFormat(data["tele"].toString()),
+      endgame:
+          EndgameInfo.fromCompatibleFormat(data["end"].toString()),
       misc: MiscInfo.fromCompatibleFormat(data["misc"].toString()),
       id: data["id"].toString(),
     );
@@ -142,10 +142,10 @@ class HollisticMatchScoutingData
   String toCompatibleFormat() {
     return jsonEncode(<dynamic, dynamic>{
       "id": id,
-      "preliminary": preliminary.toCompatibleFormat(),
+      "prelim": preliminary.toCompatibleFormat(),
       "auto": auto.toCompatibleFormat(),
-      "teleop": teleop.toCompatibleFormat(),
-      "endgame": endgame.toCompatibleFormat(),
+      "tele": teleop.toCompatibleFormat(),
+      "end": endgame.toCompatibleFormat(),
       "misc": misc.toCompatibleFormat()
     });
   }

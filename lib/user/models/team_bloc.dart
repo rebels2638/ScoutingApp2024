@@ -59,27 +59,27 @@ class MiscState extends ScoutingSessionStates {
 
 class EndgameInfo extends ScoutingInfo
     implements QRCompatibleData<EndgameInfo> {
-  bool onChain;
+  EndStatus endState;
   Harmony harmony;
   TrapScored trapScored;
   MicScored micScored;
   String? comments;
 
   EndgameInfo(
-      {required this.onChain,
+      {required this.endState,
       required this.harmony,
       required this.trapScored,
       required this.micScored,
       this.comments = ""});
 
   factory EndgameInfo.optional(
-          {bool onChain = false,
+          {EndStatus endState = EndStatus.on_stage,
           Harmony harmony = Harmony.no,
           TrapScored trapScored = TrapScored.no,
           MicScored micScored = MicScored.no,
           String comments = ""}) =>
       EndgameInfo(
-          onChain: onChain,
+          endState: endState,
           harmony: harmony,
           trapScored: trapScored,
           micScored: micScored,
@@ -87,7 +87,7 @@ class EndgameInfo extends ScoutingInfo
 
   @override
   Map<String, dynamic> exportMap() => <String, dynamic>{
-        "onChain": onChain,
+        "endStatus": endState,
         "harmony": harmony,
         "trapScored": trapScored,
         "micScored": micScored,
@@ -98,7 +98,7 @@ class EndgameInfo extends ScoutingInfo
     final Map<String, dynamic> data =
         jsonDecode(csv) as Map<String, dynamic>;
     return EndgameInfo(
-        onChain: data["chain"],
+        endState: EndStatus.values[data["end"]],
         harmony: Harmony.values[data["harmony"]],
         trapScored: TrapScored.values[data["trap"]],
         micScored: MicScored.values[data["mic"]],
@@ -108,7 +108,7 @@ class EndgameInfo extends ScoutingInfo
   @override
   String toCompatibleFormat() {
     return jsonEncode(<String, dynamic>{
-      "chain": onChain,
+      "end": endState.index,
       "harmony": harmony.index,
       "trap": trapScored.index,
       "mic": micScored.index,

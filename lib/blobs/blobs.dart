@@ -230,6 +230,7 @@ Future<void> launchConfirmDialog(BuildContext context,
     bool showOkLabel = true,
     String okLabel = "Yes",
     String denyLabel = "No",
+    bool callAfter = false,
     required void Function() onConfirm,
     void Function()? onDeny}) async {
   Debug().info(
@@ -248,10 +249,17 @@ Future<void> launchConfirmDialog(BuildContext context,
                         style: const TextStyle(
                             fontWeight: FontWeight.w700)),
                     onPressed: () {
-                      onConfirm.call();
-                      Navigator.of(context).pop();
-                      Debug().info(
-                          "CONFIRM_DIALOG [${message.hashCode}] ended with CONFIRM");
+                      if (callAfter) {
+                        Navigator.of(context).pop();
+                        onConfirm.call();
+                        Debug().info(
+                            "CONFIRM_DIALOG [${message.hashCode}] ended with CONFIRM");
+                      } else {
+                        onConfirm.call();
+                        Navigator.of(context).pop();
+                        Debug().info(
+                            "CONFIRM_DIALOG [${message.hashCode}] ended with CONFIRM");
+                      }
                     },
                   ),
                 TextButton.icon(

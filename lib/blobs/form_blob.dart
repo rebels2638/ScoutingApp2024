@@ -293,7 +293,10 @@ Widget form_label(String text,
 
 @pragma("vm:prefer-inline")
 Widget form_label_2(String text,
-        {TextStyle? style, required Widget child, Widget? icon}) =>
+        {TextStyle? style,
+        required Widget child,
+        Widget? icon,
+        bool allowRigid = true}) =>
     Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -311,9 +314,10 @@ Widget form_label_2(String text,
           const SizedBox(height: 6),
           Row(
             children: <Widget>[
-              const SizedBox(
-                  width:
-                      10), // fuck const SizedBox() its not compile const
+              if (allowRigid)
+                const SizedBox(
+                    width:
+                        10), // fuck const SizedBox() its not compile const
               child,
             ],
           )
@@ -391,9 +395,9 @@ Widget form_sec_rigid(BuildContext context,
                 .data
                 .navigationBarTheme
                 .surfaceTintColor,
-            borderRadius: BorderRadius.circular(14)),
+            borderRadius: BorderRadius.circular(16)),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(6),
           child: Column(children: <Widget>[
             Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -403,7 +407,7 @@ Widget form_sec_rigid(BuildContext context,
                   title,
                 ]),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(4.0),
               child: child,
             )
           ]),

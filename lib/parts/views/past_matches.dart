@@ -142,31 +142,6 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                                         "All past matches deleted. Cleare")),
                               );
                             })),
-                    IconButton.filledTonal(
-                      icon: const Icon(Icons.download),
-                      onPressed: () async {
-                        /*
-                        String exportData = matches
-                            .map((PastMatchesOverViewData match) =>
-                                matchDataToCsv(match))
-                            .join("\n");
-                        Widget qrWidget = createPrettyQrDataWidget(
-                          data: exportData,
-                          includeImage: false,
-                        );
-                        await launchConfirmDialog(
-                          showOkLabel: false,
-                          denyLabel: "Close",
-                          icon: const Icon(Icons.cloud_sync),
-                          title:
-                              "Transfer All Scouting Data via QR Code",
-                          context,
-                          message: qrWidget,
-                          onConfirm: () {},
-                        );
-                        */
-                      },
-                    ),
                   ], width: 14),
                 ),
               ],
