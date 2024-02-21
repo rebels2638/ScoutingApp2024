@@ -23,7 +23,7 @@ class Shared {
 final String TELEMETRY_SUBDIR_PATH =
     "$APP_CANONICAL_NAME${Platform.pathSeparator}";
 const String APP_CANONICAL_NAME = "Argus"; // be goofy with this :)
-const int REBEL_ROBOTICS_APP_VERSION = 0xb939c84d4;
+const int REBEL_ROBOTICS_APP_VERSION = 0xb935c84d4;
 const String REBEL_ROBOTICS_APP_NAME =
     "2638 Scouting \"$APP_CANONICAL_NAME\"";
 const String REBEL_ROBOTICS_APP_LEGALESE =

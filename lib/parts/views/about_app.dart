@@ -78,10 +78,10 @@ class _AboutAppViewState extends State<AboutAppView> {
                     child: Image.asset(
                       "assets/2324_teampic.jpg",
                       alignment: Alignment.center,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fitHeight,
                     ),
                   ),
-                  ColoredBox(color: Colors.black.withOpacity(0.4)),
+                  ColoredBox(color: Colors.black.withOpacity(0.35)),
                 ],
               ),
             ),
@@ -144,12 +144,16 @@ class _AboutAppViewState extends State<AboutAppView> {
                                     ],
                                   ),
                                 ),
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Image.asset(
-                                      "assets/2324_teampic.jpg",
-                                      width: 530,
-                                      height: 430),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 8.0, right: 8),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Image.asset(
+                                        "assets/2324_teampic.jpg",
+                                        width: 530,
+                                        height: 430),
+                                  ),
                                 ),
                               ]))),
                     ),

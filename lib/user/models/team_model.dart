@@ -69,77 +69,33 @@ class HollisticMatchScoutingData
 
   /// VERY FUCKING EXPENSIVE ASS FUNCTION TO CALL LMAOOO
   String get csvData {
-    const Map<String, String> compressionK = <String, String>{
-      "speaker": "spker",
-      "scored": "",
-      "coopertition": "coop",
-      "comments": "cmt",
-      "timestamp": "time",
-      "number": "#",
-      "type": "T",
-      "missed": "miss",
-      "alliance": "color",
-      "notespreloaded": "preload",
-      "notespickedup": "picked",
-      "playsdefense": "def",
-      "wasdefended": "defed",
-      "driverrating": "rting",
-      "onchain": "chain",
-      "breakdown": "brkdwn",
-    };
-
-    const Map<String, String> compressionV = <String, String>{
-      "false": "n",
-      "no": "n",
-      "yes": "y",
-      "true": "y",
-      "qualification": "qual",
-      "red": "r",
-      "blue": "b",
-      "middle": "m",
-      "left": "l",
-      "right": "r",
-      "practice": "prac",
-      "missed": "miss"
-    };
-
-    String sanitize(String value, Map<String, String> compression) {
-      for (MapEntry<String, String> r in compression.entries) {
-        value = value.toLowerCase().trim().replaceAll(r.key, r.value);
-      }
-      return value;
-    }
-
     StringBuffer header = StringBuffer();
     StringBuffer values = StringBuffer();
     // lol nested functions :D
     void writeValue(String prefix, Map<String, dynamic> map) {
       for (MapEntry<String, dynamic> entry in map.entries) {
         header.write(prefix);
-        header.write(sanitize(entry.key, compressionK));
+        header.write(entry.key);
         header.write(",");
         if (entry.value is List<dynamic>) {
           for (int i = 0;
               i < (entry.value as List<dynamic>).length;
               i++) {
             dynamic curr = (entry.value as List<dynamic>)[i];
-            values.write(sanitize(
-                curr is Enum ? curr.name : curr.toString(),
-                compressionV));
+            values.write(curr is Enum ? curr.name : curr.toString());
             if (i != (entry.value as List<dynamic>).length - 1) {
               values.write("+");
             }
           }
         } else if (entry.value is Enum) {
-          values.write(
-              sanitize((entry.value as Enum).name, compressionV));
+          values.write((entry.value as Enum).name);
         } else {
-          values
-              .write(sanitize(entry.value.toString(), compressionV));
+          values.write(entry.value.toString());
         }
         values.write(",");
       }
     }
+
     Map<String, dynamic> preliminaryMap = preliminary.exportMap();
     preliminaryMap.remove("timestamp");
     writeValue("", preliminaryMap);

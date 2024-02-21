@@ -452,18 +452,11 @@ Widget form_sec_2(BuildContext context,
 Widget form_sec(BuildContext context,
         {required SectionId header,
         required Widget child,
-        Color? backgroundColor,
-        Gradient? gradient}) =>
-    Container(
-        decoration: BoxDecoration(
-            gradient: gradient,
-            color: backgroundColor ??
-                ThemeProvider.themeOf(context)
-                    .data
-                    .secondaryHeaderColor,
-            borderRadius: BorderRadius.circular(14)),
+        Color? backgroundColor}) =>
+    Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(8),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -654,7 +647,7 @@ Widget form_txtin({
   TextInputType? inputType,
 }) =>
     SizedBox(
-      width: 300,
+      width: 150,
       child: TextFormField(
         onChanged: (String e) => onChanged?.call(e),
         keyboardType: inputType,

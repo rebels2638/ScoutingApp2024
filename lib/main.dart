@@ -56,6 +56,7 @@ Future<void> _prepareAppLaunch() async {
   if (DeviceEnv.isPhone) {
     Debug().warn("Detected MOBILE, forcing COMPACT");
     UserTelemetry().currentModel.preferCompact = true;
+    UserTelemetry().currentModel.useAltLayout = true;
   } else {
     Debug().info("Detected TABLET, forcing EXPANDED");
     UserTelemetry().currentModel.preferCompact = false;

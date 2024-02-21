@@ -210,12 +210,9 @@ class _ScoutingViewState extends State<ScoutingView>
                             .timeStamp)),
                     style: const TextStyle(
                         fontWeight: FontWeight.bold))),
-            form_label("Scouters",
-                icon: const Icon(Icons.people_rounded),
-                child: form_txtin()),
+            form_label("Scouters", child: form_txtin()),
             form_label(
               "Number ",
-              icon: const Icon(Icons.numbers_rounded),
               child: form_numpick(context,
                   label: "Picker",
                   icon: const Icon(CommunityMaterialIcons.counter),
@@ -233,7 +230,6 @@ class _ScoutingViewState extends State<ScoutingView>
               }),
             ),
             form_label("Type",
-                icon: const Icon(Icons.account_tree_rounded),
                 child: form_seg_btn_1(
                     segments: MatchType.values
                         .map<
@@ -270,25 +266,25 @@ class _ScoutingViewState extends State<ScoutingView>
           ),
           // for each of these information sections, no need to mention the individual word again like "[team] number"
           child: form_col(<Widget>[
-            form_label("Number",
-                child: form_numpick(context,
-                    label: "Picker",
-                    icon: const Icon(CommunityMaterialIcons.counter),
-                    minValue: 1,
-                    maxValue: 9999,
-                    headerMessage: "Team Number",
-                    onChange: (int number) {
-                  context
-                      .read<ScoutingSessionBloc>()
-                      .prelim
-                      .teamNumber = number;
-                  context
-                      .read<ScoutingSessionBloc>()
-                      .add(PrelimUpdateEvent());
-                }),
-                icon: const Icon(Icons.numbers_rounded)),
+            form_label(
+              "Number",
+              child: form_numpick(context,
+                  label: "Picker",
+                  icon: const Icon(CommunityMaterialIcons.counter),
+                  minValue: 1,
+                  maxValue: 9999,
+                  headerMessage: "Team Number",
+                  onChange: (int number) {
+                context
+                    .read<ScoutingSessionBloc>()
+                    .prelim
+                    .teamNumber = number;
+                context
+                    .read<ScoutingSessionBloc>()
+                    .add(PrelimUpdateEvent());
+              }),
+            ),
             form_label("Alliance",
-                icon: const Icon(Icons.flag_rounded),
                 child: TeamAllianceSwitch(
                     initialValue: context
                             .read<ScoutingSessionBloc>()
@@ -305,7 +301,6 @@ class _ScoutingViewState extends State<ScoutingView>
                           .add(PrelimUpdateEvent());
                     })),
             form_label("Starting Position",
-                icon: const Icon(Icons.location_on_rounded),
                 child: form_seg_btn_1(
                     segments: MatchStartingPosition.values
                         .map<
@@ -342,7 +337,6 @@ class _ScoutingViewState extends State<ScoutingView>
           ),
           child: form_col(<Widget>[
             form_label("Note preloaded?",
-                icon: const Icon(Icons.trip_origin),
                 child: BasicToggleSwitch(
                     initialValue:
                         BlocProvider.of<ScoutingSessionBloc>(context)
@@ -358,7 +352,6 @@ class _ScoutingViewState extends State<ScoutingView>
                           .add(AutoUpdateEvent());
                     })),
             form_label("Note(s) picked up",
-                icon: const Icon(Icons.trip_origin),
                 child: form_seg_btn_2(
                     segments: AutoPickup.values
                         .map<
@@ -388,7 +381,6 @@ class _ScoutingViewState extends State<ScoutingView>
                           .add(AutoUpdateEvent());
                     })),
             form_label("Taxis?",
-                icon: const Icon(Icons.local_taxi_rounded),
                 child: BasicToggleSwitch(
                     initialValue:
                         BlocProvider.of<ScoutingSessionBloc>(context)
@@ -403,7 +395,6 @@ class _ScoutingViewState extends State<ScoutingView>
                           .add(AutoUpdateEvent());
                     })),
             form_label("Scored in Speaker",
-                icon: const Icon(Icons.volume_up),
                 child: PlusMinus(
                   initialValue: context
                       .read<ScoutingSessionBloc>()
@@ -418,7 +409,6 @@ class _ScoutingViewState extends State<ScoutingView>
                   },
                 )),
             form_label("Missed Speaker Shots",
-                icon: const Icon(Icons.call_missed),
                 child: PlusMinus(
                   initialValue: context
                       .read<ScoutingSessionBloc>()
@@ -433,7 +423,6 @@ class _ScoutingViewState extends State<ScoutingView>
                   },
                 )),
             form_label("Scored in AMP",
-                icon: const Icon(Icons.music_note),
                 child: PlusMinus(
                   initialValue: context
                       .read<ScoutingSessionBloc>()
@@ -448,7 +437,6 @@ class _ScoutingViewState extends State<ScoutingView>
                   },
                 )),
             form_label("Missed AMP Shots",
-                icon: const Icon(Icons.call_missed),
                 child: PlusMinus(
                   initialValue: context
                       .read<ScoutingSessionBloc>()
@@ -463,7 +451,6 @@ class _ScoutingViewState extends State<ScoutingView>
                   },
                 )),
             form_label("Comments",
-                icon: const Icon(Icons.comment),
                 child: form_txtin(
                   hint: "Enter your comments here",
                   label: "Comments",
@@ -485,7 +472,6 @@ class _ScoutingViewState extends State<ScoutingView>
           ),
           child: form_col(<Widget>[
             form_label("Plays Defense",
-                icon: const Icon(Icons.shield),
                 child: BasicToggleSwitch(
                     initialValue:
                         BlocProvider.of<ScoutingSessionBloc>(context)
@@ -501,7 +487,6 @@ class _ScoutingViewState extends State<ScoutingView>
                           .add(TeleOpUpdateEvent());
                     })),
             form_label("Was Defended?",
-                icon: const Icon(Icons.verified_user),
                 child: BasicToggleSwitch(
                     initialValue:
                         BlocProvider.of<ScoutingSessionBloc>(context)
@@ -517,7 +502,6 @@ class _ScoutingViewState extends State<ScoutingView>
                           .add(TeleOpUpdateEvent());
                     })),
             form_label("Scored in Speaker",
-                icon: const Icon(Icons.volume_up),
                 child: PlusMinus(
                   initialValue: context
                       .read<ScoutingSessionBloc>()
@@ -532,7 +516,6 @@ class _ScoutingViewState extends State<ScoutingView>
                   },
                 )),
             form_label("Scored during AMP",
-                icon: const Icon(Icons.volume_up),
                 child: PlusMinus(
                   initialValue: context
                       .read<ScoutingSessionBloc>()
@@ -547,7 +530,6 @@ class _ScoutingViewState extends State<ScoutingView>
                   },
                 )),
             form_label("Missed Speaker Shots",
-                icon: const Icon(Icons.call_missed),
                 child: PlusMinus(
                   initialValue: context
                       .read<ScoutingSessionBloc>()
@@ -562,7 +544,6 @@ class _ScoutingViewState extends State<ScoutingView>
                   },
                 )),
             form_label("Scored in AMP",
-                icon: const Icon(Icons.music_note),
                 child: PlusMinus(
                   initialValue: context
                       .read<ScoutingSessionBloc>()
@@ -577,7 +558,6 @@ class _ScoutingViewState extends State<ScoutingView>
                   },
                 )),
             form_label("Missed AMP Shots",
-                icon: const Icon(Icons.call_missed),
                 child: PlusMinus(
                   initialValue: context
                       .read<ScoutingSessionBloc>()
@@ -592,7 +572,6 @@ class _ScoutingViewState extends State<ScoutingView>
                   },
                 )),
             form_label("Driver rating",
-                icon: const Icon(Icons.call_missed),
                 child: PlusMinusRating(
                   initialValue: context
                       .read<ScoutingSessionBloc>()
@@ -607,7 +586,6 @@ class _ScoutingViewState extends State<ScoutingView>
                   },
                 )),
             form_label("Comments",
-                icon: const Icon(Icons.comment),
                 child: form_txtin(
                   hint: "Enter your comments here",
                   label: "Comments",
@@ -626,7 +604,6 @@ class _ScoutingViewState extends State<ScoutingView>
           header: (icon: Icons.flag_rounded, title: "Endgame"),
           child: form_col(<Widget>[
             form_label("On chain",
-                icon: const Icon(Icons.link),
                 child: BasicToggleSwitch(
                     initialValue:
                         BlocProvider.of<ScoutingSessionBloc>(context)
@@ -641,8 +618,7 @@ class _ScoutingViewState extends State<ScoutingView>
                           .read<ScoutingSessionBloc>()
                           .add(EndgameUpdateEvent());
                     })),
-            form_label("Harmony (Used same chain)",
-                icon: const Icon(Icons.people),
+            form_label("Harmony",
                 child: form_seg_btn_1(
                     segments: Harmony.values
                         .map<
@@ -671,7 +647,6 @@ class _ScoutingViewState extends State<ScoutingView>
                           .add(EndgameUpdateEvent());
                     })),
             form_label("Scored in Trap",
-                icon: const Icon(Icons.trip_origin),
                 child: form_seg_btn_1(
                     segments: TrapScored.values
                         .map<
@@ -700,7 +675,6 @@ class _ScoutingViewState extends State<ScoutingView>
                           .add(EndgameUpdateEvent());
                     })),
             form_label("Human Scored on Mic",
-                icon: const Icon(Icons.trip_origin),
                 child: form_seg_btn_1(
                     segments: MicScored.values
                         .map<
@@ -729,7 +703,6 @@ class _ScoutingViewState extends State<ScoutingView>
                           .add(EndgameUpdateEvent());
                     })),
             form_label("Comments",
-                icon: const Icon(Icons.comment),
                 child: form_txtin(
                   hint: "Enter your comments here",
                   label: "Comments",
@@ -748,7 +721,6 @@ class _ScoutingViewState extends State<ScoutingView>
           header: (icon: Icons.more_horiz_rounded, title: "Other"),
           child: form_col(<Widget>[
             form_label("Coopertition",
-                icon: const Icon(Icons.groups),
                 child: BasicToggleSwitch(
                     initialValue: false,
                     onChanged: (bool e) {
@@ -759,7 +731,6 @@ class _ScoutingViewState extends State<ScoutingView>
                           .add(MiscUpdateEvent());
                     })),
             form_label("Breakdown",
-                icon: const Icon(Icons.handyman),
                 child: BasicToggleSwitch(
                     initialValue: false,
                     onChanged: (bool e) {
