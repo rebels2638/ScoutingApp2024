@@ -1,2 +1,5 @@
 -> Make compact layout for Settings
       -> Low Priority
+-> Remove strutAll completely
+      -> Medium Priority
+      -> Optimization by introducing a compile constant widget

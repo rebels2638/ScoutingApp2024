@@ -49,5 +49,7 @@
 		<string>Scouting App would like to save photos from the app to your gallery</string>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>Scouting App would like to access your photo gallery for uploading images to the app</string>
+		<key>NSCameraUsageDescription</key>
+		<string>Camera permission is required for QR Scanning.</string>
 	</dict>
 </plist>

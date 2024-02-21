@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/services.dart';
 import 'package:scouting_app_2024/debug.dart';
 
@@ -31,6 +33,31 @@ class GenericUtils {
   }
 
   static const String HAZARD_DIAMOND = "◢◤";
+
+  static String jsonToCsvSingle(String json) {
+    Map<String, dynamic> map = jsonDecode(json);
+    StringBuffer csvData = StringBuffer();
+    for (String key in map.keys) {
+      csvData.write("$key,${map[key]}\n");
+    }
+    return csvData.toString();
+  }
+
+  /// follows that [json] is in the format of "[{...}]"
+  static String jsonToCsvMulti1(String json) {
+    List<dynamic> map = jsonDecode(json);
+    StringBuffer csvData = StringBuffer();
+    List<String> heads = map[0].keys.toList();
+    csvData.writeAll(heads, ",");
+    csvData.write("\n");
+    for (Map<String, dynamic> row in map) {
+      for (String head in heads) {
+        csvData.write("${row[head]},");
+      }
+      csvData.write("\n");
+    }
+    return csvData.toString();
+  }
 }
 
 class LocaleUtils {

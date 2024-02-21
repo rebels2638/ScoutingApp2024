@@ -59,8 +59,8 @@ class _ExpFabBlobState extends State<ExpFabBlob>
         clipBehavior: Clip.none,
         children: <Widget>[
           SizedBox(
-            width: 56,
-            height: 56,
+            width: 64,
+            height: 64,
             child: Center(
               child: Material(
                 shape: const CircleBorder(),
@@ -74,7 +74,7 @@ class _ExpFabBlobState extends State<ExpFabBlob>
                         : _controller.reverse();
                   }),
                   child: Padding(
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(10),
                       child: widget.closeWidget),
                 ),
               ),
@@ -117,7 +117,7 @@ class _ExpFabBlobState extends State<ExpFabBlob>
   List<Widget> _buildExpandingActionButtons() {
     final List<Widget> children = <Widget>[];
     final int count = widget.children.length;
-    final double step = 90.0 / (count - 1);
+    final double step = 90 / (count - 1);
     for (int i = 0, angleInDegrees = 0;
         i < count;
         i++, angleInDegrees += step.toInt()) {

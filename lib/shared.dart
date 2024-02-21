@@ -17,6 +17,7 @@ class Shared {
   static const bool SAVE_ON_PROBE = false;
   static const int USER_TELEMETRY_SAVE_CYCLE = 50; // seconds
   static const String GENERAL_TIME_FORMAT = "HH:mm MM/dd/yyyy";
+  static const double QR_CODE_SIZE = 648;
 }
 
 final String TELEMETRY_SUBDIR_PATH =

@@ -259,36 +259,3 @@ class _PastMatchesViewState extends State<PastMatchesView> {
     );
   }
 }
-
-/*
-String matchDataToCsv(PastMatchesOverViewData match) {
-  // Convert match data to csv for QR code export
-  String csv =
-      '${match.matchID},${match.matchType.name},${match.startingPosition.name},${match.endStatus.name},${match.autoPickup.name},${match.harmony.name},${match.trapScored.name} \n';
-
-  return csv;
-}
-*/
-
-Widget createPrettyQrDataWidget({
-  required String data,
-  bool includeImage = false,
-}) {
-  const PrettyQrDecoration decorationWithImage = PrettyQrDecoration(
-    shape: PrettyQrRoundedSymbol(color: Color(0xFFFFFFFF)),
-    image: PrettyQrDecorationImage(
-      image: AssetImage('assets/appicon_header.png'),
-      position: PrettyQrDecorationImagePosition.embedded,
-    ),
-  );
-  const PrettyQrDecoration decorationWithoutImage =
-      PrettyQrDecoration(
-    shape: PrettyQrRoundedSymbol(color: Color(0xFFFFFFFF)),
-  );
-  return PrettyQrView.data(
-    data: data,
-    errorCorrectLevel: QrErrorCorrectLevel.H,
-    decoration:
-        includeImage ? decorationWithImage : decorationWithoutImage,
-  );
-}

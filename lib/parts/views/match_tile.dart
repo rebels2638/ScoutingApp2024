@@ -1,11 +1,16 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/blobs/form_blob.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_canonical.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
-import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
+import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/models/team_model.dart';
 
@@ -18,6 +23,10 @@ class MatchTile extends StatefulWidget {
 
   @override
   State<MatchTile> createState() => _MatchTileState();
+}
+
+String compressMatchData(String data) {
+  return base64.encode(gzip.encode(utf8.encode(data)));
 }
 
 class _MatchTileState extends State<MatchTile> {
@@ -112,50 +121,90 @@ class _MatchTileState extends State<MatchTile> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: strutAll(<Widget>[
-                        if (ShowExperimentalModal
-                            .isShowingExperimental(context))
-                          if (PreferCompactModal.isCompactPreferred(
-                              context))
-                            FilledButton(
+                        if (ShowConsoleModal.isShowingConsole(
+                            context))
+                          FilledButton(
                               child:
-                                  const Icon(Icons.bluetooth_rounded),
+                                  const Icon(Icons.developer_board),
                               onPressed: () async =>
-                                  await launchConfirmDialog(
-                                      showOkLabel: false,
-                                      denyLabel: "Close",
-                                      icon: const Icon(Icons
-                                          .warning_amber_rounded),
-                                      title: "Warning",
-                                      context,
-                                      message: const Text(
-                                          "Bluetooth feature not yet available!"),
-                                      onConfirm: () {}),
-                            )
-                          else
-                            FilledButton.icon(
-                                onPressed: () async =>
-                                    await launchConfirmDialog(
-                                        showOkLabel: false,
-                                        denyLabel: "Close",
-                                        icon: const Icon(Icons
-                                            .warning_amber_rounded),
-                                        title: "Warning",
-                                        context,
-                                        message: const Text(
-                                            "Bluetooth feature not yet available!"),
-                                        onConfirm: () {}),
-                                icon: const Icon(
-                                    Icons.bluetooth_rounded),
-                                label: const Text("Bluetooth Share")),
+                                  await launchConfirmDialog(context,
+                                      message: Column(
+                                        children: <Widget>[
+                                          Text(compressMatchData(
+                                              widget.match.csvData)),
+                                          const SizedBox(height: 20),
+                                          FilledButton.tonalIcon(
+                                              onPressed: () async =>
+                                                  await Clipboard.setData(
+                                                      ClipboardData(
+                                                          text: widget
+                                                              .match
+                                                              .csvData)),
+                                              icon: const Icon(Icons
+                                                  .copy_all_rounded),
+                                              label:
+                                                  const Text("COPY"))
+                                        ],
+                                      ),
+                                      onConfirm: () {})),
                         if (PreferCompactModal.isCompactPreferred(
                             context))
                           FilledButton(
                             child: const Icon(Icons.qr_code_rounded),
-                            onPressed: () {}, // TODO,
+                            onPressed: () async =>
+                                await launchConfirmDialog(context,
+                                    message: SizedBox(
+                                      width: Shared.QR_CODE_SIZE,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Colors.black,
+                                            borderRadius:
+                                                BorderRadius.circular(
+                                                    8)),
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.all(
+                                                  16),
+                                          child: Center(
+                                            child: _createPrettyQrDataWidget(
+                                                data:
+                                                    compressMatchData(
+                                                        widget.match
+                                                            .csvData)),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    title: "QR Share",
+                                    onConfirm: () {}),
                           )
                         else
                           FilledButton.icon(
-                              onPressed: () {}, // TODO,
+                              onPressed: () async =>
+                                  await launchConfirmDialog(context,
+                                      message: SizedBox(
+                                        width: Shared.QR_CODE_SIZE,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              color: Colors.black,
+                                              borderRadius:
+                                                  BorderRadius
+                                                      .circular(8)),
+                                          child: Padding(
+                                            padding:
+                                                const EdgeInsets.all(
+                                                    16),
+                                            child: Center(
+                                              child: _createPrettyQrDataWidget(
+                                                  data: compressMatchData(
+                                                      widget.match
+                                                          .csvData)),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      title: "QR Share",
+                                      onConfirm: () {}),
                               icon: const Icon(Icons.qr_code_rounded),
                               label: const Text("QR Share")),
                         if (PreferCompactModal.isCompactPreferred(
@@ -188,4 +237,24 @@ class _MatchTileState extends State<MatchTile> {
       ),
     );
   }
+}
+
+Widget _createPrettyQrDataWidget({
+  required String data,
+  bool includeImage = true,
+}) {
+  const PrettyQrDecoration decorationWithImage = PrettyQrDecoration(
+    shape: PrettyQrRoundedSymbol(
+        color: Colors.white, borderRadius: BorderRadius.zero),
+  );
+  const PrettyQrDecoration decorationWithoutImage =
+      PrettyQrDecoration(
+    shape: PrettyQrRoundedSymbol(color: Colors.white),
+  );
+  return PrettyQrView.data(
+    data: data,
+    errorCorrectLevel: QrErrorCorrectLevel.M,
+    decoration:
+        includeImage ? decorationWithImage : decorationWithoutImage,
+  );
 }

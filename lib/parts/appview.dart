@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:math';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:confetti/confetti.dart';
@@ -144,14 +143,11 @@ class _AppViewState extends State<_AppView> {
         String label,
         String tooltip
       }) item
-    })? dataHostView;
-    if (Platform.isWindows) {
-      dataHostView = const DataHostingView().exportAppPageView();
-    }
+    }) dataHostView;
+    dataHostView = const DataHostingView().exportAppPageView();
     List<NavigationDestination> bottomItems = <NavigationDestination>[
       // plsplsplspls make sure this matches with the following PageView's children ordering D:
-      if (dataHostView != null &&
-          ShowExperimentalModal.isShowingExperimental(context))
+      if (ShowExperimentalModal.isShowingExperimental(context))
         NavigationDestination(
             icon: dataHostView.item.icon,
             label: dataHostView.item.label,
@@ -179,25 +175,14 @@ class _AppViewState extends State<_AppView> {
             label: aboutAppView.item.label,
             selectedIcon: aboutAppView.item.activeIcon,
             tooltip: aboutAppView.item.tooltip),
-      if (LockedInScoutingModal.isCasual(context) &&
-          ShowConsoleModal.isShowingConsole(context))
-        NavigationDestination(
-            icon: consoleView.item.icon,
-            label: consoleView.item.label,
-            selectedIcon: consoleView.item.activeIcon,
-            tooltip: consoleView.item.tooltip)
     ];
     List<Widget> pageViewWidgets = <Widget>[
-      if (dataHostView != null &&
-          ShowExperimentalModal.isShowingExperimental(context))
+      if (ShowExperimentalModal.isShowingExperimental(context))
         dataHostView.child,
       scoutingView.child,
       pastMatchesView.child,
       if (LockedInScoutingModal.isCasual(context)) settingsView.child,
       if (LockedInScoutingModal.isCasual(context)) aboutAppView.child,
-      if (LockedInScoutingModal.isCasual(context) &&
-          ShowConsoleModal.isShowingConsole(context))
-        consoleView.child,
     ];
     Future<void>.delayed(Duration.zero, () {
       if (ThemeClassifier.of(context) !=
@@ -212,8 +197,24 @@ class _AppViewState extends State<_AppView> {
         floatingActionButton: ExpFabBlob(
             defaultWidget:
                 const Icon(CommunityMaterialIcons.star_four_points),
-            distance: 80,
+            distance: MediaQuery.of(context).size.height * 0.186,
             children: <Widget>[
+              if (ShowConsoleModal.isShowingConsole(context))
+                ActionButton(
+                    onPressed: () => Navigator.of(context)
+                        .push(MaterialPageRoute<Widget>(
+                            builder: (BuildContext ctxt) => Scaffold(
+                                  resizeToAvoidBottomInset: true,
+                                  appBar: AppBar(
+                                      title: const Text(
+                                          "DEVELOPER CONTROLS")),
+                                  body: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10),
+                                    child: consoleView.child,
+                                  ),
+                                ))),
+                    icon: consoleView.item.icon),
               ActionButton(
                 onPressed: () {
                   Provider.of<LockedInScoutingModal>(context,
@@ -246,24 +247,18 @@ class _AppViewState extends State<_AppView> {
                         .color),
               ),
               ActionButton(
-                  onPressed: () async {
-                    int i =
-                        pageViewWidgets.indexOf(gameInfoView.child);
-                    Debug().info(
-                        "GAMEINFO_HOOK TO $i and was at ${pageController.page} for builder length: ${pageViewWidgets.length}");
-                    Navigator.of(context)
-                        .push(MaterialPageRoute<Widget>(
-                            builder: (BuildContext ctxt) => Scaffold(
-                                  resizeToAvoidBottomInset: true,
-                                  appBar: AppBar(
-                                      title: const Text("Game Info")),
-                                  body: Padding(
-                                    padding:
-                                        const EdgeInsets.only(left: 10),
-                                    child: gameInfoView.child,
-                                  ),
-                                )));
-                  },
+                  onPressed: () => Navigator.of(context)
+                      .push(MaterialPageRoute<Widget>(
+                          builder: (BuildContext ctxt) => Scaffold(
+                                resizeToAvoidBottomInset: true,
+                                appBar: AppBar(
+                                    title: const Text("Game Info")),
+                                body: Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 10),
+                                  child: gameInfoView.child,
+                                ),
+                              ))),
                   icon: gameInfoView.item.icon),
               ActionButton(
                   onPressed: () {
