@@ -12,7 +12,6 @@ import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
 import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
 import 'package:scouting_app_2024/parts/bits/show_fps_monitor.dart';
-import 'package:scouting_app_2024/parts/bits/show_game_map.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/shared.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
@@ -181,13 +180,6 @@ class _AppViewState extends State<_AppView> {
             selectedIcon: aboutAppView.item.activeIcon,
             tooltip: aboutAppView.item.tooltip),
       if (LockedInScoutingModal.isCasual(context) &&
-          ShowGameMapModal.isShowingConsole(context))
-        NavigationDestination(
-            icon: gameInfoView.item.icon,
-            label: gameInfoView.item.label,
-            selectedIcon: gameInfoView.item.activeIcon,
-            tooltip: gameInfoView.item.tooltip),
-      if (LockedInScoutingModal.isCasual(context) &&
           ShowConsoleModal.isShowingConsole(context))
         NavigationDestination(
             icon: consoleView.item.icon,
@@ -203,9 +195,6 @@ class _AppViewState extends State<_AppView> {
       pastMatchesView.child,
       if (LockedInScoutingModal.isCasual(context)) settingsView.child,
       if (LockedInScoutingModal.isCasual(context)) aboutAppView.child,
-      if (LockedInScoutingModal.isCasual(context) &&
-          ShowGameMapModal.isShowingConsole(context))
-        gameInfoView.child,
       if (LockedInScoutingModal.isCasual(context) &&
           ShowConsoleModal.isShowingConsole(context))
         consoleView.child,
@@ -239,12 +228,11 @@ class _AppViewState extends State<_AppView> {
                           "BottomNavBar -> Found Scouting view at $i");
                       setState(() {
                         _bottomNavBarIndexer = i;
-                        pageController.animateToPage(
-                            _bottomNavBarIndexer,
-                            duration:
-                                const Duration(milliseconds: 500),
-                            curve: Curves.ease);
                       });
+                      pageController.animateToPage(
+                          _bottomNavBarIndexer,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.ease);
                     }
                   }
                 },
@@ -257,6 +245,26 @@ class _AppViewState extends State<_AppView> {
                         .iconTheme
                         .color),
               ),
+              ActionButton(
+                  onPressed: () async {
+                    int i =
+                        pageViewWidgets.indexOf(gameInfoView.child);
+                    Debug().info(
+                        "GAMEINFO_HOOK TO $i and was at ${pageController.page} for builder length: ${pageViewWidgets.length}");
+                    Navigator.of(context)
+                        .push(MaterialPageRoute<Widget>(
+                            builder: (BuildContext ctxt) => Scaffold(
+                                  resizeToAvoidBottomInset: true,
+                                  appBar: AppBar(
+                                      title: const Text("Game Info")),
+                                  body: Padding(
+                                    padding:
+                                        const EdgeInsets.only(left: 10),
+                                    child: gameInfoView.child,
+                                  ),
+                                )));
+                  },
+                  icon: gameInfoView.item.icon),
               ActionButton(
                   onPressed: () {
                     showDialog(

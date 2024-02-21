@@ -93,5 +93,14 @@ class ScoutingTelemetry {
   Future<void> delete(int index) async =>
       await _storedFinalizedMatches.deleteAt(index);
 
+  Future<void> deleteID(String id) async {
+    for (int i = 0; i < _storedFinalizedMatches.length; i++) {
+      if (_storedFinalizedMatches.getAt(i)!.id == id) {
+        await _storedFinalizedMatches.deleteAt(i).then((_) => Debug().warn("[BOX] Deleted the entry with ID: $id"));
+        return;
+      }
+    }
+  }
+
   Future<void> clear() async => await _storedFinalizedMatches.clear();
 }

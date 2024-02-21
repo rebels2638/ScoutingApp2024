@@ -8,7 +8,6 @@ import 'package:scouting_app_2024/parts/bits/prefer_tonal.dart';
 import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
 import 'package:scouting_app_2024/parts/bits/show_fps_monitor.dart';
-import 'package:scouting_app_2024/parts/bits/show_game_map.dart';
 import 'package:scouting_app_2024/parts/bits/use_alt_layout.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
@@ -370,24 +369,6 @@ class _SettingsViewState extends State<SettingsView> {
                               UserTelemetry()
                                   .currentModel
                                   .showConsole = val;
-                              UserTelemetry().save();
-                            })),
-                    SettingsView._labelIt(
-                        icon: Icons.map,
-                        label: "Show Game Map",
-                        hint:
-                            "This page shows an overview of the game",
-                        child: BasicToggleSwitch(
-                            initialValue: UserTelemetry()
-                                .currentModel
-                                .showGameMap,
-                            onChanged: (bool val) {
-                              Provider.of<ShowGameMapModal>(context,
-                                      listen: false)
-                                  .showingGameMap = val;
-                              UserTelemetry()
-                                  .currentModel
-                                  .showGameMap = val;
                               UserTelemetry().save();
                             })),
                     SettingsView._labelIt(

@@ -812,7 +812,7 @@ class _ScoutingViewState extends State<ScoutingView>
                       await launchConfirmDialog(context,
                           title: "Are you sure you want to exit?",
                           message: const Text(
-                              "The current session datawill be lost."),
+                              "The current session data will be lost."),
                           onConfirm: () {
                         context
                             .findAncestorStateOfType<

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
@@ -166,10 +167,10 @@ class _AboutAppViewState extends State<AboutAppView> {
         Center(
           // lets gooo its const
           child: Text.rich(
-              const TextSpan(
+              TextSpan(
                   //text: "asdawfsuiunnnnnnnnnnnnnnnnnnnn\n",
-                  children: <TextSpan>[
-                    TextSpan(
+                  children: <InlineSpan>[
+                    const TextSpan(
                       children: <InlineSpan>[
                         TextSpan(
                             text: "26",
@@ -189,112 +190,128 @@ class _AboutAppViewState extends State<AboutAppView> {
                         //decoration:TextDecoration.underline,
                       ),
                     ),
-                    TextSpan(
+                    const TextSpan(
                       text: "Version $REBEL_ROBOTICS_APP_VERSION",
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    TextSpan(
+                    const TextSpan(
                       text: _DIVIDER,
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    TextSpan(
+                    const TextSpan(
                         text: "Lead\n",
                         style: TextStyle(
                           fontWeight: FontWeight.w800,
                           fontSize: 17,
                           //decoration:TextDecoration.underline,
                         )),
-                    TextSpan(
-                      text: "Jack Meng",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    TextSpan(
+                    WidgetSpan(
+                        child: Padding(
+                      padding:
+                          const EdgeInsets.only(top: 4, right: 8),
+                      child: FilledButton.tonalIcon(
+                          onPressed: () async => await launchConfirmDialog(
+                              context,
+                              message: const Text.rich(TextSpan(
+                                  text:
+                                      "Go check out Jack Meng (exoad)? ",
+                                  children: <WidgetSpan>[
+                                    WidgetSpan(
+                                        child: Icon(
+                                            CommunityMaterialIcons
+                                                .emoticon_happy))
+                                  ])),
+                              onConfirm: () async => await launchUrl(
+                                  Uri.parse(ExoadShared.github))),
+                          label: const Text("Jack Meng (exoad)"),
+                          icon: const Icon(
+                              CommunityMaterialIcons.space_invaders)),
+                    )),
+                    const TextSpan(
                       text: _DIVIDER,
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    TextSpan(
+                    const TextSpan(
                         text: "Team\n",
                         style: TextStyle(
                           fontWeight: FontWeight.w800,
                           fontSize: 17,
                           //decoration:TextDecoration.underline,
                         )),
-                    TextSpan(
+                    const TextSpan(
                       text:
                           "Chiming Wang\nRichard Xu\nAarav Minocha\nAiden Pan",
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    TextSpan(
+                    const TextSpan(
                       text: _DIVIDER,
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    TextSpan(
+                    const TextSpan(
                         text: "Helpers\n",
                         style: TextStyle(
                           fontWeight: FontWeight.w800,
                           fontSize: 17,
                           //decoration:TextDecoration.underline,
                         )),
-                    TextSpan(
+                    const TextSpan(
                       text: "Conner Shea",
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    TextSpan(
+                    const TextSpan(
                       text: _DIVIDER,
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    TextSpan(
+                    const TextSpan(
                         text: "Tools Used\n",
                         style: TextStyle(
                           fontWeight: FontWeight.w800,
                           fontSize: 17,
                           //decoration:TextDecoration.underline,
                         )),
-                    TextSpan(
+                    const TextSpan(
                       text:
                           "Flutter/Dart\nVisual Studio Code\nGithub",
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    TextSpan(
+                    const TextSpan(
                       text: _DIVIDER,
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    TextSpan(
+                    const TextSpan(
                         text: "Special thanks to\n",
                         style: TextStyle(
                           fontWeight: FontWeight.w800,
                           fontSize: 17,
                           //decoration:TextDecoration.underline,
                         )),
-                    TextSpan(
+                    const TextSpan(
                       text:
                           "John Motchkavitz\nMatthew Corrigan\nAndrea Zinn\nGeroge Motchkavitz\n",
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    TextSpan(
+                    const TextSpan(
                       text: "And all of our amazing mentors!",
                       style: TextStyle(
                         fontWeight: FontWeight.w400,

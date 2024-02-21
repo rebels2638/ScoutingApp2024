@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -8,7 +7,7 @@ import 'package:scouting_app_2024/user/env.dart';
 import 'package:scouting_app_2024/user/models/ephemeral_data.dart';
 import 'package:scouting_app_2024/user/scouting_telemetry.dart';
 import 'package:scouting_app_2024/utils.dart';
-
+import 'package:platform_info/platform_info.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'package:scouting_app_2024/debug.dart';
@@ -53,6 +52,14 @@ Future<void> _prepareAppLaunch() async {
           "Not saving probe time... Waiting for next save cycle.");
     }
   });
+  Debug().newPhase("COMPATABILITY_CHECK");
+  if (DeviceEnv.isPhone) {
+    Debug().warn("Detected MOBILE, forcing COMPACT");
+    UserTelemetry().currentModel.preferCompact = true;
+  } else {
+    Debug().info("Detected TABLET, forcing EXPANDED");
+    UserTelemetry().currentModel.preferCompact = false;
+  }
 }
 
 late final DateTime APP_START_TIME;
@@ -67,12 +74,26 @@ void main() async {
     FlutterError.presentError.call(details);
     Debug().warn("${details.summary} ${details.context}");
   };
+
   // I LOVE THE THEN FUNCTION OH MY GOD HOLY SHIT, I LOVE THIS FUNCTION, WE SHOULD MAKE EVERYTHING WITH THIS FUNCTION
   runApp(LoadingAppViewScreen(task: _prepareAppLaunch()));
-  if (Platform.isWindows) {
+  if (Platform.I.isWindows) {
     // ig we only support windows, so extern/platform.dart is fucking useless LMAO
     await WindowManager.instance.ensureInitialized();
     await windowManager.setTitle(
         "2638 Scout \"$APP_CANONICAL_NAME\" (Build $REBEL_ROBOTICS_APP_VERSION)");
   }
+  Debug().info("""
+  \nBEGIN
+  =========================================
+  PROCESSOR_COUNT  = ${Platform.I.numberOfProcessors}
+  VERSION          = ${Platform.I.version}
+  OPERATING_SYSTEM = ${Platform.I.operatingSystem}
+  BUILD_MODE       = ${Platform.I.buildMode}
+  LOCALE           = ${Platform.I.locale}
+  IO_SUPPORT       = ${Platform.I.isIO ? "NON_WEB" : "WEB"}
+  DESIGN           = ${Platform.I.isMaterial ? "Material" : Platform.I.isCupertino ? "Cupertino" : "Unknown"}
+  =========================================
+  END
+  """);
 }

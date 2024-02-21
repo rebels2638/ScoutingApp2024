@@ -1,0 +1,2 @@
+-> Make compact layout for Settings
+      -> Low Priority

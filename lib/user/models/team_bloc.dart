@@ -426,35 +426,30 @@ class ScoutingSessionBloc
         .v1(); // generatate UUID using v1 which is time based
     on<PrelimUpdateEvent>((PrelimUpdateEvent event,
         Emitter<ScoutingSessionStates> emit) {
-      prelim = PrelimInfo.optional();
       emit(PrelimState(prelim));
-      Debug()
-          .info("[Update] SCOUTING_SESSION$hashCode PRELIM->updated.");
+      Debug().info(
+          "[Update] SCOUTING_SESSION$hashCode PRELIM->updated.");
     });
     on<AutoUpdateEvent>(
         (AutoUpdateEvent event, Emitter<ScoutingSessionStates> emit) {
-      auto = AutoInfo.optional();
       emit(AutoState(auto));
       Debug()
           .info("[Update] SCOUTING_SESSION$hashCode AUTO->updated");
     });
     on<MiscUpdateEvent>(
         (MiscUpdateEvent event, Emitter<ScoutingSessionStates> emit) {
-      misc = MiscInfo.optional();
       emit(MiscState(misc));
       Debug()
           .info("[Update] SCOUTING_SESSION$hashCode MISC->updated");
     });
     on<TeleOpUpdateEvent>((TeleOpUpdateEvent event,
         Emitter<ScoutingSessionStates> emit) {
-      teleop = TeleOpInfo.optional();
       emit(TeleOpState(teleop));
       Debug()
           .info("[Update] SCOUTING_SESSION$hashCode TELEOP->updated");
     });
     on<EndgameUpdateEvent>((EndgameUpdateEvent event,
         Emitter<ScoutingSessionStates> emit) {
-      endgame = EndgameInfo.optional();
       emit(EndgameState(endgame));
       Debug().info(
           "[Update] SCOUTING_SESSION$hashCode ENDGAME->updated");

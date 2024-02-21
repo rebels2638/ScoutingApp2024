@@ -11,3 +11,7 @@ class FIRSTCrescendoShared {
   static const String website =
       "https://www.firstinspires.org/resource-library/frc/competition-manual-qa-system";
 }
+
+class ExoadShared {
+  static const String github = "https://github.com/exoad";
+}
