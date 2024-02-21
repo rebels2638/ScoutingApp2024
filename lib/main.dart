@@ -9,7 +9,7 @@ import 'package:scouting_app_2024/user/scouting_telemetry.dart';
 import 'package:scouting_app_2024/utils.dart';
 import 'package:platform_info/platform_info.dart';
 import 'package:window_manager/window_manager.dart';
-
+import 'package:scouting_app_2024/user/models/shared.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
 import 'package:scouting_app_2024/shared.dart';
@@ -30,6 +30,17 @@ Future<void> _prepareAppLaunch() async {
   Hive.init(DeviceEnv.saveLocation.path);
   Hive.registerAdapter(EphemeralScoutingDataAdapter());
   await ScoutingTelemetry().loadBoxes();
+  Debug().newPhase("VALIDATE_BOXES");
+  ({bool res, List<String> failedIds}) r =
+      ScoutingTelemetry().validateAllEntriesVersion();
+  Debug().info("Current model version: $EPHEMERAL_MODELS_VERSION");
+  Debug().warn(
+      "Check validation for boxes is good? ${r.res} with ${r.failedIds.length} failed");
+  for (String rr in r.failedIds) {
+    Debug().warn(
+        "[RMF] version_not_compatible -> $rr ($rr =/= $EPHEMERAL_MODELS_VERSION)");
+    ScoutingTelemetry().deleteID(rr);
+  }
   Debug().newPhase("LOAD_USER_TELEMETRY");
   await UserTelemetry().init();
   Debug().newPhase("HOOK_LIFECYCLE");

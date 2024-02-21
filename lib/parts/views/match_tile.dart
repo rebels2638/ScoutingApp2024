@@ -111,21 +111,19 @@ class _MatchTileState extends State<MatchTile> {
                               overflow: TextOverflow.ellipsis)),
                     ]))),
                 form_label_rigid(
-                  'Transfer Options',
+                  'Transfer',
                   style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                       fontStyle: FontStyle.italic,
                       overflow: TextOverflow.ellipsis),
                   child: Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                    child: Wrap(
                       children: strutAll(<Widget>[
                         if (ShowConsoleModal.isShowingConsole(
                             context))
-                          FilledButton(
-                              child:
-                                  const Icon(Icons.developer_board),
+                          IconButton.filledTonal(
+                              icon: const Icon(Icons.developer_board),
                               onPressed: () async =>
                                   await launchConfirmDialog(context,
                                       message: Column(
@@ -149,8 +147,8 @@ class _MatchTileState extends State<MatchTile> {
                                       onConfirm: () {})),
                         if (PreferCompactModal.isCompactPreferred(
                             context))
-                          FilledButton(
-                            child: const Icon(Icons.qr_code_rounded),
+                          IconButton.filledTonal(
+                            icon: const Icon(Icons.qr_code_rounded),
                             onPressed: () async =>
                                 await launchConfirmDialog(context,
                                     message: SizedBox(
@@ -209,10 +207,17 @@ class _MatchTileState extends State<MatchTile> {
                               label: const Text("QR Share")),
                         if (PreferCompactModal.isCompactPreferred(
                             context))
-                          FilledButton(
-                            child: const Icon(
+                          IconButton.filledTonal(
+                            icon: const Icon(
                                 Icons.delete_forever_rounded),
-                            onPressed: () {},
+                            onPressed: () async =>
+                                await launchAssuredConfirmDialog(
+                                    context,
+                                    onConfirm: () => widget.onDelete
+                                        .call(widget.match.id),
+                                    message:
+                                        "Are you sure want to delete THIS entry?",
+                                    title: "Delete entry"),
                           )
                         else
                           FilledButton.icon(

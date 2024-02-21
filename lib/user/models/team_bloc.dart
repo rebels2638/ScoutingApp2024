@@ -40,16 +40,13 @@ class MiscInfo extends ScoutingInfo
     final Map<String, dynamic> data =
         jsonDecode(csv) as Map<String, dynamic>;
     return MiscInfo(
-        coopertition: data["coopertition"],
-        breakdown: data["breakdown"]);
+        coopertition: data["coop"], breakdown: data["broken"]);
   }
 
   @override
   String toCompatibleFormat() {
-    return jsonEncode(<String, dynamic>{
-      "coopertition": coopertition,
-      "breakdown": breakdown
-    });
+    return jsonEncode(
+        <String, dynamic>{"coop": coopertition, "broken": breakdown});
   }
 }
 
@@ -101,21 +98,21 @@ class EndgameInfo extends ScoutingInfo
     final Map<String, dynamic> data =
         jsonDecode(csv) as Map<String, dynamic>;
     return EndgameInfo(
-        onChain: data["onChain"],
+        onChain: data["chain"],
         harmony: Harmony.values[data["harmony"]],
-        trapScored: TrapScored.values[data["trapScored"]],
-        micScored: MicScored.values[data["micScored"]],
-        comments: data["comments"]);
+        trapScored: TrapScored.values[data["trap"]],
+        micScored: MicScored.values[data["mic"]],
+        comments: data["cmt"]);
   }
 
   @override
   String toCompatibleFormat() {
     return jsonEncode(<String, dynamic>{
-      "onChain": onChain,
+      "chain": onChain,
       "harmony": harmony.index,
-      "trapScored": trapScored.index,
-      "micScored": micScored.index,
-      "comments": comments
+      "trap": trapScored.index,
+      "mic": micScored.index,
+      "cmt": comments
     });
   }
 }
@@ -189,29 +186,29 @@ class TeleOpInfo extends ScoutingInfo
     final Map<String, dynamic> data =
         jsonDecode(csv) as Map<String, dynamic>;
     return TeleOpInfo(
-        playsDefense: data["playsDefense"],
-        wasDefended: data["wasDefended"],
-        scoredSpeaker: data["scoredSpeaker"],
-        missedSpeaker: data["missedSpeaker"],
-        scoredAmp: data["scoredAmp"],
-        missedAmp: data["missedAmp"],
-        scoredWhileAmped: data["scoredWhileAmped"],
-        comments: data["comments"],
-        driverRating: data["driverRating"]);
+        playsDefense: data["defensive"],
+        wasDefended: data["defed"],
+        scoredSpeaker: data["spker"],
+        missedSpeaker: data["missSpker"],
+        scoredAmp: data["amp"],
+        missedAmp: data["missAmp"],
+        scoredWhileAmped: data["whileAmp"],
+        comments: data["cmt"],
+        driverRating: data["driverting"]);
   }
 
   @override
   String toCompatibleFormat() {
     return jsonEncode(<String, dynamic>{
-      "playsDefense": playsDefense,
-      "wasDefended": wasDefended,
-      "scoredSpeaker": scoredSpeaker,
-      "missedSpeaker": missedSpeaker,
-      "scoredAmp": scoredAmp,
-      "missedAmp": missedAmp,
-      "scoredWhileAmped": scoredWhileAmped,
-      "comments": comments,
-      "driverRating": driverRating
+      "defensive": playsDefense,
+      "defed": wasDefended,
+      "spker": scoredSpeaker,
+      "missSpker": missedSpeaker,
+      "amp": scoredAmp,
+      "missAmp": missedAmp,
+      "whileAmp": scoredWhileAmped,
+      "cmt": comments,
+      "driverting": driverRating
     });
   }
 }
@@ -281,18 +278,18 @@ class AutoInfo extends ScoutingInfo
     final Map<String, dynamic> data =
         jsonDecode(rawData) as Map<String, dynamic>;
     final List<AutoPickup> notesPickedUp = <AutoPickup>[];
-    for (int element in data["notesPickedUp"]) {
+    for (int element in data["pickup"]) {
       notesPickedUp.add(AutoPickup.values[element]);
     }
     return AutoInfo(
-        notePreloaded: data["notePreloaded"],
+        notePreloaded: data["preload"],
         notesPickedUp: notesPickedUp,
         taxi: data["taxi"],
-        scoredSpeaker: data["scoredSpeaker"],
-        missedSpeaker: data["missedSpeaker"],
-        scoredAmp: data["scoredAmp"],
-        missedAmp: data["missedAmp"],
-        comments: data["comments"]);
+        scoredSpeaker: data["spker"],
+        missedSpeaker: data["missSpker"],
+        scoredAmp: data["amp"],
+        missedAmp: data["missAmp"],
+        comments: data["cmt"]);
   }
 
   @override
@@ -302,14 +299,14 @@ class AutoInfo extends ScoutingInfo
       notesPickedUpIndexes.add(element.index);
     }
     return jsonEncode(<String, dynamic>{
-      "notePreloaded": notePreloaded,
-      "notesPickedUp": notesPickedUpIndexes,
+      "preload": notePreloaded,
+      "pickup": notesPickedUpIndexes,
       "taxi": taxi,
-      "scoredSpeaker": scoredSpeaker,
-      "missedSpeaker": missedSpeaker,
-      "scoredAmp": scoredAmp,
-      "missedAmp": missedAmp,
-      "comments": comments
+      "spker": scoredSpeaker,
+      "missSpker": missedSpeaker,
+      "amp": scoredAmp,
+      "missAmp": missedAmp,
+      "cmt": comments
     });
   }
 }
@@ -374,26 +371,26 @@ class PrelimInfo extends ScoutingInfo
     final Map<String, dynamic> data =
         jsonDecode(rawData) as Map<String, dynamic>;
     return PrelimInfo(
-        timeStamp: data["timeStamp"],
-        scouters: data["scouters"],
-        teamNumber: data["teamNumber"],
-        matchNumber: data["matchNumber"],
-        matchType: MatchType.values[data["matchType"]],
-        alliance: TeamAlliance.values[data["alliance"]],
+        timeStamp: data["time"],
+        scouters: data["scters"],
+        teamNumber: data["team#"],
+        matchNumber: data["match#"],
+        matchType: MatchType.values[data["match"]],
+        alliance: TeamAlliance.values[data["allies"]],
         startingPosition:
-            MatchStartingPosition.values[data["startingPosition"]]);
+            MatchStartingPosition.values[data["start"]]);
   }
 
   @override
   String toCompatibleFormat() {
     return jsonEncode(<String, dynamic>{
-      "timeStamp": timeStamp,
-      "scouters": scouters,
-      "teamNumber": teamNumber,
-      "matchNumber": matchNumber,
-      "matchType": matchType.index,
-      "alliance": alliance.index,
-      "startingPosition": startingPosition.index
+      "time": timeStamp,
+      "scters": scouters,
+      "team#": teamNumber,
+      "match#": matchNumber,
+      "match": matchType.index,
+      "allies": alliance.index,
+      "start": startingPosition.index
     });
   }
 }
