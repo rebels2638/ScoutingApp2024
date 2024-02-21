@@ -74,42 +74,153 @@ class _MatchTileState extends State<MatchTile> {
                         fontStyle: FontStyle.italic,
                         overflow: TextOverflow.ellipsis),
                     icon: const Icon(Icons.data_exploration_rounded),
-                    child: Text.rich(TextSpan(children: <InlineSpan>[
-                      const TextSpan(
-                          text: "Starting Position: ",
-                          style: TextStyle(
-                              overflow: TextOverflow.ellipsis,
+                    child: Row(children: <Widget>[
+                      Text.rich(TextSpan(children: <InlineSpan>[
+                        const TextSpan(
+                            text: "- Starting Position: ",
+                            style: TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                height: 1.6,
+                                fontWeight: FontWeight.w700)),
+                        TextSpan(
+                            text:
+                                "${widget.match.preliminary.startingPosition.name.capitalizeFirst}\n",
+                            style: const TextStyle(
                               height: 1.6,
-                              fontWeight: FontWeight.w700)),
-                      TextSpan(
-                          text:
-                              "${widget.match.preliminary.startingPosition.name.capitalizeFirst}\n",
-                          style: const TextStyle(height: 1.6)),
-                      const TextSpan(
-                          text: "Harmonized: ",
-                          style: TextStyle(
-                              overflow: TextOverflow.ellipsis,
+                              backgroundColor: Colors.black,
+                              color: Colors.amber,
+                            )),
+                        const TextSpan(
+                            text: "- Harmonized: ",
+                            style: TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                height: 1.6,
+                                fontWeight: FontWeight.w700)),
+                        TextSpan(
+                            text:
+                                "${widget.match.endgame.harmony.name.capitalizeFirst}\n",
+                            style: const TextStyle(
+                                backgroundColor: Colors.black,
+                                color: Colors.amber,
+                                height: 1.6,
+                                overflow: TextOverflow.ellipsis)),
+                        const TextSpan(
+                            text: "- Trap Scored: ",
+                            style: TextStyle(
+                                height: 1.6,
+                                fontWeight: FontWeight.w700,
+                                overflow: TextOverflow.ellipsis)),
+                        TextSpan(
+                            text:
+                                "${widget.match.endgame.trapScored.name.capitalizeFirst}\n",
+                            style: const TextStyle(
+                                backgroundColor: Colors.black,
+                                color: Colors.amber,
+                                height: 1.6,
+                                overflow: TextOverflow.ellipsis)),
+                        const TextSpan(
+                            text: "- Auto Speaker Scored: ",
+                            style: TextStyle(
+                                height: 1.6,
+                                fontWeight: FontWeight.w700,
+                                overflow: TextOverflow.ellipsis)),
+                        TextSpan(
+                            text:
+                                "${widget.match.auto.scoredSpeaker}\n",
+                            style: const TextStyle(
+                                backgroundColor: Colors.black,
+                                color: Colors.amber,
+                                height: 1.6,
+                                overflow: TextOverflow.ellipsis)),
+                        const TextSpan(
+                            text: "- TeleOp Speaker Scored: ",
+                            style: TextStyle(
+                                height: 1.6,
+                                fontWeight: FontWeight.w700,
+                                overflow: TextOverflow.ellipsis)),
+                        TextSpan(
+                            text:
+                                "${widget.match.teleop.scoredSpeaker}\n",
+                            style: const TextStyle(
+                                backgroundColor: Colors.black,
+                                color: Colors.amber,
+                                height: 1.6,
+                                overflow: TextOverflow.ellipsis)),
+                      ])),
+                      const VerticalDivider(),
+                      Text.rich(TextSpan(children: <InlineSpan>[
+                        const TextSpan(
+                            text: "- Starting Position: ",
+                            style: TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                height: 1.6,
+                                fontWeight: FontWeight.w700)),
+                        TextSpan(
+                            text:
+                                "${widget.match.preliminary.startingPosition.name.capitalizeFirst}\n",
+                            style: const TextStyle(
                               height: 1.6,
-                              fontWeight: FontWeight.w700)),
-                      TextSpan(
-                          text:
-                              "${widget.match.endgame.harmony.name.capitalizeFirst}\n",
-                          style: const TextStyle(
-                              height: 1.6,
-                              overflow: TextOverflow.ellipsis)),
-                      const TextSpan(
-                          text: "Trap Scored: ",
-                          style: TextStyle(
-                              height: 1.6,
-                              fontWeight: FontWeight.w700,
-                              overflow: TextOverflow.ellipsis)),
-                      TextSpan(
-                          text:
-                              "${widget.match.endgame.trapScored.name.capitalizeFirst}\n",
-                          style: const TextStyle(
-                              height: 1.6,
-                              overflow: TextOverflow.ellipsis)),
-                    ]))),
+                              backgroundColor: Colors.black,
+                              color: Colors.amber,
+                            )),
+                        const TextSpan(
+                            text: "- Harmonized: ",
+                            style: TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                height: 1.6,
+                                fontWeight: FontWeight.w700)),
+                        TextSpan(
+                            text:
+                                "${widget.match.endgame.harmony.name.capitalizeFirst}\n",
+                            style: const TextStyle(
+                                backgroundColor: Colors.black,
+                                color: Colors.amber,
+                                height: 1.6,
+                                overflow: TextOverflow.ellipsis)),
+                        const TextSpan(
+                            text: "- Trap Scored: ",
+                            style: TextStyle(
+                                height: 1.6,
+                                fontWeight: FontWeight.w700,
+                                overflow: TextOverflow.ellipsis)),
+                        TextSpan(
+                            text:
+                                "${widget.match.endgame.trapScored.name.capitalizeFirst}\n",
+                            style: const TextStyle(
+                                backgroundColor: Colors.black,
+                                color: Colors.amber,
+                                height: 1.6,
+                                overflow: TextOverflow.ellipsis)),
+                        const TextSpan(
+                            text: "- Auto Speaker Scored: ",
+                            style: TextStyle(
+                                height: 1.6,
+                                fontWeight: FontWeight.w700,
+                                overflow: TextOverflow.ellipsis)),
+                        TextSpan(
+                            text:
+                                "${widget.match.auto.scoredSpeaker}\n",
+                            style: const TextStyle(
+                                backgroundColor: Colors.black,
+                                color: Colors.amber,
+                                height: 1.6,
+                                overflow: TextOverflow.ellipsis)),
+                        const TextSpan(
+                            text: "- TeleOp Speaker Scored: ",
+                            style: TextStyle(
+                                height: 1.6,
+                                fontWeight: FontWeight.w700,
+                                overflow: TextOverflow.ellipsis)),
+                        TextSpan(
+                            text:
+                                "${widget.match.teleop.scoredSpeaker}\n",
+                            style: const TextStyle(
+                                backgroundColor: Colors.black,
+                                color: Colors.amber,
+                                height: 1.6,
+                                overflow: TextOverflow.ellipsis)),
+                      ])),
+                    ])),
                 form_label_rigid(
                   'Transfer',
                   style: const TextStyle(
