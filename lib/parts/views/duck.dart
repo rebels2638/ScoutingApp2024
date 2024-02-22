@@ -79,11 +79,19 @@ class DataHostingView extends StatefulWidget
 }
 
 class _DataHostingViewState extends State<DataHostingView> {
+  late Map<int, List<HollisticMatchScoutingData>> teamsData;
+  late bool _searched;
+
+  @override
+  void initState() {
+    super.initState();
+    teamsData =
+        MatchUtils.filterByTeam(DucTelemetry().allHollisticEntries);
+    _searched = false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    Map<int, List<HollisticMatchScoutingData>> teamsData =
-        MatchUtils.filterByTeam(DucTelemetry().allHollisticEntries);
-
     return SingleChildScrollView(
       physics: const AlwaysScrollableScrollPhysics(
           parent: BouncingScrollPhysics()),
@@ -137,97 +145,137 @@ class _DataHostingViewState extends State<DataHostingView> {
               ),
             ),
             const SizedBox(height: 14),
-            Builder(builder: (BuildContext context) {
-              int totalMatches = 0;
-              teamsData.forEach(
-                  (int key, List<HollisticMatchScoutingData> value) {
-                totalMatches += value.length;
-              });
-              return Text.rich(
-                TextSpan(children: <InlineSpan>[
-                  const TextSpan(
-                      text: "Total Teams Loaded: ",
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  TextSpan(
-                    text: teamsData.keys.length.toString(),
-                  ),
-                  const TextSpan(
-                      text: "\nTotal Matches Loaded: ",
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  TextSpan(
-                    text: "$totalMatches ",
-                  ),
-                ]),
-                style: const TextStyle(fontSize: 18),
-              );
-            }),
+            if (!_searched)
+              Builder(builder: (BuildContext context) {
+                int totalMatches = 0;
+                teamsData.forEach((int key,
+                    List<HollisticMatchScoutingData> value) {
+                  totalMatches += value.length;
+                });
+                return Text.rich(
+                  TextSpan(children: <InlineSpan>[
+                    const TextSpan(
+                        text: "Total Teams Loaded: ",
+                        style:
+                            TextStyle(fontWeight: FontWeight.bold)),
+                    TextSpan(
+                      text: teamsData.keys.length.toString(),
+                    ),
+                    const TextSpan(
+                        text: "\nTotal Matches Loaded: ",
+                        style:
+                            TextStyle(fontWeight: FontWeight.bold)),
+                    TextSpan(
+                      text: "$totalMatches ",
+                    ),
+                  ]),
+                  style: const TextStyle(fontSize: 18),
+                );
+              }),
             const SizedBox(height: 14),
-            if (Platform.isAndroid || Platform.isIOS)
+            Wrap(spacing: 14, runSpacing: 14, children: <Widget>[
+              if (!_searched)
+                if (Platform.isAndroid || Platform.isIOS)
+                  FilledButton.tonalIcon(
+                      onPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute<Widget>(
+                              builder: (BuildContext context) =>
+                                  Scaffold(
+                                      appBar: AppBar(
+                                          title: const Text(
+                                              "DUC Scanner")),
+                                      body: const _QrScanner()))),
+                      icon: const Icon(Icons.qr_code_scanner_rounded),
+                      label: const Text("Scan DUC"))
+                else
+                  Text.rich(TextSpan(children: <InlineSpan>[
+                    const WidgetSpan(
+                        child: Icon(Icons.error_rounded)),
+                    TextSpan(
+                        text:
+                            "DUC Scanning is not supported on ${Platform.operatingSystem}")
+                  ])),
+              if (!_searched)
+                FilledButton.tonalIcon(
+                    onPressed: () async => await Provider.of<
+                            DucBaseBit>(context, listen: false)
+                        .save()
+                        .then((_) => Debug().info("[DUC] Saved!")),
+                    icon: const Icon(Icons.save_rounded),
+                    label: const Text("Save")),
+              if (!_searched)
+                FilledButton.tonalIcon(
+                    onPressed: () async => await showDialog(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            const _PasteDucData()),
+                    icon: const Icon(Icons.paste_rounded),
+                    label: const Text("Paste DUC")),
+              if (!_searched)
+                FilledButton.tonalIcon(
+                    onPressed: () async =>
+                        await launchAssuredConfirmDialog(context,
+                            message:
+                                "Are you sure you want to delete all DUC data? This is irreversible!",
+                            title: "Delete DUC", onConfirm: () {
+                          Provider.of<DucBaseBit>(context,
+                                  listen: false)
+                              .removeAll()
+                              .then((_) => Debug().warn(
+                                  "[DUC] Removed all DUC data..."));
+                        }),
+                    icon: const Icon(Icons.delete_forever_rounded),
+                    label: const Text("Delete All")),
+              if (!_searched)
+                FilledButton.tonalIcon(
+                    onPressed: () {
+                      teamsData = MatchUtils.filterByTeam(
+                          DucTelemetry().allHollisticEntries);
+                      setState(() {});
+                    },
+                    icon: const Icon(Icons.refresh_rounded),
+                    label: const Text("Refresh")),
+              if (_searched)
+                FilledButton.tonalIcon(
+                    onPressed: () {
+                      teamsData = MatchUtils.filterByTeam(
+                          DucTelemetry().allHollisticEntries);
+                      setState(() => _searched = false);
+                    },
+                    icon: const Icon(Icons.arrow_back_rounded),
+                    label: const Text("Cancel Search")),
               FilledButton.tonalIcon(
-                  onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute<Widget>(
-                          builder: (BuildContext context) => Scaffold(
-                              appBar: AppBar(
-                                  title: const Text("DUC Scanner")),
-                              body: const _QrScanner()))),
-                  icon: const Icon(Icons.qr_code_scanner_rounded),
-                  label: const Text("Scan DUC"))
-            else
-              Text.rich(TextSpan(children: <InlineSpan>[
-                const WidgetSpan(child: Icon(Icons.error_rounded)),
-                TextSpan(
-                    text:
-                        "DUC Scanning is not supported on ${Platform.operatingSystem}")
-              ])),
-            const SizedBox(height: 14),
-            FilledButton.tonalIcon(
-                onPressed: () async => await Provider.of<DucBaseBit>(
-                        context,
-                        listen: false)
-                    .save()
-                    .then((_) => Debug().info("[DUC] Saved!")),
-                icon: const Icon(Icons.save_rounded),
-                label: const Text("Save")),
-            const SizedBox(height: 14),
-            FilledButton.tonalIcon(
-                onPressed: () async => await showDialog(
-                    context: context,
-                    builder: (BuildContext context) =>
-                        const _PasteDucData()),
-                icon: const Icon(Icons.paste_rounded),
-                label: const Text("Paste DUC")),
-            const SizedBox(height: 14),
-            FilledButton.tonalIcon(
-                onPressed: () async =>
-                    await launchAssuredConfirmDialog(context,
-                        message:
-                            "Are you sure you want to delete all DUC data? This is irreversible!",
-                        title: "Delete DUC", onConfirm: () {
-                      Provider.of<DucBaseBit>(context, listen: false)
-                          .removeAll()
-                          .then((_) => Debug()
-                              .warn("[DUC] Removed all DUC data..."));
-                    }),
-                icon: const Icon(Icons.delete_forever_rounded),
-                label: const Text("Delete All")),
-            const SizedBox(height: 14),
-            FilledButton.tonalIcon(
-                onPressed: () => setState(() {}),
-                icon: const Icon(Icons.refresh_rounded),
-                label: const Text("Refresh")),
+                  onPressed: () async => await showDialog(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          _SearchTeamsDialog(onSubmit: (String id) {
+                            teamsData.removeWhere(
+                                (int key, _) => key != int.parse(id));
+                            setState(() => _searched = true);
+                          }, onValidate: (String id) {
+                            try {
+                              return teamsData
+                                  .containsKey(int.parse(id));
+                            } catch (e) {
+                              return false;
+                            }
+                          })),
+                  icon: const Icon(Icons.search_rounded),
+                  label: const Text("Search Teams"))
+            ]),
             const SizedBox(height: 32),
             Column(
-              children: _readProviderOfDucs(context),
+              children: _readProviderOfDucs(context, teamsData),
             )
           ]),
     );
   }
 
-  List<Widget> _readProviderOfDucs(BuildContext context) {
-    if (Provider.of<DucBaseBit>(context).length > 0) {
+  List<Widget> _readProviderOfDucs(BuildContext context,
+      Map<int, List<HollisticMatchScoutingData>> teamsData) {
+    if (teamsData.isNotEmpty) {
       List<Widget> widgets = <Widget>[];
-      Map<int, List<HollisticMatchScoutingData>> teams =
-          MatchUtils.filterByTeam(DucTelemetry().allHollisticEntries);
+      Map<int, List<HollisticMatchScoutingData>> teams = teamsData;
       teams.forEach(
           (int teamNumber, List<HollisticMatchScoutingData> data) {
         widgets.add(Padding(
@@ -888,6 +936,66 @@ class _DataHostingViewState extends State<DataHostingView> {
         ),
       )
     ];
+  }
+}
+
+class _SearchTeamsDialog extends StatefulWidget {
+  final void Function(String teamNumber) onSubmit;
+  final bool Function(String teamNumber) onValidate;
+
+  const _SearchTeamsDialog(
+      {required this.onSubmit, required this.onValidate});
+
+  @override
+  State<_SearchTeamsDialog> createState() =>
+      _SearchTeamsDialogState();
+}
+
+class _SearchTeamsDialogState extends State<_SearchTeamsDialog> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+        title: const Text("Search Teams"),
+        icon: const Icon(Icons.search_rounded),
+        actions: <Widget>[
+          FilledButton.tonalIcon(
+              onPressed: () => Navigator.of(context).pop(),
+              icon: const Icon(Icons.cancel_rounded),
+              label: const Text("Cancel")),
+          FilledButton.tonalIcon(
+              onPressed: () => widget.onSubmit(_controller.text),
+              icon: const Icon(Icons.check_rounded),
+              label: const Text("Search"))
+        ],
+        content:
+            Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+          const Text("Enter a team number to search for:"),
+          const SizedBox(height: 8),
+          TextFormField(
+              controller: _controller,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                  labelText: "Team Number",
+                  errorMaxLines: 2,
+                  errorText: widget.onValidate(_controller.text)
+                      ? null
+                      : "Invalid Team Number",
+                  hintText: "Enter a team number"))
+        ]));
   }
 }
 
