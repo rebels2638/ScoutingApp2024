@@ -57,7 +57,7 @@ They can be found under the <a href="https://github.com/rebels2638/ScoutingApp20
 
 *Not Supported:* web
 
-**Not tested:* Linux, OSX
+*Not tested:* Linux, OSX
 
 > [!CAUTION]
 > These commands are not going to certify or sign the built binary, so use the respective platform certification program!
