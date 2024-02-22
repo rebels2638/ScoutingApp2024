@@ -42,17 +42,21 @@ They can be found under the <a href="https://github.com/rebels2638/ScoutingApp20
 * Make sure you have the Flutter SDK downloaded, you can find how to install it for your platform [here](https://docs.flutter.dev/get-started/install)
 * If you want to test the App in a mobile environment, make sure you have set up either **Android Studio** or **XCode** for development on those platforms.
 
-> [!WARNING]
-> Building for web is not supported
+1. Clone this repository either through GitHub web or through `git` using `git clone https://github.com/rebels2638/ScoutingApp2024.git`
+2. Go into the project folder
+3. Run `flutter pub get`
+> [!CAUTION]
+> Do not run upgrades unless it is for the Flutter framework or Dart framework itself.
+4. After pub has cached all of the dependencies, determine the platform you want to build for; here are a list of platforms supported:
 
-1. Clone this repository either through GitHub or using `git clone https://github.com/rebels2638/ScoutingApp2024.git`
-2. Open directory in terminal/CLI: `cd ScoutingApp2024`
-3. Download libraries/dependencies: `flutter pub get` (you can also run [`scripts/mac-flutter-start.sh`](./scripts/mac-flutter-start.sh) or [`scripts/windows-flutter-start.bat`](./scripts/windows-flutter-start.bat))
-> [!WARNING]
-> If Flutter prompts you with an upgrade notification, please run the respective upgrade command: `flutter upgrade`
-4. Run `flutter build [platform]` to build for the desired platform (e.g. `windows`).
+**Build for Android** `flutter build apk --release --no-tree-shake-icons` or `flutter build aab --release --no-tree-shake-icons`
 
-If you would like to build for a different platform like iOS, please make sure you meet the prerequisites for that platform. For example, to test on iOS, you need XCode on an Apple device. For more information, check https://docs.flutter.dev/platform-integration
+**Build for Windows** `flutter build windows --release`
+
+**Build for iOS** `flutter build ipa --release --no-tree-shake-icons`
+
+> [!CAUTION]
+> These commands are not going to certify or sign the built binary, so use the respective platform certification program!
 
 ## Testing
 
