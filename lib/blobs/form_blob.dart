@@ -397,7 +397,7 @@ Widget form_sec_rigid(BuildContext context,
                 .surfaceTintColor,
             borderRadius: BorderRadius.circular(16)),
         child: Padding(
-          padding: const EdgeInsets.all(6),
+          padding: const EdgeInsets.all(10),
           child: Column(children: <Widget>[
             Row(
                 mainAxisAlignment: MainAxisAlignment.start,

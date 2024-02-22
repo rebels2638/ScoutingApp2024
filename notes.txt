@@ -19,9 +19,8 @@ Endgame:
 Climb?
 Success rate when harmony is attempted
 % of times they scored in trap
-% of times they scored in trap when attempted
-
 Human player accuracy
+
 General:
 Predicted points of each alliance
 Win likelihood

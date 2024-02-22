@@ -11,10 +11,10 @@ import "package:scouting_app_2024/extern/string.dart";
 import "package:scouting_app_2024/parts/bits/appbar_celebrate.dart";
 import "package:scouting_app_2024/parts/bits/prefer_compact.dart";
 import "package:scouting_app_2024/parts/bits/show_console.dart";
-import "package:scouting_app_2024/parts/bits/show_experimental.dart";
 import "package:scouting_app_2024/parts/bits/use_alt_layout.dart";
 import "package:scouting_app_2024/shared.dart";
 import "package:scouting_app_2024/user/models/ephemeral_data.dart";
+import "package:scouting_app_2024/user/models/shared.dart";
 import 'package:scouting_app_2024/user/models/team_bloc.dart';
 import "package:scouting_app_2024/parts/team.dart";
 import "package:scouting_app_2024/parts/views_delegate.dart";
@@ -119,6 +119,9 @@ class _ScoutingSessionViewDelegateState
                           ])),
                         ),
                         const SizedBox(height: 34),
+                        const Text(
+                            "Scouting Revision: v$EPHEMERAL_MODELS_VERSION"),
+                        const SizedBox(height: 34),
                         ElevatedButton(
                             style: ButtonStyle(
                                 shape: MaterialStateProperty.all<
@@ -210,7 +213,6 @@ class _ScoutingViewState extends State<ScoutingView>
                             .timeStamp)),
                     style: const TextStyle(
                         fontWeight: FontWeight.bold))),
-            form_label("Scouters", child: form_txtin()),
             form_label(
               "Number ",
               child: form_numpick(context,
@@ -450,19 +452,6 @@ class _ScoutingViewState extends State<ScoutingView>
                         .add(AutoUpdateEvent());
                   },
                 )),
-            form_label("Comments",
-                child: form_txtin(
-                  hint: "Enter your comments here",
-                  label: "Comments",
-                  onChanged: (String value) {
-                    BlocProvider.of<ScoutingSessionBloc>(context)
-                        .auto
-                        .comments = value;
-                    BlocProvider.of<ScoutingSessionBloc>(context)
-                        .add(AutoUpdateEvent());
-                  },
-                  inputType: TextInputType.multiline,
-                )),
           ])),
       form_sec(context,
           backgroundColor: Colors.transparent,
@@ -471,6 +460,20 @@ class _ScoutingViewState extends State<ScoutingView>
             title: "Tele-op"
           ),
           child: form_col(<Widget>[
+            form_label("Pieces Scored",
+                child: PlusMinus(
+                  initialValue: context
+                      .read<ScoutingSessionBloc>()
+                      .teleop
+                      .piecesScored,
+                  onValueChanged: (int value) {
+                    BlocProvider.of<ScoutingSessionBloc>(context)
+                        .teleop
+                        .piecesScored = value;
+                    BlocProvider.of<ScoutingSessionBloc>(context)
+                        .add(TeleOpUpdateEvent());
+                  },
+                )),
             form_label("Plays Defense",
                 child: BasicToggleSwitch(
                     initialValue:
@@ -486,17 +489,17 @@ class _ScoutingViewState extends State<ScoutingView>
                           .read<ScoutingSessionBloc>()
                           .add(TeleOpUpdateEvent());
                     })),
-            form_label("Was Defended?",
+            form_label("Goes under stage?",
                 child: BasicToggleSwitch(
                     initialValue:
                         BlocProvider.of<ScoutingSessionBloc>(context)
                             .teleop
-                            .wasDefended,
+                            .underStage,
                     onChanged: (bool e) {
                       context
                           .read<ScoutingSessionBloc>()
                           .teleop
-                          .wasDefended = e;
+                          .underStage = e;
                       context
                           .read<ScoutingSessionBloc>()
                           .add(TeleOpUpdateEvent());
@@ -515,7 +518,7 @@ class _ScoutingViewState extends State<ScoutingView>
                         .add(TeleOpUpdateEvent());
                   },
                 )),
-            form_label("Scored during AMP",
+            form_label("Scored while AMPed",
                 child: PlusMinus(
                   initialValue: context
                       .read<ScoutingSessionBloc>()
@@ -571,7 +574,7 @@ class _ScoutingViewState extends State<ScoutingView>
                         .add(TeleOpUpdateEvent());
                   },
                 )),
-            form_label("Driver rating",
+            form_label("Driver rating (1-10)",
                 child: PlusMinusRating(
                   initialValue: context
                       .read<ScoutingSessionBloc>()
@@ -584,19 +587,6 @@ class _ScoutingViewState extends State<ScoutingView>
                     BlocProvider.of<ScoutingSessionBloc>(context)
                         .add(TeleOpUpdateEvent());
                   },
-                )),
-            form_label("Comments",
-                child: form_txtin(
-                  hint: "Enter your comments here",
-                  label: "Comments",
-                  onChanged: (String value) {
-                    BlocProvider.of<ScoutingSessionBloc>(context)
-                        .teleop
-                        .comments = value;
-                    BlocProvider.of<ScoutingSessionBloc>(context)
-                        .add(TeleOpUpdateEvent());
-                  },
-                  inputType: TextInputType.multiline,
                 )),
           ])),
       form_sec(context,
@@ -631,34 +621,57 @@ class _ScoutingViewState extends State<ScoutingView>
                           .read<ScoutingSessionBloc>()
                           .add(EndgameUpdateEvent());
                     })),
-            form_label("Harmony",
-                child: form_seg_btn_1(
-                    segments: Harmony.values
-                        .map<
-                                ({
-                                  Icon? icon,
-                                  String label,
-                                  Harmony value
-                                })>(
-                            (Harmony e) => (
-                                  label: e.name.formalize,
-                                  icon: null,
-                                  value: e
-                                ))
-                        .toList(),
-                    initialSelection:
-                        BlocProvider.of<ScoutingSessionBloc>(context)
-                            .endgame
-                            .harmony,
-                    onSelect: (Harmony e) {
-                      context
-                          .read<ScoutingSessionBloc>()
+            form_label(
+              "Attempted harmony?",
+              child: BasicToggleSwitch(
+                  initialValue:
+                      BlocProvider.of<ScoutingSessionBloc>(context)
                           .endgame
-                          .harmony = e;
-                      context
-                          .read<ScoutingSessionBloc>()
-                          .add(EndgameUpdateEvent());
-                    })),
+                          .harmonyAttempted,
+                  onChanged: (bool e) {
+                    context
+                        .read<ScoutingSessionBloc>()
+                        .endgame
+                        .harmonyAttempted = e;
+                    context
+                        .read<ScoutingSessionBloc>()
+                        .add(EndgameUpdateEvent());
+                    setState(() {});
+                  }),
+            ),
+            if (context
+                .read<ScoutingSessionBloc>()
+                .endgame
+                .harmonyAttempted)
+              form_label("Harmony",
+                  child: form_seg_btn_1(
+                      segments: Harmony.values
+                          .map<
+                                  ({
+                                    Icon? icon,
+                                    String label,
+                                    Harmony value
+                                  })>(
+                              (Harmony e) => (
+                                    label: e.name.formalize,
+                                    icon: null,
+                                    value: e
+                                  ))
+                          .toList(),
+                      initialSelection:
+                          BlocProvider.of<ScoutingSessionBloc>(
+                                  context)
+                              .endgame
+                              .harmony,
+                      onSelect: (Harmony e) {
+                        context
+                            .read<ScoutingSessionBloc>()
+                            .endgame
+                            .harmony = e;
+                        context
+                            .read<ScoutingSessionBloc>()
+                            .add(EndgameUpdateEvent());
+                      })),
             form_label("Scored in Trap",
                 child: form_seg_btn_1(
                     segments: TrapScored.values
@@ -715,19 +728,34 @@ class _ScoutingViewState extends State<ScoutingView>
                           .read<ScoutingSessionBloc>()
                           .add(EndgameUpdateEvent());
                     })),
-            form_label("Comments",
-                child: form_txtin(
-                  hint: "Enter your comments here",
-                  label: "Comments",
-                  onChanged: (String value) {
-                    BlocProvider.of<ScoutingSessionBloc>(context)
-                        .endgame
-                        .comments = value;
-                    BlocProvider.of<ScoutingSessionBloc>(context)
-                        .add(EndgameUpdateEvent());
-                  },
-                  inputType: TextInputType.multiline,
-                )),
+            form_label("Match Result",
+                child: form_seg_btn_1(
+                    segments: MatchResult.values
+                        .map<
+                                ({
+                                  Icon? icon,
+                                  String label,
+                                  MatchResult value
+                                })>(
+                            (MatchResult e) => (
+                                  label: e.name.formalize,
+                                  icon: null,
+                                  value: e
+                                ))
+                        .toList(),
+                    initialSelection:
+                        BlocProvider.of<ScoutingSessionBloc>(context)
+                            .endgame
+                            .matchResult,
+                    onSelect: (MatchResult e) {
+                      context
+                          .read<ScoutingSessionBloc>()
+                          .endgame
+                          .matchResult = e;
+                      context
+                          .read<ScoutingSessionBloc>()
+                          .add(EndgameUpdateEvent());
+                    })),
           ])),
       form_sec(context,
           backgroundColor: Colors.transparent,
@@ -808,57 +836,6 @@ class _ScoutingViewState extends State<ScoutingView>
                         });
                       });
                     }),
-              if (ShowExperimentalModal.isShowingExperimental(
-                  context))
-                if (PreferCompactModal.isCompactPreferred(context))
-                  IconButton.filledTonal(
-                      onPressed: () async =>
-                          await launchConfirmDialog(
-                              showOkLabel: false,
-                              denyLabel: "Close",
-                              icon: const Icon(
-                                  Icons.warning_amber_rounded),
-                              title: "Warning",
-                              context,
-                              message: const Text("Unavaliable..."),
-                              onConfirm: () {}),
-                      icon: const Icon(
-                          Icons.bluetooth_connected_rounded))
-                else
-                  FilledButton.icon(
-                    style: ButtonStyle(
-                        shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(8)))),
-                    icon:
-                        const Icon(Icons.bluetooth_connected_rounded),
-                    label: const Text("Beam Session"),
-                    onPressed: () async => await launchConfirmDialog(
-                        showOkLabel: false,
-                        denyLabel: "Close",
-                        icon: const Icon(Icons.warning_amber_rounded),
-                        title: "Warning",
-                        context,
-                        message: const Text("Unavaliable..."),
-                        onConfirm: () {}),
-                  ),
-              if (PreferCompactModal.isCompactPreferred(context))
-                IconButton.filledTonal(
-                    onPressed: () {},
-                    icon: const Icon(CommunityMaterialIcons.qrcode))
-              else
-                FilledButton.icon(
-                    style: ButtonStyle(
-                        shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(8)))),
-                    icon: const Icon(CommunityMaterialIcons.qrcode),
-                    label: const Text("Export Session"),
-                    onPressed: () {}),
               if (PreferCompactModal.isCompactPreferred(context))
                 IconButton.filledTonal(
                     onPressed: () async {

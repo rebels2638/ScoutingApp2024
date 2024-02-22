@@ -20,13 +20,15 @@ enum TeamAlliance {
 
 enum MatchType { practice, qualification, playoff }
 
+enum MatchResult { win, loss, tie }
+
 enum MatchStartingPosition { left, middle, right }
 
 enum EndStatus { on_chain, on_stage, failed }
 
 enum AutoPickup { l, m, r, no }
 
-enum Harmony { yes, no, failed }
+enum Harmony { yes, no, missed }
 
 enum TrapScored { yes, no, missed }
 

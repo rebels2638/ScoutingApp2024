@@ -486,3 +486,5 @@ Widget _createPrettyQrDataWidget({
         includeImage ? decorationWithImage : decorationWithoutImage,
   );
 }
+
+

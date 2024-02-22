@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:scouting_app_2024/debug.dart';
+import 'package:scouting_app_2024/user/models/shared.dart';
 import 'package:scouting_app_2024/user/models/team_model.dart';
 
 /*
@@ -39,8 +41,7 @@ const String _keyword = "dUc#";
 
 extension DynamicUserCapture<T> on HollisticMatchScoutingData {
   String toDucFormat() {
-    return base64.encode(
-        gzip.encode(utf8.encode("$_keyword${toCompatibleFormat()}")));
+    return "${EPHEMERAL_MODELS_VERSION.toString()}${base64.encode(gzip.encode(utf8.encode("$_keyword${toCompatibleFormat()}")))}";
   }
 
   static String? fromDucFormat(String duc) {
@@ -60,6 +61,13 @@ extension DynamicUserCapture<T> on HollisticMatchScoutingData {
 
 String? fromDucFormatExtern(String duc) {
   try {
+    int version = int.parse(duc.substring(0, 1));
+    if (version != EPHEMERAL_MODELS_VERSION) {
+      Debug().info(
+          "Encountered a version mismatch in DUC ($version != $EPHEMERAL_MODELS_VERSION) . Failing parse.");
+      return null;
+    }
+    duc = duc.substring(1);
     String data = utf8.decode(gzip.decode(base64.decode(duc)));
     if (data.substring(0, _keyword.length) != _keyword) {
       return null; // L bozo issue

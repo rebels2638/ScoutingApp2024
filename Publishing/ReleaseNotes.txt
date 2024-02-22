@@ -1,0 +1,9 @@
+Scouting App 6.0.0
+
+Date: February 21, 2024
+
+Major Changes
+- Adapted the app to utilize features meant for FRC's 2024 game: Crescendo
+- Migration of the frontend and also backend from React Native to Flutter
+- Usage of an internal calculator that can crunch through all of the scouted data
+- Local storage of all of the scouting data on a user's device for future broadcasting

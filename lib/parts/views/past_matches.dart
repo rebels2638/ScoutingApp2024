@@ -185,6 +185,7 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                     ))
                   : PreferCompactModal.isCompactPreferred(context)
                       ? Builder(
+                          // this could be optimized further with a futurebuilder
                           builder: (BuildContext context) {
                             List<Widget> widgets = <Widget>[];
                             for (HollisticMatchScoutingData match

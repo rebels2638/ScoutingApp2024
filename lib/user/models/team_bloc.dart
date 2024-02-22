@@ -62,28 +62,33 @@ class EndgameInfo extends ScoutingInfo
   EndStatus endState;
   Harmony harmony;
   TrapScored trapScored;
+  MatchResult matchResult;
   MicScored micScored;
-  String? comments;
+  bool harmonyAttempted;
 
   EndgameInfo(
       {required this.endState,
       required this.harmony,
+      required this.harmonyAttempted,
+      required this.matchResult,
       required this.trapScored,
-      required this.micScored,
-      this.comments = ""});
+      required this.micScored});
 
   factory EndgameInfo.optional(
           {EndStatus endState = EndStatus.on_stage,
           Harmony harmony = Harmony.no,
+          bool harmonyAttempted = false,
+          MatchResult matchResult = MatchResult.loss,
           TrapScored trapScored = TrapScored.no,
-          MicScored micScored = MicScored.no,
-          String comments = ""}) =>
+          MicScored micScored = MicScored.no}) =>
       EndgameInfo(
-          endState: endState,
-          harmony: harmony,
-          trapScored: trapScored,
-          micScored: micScored,
-          comments: comments);
+        harmonyAttempted: harmonyAttempted,
+        matchResult: matchResult,
+        endState: endState,
+        harmony: harmony,
+        trapScored: trapScored,
+        micScored: micScored,
+      );
 
   @override
   Map<String, dynamic> exportMap() => <String, dynamic>{
@@ -91,28 +96,31 @@ class EndgameInfo extends ScoutingInfo
         "harmony": harmony,
         "trapScored": trapScored,
         "micScored": micScored,
-        "comments": comments
+        "harmonyAttempted": harmonyAttempted,
+        "matchResult": matchResult,
       };
 
   static EndgameInfo fromCompatibleFormat(String csv) {
     final Map<String, dynamic> data =
         jsonDecode(csv) as Map<String, dynamic>;
     return EndgameInfo(
+        harmonyAttempted: data["hmnyAttempt"],
+        matchResult: MatchResult.values[data["res"]],
         endState: EndStatus.values[data["end"]],
-        harmony: Harmony.values[data["harmony"]],
+        harmony: Harmony.values[data["hmny"]],
         trapScored: TrapScored.values[data["trap"]],
-        micScored: MicScored.values[data["mic"]],
-        comments: data["cmt"]);
+        micScored: MicScored.values[data["mic"]]);
   }
 
   @override
   String toCompatibleFormat() {
     return jsonEncode(<String, dynamic>{
+      "res": matchResult.index,
       "end": endState.index,
-      "harmony": harmony.index,
+      "hmny": harmony.index,
+      "hmnyAttempt": harmonyAttempted,
       "trap": trapScored.index,
       "mic": micScored.index,
-      "cmt": comments
     });
   }
 }
@@ -127,58 +135,57 @@ class EndgameState extends ScoutingSessionStates {
 class TeleOpInfo extends ScoutingInfo
     implements QRCompatibleData<TeleOpInfo> {
   bool playsDefense;
-  bool wasDefended;
+  bool underStage;
   int scoredSpeaker;
   int missedSpeaker;
   int scoredAmp;
+  int piecesScored;
   int missedAmp;
-
   int scoredWhileAmped; // such a goofy name
-  String? comments;
   int driverRating;
 
   TeleOpInfo(
       {required this.playsDefense,
-      required this.wasDefended,
+      required this.underStage,
       required this.scoredSpeaker,
       required this.missedSpeaker,
       required this.scoredAmp,
+      required this.piecesScored,
       required this.missedAmp,
       required this.scoredWhileAmped,
-      this.comments = "",
       required this.driverRating});
 
   factory TeleOpInfo.optional(
           {bool playsDefense = false,
-          bool wasDefended = false,
+          bool underStage = false,
           int scoredSpeaker = 0,
           int missedSpeaker = 0,
           int scoredAmp = 0,
+          int piecesScored = 0,
           int missedAmp = 0,
           int scoredWhileAmped = 0,
-          String comments = "",
           int driverRating = 0}) =>
       TeleOpInfo(
           playsDefense: playsDefense,
-          wasDefended: wasDefended,
+          underStage: underStage,
           scoredSpeaker: scoredSpeaker,
           missedSpeaker: missedSpeaker,
           scoredAmp: scoredAmp,
+          piecesScored: piecesScored,
           missedAmp: missedAmp,
           scoredWhileAmped: scoredWhileAmped,
-          comments: comments,
           driverRating: driverRating);
 
   @override
   Map<String, dynamic> exportMap() => <String, dynamic>{
         "playsDefense": playsDefense,
-        "wasDefended": wasDefended,
+        "underStage": underStage,
         "scoredSpeaker": scoredSpeaker,
         "missedSpeaker": missedSpeaker,
         "scoredAmp": scoredAmp,
+        "piecesScored": piecesScored,
         "missedAmp": missedAmp,
         "scoredWhileAmped": scoredWhileAmped,
-        "comments": comments,
         "driverRating": driverRating
       };
 
@@ -186,28 +193,28 @@ class TeleOpInfo extends ScoutingInfo
     final Map<String, dynamic> data =
         jsonDecode(csv) as Map<String, dynamic>;
     return TeleOpInfo(
-        playsDefense: data["defensive"],
-        wasDefended: data["defed"],
+        piecesScored: data["pieces"],
+        playsDefense: data["def"],
+        underStage: data["undSpker"],
         scoredSpeaker: data["spker"],
         missedSpeaker: data["missSpker"],
         scoredAmp: data["amp"],
         missedAmp: data["missAmp"],
         scoredWhileAmped: data["whileAmp"],
-        comments: data["cmt"],
         driverRating: data["driverting"]);
   }
 
   @override
   String toCompatibleFormat() {
     return jsonEncode(<String, dynamic>{
-      "defensive": playsDefense,
-      "defed": wasDefended,
+      "def": playsDefense,
+      "pieces": piecesScored,
+      "undSpker": underStage,
       "spker": scoredSpeaker,
       "missSpker": missedSpeaker,
       "amp": scoredAmp,
       "missAmp": missedAmp,
       "whileAmp": scoredWhileAmped,
-      "cmt": comments,
       "driverting": driverRating
     });
   }
@@ -229,7 +236,6 @@ class AutoInfo extends ScoutingInfo
   int missedSpeaker;
   int scoredAmp;
   int missedAmp;
-  String? comments;
 
   AutoInfo(
       {required this.notePreloaded,
@@ -238,8 +244,7 @@ class AutoInfo extends ScoutingInfo
       required this.scoredSpeaker,
       required this.missedSpeaker,
       required this.scoredAmp,
-      required this.missedAmp,
-      this.comments = ""});
+      required this.missedAmp});
 
   factory AutoInfo.optional(
           {bool notePreloaded = false,
@@ -250,8 +255,7 @@ class AutoInfo extends ScoutingInfo
           int scoredSpeaker = 0,
           int missedSpeaker = 0,
           int scoredAmp = 0,
-          int missedAmp = 0,
-          String comments = ""}) =>
+          int missedAmp = 0}) =>
       AutoInfo(
           notePreloaded: notePreloaded,
           notesPickedUp: notesPickedUp,
@@ -259,8 +263,7 @@ class AutoInfo extends ScoutingInfo
           scoredSpeaker: scoredSpeaker,
           missedSpeaker: missedSpeaker,
           scoredAmp: scoredAmp,
-          missedAmp: missedAmp,
-          comments: comments);
+          missedAmp: missedAmp);
 
   @override
   Map<String, dynamic> exportMap() => <String, dynamic>{
@@ -271,7 +274,6 @@ class AutoInfo extends ScoutingInfo
         "missedSpeaker": missedSpeaker,
         "scoredAmp": scoredAmp,
         "missedAmp": missedAmp,
-        "comments": comments
       };
 
   static AutoInfo fromCompatibleFormat(String rawData) {
@@ -288,8 +290,7 @@ class AutoInfo extends ScoutingInfo
         scoredSpeaker: data["spker"],
         missedSpeaker: data["missSpker"],
         scoredAmp: data["amp"],
-        missedAmp: data["missAmp"],
-        comments: data["cmt"]);
+        missedAmp: data["missAmp"]);
   }
 
   @override
@@ -306,7 +307,6 @@ class AutoInfo extends ScoutingInfo
       "missSpker": missedSpeaker,
       "amp": scoredAmp,
       "missAmp": missedAmp,
-      "cmt": comments
     });
   }
 }
@@ -321,7 +321,6 @@ class AutoState extends ScoutingSessionStates {
 class PrelimInfo extends ScoutingInfo
     implements QRCompatibleData<PrelimInfo> {
   int timeStamp; // this is in ms since epoch
-  String scouters;
   int teamNumber;
   int matchNumber;
   MatchType matchType;
@@ -330,7 +329,6 @@ class PrelimInfo extends ScoutingInfo
 
   PrelimInfo(
       {required this.timeStamp,
-      required this.scouters,
       required this.teamNumber,
       required this.matchNumber,
       required this.matchType,
@@ -339,7 +337,6 @@ class PrelimInfo extends ScoutingInfo
 
   factory PrelimInfo.optional(
           {int? timeStamp,
-          String scouters = "",
           int teamNumber = 0,
           int matchNumber = 0,
           MatchType matchType = MatchType.qualification,
@@ -349,7 +346,6 @@ class PrelimInfo extends ScoutingInfo
       PrelimInfo(
           timeStamp:
               timeStamp ?? DateTime.now().millisecondsSinceEpoch,
-          scouters: scouters,
           teamNumber: teamNumber,
           matchNumber: matchNumber,
           matchType: matchType,
@@ -359,7 +355,6 @@ class PrelimInfo extends ScoutingInfo
   @override
   Map<String, dynamic> exportMap() => <String, dynamic>{
         "timeStamp": timeStamp,
-        "scouters": scouters,
         "teamNumber": teamNumber,
         "matchNumber": matchNumber,
         "matchType": matchType,
@@ -372,7 +367,6 @@ class PrelimInfo extends ScoutingInfo
         jsonDecode(rawData) as Map<String, dynamic>;
     return PrelimInfo(
         timeStamp: data["time"],
-        scouters: data["scters"],
         teamNumber: data["team#"],
         matchNumber: data["match#"],
         matchType: MatchType.values[data["match"]],
@@ -385,7 +379,6 @@ class PrelimInfo extends ScoutingInfo
   String toCompatibleFormat() {
     return jsonEncode(<String, dynamic>{
       "time": timeStamp,
-      "scters": scouters,
       "team#": teamNumber,
       "match#": matchNumber,
       "match": matchType.index,

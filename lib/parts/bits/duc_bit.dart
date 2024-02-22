@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:scouting_app_2024/debug.dart';
+import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/duc_telemetry.dart';
 import 'package:scouting_app_2024/user/models/ephemeral_data.dart';
 import 'package:scouting_app_2024/user/models/team_model.dart';
@@ -7,7 +11,13 @@ import 'package:scouting_app_2024/user/models/team_model.dart';
 class DucBaseBit with ChangeNotifier {
   final List<HollisticMatchScoutingData> _data;
 
-  DucBaseBit(this._data);
+  DucBaseBit(this._data) {
+    Timer.periodic(const Duration(seconds: Shared.DUC_SAVE_PERIOD),
+        (_) async {
+      Debug().info("[DUC] Saving AUTOMATICALLY");
+      await save();
+    });
+  }
 
   int get length => _data.length;
 
@@ -26,10 +36,25 @@ class DucBaseBit with ChangeNotifier {
     }
   }
 
+  bool containsID(String id) {
+    for (HollisticMatchScoutingData r in _data) {
+      if (r.id == id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   void add(HollisticMatchScoutingData data) {
     _data.add(data);
     notifyListeners();
     save();
+  }
+
+  Future<void> removeAll() async {
+    _data.clear();
+    await DucTelemetry().clear();
+    notifyListeners();
   }
 
   void remove(HollisticMatchScoutingData data) {
