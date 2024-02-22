@@ -207,8 +207,8 @@ class _DataHostingViewState extends State<DataHostingView> {
                 FilledButton.tonalIcon(
                     onPressed: () async => await showDialog(
                         context: context,
-                        builder: (BuildContext context) =>
-                            const _PasteDucData()),
+                        builder: (BuildContext _) =>
+                            _PasteDucData(context)),
                     icon: const Icon(Icons.paste_rounded),
                     label: const Text("Paste DUC")),
               if (!_searched)
@@ -1000,7 +1000,8 @@ class _SearchTeamsDialogState extends State<_SearchTeamsDialog> {
 }
 
 class _PasteDucData extends StatefulWidget {
-  const _PasteDucData();
+  final BuildContext parentContext;
+  const _PasteDucData(this.parentContext);
 
   @override
   State<_PasteDucData> createState() => _PasteDucDataState();
@@ -1043,9 +1044,22 @@ class _PasteDucDataState extends State<_PasteDucData> {
                 if (res == null) {
                   setState(() => _isBadData = true);
                 } else {
-                  Provider.of<DucBaseBit>(context).add(
+                  HollisticMatchScoutingData data =
                       HollisticMatchScoutingData.fromCompatibleFormat(
-                          res));
+                          res);
+                  if (Provider.of<DucBaseBit>(widget.parentContext,
+                          listen: false)
+                      .containsID(data.id)) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text(
+                                "This DUC seems to be already recorded...")));
+                    return;
+                  }
+                  Provider.of<DucBaseBit>(widget.parentContext,
+                          listen: false)
+                      .add(HollisticMatchScoutingData
+                          .fromCompatibleFormat(res));
                   Navigator.of(context).pop();
                   Debug().info(
                       "Submitted new DUC Information from QR_PASTE");
