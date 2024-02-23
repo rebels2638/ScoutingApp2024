@@ -8,3 +8,4 @@ Major Changes
 - Local storage of all of the scouting data on a user's device for future broadcasting
 - Optimized the user interface with additional customization options
 - Adaptive layout for the scouting form
+- A new data format (DUC) alongside CSV QR Codes that allows seamless data transfers between multipler users
