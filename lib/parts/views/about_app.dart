@@ -290,7 +290,7 @@ class _AboutAppViewState extends State<AboutAppView> {
                         )),
                     const TextSpan(
                       text:
-                          "Flutter/Dart\nVisual Studio Code\nGithub",
+                          "Flutter\nDart\nVisual Studio Code\nGitHub",
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                       ),
@@ -310,7 +310,7 @@ class _AboutAppViewState extends State<AboutAppView> {
                         )),
                     const TextSpan(
                       text:
-                          "John Motchkavitz\nMatthew Corrigan\nAndrea Zinn\nGeroge Motchkavitz\n",
+                          "John Motchkavitz\nMatthew Corrigan\nAndrea Zinn\nGeorge Motchkavitz\n",
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                       ),

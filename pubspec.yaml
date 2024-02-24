@@ -1,7 +1,7 @@
 name: scouting_app_2024
 description: "Rebel Robotics FRC 2638 Scouting App 2024"
 publish_to: "none"
-version: 0.1.0
+version: 1.0.1+2
 
 environment:
   sdk: ">=3.2.5 <4.0.0"
@@ -12,6 +12,7 @@ dependencies:
   community_material_icon: ^5.9.55
   confetti: ^0.7.0
   equatable: ^2.0.5
+  fl_chart: ^0.66.2
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.3
