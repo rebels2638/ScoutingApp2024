@@ -139,7 +139,7 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                                   .showSnackBar(
                                 const SnackBar(
                                     content: Text(
-                                        "All past matches deleted. Cleare")),
+                                        "All past matches deleted!")),
                               );
                             })),
                   ], width: 14),

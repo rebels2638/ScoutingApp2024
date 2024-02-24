@@ -1,8 +1,11 @@
 import "dart:convert";
+
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:intl/intl.dart";
 import "package:provider/provider.dart";
+import 'package:community_material_icon/community_material_icon.dart';
+
 import "package:scouting_app_2024/blobs/basic_toggle_switch.dart";
 import "package:scouting_app_2024/blobs/blobs.dart";
 import "package:scouting_app_2024/blobs/form_blob.dart";
@@ -12,17 +15,16 @@ import "package:scouting_app_2024/parts/bits/appbar_celebrate.dart";
 import "package:scouting_app_2024/parts/bits/prefer_compact.dart";
 import "package:scouting_app_2024/parts/bits/show_console.dart";
 import "package:scouting_app_2024/parts/bits/use_alt_layout.dart";
+import "package:scouting_app_2024/parts/team.dart";
+import "package:scouting_app_2024/parts/views_delegate.dart";
 import "package:scouting_app_2024/shared.dart";
 import "package:scouting_app_2024/user/models/ephemeral_data.dart";
 import "package:scouting_app_2024/user/models/shared.dart";
-import 'package:scouting_app_2024/user/models/team_bloc.dart';
-import "package:scouting_app_2024/parts/team.dart";
-import "package:scouting_app_2024/parts/views_delegate.dart";
-import 'package:scouting_app_2024/user/models/team_model.dart';
-import 'package:scouting_app_2024/debug.dart';
-import 'package:community_material_icon/community_material_icon.dart';
 import "package:scouting_app_2024/user/scouting_telemetry.dart";
 import "package:scouting_app_2024/user/user_telemetry.dart";
+import 'package:scouting_app_2024/debug.dart';
+import 'package:scouting_app_2024/user/models/team_bloc.dart';
+import 'package:scouting_app_2024/user/models/team_model.dart';
 
 typedef SectionId = ({String title, IconData icon});
 

@@ -57,17 +57,24 @@ class DucBaseBit with ChangeNotifier {
     notifyListeners();
   }
 
-  void remove(HollisticMatchScoutingData data) {
-    _data.remove(data);
+  Future<void> removeWhere(
+      bool Function(HollisticMatchScoutingData data) filter) async {
+    _data.removeWhere(filter);
+    await save();
     notifyListeners();
-    save();
   }
 
-  void removeID(String id) {
+  Future<void> remove(HollisticMatchScoutingData data) async {
+    _data.remove(data);
+    save();
+    notifyListeners();
+  }
+
+  Future<void> removeID(String id) async {
     _data.removeWhere(
         (HollisticMatchScoutingData element) => element.id == id);
     notifyListeners();
-    save();
+    await save();
   }
 
   List<HollisticMatchScoutingData> filter(
