@@ -249,7 +249,7 @@ class AutoInfo extends ScoutingInfo
   factory AutoInfo.optional(
           {bool notePreloaded = false,
           List<AutoPickup> notesPickedUp = const <AutoPickup>[
-            ...AutoPickup.values
+            AutoPickup.no,
           ],
           bool taxi = false,
           int scoredSpeaker = 0,
