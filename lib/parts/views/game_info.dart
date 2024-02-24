@@ -58,7 +58,7 @@ class GameInfoView extends StatelessWidget
             Wrap(
               children: <String>['Notes', 'High Notes']
                   .map((String title) =>
-                      _buildButton(context, title, isGameItem: true))
+                      _buildButton(context, title,isGameItem: true, isGameLocation: false, isGamePhase: false))
                   .toList(),
             ),
             const SizedBox(height: 20),
@@ -75,7 +75,22 @@ class GameInfoView extends StatelessWidget
                 'Amp Zone',
                 'Stage',
               ]
-                  .map((String title) => _buildButton(context, title))
+                  .map((String title) => _buildButton(context, title, isGameItem: false, isGameLocation: true, isGamePhase: false))
+                  .toList(),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'Game Phases',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 10),
+            Wrap(
+              children: <String>[
+                'Autonomous',
+                'Teleop',
+                'Endgame',
+              ]
+                  .map((String title) => _buildButton(context, title,isGameItem: false, isGameLocation: false, isGamePhase: true))
                   .toList(),
             ),
           ],
@@ -85,7 +100,7 @@ class GameInfoView extends StatelessWidget
   }
 
   Widget _buildButton(BuildContext context, String title,
-      {bool isGameItem = false}) {
+      {bool isGameItem = false ,bool isGameLocation = false, required bool isGamePhase}) {
     return Padding(
       padding: const EdgeInsets.only(right: 8, top: 8),
       child: Container(
@@ -94,7 +109,7 @@ class GameInfoView extends StatelessWidget
         child: preferTonalButton(
           onPressed: () => _showDetails(context, title),
           icon: Icon(
-              isGameItem ? Icons.build : Icons.location_on_rounded),
+              isGameItem ? Icons.build : isGameLocation ? Icons.location_on_rounded : isGamePhase ? Icons.timer : Icons.man_2 ),
           style: FilledButton.styleFrom(elevation: 2),
           label: Text(title,
               textAlign: TextAlign.center,
@@ -121,6 +136,9 @@ class GameInfoView extends StatelessWidget
           '• High note - special game piece\n\n• Spotlighting - when High Note scored on Microphone when 1 or more robots are on stage.\n• During Spotlight, every note scored in the trap will be granted one additional point (max 3) .',
       'Notes':
           '• Note - primary game piece\n• Scored in Speaker and Amp for points',
+      'Autonomous':'First phase of the match (15 Seconds Long)\n\nRobots operate with only their pre-programmed instructions with no human control\n\nRobots are pre-loaded with one note and may control no more than one note at a time\n\nRobots can score in either the Speaker (5 points) or Amp (2 points)',
+      'Teleop':'Second Phase of the match (2 Minutes and 15 Seconds Long)\n\nRobots operated by drive team and can score in the Speaker (2 Points or 5 Points if amplified)\n\nRobots can score 2 notes in the Amplifier(1 point and choice between increased points for scoring in the Speaker or Coopertition Bonus)',
+      'Endgame':'Final Phase of the match (20 Seconds Long)\n\nRobots climb chains to get on Stage(3 Points) and score in the trap(5 points)\n\nIf Two Robots are on the same chain they achieve Harmony (2 Points) \n\nHuman Players Spotlight robots on Stage by throwing high notes onto Microphone (Increase points for Robots on Stage to 4 Points)\n\nRobots can go under the Stage to Park (1 Point)',
     };
 
     final Map<String, IconData> icons = <String, IconData>{
@@ -131,6 +149,9 @@ class GameInfoView extends StatelessWidget
       'Speaker': Icons.speaker,
       'High Notes': Icons.music_note,
       'Notes': Icons.music_note,
+      'Autonomous': Icons.settings_rounded,
+      'Teleop':Icons.person_2_rounded,
+      'Endgame':Icons.outlined_flag_rounded
     };
 
     IconData icon = icons[title] ?? Icons.help_outline;

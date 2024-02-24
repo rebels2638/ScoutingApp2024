@@ -39,7 +39,7 @@ class Debug {
     // this makes sure we capture all of the data before the app runs or any states that are not yet initted.
     // thus make sure to call init before the app itself starts!!
     listen((LogRecord record) {
-      if (ConsoleStateComponent.internalConsoleBuffer.length >=
+      if (ConsoleStateComponent.internalConsoleBuffer.length >=   
           Shared.MAX_LOG_LENGTH) {
         ConsoleStateComponent.internalConsoleBuffer.clear();
       }

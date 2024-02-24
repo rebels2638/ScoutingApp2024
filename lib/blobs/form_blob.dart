@@ -140,8 +140,7 @@ class _NumPickBtnState extends State<_NumPickBtn> {
           if (PreferCompactModal.isCompactPreferred(context))
             IconButton.filled(
                 icon: widget.icon,
-                onPressed: () async => await launchNumberPickerDialog(
-                        context,
+                onPressed: () => launchNumberPickerDialog(context,
                         maxValue: widget.maxValue.abs(),
                         minValue: widget.minValue.abs(),
                         headerMessage: widget.headerMessage,
@@ -155,8 +154,7 @@ class _NumPickBtnState extends State<_NumPickBtn> {
           else
             FilledButton(
                 child: widget.icon,
-                onPressed: () async => await launchNumberPickerDialog(
-                        context,
+                onPressed: () => launchNumberPickerDialog(context,
                         maxValue: widget.maxValue.abs(),
                         minValue: widget.minValue.abs(),
                         headerMessage: widget.headerMessage,

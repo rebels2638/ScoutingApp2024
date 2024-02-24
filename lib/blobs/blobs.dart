@@ -6,6 +6,7 @@ import 'package:scouting_app_2024/blobs/assured_dialog.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
 import 'package:scouting_app_2024/utils.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 // there is no much boilerplate shitty code for this number picker thing, just look below, there are like 2 delegate functions for this lmfao
 class _InternalNumberPicker extends StatefulWidget {
@@ -47,27 +48,102 @@ class _InternalNumberPickerState
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Text("Number ${_combineDigits()}"),
-        const SizedBox(height: 16),
-        Row(
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            for (int i = 0; i < widget.itemCount; i++)
-              NumberPicker(
-                infiniteLoop: widget.infiniteLoop,
-                axis: widget.alignment ?? Axis.vertical,
-                minValue: 0,
-                maxValue: 9,
-                value: _valueCounts[i],
-                onChanged: (int value) {
-                  setState(() => _valueCounts[i] = value);
-                  widget.onChange.call(_combineDigits());
-                },
-              ),
+            Text(_combineDigits().toString(),
+                style: const TextStyle(
+                    fontSize: 30, fontWeight: FontWeight.w500)),
+            const SizedBox(height: 16),
+            const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(Icons.swipe_vertical_rounded),
+                  SizedBox(width: 6),
+                  Text("Swipe",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w300, fontSize: 14))
+                ]),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                for (int i = 0; i < widget.itemCount; i++)
+                  if (i != widget.itemCount - 1)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                                color: ThemeProvider.themeOf(context)
+                                    .data
+                                    .colorScheme
+                                    .primary)),
+                        child: NumberPicker(
+                          selectedTextStyle: TextStyle(
+                              color: ThemeProvider.themeOf(context)
+                                  .data
+                                  .iconTheme
+                                  .color,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold),
+                          textStyle: const TextStyle(fontSize: 16),
+                          infiniteLoop: widget.infiniteLoop,
+                          axis: widget.alignment ?? Axis.vertical,
+                          minValue: 0,
+                          maxValue: 9,
+                          itemHeight: 65,
+                          itemWidth: 50,
+                          value: _valueCounts[i],
+                          onChanged: (int value) {
+                            setState(() => _valueCounts[i] = value);
+                            widget.onChange.call(_combineDigits());
+                          },
+                        ),
+                      ),
+                    )
+                  else
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                              color: ThemeProvider.themeOf(context)
+                                  .data
+                                  .colorScheme
+                                  .primary)),
+                      child: NumberPicker(
+                        selectedTextStyle: TextStyle(
+                            color: ThemeProvider.themeOf(context)
+                                .data
+                                .iconTheme
+                                .color,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold),
+                        textStyle: const TextStyle(fontSize: 16),
+                        infiniteLoop: widget.infiniteLoop,
+                        axis: widget.alignment ?? Axis.vertical,
+                        minValue: 0,
+                        maxValue: 9,
+                        itemHeight: 65,
+                        itemWidth: 50,
+                        value: _valueCounts[i],
+                        onChanged: (int value) {
+                          setState(() => _valueCounts[i] = value);
+                          widget.onChange.call(_combineDigits());
+                        },
+                      ),
+                    ),
+              ],
+            ),
           ],
         ),
-      ],
+      ),
     );
   }
 
@@ -80,7 +156,7 @@ class _InternalNumberPickerState
   }
 }
 
-Future<void> launchNumberPickerDialog(BuildContext context,
+void launchNumberPickerDialog(BuildContext context,
         {required int minValue,
         required int maxValue,
         int? itemCount,
@@ -89,34 +165,34 @@ Future<void> launchNumberPickerDialog(BuildContext context,
         Axis? alignment,
         required String headerMessage,
         String? comment,
-        required void Function(int res) onChange}) async =>
-    await showDialog(
-        context: context,
-        builder: (BuildContext context) => Wrap(
-                alignment: WrapAlignment.center,
-                runAlignment: WrapAlignment.center,
-                children: <Widget>[
-                  AlertDialog(
-                      actions: <Widget>[
-                        TextButton.icon(
-                            onPressed: () =>
-                                Navigator.of(context).pop(),
-                            icon: const Icon(Icons.check_rounded),
-                            label: const Text("OK")),
-                      ],
-                      icon: headerIcon,
-                      title: Text(headerMessage),
-                      content: Wrap(children: <Widget>[
-                        _InternalNumberPicker(
-                            infiniteLoop: infiniteLoop,
-                            alignment: alignment,
-                            itemCount: itemCount ??
-                                maxValue.abs().toString().length,
-                            minValue: minValue,
-                            maxValue: maxValue,
-                            onChange: onChange),
-                      ])),
-                ]));
+        required void Function(int res) onChange}) =>
+    Navigator.of(context).push(
+        MaterialPageRoute<Widget>(builder: (BuildContext context) {
+      return Scaffold(
+          appBar: AppBar(
+              title: Row(children: <Widget>[
+            const Icon(Icons.numbers_rounded),
+            const SizedBox(width: 8),
+            Text(headerMessage)
+          ])),
+          body: Padding(
+            padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.width * 0.45),
+            child: SingleChildScrollView(
+                child: Column(
+              children: <Widget>[
+                _InternalNumberPicker(
+                    infiniteLoop: infiniteLoop,
+                    alignment: alignment,
+                    itemCount:
+                        itemCount ?? maxValue.abs().toString().length,
+                    minValue: minValue,
+                    maxValue: maxValue,
+                    onChange: onChange)
+              ],
+            )),
+          ));
+    }));
 
 @pragma("vm:prefer-inline")
 Widget preferTonalButton(

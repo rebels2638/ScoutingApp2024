@@ -176,8 +176,7 @@ class ConsoleStateComponent extends State<_ConsoleComponent> {
                         fontWeight: FontWeight.w600,
                         fontFamily: "IBM Plex Mono"))),
             TextButton.icon(
-                onPressed: () async => await launchNumberPickerDialog(
-                    context,
+                onPressed: () => launchNumberPickerDialog(context,
                     minValue: 0,
                     maxValue: 999,
                     headerMessage: "Number Picker (ig)",
