@@ -26,7 +26,7 @@ class PastMatchesView extends StatefulWidget
       item: (
         activeIcon: const Icon(Icons.receipt_rounded),
         icon: const Icon(Icons.receipt_outlined),
-        label: "History",
+        label: "Recorded",
         tooltip: "View data collected from past matches"
       )
     );
@@ -88,12 +88,12 @@ class _PastMatchesViewState extends State<PastMatchesView> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                const Row(
+                Row(
                   children: <Widget>[
-                    Icon(Icons.calendar_month),
-                    SizedBox(width: 8.0),
-                    Text("Past Matches",
-                        style: TextStyle(fontSize: 20.0)),
+                    const Icon(Icons.calendar_month),
+                    const SizedBox(width: 8.0),
+                    Text("Recorded ${matches.length} Match${matches.length > 2 ? "es" : ""}",
+                        style: const TextStyle(fontSize: 20.0)),
                   ],
                 ),
                 Row(

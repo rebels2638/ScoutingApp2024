@@ -14,6 +14,7 @@ additions:
   - Some few more word choices for assured confirm dialogs
   - Patch notes dialog
   - Connected more components tonal controls
+  - Brought the insights button from DUC over to regular match history
 fixes:
   - Fixed a bug where the number picker would provide a render error when rendering on smaller width displays
   - Removed the underscore for On Chain section
@@ -23,9 +24,13 @@ fixes:
   - Black borders around about page image due to usage of JPEG
   - Typo within the word choices for assured confirm dialogs
   - A rendering fault occurring with the save and reset settings buttons
+  - Changed "Past Matches" to "Recorded Matches"
+  - Android has a chance to crash due to undisposed controllers
 optimize:
   - Optimized the layout rendering for the alternative scouting form
   - Improved the backdrop parallax rendering of the About Page
   - Compressed some of the about page images to reduce the app size
   - Improved color rendering and color contrast for the app
   - Improved animation tick rate for the app (this should help with smoother animations on lower end devices)
+  - App on Windows persisting with the wrong API version
+  - General Raster Jank fixes

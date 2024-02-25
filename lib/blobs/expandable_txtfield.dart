@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
+import 'package:scouting_app_2024/blobs/hints_blob.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/extern/string.dart';
+import 'package:scouting_app_2024/parts/bits/show_hints.dart';
+import 'package:scouting_app_2024/user/models/shared.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 class ExpandedTextFieldBlob extends StatefulWidget {
@@ -85,7 +88,13 @@ class _ExpandedTextFieldBlobState
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        const SizedBox(height: 40),
+                        if (ShowHintsGuideModal.isShowingHints(
+                                context) &&
+                            widget.maxChars != null)
+                          const WarningHintsBlob(
+                              "Do not exceed the character limit",
+                              "If you exceed the character limit of $COMMENTS_MAX_CHARS, your data will be truncated to fit the limit."),
+                        const SizedBox(height: 20),
                         Text(
                           widget.labelText,
                           style: const TextStyle(
@@ -135,17 +144,19 @@ class _ExpandedTextFieldBlobState
                           onChanged: (String data) {
                             if (widget.maxChars != null) {
                               if (data.length > widget.maxChars!) {
-                                setState(() => _badText = true);
+                                setState(() {
+                                  _characterCount = data.length;
+                                  _badText = true;
+                                });
                                 widget.onChanged.call(data.substring(
                                     0, widget.maxChars!));
                                 Debug().warn(
                                     "Content for $hashCode [EXP_TXTFIELD] was truncated to ${widget.maxChars} characters.");
                                 return;
                               }
-                            } else {
-                              setState(() => _badText = false);
                             }
                             setState(() {
+                              _badText = false;
                               _controller.text = data;
                               _characterCount = data
                                   .length; // Update character count

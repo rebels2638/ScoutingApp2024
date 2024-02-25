@@ -59,12 +59,15 @@ extension DynamicUserCapture<T> on HollisticMatchScoutingData {
   }
 }
 
-String? fromDucFormatExtern(String duc) {
+String? fromDucFormatExtern(String duc, [void Function()? onBad]) {
   try {
     int version = int.parse(duc.substring(0, 1));
     if (version != EPHEMERAL_MODELS_VERSION) {
       Debug().info(
-          "Encountered a version mismatch in DUC ($version != $EPHEMERAL_MODELS_VERSION) . Failing parse.");
+          "Encountered a version mismatch in DUC (Received:$version =/= Local:$EPHEMERAL_MODELS_VERSION) . Failing parse.");
+      if (onBad != null) {
+        onBad.call();
+      }
       return null;
     }
     duc = duc.substring(1);

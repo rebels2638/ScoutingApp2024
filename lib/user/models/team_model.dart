@@ -119,7 +119,7 @@ class HollisticMatchScoutingData
   }
 
   String get commentsCSVData {
-    return "Match,Team,Comment\n${comments.matchNumber},${comments.teamNumber},${comments.isEmpty ? "No Comments" : comments.comment}";
+    return "Match,Team,Comment\n${comments.matchNumber},${comments.teamNumber},${comments.isEmpty ? "No Comments" : comments.comment!.trim().replaceAll(",", "_")}";
   }
 
   static HollisticMatchScoutingData fromCompatibleFormat(

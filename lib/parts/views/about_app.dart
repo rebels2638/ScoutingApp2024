@@ -226,19 +226,41 @@ class _AboutAppViewState extends State<AboutAppView> {
                       padding:
                           const EdgeInsets.only(top: 4, right: 8),
                       child: FilledButton.tonalIcon(
-                          onPressed: () async => await launchConfirmDialog(
-                              context,
-                              message: const Text.rich(TextSpan(
-                                  text:
-                                      "Go check out Jack Meng (exoad)? ",
-                                  children: <WidgetSpan>[
-                                    WidgetSpan(
-                                        child: Icon(
-                                            CommunityMaterialIcons
-                                                .emoticon_happy))
-                                  ])),
-                              onConfirm: () async => await launchUrl(
-                                  Uri.parse(ExoadShared.github))),
+                          onPressed: () async =>
+                              await launchInformDialog(
+                                context,
+                                title: "Jack Meng (exoad)",
+                                message: const SingleChildScrollView(
+                                  child: Text.rich(
+                                    TextSpan(children: <InlineSpan>[
+                                      TextSpan(
+                                          text: "Hey scouter!",
+                                          style: TextStyle(
+                                              fontWeight:
+                                                  FontWeight.w500)),
+                                      WidgetSpan(
+                                          child: Icon(
+                                              CommunityMaterialIcons
+                                                  .duck)),
+                                      TextSpan(
+                                          text:
+                                              "\nI am the developer of 2638's 2024 Scouting App and\nalso a senior in high school (as of writing)!\nI hope you are enjoying the app so far!"),
+                                      TextSpan(
+                                          text:
+                                              "\n\nIf you have questions, you can find me here:"),
+                                      TextSpan(
+                                          text: "\n- Discord: exoad"),
+                                      TextSpan(
+                                          text:
+                                              "\n- GitHub: github.com/exoad\n\n"),
+                                      TextSpan(
+                                          text:
+                                              "Good luck and have fun scouting!"),
+                                    ]),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
                           label: const Text("Jack Meng (exoad)"),
                           icon: const Icon(
                               CommunityMaterialIcons.space_invaders)),

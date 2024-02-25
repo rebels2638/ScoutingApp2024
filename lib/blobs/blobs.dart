@@ -75,7 +75,7 @@ class _InternalNumberPickerState
               for (int i = 0; i < widget.itemCount; i++)
                 if (i != widget.itemCount - 1)
                   Padding(
-                    padding: const EdgeInsets.only(right: 10),
+                    padding: const EdgeInsets.only(right: 14),
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),

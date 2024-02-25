@@ -13,7 +13,9 @@ import 'package:scouting_app_2024/parts/bits/prefer_canonical.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
 import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/shared.dart';
+import 'package:scouting_app_2024/user/models/shared.dart';
 import 'package:scouting_app_2024/user/models/team_model.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class MatchTile extends StatefulWidget {
   final HollisticMatchScoutingData match;
@@ -29,6 +31,409 @@ class MatchTile extends StatefulWidget {
 class _MatchTileState extends State<MatchTile> {
   @override
   Widget build(BuildContext context) {
+    void launchInsightView() {
+      Navigator.of(context)
+          .push(MaterialPageRoute<Widget>(builder: (BuildContext _) {
+        return Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(
+                  parent: BouncingScrollPhysics()),
+              child: Padding(
+                padding: const EdgeInsets.all(14),
+                child: Column(children: <Widget>[
+                  const Row(children: <Widget>[
+                    Icon(Icons.info_rounded),
+                    SizedBox(width: 8),
+                    Text("Preliminary",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20)),
+                  ]),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: <Widget>[
+                      Flexible(
+                        child: Text.rich(
+                            TextSpan(children: <InlineSpan>[
+                              const TextSpan(
+                                  text: "Time: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: DateFormat(
+                                          Shared.GENERAL_TIME_FORMAT)
+                                      .format(DateTime
+                                          .fromMillisecondsSinceEpoch(
+                                              widget.match.preliminary
+                                                  .timeStamp))),
+                              const TextSpan(
+                                  text: "\nMatch: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text:
+                                      "${widget.match.preliminary.matchType.name.formalize} #${widget.match.preliminary.matchNumber}"),
+                              const TextSpan(
+                                  text: "\nTeam: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text:
+                                      "${widget.match.preliminary.teamNumber}"),
+                              const TextSpan(
+                                  text: "\nAlliance: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: widget.match.preliminary
+                                      .alliance.name.formalize,
+                                  style: TextStyle(
+                                      color: widget
+                                          .match.preliminary.alliance
+                                          .toColor(),
+                                      backgroundColor: Colors.black)),
+                              const TextSpan(
+                                  text: "\nStarting Position: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: widget
+                                      .match
+                                      .preliminary
+                                      .startingPosition
+                                      .name
+                                      .formalize),
+                            ]),
+                            style: const TextStyle(fontSize: 16)),
+                      ),
+                      const Spacer() // more scuffed solutions XD (see above)
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  const Row(children: <Widget>[
+                    Icon(CommunityMaterialIcons.robot),
+                    SizedBox(width: 8),
+                    Text("Auto",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20)),
+                  ]),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: <Widget>[
+                      Flexible(
+                        child: Text.rich(
+                            TextSpan(children: <InlineSpan>[
+                              const TextSpan(
+                                  text: "Taxi: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: widget.match.auto.taxi
+                                      ? "Yes"
+                                      : "No"),
+                              const TextSpan(
+                                  text: "\nScored Speaker: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: widget
+                                      .match.auto.scoredSpeaker
+                                      .toString()),
+                              const TextSpan(
+                                  text: "\nScored Amp: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: widget.match.auto.scoredAmp
+                                      .toString()),
+                              const TextSpan(
+                                  text: "\nNotes Picked Up: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: widget
+                                      .match.auto.notesPickedUp
+                                      .map((AutoPickup e) =>
+                                          e.name.formalize)
+                                      .join(", ")),
+                              const TextSpan(
+                                  text: "\nNotes Preloaded: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                text: widget.match.auto.notePreloaded
+                                    ? "Yes"
+                                    : "No",
+                              ),
+                              const TextSpan(
+                                  text: "\nNotes Picked up: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: widget
+                                      .match.auto.notesPickedUp
+                                      .map((AutoPickup e) =>
+                                          e.name.formalize)
+                                      .join(", ")),
+                              const TextSpan(
+                                  text: "\nAMP Missed: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: widget.match.auto.missedAmp
+                                      .toString()),
+                              const TextSpan(
+                                  text: "\nSpeaker Missed: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: widget
+                                      .match.auto.missedSpeaker
+                                      .toString()),
+                            ]),
+                            style: const TextStyle(fontSize: 16)),
+                      ),
+                      const Spacer()
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  const Row(children: <Widget>[
+                    Icon(Icons.group_rounded),
+                    SizedBox(width: 8),
+                    Text("Tele-Op",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20)),
+                  ]),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: <Widget>[
+                      Flexible(
+                        child: Text.rich(
+                            TextSpan(children: <InlineSpan>[
+                              const TextSpan(
+                                  text: "Scored Speaker: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: widget
+                                      .match.teleop.scoredSpeaker
+                                      .toString()),
+                              const TextSpan(
+                                  text: "\nScored Amp: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: widget.match.teleop.scoredAmp
+                                      .toString()),
+                              const TextSpan(
+                                  text: "\nPieces Scored: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: widget
+                                      .match.teleop.piecesScored
+                                      .toString()),
+                              const TextSpan(
+                                  text: "\nUnder Stage: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: widget.match.teleop.underStage
+                                      ? "Yes"
+                                      : "No"),
+                              const TextSpan(
+                                  text: "\nDriver Rating: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: widget
+                                      .match.teleop.driverRating
+                                      .toString()),
+                              const TextSpan(
+                                  text: "\nScored While Amped: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: widget
+                                      .match.teleop.scoredWhileAmped
+                                      .toString()),
+                              const TextSpan(
+                                  text: "\nMissed Amp: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: widget.match.teleop.missedAmp
+                                      .toString()),
+                              const TextSpan(
+                                  text: "\nMissed Speaker: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: widget
+                                      .match.teleop.missedSpeaker
+                                      .toString()),
+                            ]),
+                            style: const TextStyle(fontSize: 16)),
+                      ),
+                      const Spacer()
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  const Row(children: <Widget>[
+                    Icon(Icons.commit_rounded),
+                    SizedBox(width: 8),
+                    Text("Endgame",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20)),
+                  ]),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: <Widget>[
+                      Flexible(
+                        child: Text.rich(
+                            TextSpan(children: <InlineSpan>[
+                              const TextSpan(
+                                  text: "End State: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: widget.match.endgame.endState
+                                      .name.formalize),
+                              const TextSpan(
+                                  text: "\nHarmony: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: widget.match.endgame.harmony
+                                      .name.formalize),
+                              const TextSpan(
+                                  text: "\nHarmony Attempted: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: widget.match.endgame
+                                          .harmonyAttempted
+                                      ? "Yes"
+                                      : "No"),
+                              const TextSpan(
+                                  text: "\nTrap Scored: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: widget.match.endgame
+                                      .trapScored.name.formalize),
+                              const TextSpan(
+                                  text: "\nCoopertition: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: widget.match.misc.coopertition
+                                      .toString()),
+                              const TextSpan(
+                                  text: "\nMatch Result: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: widget.match.endgame
+                                      .matchResult.name.formalize),
+                            ]),
+                            style: const TextStyle(fontSize: 16)),
+                      ),
+                      const Spacer()
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  const Row(children: <Widget>[
+                    Icon(Icons.miscellaneous_services_rounded),
+                    SizedBox(width: 8),
+                    Text("Misc",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20)),
+                  ]),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: <Widget>[
+                      Flexible(
+                        child: Text.rich(
+                            TextSpan(children: <InlineSpan>[
+                              TextSpan(
+                                  text: "Comments:\n",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                  children: <InlineSpan>[
+                                    WidgetSpan(
+                                        child: Container(
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: ThemeProvider
+                                                            .themeOf(
+                                                                context)
+                                                        .data
+                                                        .iconTheme
+                                                        .color!),
+                                                borderRadius:
+                                                    BorderRadius
+                                                        .circular(2)),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets
+                                                      .all(2),
+                                              child: Text(
+                                                  widget
+                                                          .match
+                                                          .comments
+                                                          .comment ??
+                                                      "None",
+                                                  style:
+                                                      const TextStyle(
+                                                          fontSize:
+                                                              16),
+                                                  softWrap: true),
+                                            ))),
+                                  ]),
+                              const TextSpan(
+                                  text: "\nID: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(text: widget.match.id),
+                              const TextSpan(
+                                  text: "\nTimestamp: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: DateFormat(
+                                          Shared.GENERAL_TIME_FORMAT)
+                                      .format(DateTime
+                                          .fromMillisecondsSinceEpoch(
+                                              widget.match.preliminary
+                                                  .timeStamp))),
+                            ]),
+                            style: const TextStyle(fontSize: 16)),
+                      ),
+                      const Spacer()
+                    ],
+                  ),
+                  const SizedBox(height: 40)
+                ]),
+              )),
+          appBar: AppBar(
+              title: Row(
+            children: <Widget>[
+              const Icon(Icons.insights_rounded),
+              const SizedBox(width: 8),
+              Text(
+                  "Insights for match ${widget.match.preliminary.matchNumber} of team ${widget.match.preliminary.teamNumber}"),
+            ],
+          )),
+        );
+      }));
+    }
+
     return Padding(
       padding: const EdgeInsets.only(left: 8.0, right: 8, bottom: 4),
       child: Card(
@@ -201,6 +606,33 @@ class _MatchTileState extends State<MatchTile> {
                                 overflow: TextOverflow.ellipsis)),
                       ])),
                     ])),
+                form_label_rigid("Insight",
+                    icon: const Icon(Icons.insights_rounded),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        fontStyle: FontStyle.italic,
+                        overflow: TextOverflow.ellipsis),
+                    child: Expanded(
+                      child: Row(
+                        children: <Widget>[
+                          PreferCompactModal.isCompactPreferred(
+                                  context)
+                              ? IconButton.filledTonal(
+                                  onPressed: () =>
+                                      launchInsightView(),
+                                  icon: const Icon(
+                                      Icons.search_rounded))
+                              : FilledButton.tonalIcon(
+                                  onPressed: () =>
+                                      launchInsightView(),
+                                  icon: const Icon(
+                                      Icons.search_rounded),
+                                  label: const Text("View")),
+                        ],
+                      ),
+                    )),
+                const SizedBox(height: 8),
                 form_label_rigid(
                   'Transfer',
                   style: const TextStyle(
@@ -219,7 +651,9 @@ class _MatchTileState extends State<MatchTile> {
                                   await launchConfirmDialog(context,
                                       message: Column(
                                         children: <Widget>[
-                                          Text("${widget.match.csvData}\n\n${widget.match.commentsCSVData}", softWrap: true),
+                                          Text(
+                                              "${widget.match.csvData}\n\n${widget.match.commentsCSVData}",
+                                              softWrap: true),
                                           const SizedBox(height: 20),
                                           FilledButton.tonalIcon(
                                               onPressed: () async =>
@@ -299,28 +733,30 @@ class _MatchTileState extends State<MatchTile> {
                 if (widget.match.comments.isNotEmpty)
                   form_label_rigid(
                     "Comments",
+                    icon: const Icon(Icons.comment_rounded),
                     child: Expanded(
                       child: Row(
                         children: <Widget>[
                           PreferCompactModal.isCompactPreferred(context)
                               ? IconButton.filledTonal(
                                   onPressed: () async =>
-                                      await launchInformDialog(context,
+                                      await launchInformDialog(
+                                          context,
                                           message: Text(widget.match
                                               .comments.comment!),
-                                          title: "Comments",
+                                          title:
+                                              "Comments (${widget.match.comments.comment!.length}/$COMMENTS_MAX_CHARS)",
                                           icon: const Icon(
                                               Icons.comment_rounded)),
                                   icon: const Icon(
                                       Icons.comment_rounded))
                               : FilledButton.tonalIcon(
-                                  onPressed: () async =>
-                                      await launchInformDialog(
-                                          context,
-                                          message: Text(
-                                              widget.match.comments.comment!),
-                                          title: "Comments",
-                                          icon: const Icon(Icons.comment_rounded)),
+                                  onPressed: () async => await launchInformDialog(
+                                      context,
+                                      message: Text(
+                                          widget.match.comments.comment!),
+                                      title: "Comments (${widget.match.comments.comment!.length}/$COMMENTS_MAX_CHARS)",
+                                      icon: const Icon(Icons.comment_rounded)),
                                   icon: const Icon(Icons.comment_rounded),
                                   label: const Text("View Comments"))
                         ],
@@ -360,8 +796,20 @@ class _MatchTileState extends State<MatchTile> {
                     const SizedBox(height: 20),
                     const InformationalHintsBlob(
                         "Show to a scouting leader",
-                        "A scouting leader will be able to help you with collecting data."),
+                        "A scouting leader will be able to help you with collecting data. Data here is encoded in a CSV format"),
                     const SizedBox(height: 20),
+                    const Text("Match Data",
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 8),
+                    FilledButton.tonalIcon(
+                        onPressed: () async =>
+                            await Clipboard.setData(ClipboardData(
+                                text: widget.match.toDucFormat())),
+                        icon: const Icon(Icons.copy_rounded),
+                        label: const Text("Copy")),
+                    const SizedBox(height: 8),
                     Center(
                       child: GestureDetector(
                         onTap: () async => launchConfirmDialog(
@@ -385,13 +833,6 @@ class _MatchTileState extends State<MatchTile> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 30),
-                    FilledButton.tonalIcon(
-                        onPressed: () async =>
-                            await Clipboard.setData(ClipboardData(
-                                text: widget.match.toDucFormat())),
-                        icon: const Icon(Icons.copy_rounded),
-                        label: const Text("Copy")),
                     const SizedBox(
                         height: 40), // idk why, just leave it
                   ],
@@ -465,7 +906,6 @@ class _MatchTileState extends State<MatchTile> {
                     ),
                   ),
                   if (commentsQr != null) const Divider(),
-                  if (commentsQr != null) const SizedBox(height: 20),
                   if (commentsQr != null)
                     const Text("Comments Data",
                         style: TextStyle(
@@ -491,6 +931,7 @@ class _MatchTileState extends State<MatchTile> {
                                 text: widget.match.commentsCSVData)),
                         icon: const Icon(Icons.copy_rounded),
                         label: const Text("Copy")),
+                  const SizedBox(height: 8),
                   if (commentsQr != null)
                     GestureDetector(
                       onTap: () async => launchConfirmDialog(context,
