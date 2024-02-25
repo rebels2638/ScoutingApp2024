@@ -1,11 +1,39 @@
-Scouting App 6.0.0
+Scouting App 6.0.1
 
-Date: February 21, 2024
+Date: February 25, 2024
 
-Major Changes
-- Adapted the app to utilize features meant for FRC's 2024 game: Crescendo
-- Usage of an internal calculator that can crunch through all of the scouted data
-- Local storage of all of the scouting data on a user's device for future broadcasting
-- Optimized the user interface with additional customization options
-- Adaptive layout for the scouting form
-- A new data format (DUC) alongside CSV QR Codes that allows seamless data transfers between multiple users
+Additions:
+  - Added dark theme "Amore"
+  - Added dark theme "Crimson Noir"
+  - Added dark theme "Misty"
+  - "Swapped out hardcoded warning blocs for dynamic hints that utilize three levels of criticality: Informational, Warning, and Apex"
+  - Altered some of the wording of the scouting form to be more clear
+  - Added semantics & hints to some of the scouting form fields to improve accessibility
+  - Altered the look of the number incrementor buttons to fit the theme better
+  - Added a new section to support qualitative data collection
+  - Some few more word choices for assured confirm dialogs
+  - Patch notes dialog
+  - Connected more components tonal controls
+  - Brought the insights button from DUC over to regular match history
+  
+Fixes:
+  - Fixed a bug where the number picker would provide a render error when rendering on smaller width displays
+  - Removed the underscore for On Chain section
+  - Typos throughout the app
+  - Changed DUC toggle in settings to "View App as Scouting Leader"
+  - Improved readability of About Page
+  - Black borders around about page image due to usage of JPEG
+  - Typo within the word choices for assured confirm dialogs
+  - A rendering fault occurring with the save and reset settings buttons
+  - Changed "Past Matches" to "Recorded Matches"
+  - Android has a chance to crash due to undisposed controllers
+  - Duplicate fields within match insights
+
+Optimizations:
+  - Optimized the layout rendering for the alternative scouting form
+  - Improved the backdrop parallax rendering of the About Page
+  - Compressed some of the about page images to reduce the app size
+  - Improved color rendering and color contrast for the app
+  - Improved animation tick rate for the app (this should help with smoother animations on lower end devices)
+  - App on Windows persisting with the wrong API version
+  - General Raster Jank fixes

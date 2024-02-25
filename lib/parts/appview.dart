@@ -226,53 +226,55 @@ class _AppViewState extends State<_AppView> {
                                           Text("Patch Notes"),
                                         ],
                                       )),
-                                      body: Padding(
-                                          padding:
-                                              const EdgeInsets.only(
-                                                  left: 10),
-                                          child: FutureBuilder<
-                                                  String>(
-                                              future: rootBundle
-                                                  .loadString(
-                                                      "assets/rules/patch_notes.yml"),
-                                              builder: (BuildContext
-                                                      context,
-                                                  AsyncSnapshot<
-                                                          String>
-                                                      snapshot) {
-                                                if (snapshot
-                                                    .hasData) {
-                                                  YamlMap map =
-                                                      loadYaml(
-                                                          snapshot
-                                                              .data!);
-                                                  return PatchNotesDisplay(<String,
-                                                      dynamic>{
-                                                    "version": map[
-                                                        "version"],
-                                                    "date":
-                                                        map["date"],
-                                                    "author":
-                                                        map["author"],
-                                                    "additions": map[
-                                                        "additions"],
-                                                    "fixes":
-                                                        map["fixes"],
-                                                    "optimize": map[
-                                                        "optimize"]
-                                                  });
-                                                } else {
-                                                  return const Center(
-                                                    child: SpinBlob(
-                                                        child: Image(
-                                                      image: ExactAssetImage(
-                                                          "assets/appicon_header.png"),
-                                                      width: 148,
-                                                      height: 148,
-                                                    )),
-                                                  );
-                                                }
-                                              })))));
+                                      body: SafeArea(
+                                        child: Padding(
+                                            padding:
+                                                const EdgeInsets.only(
+                                                    left: 10),
+                                            child: FutureBuilder<
+                                                    String>(
+                                                future: rootBundle
+                                                    .loadString(
+                                                        "assets/rules/patch_notes.yml"),
+                                                builder: (BuildContext
+                                                        context,
+                                                    AsyncSnapshot<
+                                                            String>
+                                                        snapshot) {
+                                                  if (snapshot
+                                                      .hasData) {
+                                                    YamlMap map =
+                                                        loadYaml(
+                                                            snapshot
+                                                                .data!);
+                                                    return PatchNotesDisplay(<String,
+                                                        dynamic>{
+                                                      "version": map[
+                                                          "version"],
+                                                      "date":
+                                                          map["date"],
+                                                      "author":
+                                                          map["author"],
+                                                      "additions": map[
+                                                          "additions"],
+                                                      "fixes":
+                                                          map["fixes"],
+                                                      "optimize": map[
+                                                          "optimize"]
+                                                    });
+                                                  } else {
+                                                    return const Center(
+                                                      child: SpinBlob(
+                                                          child: Image(
+                                                        image: ExactAssetImage(
+                                                            "assets/appicon_header.png"),
+                                                        width: 148,
+                                                        height: 148,
+                                                      )),
+                                                    );
+                                                  }
+                                                })),
+                                      ))));
                           Provider.of<SeenPatchNotesModal>(context,
                                   listen: false)
                               .seenPatches = true;
@@ -306,10 +308,12 @@ class _AppViewState extends State<_AppView> {
                                   appBar: AppBar(
                                       title: const Text(
                                           "DEVELOPER CONTROLS")),
-                                  body: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10),
-                                    child: consoleView.child,
+                                  body: SafeArea(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10),
+                                      child: consoleView.child,
+                                    ),
                                   ),
                                 ))),
                     icon: consoleView.item.icon),
@@ -351,10 +355,12 @@ class _AppViewState extends State<_AppView> {
                                 resizeToAvoidBottomInset: true,
                                 appBar: AppBar(
                                     title: const Text("Game Info")),
-                                body: Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 10),
-                                  child: gameInfoView.child,
+                                body: SafeArea(
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.only(left: 10),
+                                    child: gameInfoView.child,
+                                  ),
                                 ),
                               ))),
                   icon: gameInfoView.item.icon),
@@ -727,17 +733,19 @@ class _AppViewState extends State<_AppView> {
                         )
                       : Container()),
             )) /*lmao */,
-        body: RepaintBoundary(
-          child: PageView(
-            physics: const NeverScrollableScrollPhysics(),
-            // this keeps the bottom nav bar index and the page view index in sync. this is kind of unoptimized in the sense of setState
-            onPageChanged: (int pageNow) =>
-                setState(() => _bottomNavBarIndexer = pageNow),
-            scrollDirection: Axis.horizontal,
-            allowImplicitScrolling:
-                false, // prevent users from accidentally swiping
-            controller: pageController,
-            children: pageViewWidgets,
+        body: SafeArea(
+          child: RepaintBoundary(
+            child: PageView(
+              physics: const NeverScrollableScrollPhysics(),
+              // this keeps the bottom nav bar index and the page view index in sync. this is kind of unoptimized in the sense of setState
+              onPageChanged: (int pageNow) =>
+                  setState(() => _bottomNavBarIndexer = pageNow),
+              scrollDirection: Axis.horizontal,
+              allowImplicitScrolling:
+                  false, // prevent users from accidentally swiping
+              controller: pageController,
+              children: pageViewWidgets,
+            ),
           ),
         ));
   }

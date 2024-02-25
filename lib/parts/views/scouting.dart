@@ -12,6 +12,7 @@ import "package:scouting_app_2024/blobs/expandable_txtfield.dart";
 import "package:scouting_app_2024/blobs/form_blob.dart";
 import "package:scouting_app_2024/blobs/hints_blob.dart";
 import "package:scouting_app_2024/blobs/inc_dec_blob.dart";
+import "package:scouting_app_2024/blobs/multi_select_blob.dart";
 import "package:scouting_app_2024/extern/scroll_controller.dart";
 import "package:scouting_app_2024/extern/string.dart";
 import "package:scouting_app_2024/parts/bits/appbar_celebrate.dart";
@@ -255,7 +256,23 @@ class _ScoutingViewState extends State<ScoutingView>
               }),
             ),
             form_label("Type",
-                child: form_seg_btn_1(
+                child: Flexible(
+                  child: SingleSelectBlob<MatchType>(
+                      items: <String, MatchType>{
+                        for (MatchType e in MatchType.values)
+                          e.name.formalize: e
+                      },
+                      onSelected: (MatchType e) {
+                        context
+                            .read<ScoutingSessionBloc>()
+                            .prelim
+                            .matchType = e;
+                        context
+                            .read<ScoutingSessionBloc>()
+                            .add(PrelimUpdateEvent());
+                      }),
+                )
+                /*form_seg_btn_1(
                     segments: MatchType.values
                         .map<
                                 ({
@@ -281,7 +298,8 @@ class _ScoutingViewState extends State<ScoutingView>
                       context
                           .read<ScoutingSessionBloc>()
                           .add(PrelimUpdateEvent());
-                    }))
+                    })*/
+                )
           ])),
       form_sec(context,
           backgroundColor: Colors.transparent,
@@ -326,7 +344,24 @@ class _ScoutingViewState extends State<ScoutingView>
                           .add(PrelimUpdateEvent());
                     })),
             form_label("Starting Position",
-                child: form_seg_btn_1(
+                child: Flexible(
+                  child: SingleSelectBlob<MatchStartingPosition>(
+                      items: <String, MatchStartingPosition>{
+                        for (MatchStartingPosition e
+                            in MatchStartingPosition.values)
+                          e.name.formalize: e
+                      },
+                      onSelected: (MatchStartingPosition e) {
+                        context
+                            .read<ScoutingSessionBloc>()
+                            .prelim
+                            .startingPosition = e;
+                        context
+                            .read<ScoutingSessionBloc>()
+                            .add(PrelimUpdateEvent());
+                      }),
+                )
+                /*form_seg_btn_1(
                     segments: MatchStartingPosition.values
                         .map<
                                 ({
@@ -352,7 +387,8 @@ class _ScoutingViewState extends State<ScoutingView>
                       context
                           .read<ScoutingSessionBloc>()
                           .add(PrelimUpdateEvent());
-                    })),
+                    })),*/
+                )
           ])),
       form_sec(context,
           backgroundColor: Colors.transparent,
@@ -378,7 +414,23 @@ class _ScoutingViewState extends State<ScoutingView>
                     })),
             form_label("Note(s) picked up\n",
                 hint: "Hello",
-                child: form_seg_btn_2(
+                child: Flexible(
+                  child: MultiSelectBlob<AutoPickup>(
+                      items: <String, AutoPickup>{
+                        for (AutoPickup e in AutoPickup.values)
+                          e.name.formalize: e
+                      },
+                      onSelected: (List<AutoPickup> e) {
+                        context
+                            .read<ScoutingSessionBloc>()
+                            .auto
+                            .notesPickedUp = e;
+                        context
+                            .read<ScoutingSessionBloc>()
+                            .add(AutoUpdateEvent());
+                      }),
+                )
+                /*form_seg_btn_2(
                     segments: AutoPickup.values
                         .map<
                                 ({
@@ -405,7 +457,8 @@ class _ScoutingViewState extends State<ScoutingView>
                       context
                           .read<ScoutingSessionBloc>()
                           .add(AutoUpdateEvent());
-                    })),
+                    })*/
+                ),
             form_label("Taxis?",
                 child: BasicToggleSwitch(
                     initialValue:
@@ -618,7 +671,23 @@ class _ScoutingViewState extends State<ScoutingView>
           header: (icon: Icons.flag_rounded, title: "Endgame"),
           child: form_col(<Widget>[
             form_label("On chain",
-                child: form_seg_btn_1(
+                child: Flexible(
+                  child: SingleSelectBlob<EndStatus>(
+                      items: <String, EndStatus>{
+                        for (EndStatus e in EndStatus.values)
+                          e.name.formalize: e
+                      },
+                      onSelected: (EndStatus e) {
+                        context
+                            .read<ScoutingSessionBloc>()
+                            .endgame
+                            .endState = e;
+                        context
+                            .read<ScoutingSessionBloc>()
+                            .add(EndgameUpdateEvent());
+                      }),
+                )
+                /*form_seg_btn_1(
                     segments: EndStatus.values
                         .map<({Icon? icon, String label, EndStatus value})>(
                             (EndStatus e) => (
@@ -641,7 +710,8 @@ class _ScoutingViewState extends State<ScoutingView>
                       context
                           .read<ScoutingSessionBloc>()
                           .add(EndgameUpdateEvent());
-                    })),
+                    })*/
+                ),
             form_label(
               "Attempted harmony?",
               child: BasicToggleSwitch(
@@ -665,7 +735,23 @@ class _ScoutingViewState extends State<ScoutingView>
                 .endgame
                 .harmonyAttempted)
               form_label("Harmony",
-                  child: form_seg_btn_1(
+                  child: Flexible(
+                    child: SingleSelectBlob<Harmony>(
+                        items: <String, Harmony>{
+                          for (Harmony e in Harmony.values)
+                            e.name.formalize: e
+                        },
+                        onSelected: (Harmony e) {
+                          context
+                              .read<ScoutingSessionBloc>()
+                              .endgame
+                              .harmony = e;
+                          context
+                              .read<ScoutingSessionBloc>()
+                              .add(EndgameUpdateEvent());
+                        }),
+                  )
+                  /*form_seg_btn_1(
                       segments: Harmony.values
                           .map<
                                   ({
@@ -692,9 +778,26 @@ class _ScoutingViewState extends State<ScoutingView>
                         context
                             .read<ScoutingSessionBloc>()
                             .add(EndgameUpdateEvent());
-                      })),
+                      })*/
+                  ),
             form_label("Scored in Trap",
-                child: form_seg_btn_1(
+                child: Flexible(
+                  child: SingleSelectBlob<TrapScored>(
+                      items: <String, TrapScored>{
+                        for (TrapScored e in TrapScored.values)
+                          e.name.formalize: e
+                      },
+                      onSelected: (TrapScored e) {
+                        context
+                            .read<ScoutingSessionBloc>()
+                            .endgame
+                            .trapScored = e;
+                        context
+                            .read<ScoutingSessionBloc>()
+                            .add(EndgameUpdateEvent());
+                      }),
+                )
+                /*form_seg_btn_1(
                     segments: TrapScored.values
                         .map<
                                 ({
@@ -720,9 +823,26 @@ class _ScoutingViewState extends State<ScoutingView>
                       context
                           .read<ScoutingSessionBloc>()
                           .add(EndgameUpdateEvent());
-                    })),
+                    })*/
+                ),
             form_label("Human Scored on Mic",
-                child: form_seg_btn_1(
+                child: Flexible(
+                  child: SingleSelectBlob<MicScored>(
+                      items: <String, MicScored>{
+                        for (MicScored e in MicScored.values)
+                          e.name.formalize: e
+                      },
+                      onSelected: (MicScored e) {
+                        context
+                            .read<ScoutingSessionBloc>()
+                            .endgame
+                            .micScored = e;
+                        context
+                            .read<ScoutingSessionBloc>()
+                            .add(EndgameUpdateEvent());
+                      }),
+                )
+                /*form_seg_btn_1(
                     segments: MicScored.values
                         .map<
                                 ({
@@ -748,9 +868,26 @@ class _ScoutingViewState extends State<ScoutingView>
                       context
                           .read<ScoutingSessionBloc>()
                           .add(EndgameUpdateEvent());
-                    })),
+                    })*/
+                ),
             form_label("Match Result",
-                child: form_seg_btn_1(
+                child: Flexible(
+                  child: SingleSelectBlob<MatchResult>(
+                      items: <String, MatchResult>{
+                        for (MatchResult e in MatchResult.values)
+                          e.name.formalize: e
+                      },
+                      onSelected: (MatchResult e) {
+                        context
+                            .read<ScoutingSessionBloc>()
+                            .endgame
+                            .matchResult = e;
+                        context
+                            .read<ScoutingSessionBloc>()
+                            .add(EndgameUpdateEvent());
+                      }),
+                )
+                /*form_seg_btn_1(
                     segments: MatchResult.values
                         .map<
                                 ({
@@ -776,7 +913,8 @@ class _ScoutingViewState extends State<ScoutingView>
                       context
                           .read<ScoutingSessionBloc>()
                           .add(EndgameUpdateEvent());
-                    })),
+                    })*/
+                ),
           ])),
       form_sec(context,
           backgroundColor: Colors.transparent,
@@ -1012,8 +1150,9 @@ class _ScoutingViewState extends State<ScoutingView>
                                     top: 10, bottom: 10),
                                 child: Text.rich(
                                   TextSpan(
-                                      text:
-                                          "RAW\n${jsonEncode(BlocProvider.of<ScoutingSessionBloc>(context).exportMapDeep().toString())}\n\nHollistic\n${jsonEncode(BlocProvider.of<ScoutingSessionBloc>(context).exportHollistic().toString())}\n\nEphemeral\n${EphemeralScoutingData.fromHollistic(BlocProvider.of<ScoutingSessionBloc>(context).exportHollistic())}\n\nComments\n${BlocProvider.of<ScoutingSessionBloc>(context).comments.comment}",),
+                                    text:
+                                        "RAW\n${jsonEncode(BlocProvider.of<ScoutingSessionBloc>(context).exportMapDeep().toString())}\n\nHollistic\n${jsonEncode(BlocProvider.of<ScoutingSessionBloc>(context).exportHollistic().toString())}\n\nEphemeral\n${EphemeralScoutingData.fromHollistic(BlocProvider.of<ScoutingSessionBloc>(context).exportHollistic())}\n\nComments\n${BlocProvider.of<ScoutingSessionBloc>(context).comments.comment}",
+                                  ),
                                 ),
                               ),
                             ),

@@ -26,6 +26,7 @@ fixes:
   - A rendering fault occurring with the save and reset settings buttons
   - Changed "Past Matches" to "Recorded Matches"
   - Android has a chance to crash due to undisposed controllers
+  - Duplicate fields within match insights
 optimize:
   - Optimized the layout rendering for the alternative scouting form
   - Improved the backdrop parallax rendering of the About Page

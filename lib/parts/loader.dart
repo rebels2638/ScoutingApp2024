@@ -48,25 +48,27 @@ class _LoadingAppViewScreenState extends State<LoadingAppViewScreen> {
                         child: IntermediateMaterialApp());
                   } else {
                     return Scaffold(
-                        body: Container(
-                      decoration:
-                          BoxDecoration(color: Colors.grey[900]),
-                      child: const Center(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          SpinBlob(
-                              child: Image(
-                            image: ExactAssetImage(
-                                "assets/appicon_header.png"),
-                            width: 148,
-                            height: 148,
-                          )),
-                          SizedBox(height: 30),
-                          _UpdaterPhaseString()
-                        ],
-                      )),
-                    ));
+                        body: SafeArea(
+                          child: Container(
+                                                decoration:
+                            BoxDecoration(color: Colors.grey[900]),
+                                                child: const Center(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            SpinBlob(
+                                child: Image(
+                              image: ExactAssetImage(
+                                  "assets/appicon_header.png"),
+                              width: 148,
+                              height: 148,
+                            )),
+                            SizedBox(height: 30),
+                            _UpdaterPhaseString()
+                          ],
+                                                )),
+                                              ),
+                        ));
                   }
                 })));
   }

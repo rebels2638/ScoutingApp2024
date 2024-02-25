@@ -173,7 +173,7 @@ void launchNumberPickerDialog(BuildContext context,
             const SizedBox(width: 8),
             Text(headerMessage)
           ])),
-          body: SingleChildScrollView(
+          body: SafeArea(child: SingleChildScrollView(
               child: _InternalNumberPicker(
                   infiniteLoop: infiniteLoop,
                   alignment: alignment,
@@ -181,7 +181,8 @@ void launchNumberPickerDialog(BuildContext context,
                       itemCount ?? maxValue.abs().toString().length,
                   minValue: minValue,
                   maxValue: maxValue,
-                  onChange: onChange)));
+                  onChange: onChange))))
+                  ;
     }));
 
 @pragma("vm:prefer-inline")

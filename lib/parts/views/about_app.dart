@@ -392,41 +392,43 @@ class _AboutAppViewState extends State<AboutAppView> {
                                   Text("Patch Notes"),
                                 ],
                               )),
-                              body: Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 10),
-                                  child: FutureBuilder<String>(
-                                      future: rootBundle.loadString(
-                                          "assets/rules/patch_notes.yml"),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot<String>
-                                              snapshot) {
-                                        if (snapshot.hasData) {
-                                          YamlMap map = loadYaml(
-                                              snapshot.data!);
-                                          return PatchNotesDisplay(<String,
-                                              dynamic>{
-                                            "version": map["version"],
-                                            "date": map["date"],
-                                            "author": map["author"],
-                                            "additions":
-                                                map["additions"],
-                                            "fixes": map["fixes"],
-                                            "optimize":
-                                                map["optimize"]
-                                          });
-                                        } else {
-                                          return const Center(
-                                            child: SpinBlob(
-                                                child: Image(
-                                              image: ExactAssetImage(
-                                                  "assets/appicon_header.png"),
-                                              width: 148,
-                                              height: 148,
-                                            )),
-                                          );
-                                        }
-                                      }))))),
+                              body: SafeArea(
+                                child: Padding(
+                                    padding:
+                                        const EdgeInsets.only(left: 10),
+                                    child: FutureBuilder<String>(
+                                        future: rootBundle.loadString(
+                                            "assets/rules/patch_notes.yml"),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot<String>
+                                                snapshot) {
+                                          if (snapshot.hasData) {
+                                            YamlMap map = loadYaml(
+                                                snapshot.data!);
+                                            return PatchNotesDisplay(<String,
+                                                dynamic>{
+                                              "version": map["version"],
+                                              "date": map["date"],
+                                              "author": map["author"],
+                                              "additions":
+                                                  map["additions"],
+                                              "fixes": map["fixes"],
+                                              "optimize":
+                                                  map["optimize"]
+                                            });
+                                          } else {
+                                            return const Center(
+                                              child: SpinBlob(
+                                                  child: Image(
+                                                image: ExactAssetImage(
+                                                    "assets/appicon_header.png"),
+                                                width: 148,
+                                                height: 148,
+                                              )),
+                                            );
+                                          }
+                                        })),
+                              )))),
                   label: const Text("Patch Notes"),
                   icon: const Icon(Icons.history_edu_rounded)),
               preferTonalButton(

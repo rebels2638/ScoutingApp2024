@@ -1420,16 +1420,6 @@ class _DucMatchTileState extends State<DucMatchTile> {
                                   text: widget.match.auto.scoredAmp
                                       .toString()),
                               const TextSpan(
-                                  text: "\nNotes Picked Up: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget
-                                      .match.auto.notesPickedUp
-                                      .map((AutoPickup e) =>
-                                          e.name.formalize)
-                                      .join(", ")),
-                              const TextSpan(
                                   text: "\nNotes Preloaded: ",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold)),
