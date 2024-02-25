@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
+import 'package:scouting_app_2024/blobs/hints_blob.dart';
 import 'package:scouting_app_2024/blobs/locale_blob.dart';
 import 'package:scouting_app_2024/debug.dart';
+import 'package:scouting_app_2024/parts/bits/show_hints.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/models/ephemeral_data.dart';
@@ -65,7 +67,9 @@ class ConsoleStateComponent extends State<_ConsoleComponent> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          const _FlashingWarning(),
+          if (ShowHintsGuideModal.isShowingHints(context))
+            const ApexHintsBlob("Developer Section!",
+                "This part of the app is designed for debugging and development purposes, so some features may compromise the app's stability."),
           const SizedBox(height: 14),
           Wrap(children: <Widget>[
             TextButton.icon(
@@ -230,7 +234,8 @@ class ConsoleStateComponent extends State<_ConsoleComponent> {
                   _scrollController.animateTo(
                       _scrollController.position.maxScrollExtent,
                       duration: const Duration(milliseconds: 200),
-                      curve: Curves.easeOut);
+                      curve:
+                          Curves.easeOut); // reference for later :D
                 },
                 child: const Text("Scroll to Bottom")),
             FilledButton.tonal(
@@ -309,88 +314,5 @@ class ConsoleStateComponent extends State<_ConsoleComponent> {
             ),
           )
         ]);
-  }
-}
-
-class _FlashingWarning extends StatefulWidget {
-  const _FlashingWarning();
-
-  @override
-  State<_FlashingWarning> createState() => _FlashingWarningState();
-}
-
-class _FlashingWarningState extends State<_FlashingWarning>
-    with TickerProviderStateMixin {
-  late AnimationController _controller1;
-  late AnimationController _controller2;
-  late Animation<Color?> _colorAnimation1;
-  late Animation<Color?> _colorAnimation2;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller1 = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 2500),
-    )..repeat(reverse: true);
-    _controller2 = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1800),
-    )..repeat(reverse: true);
-    _colorAnimation1 = ColorTween(
-      begin: Colors.amber[600],
-      end: Colors.black,
-    ).animate(_controller1);
-    _colorAnimation2 = ColorTween(
-      begin: Colors.black,
-      end: Colors.amber[600],
-    ).animate(_controller2);
-  }
-
-  @override
-  void dispose() {
-    _controller1.dispose();
-    _controller2.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 8, right: 8),
-      child: AnimatedBuilder(
-        animation: Listenable.merge(
-            <Listenable?>[_controller1, _controller2]),
-        builder: (BuildContext context, Widget? child) {
-          return Container(
-            decoration: BoxDecoration(
-              color: _colorAnimation1.value,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Row(
-                children: <Widget>[
-                  Icon(
-                    Icons.warning_rounded,
-                    size: 64,
-                    color: _colorAnimation2.value,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    "THIS IS FOR DEVELOPMENT PURPOSES ONLY. USE AT YOUR OWN RISK",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16,
-                      color: _colorAnimation2.value,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-    );
   }
 }

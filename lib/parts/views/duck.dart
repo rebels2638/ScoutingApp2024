@@ -7,6 +7,7 @@ import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:provider/provider.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/blobs/form_blob.dart';
+import 'package:scouting_app_2024/blobs/hints_blob.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/extern/dynamic_user_capture.dart';
 import 'package:scouting_app_2024/extern/string.dart';
@@ -14,6 +15,7 @@ import 'package:scouting_app_2024/parts/bits/duc_bit.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_canonical.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
 import 'package:scouting_app_2024/parts/bits/show_console.dart';
+import 'package:scouting_app_2024/parts/bits/show_hints.dart';
 import 'dart:io';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:scouting_app_2024/shared.dart';
@@ -127,6 +129,9 @@ class _DataHostingViewState extends State<DataHostingView> {
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            if (ShowHintsGuideModal.isShowingHints(context))
+              const WarningHintsBlob("Scouting Leaders only",
+                  "This part of the app is to be operated by scouting leaders, it is not recommended for regular users."),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -146,32 +151,6 @@ class _DataHostingViewState extends State<DataHostingView> {
                     style: TextStyle(
                         fontSize: 24, fontWeight: FontWeight.bold)),
               ],
-            ),
-            FittedBox(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: const Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Row(
-                      children: <Widget>[
-                        Icon(Icons.warning_amber_rounded,
-                            color: Colors.black),
-                        Text(
-                            "Only use this if you know what you are doing or you are a [Scouting Leader]",
-                            softWrap: true,
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black)),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
             ),
             const SizedBox(height: 14),
             if (!_searched)
@@ -311,9 +290,9 @@ class _DataHostingViewState extends State<DataHostingView> {
         double autoPercentGetMovementPoints = 0.0;
         double autoAvgScoredSpeaker = 0.0;
         double autoAvgScoredInAmp = 0.0;
-        double autoPercentOfPickUpLeftNote = 0.0;
-        double autoPercentOfPickUpRightNote = 0.0;
-        double autoPercentOfPickUpMiddleNote = 0.0;
+        double autoPercentOfPickupAmpSideNote = 0.0;
+        double autoPercentOfPickupStageSideNote = 0.0;
+        double autoPercentOfPickupMiddleSideNote = 0.0;
         double autoPercentStartLeft = 0.0;
         double autoPercentStartRight = 0.0;
         double autoPercentStartMiddle = 0.0;
@@ -337,21 +316,21 @@ class _DataHostingViewState extends State<DataHostingView> {
           autoAvgScoredSpeaker += d.auto.scoredSpeaker;
           autoAvgScoredInAmp += d.auto.scoredAmp;
           if (d.auto.notesPickedUp.isNotEmpty) {
-            autoPercentOfPickUpLeftNote += d.auto.notesPickedUp
-                .where((AutoPickup e) => e == AutoPickup.l)
+            autoPercentOfPickupAmpSideNote += d.auto.notesPickedUp
+                .where((AutoPickup e) => e == AutoPickup.amp)
                 .length;
-            autoPercentOfPickUpRightNote += d.auto.notesPickedUp
-                .where((AutoPickup e) => e == AutoPickup.r)
+            autoPercentOfPickupStageSideNote += d.auto.notesPickedUp
+                .where((AutoPickup e) => e == AutoPickup.stage)
                 .length;
-            autoPercentOfPickUpMiddleNote += d.auto.notesPickedUp
-                .where((AutoPickup e) => e == AutoPickup.m)
+            autoPercentOfPickupMiddleSideNote += d.auto.notesPickedUp
+                .where((AutoPickup e) => e == AutoPickup.middle)
                 .length;
           }
           if (d.preliminary.startingPosition ==
-              MatchStartingPosition.left) {
+              MatchStartingPosition.amp) {
             autoPercentStartLeft++;
           } else if (d.preliminary.startingPosition ==
-              MatchStartingPosition.right) {
+              MatchStartingPosition.stage) {
             autoPercentStartRight++;
           } else {
             autoPercentStartMiddle++;
@@ -376,9 +355,9 @@ class _DataHostingViewState extends State<DataHostingView> {
         autoPercentGetMovementPoints /= data.length;
         autoAvgScoredSpeaker /= data.length;
         autoAvgScoredInAmp /= data.length;
-        autoPercentOfPickUpLeftNote /= data.length;
-        autoPercentOfPickUpRightNote /= data.length;
-        autoPercentOfPickUpMiddleNote /= data.length;
+        autoPercentOfPickupAmpSideNote /= data.length;
+        autoPercentOfPickupStageSideNote /= data.length;
+        autoPercentOfPickupMiddleSideNote /= data.length;
         autoPercentStartLeft /= data.length;
         autoPercentStartRight /= data.length;
         autoPercentStartMiddle /= data.length;
@@ -527,32 +506,32 @@ class _DataHostingViewState extends State<DataHostingView> {
                                                             ),
                                                             const TextSpan(
                                                               text:
-                                                                  "\n% of Pickups Left: ",
+                                                                  "\n% of Pickups AMP Side: ",
                                                               style: TextStyle(
                                                                   fontWeight:
                                                                       FontWeight.bold),
                                                             ),
                                                             TextSpan(
                                                               text:
-                                                                  "${(autoPercentOfPickUpLeftNote * 100).toStringAsFixed(2)}%",
+                                                                  "${(autoPercentOfPickupAmpSideNote * 100).toStringAsFixed(2)}%",
                                                               style: TextStyle(
                                                                   color:
-                                                                      heat(autoPercentOfPickUpLeftNote),
+                                                                      heat(autoPercentOfPickupAmpSideNote),
                                                                   backgroundColor: Colors.black),
                                                             ),
                                                             const TextSpan(
                                                               text:
-                                                                  "\n% of Pickups Right: ",
+                                                                  "\n% of Pickups Stage Side: ",
                                                               style: TextStyle(
                                                                   fontWeight:
                                                                       FontWeight.bold),
                                                             ),
                                                             TextSpan(
                                                               text:
-                                                                  "${(autoPercentOfPickUpRightNote * 100).toStringAsFixed(2)}%",
+                                                                  "${(autoPercentOfPickupStageSideNote * 100).toStringAsFixed(2)}%",
                                                               style: TextStyle(
                                                                   color:
-                                                                      heat(autoPercentOfPickUpRightNote),
+                                                                      heat(autoPercentOfPickupStageSideNote),
                                                                   backgroundColor: Colors.black),
                                                             ),
                                                             const TextSpan(
@@ -564,15 +543,15 @@ class _DataHostingViewState extends State<DataHostingView> {
                                                             ),
                                                             TextSpan(
                                                               text:
-                                                                  "${(autoPercentOfPickUpMiddleNote * 100).toStringAsFixed(2)}%",
+                                                                  "${(autoPercentOfPickupMiddleSideNote * 100).toStringAsFixed(2)}%",
                                                               style: TextStyle(
                                                                   color:
-                                                                      heat(autoPercentOfPickUpMiddleNote),
+                                                                      heat(autoPercentOfPickupMiddleSideNote),
                                                                   backgroundColor: Colors.black),
                                                             ),
                                                             const TextSpan(
                                                               text:
-                                                                  "\n% of Start Left: ",
+                                                                  "\n% of Start AMP Side: ",
                                                               style: TextStyle(
                                                                   fontWeight:
                                                                       FontWeight.bold),
@@ -587,7 +566,7 @@ class _DataHostingViewState extends State<DataHostingView> {
                                                             ),
                                                             const TextSpan(
                                                               text:
-                                                                  "\n% of Start Right: ",
+                                                                  "\n% of Start Stage Side: ",
                                                               style: TextStyle(
                                                                   fontWeight:
                                                                       FontWeight.bold),
@@ -949,15 +928,15 @@ class _DataHostingViewState extends State<DataHostingView> {
                                     > **% Movement Points** ${(autoPercentGetMovementPoints * 100).toStringAsFixed(2)}%
                                     > **Avg Scored in Speaker** ${autoAvgScoredSpeaker.toStringAsFixed(2)}
                                     > **Avg Scored in Amp** ${autoAvgScoredInAmp.toStringAsFixed(2)}
-                                    > **% of Pickups Left** ${(autoPercentOfPickUpLeftNote * 100).toStringAsFixed(2)}%
-                                    > **% of Pickups Right** ${(autoPercentOfPickUpRightNote * 100).toStringAsFixed(2)}%
-                                    > **% of Pickups Middle** ${(autoPercentOfPickUpMiddleNote * 100).toStringAsFixed(2)}%
+                                    > **% of Pickups AMP Side** ${(autoPercentOfPickupAmpSideNote * 100).toStringAsFixed(2)}%
+                                    > **% of Pickups Stage Side** ${(autoPercentOfPickupStageSideNote * 100).toStringAsFixed(2)}%
+                                    > **% of Pickups Speaker Side** ${(autoPercentOfPickupMiddleSideNote * 100).toStringAsFixed(2)}%
                                     > **% of Start Left** ${(autoPercentStartLeft * 100).toStringAsFixed(2)}%
                                     > **% of Start Right** ${(autoPercentStartRight * 100).toStringAsFixed(2)}%
                                     > **% of Start Middle** ${(autoPercentStartMiddle * 100).toStringAsFixed(2)}%
                                     ## Tele-Op
                                     > **Avg Scored in Speaker** ${teleopAvgScoredInSpeaker.toStringAsFixed(2)}
-                                    > **Avg Scored in Amp** ${teleopAvgScoredInAmp.toStringAsFixed(2)}
+                                    > **Avg Scored in AMP** ${teleopAvgScoredInAmp.toStringAsFixed(2)}
                                     > **Avg Notes Scored** ${teleopAvgNotesScored.toStringAsFixed(2)}
                                     > **Goes Under Stage** ${teleopGoesUnderStage ? "Yes" : "No"}
                                     > **Driver Rating** ${teleopDriverRating.toStringAsFixed(2)}/10

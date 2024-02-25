@@ -552,6 +552,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.0"
+  multi_dropdown:
+    dependency: "direct main"
+    description:
+      name: multi_dropdown
+      sha256: b63ff339fcc875d667f8688c8ef62853545b580dd2b6fe78b73339783268afd8
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.4"
   nested:
     dependency: transitive
     description:
@@ -997,6 +1005,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.0"
+  themed:
+    dependency: "direct main"
+    description:
+      name: themed
+      sha256: d717c5ed896ddb0da512568758e39aa53df28cdec1db81a8766e56b222e6219d
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.1"
   timing:
     dependency: transitive
     description:

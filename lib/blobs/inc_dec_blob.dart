@@ -33,32 +33,17 @@ class _PlusMinusState extends State<PlusMinus> {
         if (_val > 0)
           Tooltip(
             message: "Reset value to 0",
-            child: OutlinedButton(
+            child: IconButton.filledTonal(
               onPressed: () {
                 setState(() => _val = 0);
                 widget.onValueChanged?.call(_val);
               },
-              style: OutlinedButton.styleFrom(
-                padding: const EdgeInsets.all(16),
-                side: BorderSide(
-                    color: ThemeProvider.themeOf(context)
-                        .data
-                        .colorScheme
-                        .primary,
-                    width: 2),
-              ),
-              child: Text("0",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w800,
-                      color: ThemeProvider.themeOf(context)
-                          .data
-                          .colorScheme
-                          .primary)),
+              icon: const Icon(Icons.exposure_zero_rounded),
             ),
           ),
         Tooltip(
           message: "Decrement value by 1",
-          child: OutlinedButton(
+          child: IconButton.filledTonal(
             onPressed: () {
               int newVal = _val - 1;
               if (newVal >= 0) {
@@ -66,38 +51,23 @@ class _PlusMinusState extends State<PlusMinus> {
                 widget.onValueChanged?.call(_val);
               }
             },
-            style: OutlinedButton.styleFrom(
-              padding: const EdgeInsets.all(12),
-              side: BorderSide(
-                  color: _val == 0
-                      ? ThemeProvider.themeOf(context)
-                          .data
-                          .colorScheme
-                          .primary
-                          .grayScale()
-                      : ThemeProvider.themeOf(context)
-                          .data
-                          .colorScheme
-                          .primary,
-                  width: 2),
-            ),
-            child: _val == 0
-                ? Text("-",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w800,
-                        color: ThemeProvider.themeOf(context)
-                            .data
-                            .colorScheme
-                            .primary
-                            .grayScale()))
-                : const Text("-",
-                    style: TextStyle(fontWeight: FontWeight.w800)),
+            icon: Icon(Icons.remove_rounded,
+                color: _val == 0
+                    ? ThemeProvider.themeOf(context)
+                        .data
+                        .colorScheme
+                        .primary
+                        .grayScale()
+                    : ThemeProvider.themeOf(context)
+                        .data
+                        .colorScheme
+                        .primary),
           ),
         ),
         Text(_val.toString(), style: const TextStyle(fontSize: 20)),
         Tooltip(
           message: "Increment value by 1",
-          child: OutlinedButton(
+          child: IconButton.filledTonal(
             onPressed: () {
               int newVal = _val + 1;
               if (newVal <= 99) {
@@ -105,20 +75,10 @@ class _PlusMinusState extends State<PlusMinus> {
                 widget.onValueChanged?.call(_val);
               }
             },
-            style: OutlinedButton.styleFrom(
-              padding: const EdgeInsets.all(12),
-              side: BorderSide(
-                  color: ThemeProvider.themeOf(context)
-                      .data
-                      .colorScheme
-                      .primary,
-                  width: 2),
-            ),
-            child: const Text("+",
-                style: TextStyle(fontWeight: FontWeight.w800)),
+            icon: const Icon(Icons.add_rounded),
           ),
         ),
-      ], width: 8),
+      ], width: 6),
     );
   }
 }
@@ -153,32 +113,17 @@ class _PlusMinusRatingState extends State<PlusMinusRating> {
         if (_val > 0)
           Tooltip(
             message: "Reset value to 0",
-            child: OutlinedButton(
+            child: IconButton.filledTonal(
               onPressed: () {
                 setState(() => _val = 0);
                 widget.onValueChanged?.call(_val);
               },
-              style: OutlinedButton.styleFrom(
-                padding: const EdgeInsets.all(16),
-                side: BorderSide(
-                    color: ThemeProvider.themeOf(context)
-                        .data
-                        .colorScheme
-                        .primary,
-                    width: 2),
-              ),
-              child: Text("0",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w800,
-                      color: ThemeProvider.themeOf(context)
-                          .data
-                          .colorScheme
-                          .primary)),
+              icon: const Icon(Icons.exposure_zero_rounded),
             ),
           ),
         Tooltip(
           message: "Decrement value by 1",
-          child: OutlinedButton(
+          child: IconButton.filledTonal(
             onPressed: () {
               int newVal = _val - 1;
               if (newVal >= 0) {
@@ -186,59 +131,33 @@ class _PlusMinusRatingState extends State<PlusMinusRating> {
                 widget.onValueChanged?.call(_val);
               }
             },
-            style: OutlinedButton.styleFrom(
-              padding: const EdgeInsets.all(16),
-              side: BorderSide(
-                  color: _val == 0
-                      ? ThemeProvider.themeOf(context)
-                          .data
-                          .colorScheme
-                          .primary
-                          .grayScale()
-                      : ThemeProvider.themeOf(context)
-                          .data
-                          .colorScheme
-                          .primary,
-                  width: 2),
-            ),
-            child: _val == 0
-                ? Text("-",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w800,
-                        color: ThemeProvider.themeOf(context)
-                            .data
-                            .colorScheme
-                            .primary
-                            .grayScale()))
-                : const Text("-",
-                    style: TextStyle(fontWeight: FontWeight.w800)),
+            icon: Icon(Icons.remove_rounded,
+                color: _val == 0
+                    ? ThemeProvider.themeOf(context)
+                        .data
+                        .colorScheme
+                        .primary
+                        .grayScale()
+                    : ThemeProvider.themeOf(context)
+                        .data
+                        .colorScheme
+                        .primary),
           ),
         ),
         Text(_val.toString(), style: const TextStyle(fontSize: 20)),
         Tooltip(
           message: "Increment value by 1",
-          child: OutlinedButton(
-            onPressed: () {
-              int newVal = _val + 1;
-              if (newVal <= 10) {
-                setState(() => _val = newVal);
-                widget.onValueChanged?.call(_val);
-              }
-            },
-            style: OutlinedButton.styleFrom(
-              padding: const EdgeInsets.all(16),
-              side: BorderSide(
-                  color: ThemeProvider.themeOf(context)
-                      .data
-                      .colorScheme
-                      .primary,
-                  width: 2),
-            ),
-            child: const Text("+",
-                style: TextStyle(fontWeight: FontWeight.w800)),
-          ),
+          child: IconButton.filledTonal(
+              onPressed: () {
+                int newVal = _val + 1;
+                if (newVal <= 10) {
+                  setState(() => _val = newVal);
+                  widget.onValueChanged?.call(_val);
+                }
+              },
+              icon: const Icon(Icons.add_rounded)),
         ),
-      ], width: 8),
+      ], width: 6),
     );
   }
 }

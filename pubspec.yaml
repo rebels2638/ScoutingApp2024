@@ -1,7 +1,7 @@
 name: scouting_app_2024
 description: "Rebel Robotics FRC 2638 Scouting App 2024"
 publish_to: "none"
-version: 1.0.1+2
+version: 1.0.5+4
 
 environment:
   sdk: ">=3.2.5 <4.0.0"
@@ -29,6 +29,7 @@ dependencies:
   json_theme: ^6.4.0
   logging: ^1.2.0
   mobile_scanner: ^4.0.0
+  multi_dropdown: ^2.1.4
   numberpicker: ^2.1.2
   path_provider: ^2.1.2
   permission_handler: ^11.3.0
@@ -40,6 +41,7 @@ dependencies:
   show_fps: ^1.0.6
   sizer: ^2.0.15
   theme_provider: ^0.6.0
+  themed: ^5.0.1
   url_launcher: ^6.2.3
   uuid: ^4.3.3
   window_manager: ^0.3.8

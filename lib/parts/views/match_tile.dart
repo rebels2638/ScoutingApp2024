@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/blobs/form_blob.dart';
+import 'package:scouting_app_2024/blobs/hints_blob.dart';
 import 'package:scouting_app_2024/extern/dynamic_user_capture.dart';
 import 'package:scouting_app_2024/extern/string.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_canonical.dart';
@@ -39,27 +40,29 @@ class _MatchTileState extends State<MatchTile> {
                   PreferCanonicalModal.isCanonicalPreferred(context)
                       ? widget.match.preliminary.alliance.toColor()
                       : null),
-          title: Text.rich(TextSpan(
-              text:
-                  "${widget.match.preliminary.matchType.name.capitalizeFirst} #${widget.match.preliminary.matchNumber} | Team ${widget.match.preliminary.teamNumber} | ${widget.match.preliminary.alliance.name.capitalizeFirst}\n",
-              style: const TextStyle(
-                  fontWeight: FontWeight.w700, fontSize: 20),
-              children: <InlineSpan>[
-                TextSpan(
-                    text: DateFormat(Shared.GENERAL_TIME_FORMAT)
-                        .format(DateTime.fromMillisecondsSinceEpoch(
-                            widget.match.preliminary.timeStamp)),
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        overflow: TextOverflow.ellipsis,
-                        fontSize: 14)),
-                TextSpan(
-                    text: "\n${widget.match.id}",
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w300,
-                        overflow: TextOverflow.ellipsis,
-                        fontSize: 12))
-              ])),
+          title: Flexible(
+            child: Text.rich(TextSpan(
+                text:
+                    "${widget.match.preliminary.matchType.name.capitalizeFirst} #${widget.match.preliminary.matchNumber} | Team ${widget.match.preliminary.teamNumber} | ${widget.match.preliminary.alliance.name.capitalizeFirst}\n",
+                style: const TextStyle(
+                    fontWeight: FontWeight.w700, fontSize: 20),
+                children: <InlineSpan>[
+                  TextSpan(
+                      text: DateFormat(Shared.GENERAL_TIME_FORMAT)
+                          .format(DateTime.fromMillisecondsSinceEpoch(
+                              widget.match.preliminary.timeStamp)),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                          overflow: TextOverflow.ellipsis,
+                          fontSize: 14)),
+                  TextSpan(
+                      text: "\n${widget.match.id}",
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w300,
+                          overflow: TextOverflow.ellipsis,
+                          fontSize: 12))
+                ])),
+          ),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -291,6 +294,39 @@ class _MatchTileState extends State<MatchTile> {
                   ),
                   icon: const Icon(Icons.cell_tower_rounded),
                 ),
+                if (widget.match.comments.isNotEmpty)
+                  const SizedBox(height: 8),
+                if (widget.match.comments.isNotEmpty)
+                  form_label_rigid(
+                    "Comments",
+                    child: Expanded(
+                      child: Row(
+                        children: <Widget>[
+                          PreferCompactModal.isCompactPreferred(context)
+                              ? IconButton.filledTonal(
+                                  onPressed: () async =>
+                                      await launchInformDialog(context,
+                                          message: Text(widget.match
+                                              .comments.comment!),
+                                          title: "Comments",
+                                          icon: const Icon(
+                                              Icons.comment_rounded)),
+                                  icon: const Icon(
+                                      Icons.comment_rounded))
+                              : FilledButton.tonalIcon(
+                                  onPressed: () async =>
+                                      await launchInformDialog(
+                                          context,
+                                          message: Text(
+                                              widget.match.comments.comment!),
+                                          title: "Comments",
+                                          icon: const Icon(Icons.comment_rounded)),
+                                  icon: const Icon(Icons.comment_rounded),
+                                  label: const Text("View Comments"))
+                        ],
+                      ),
+                    ),
+                  ),
               ]),
         ),
       ),
@@ -321,28 +357,10 @@ class _MatchTileState extends State<MatchTile> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Center(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.amber,
-                            borderRadius: BorderRadius.circular(8)),
-                        child: const Padding(
-                          padding: EdgeInsets.all(6),
-                          child: Text.rich(
-                              TextSpan(children: <InlineSpan>[
-                            WidgetSpan(
-                                child: Icon(
-                                    CommunityMaterialIcons.duck,
-                                    color: Colors.black)),
-                            TextSpan(
-                                text: " Show to a Scouting Leader",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18))
-                          ], style: TextStyle(color: Colors.black))),
-                        ),
-                      ),
-                    ),
+                    const SizedBox(height: 20),
+                    const InformationalHintsBlob(
+                        "Show to a scouting leader",
+                        "A scouting leader will be able to help you with collecting data."),
                     const SizedBox(height: 20),
                     Center(
                       child: GestureDetector(
@@ -361,7 +379,6 @@ class _MatchTileState extends State<MatchTile> {
                             padding: const EdgeInsets.all(24),
                             child: SizedBox(
                               width: 512,
-                              height: 512,
                               child: qr,
                             ),
                           ),
@@ -389,6 +406,11 @@ class _MatchTileState extends State<MatchTile> {
 
   void qrSharedDialog(BuildContext context) {
     Widget qr = _createPrettyQrDataWidget(data: widget.match.csvData);
+    Widget? commentsQr;
+    if (widget.match.comments.isNotEmpty) {
+      commentsQr = _createPrettyQrDataWidget(
+          data: widget.match.commentsCSVData);
+    }
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (BuildContext context) {
@@ -402,61 +424,95 @@ class _MatchTileState extends State<MatchTile> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Center(
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.amber,
-                          borderRadius: BorderRadius.circular(8)),
-                      child: const Padding(
-                        padding: EdgeInsets.all(6),
-                        child:
-                            Text.rich(TextSpan(children: <InlineSpan>[
-                          WidgetSpan(
-                              child: Icon(
-                                  CommunityMaterialIcons
-                                      .shield_account,
-                                  color: Colors.black)),
-                          TextSpan(
-                              text: " Show to a Scouting Leader",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18))
-                        ], style: TextStyle(color: Colors.black))),
-                      ),
-                    ),
-                  ),
                   const SizedBox(height: 20),
-                  Center(
-                    child: GestureDetector(
-                      onTap: () async => launchConfirmDialog(context,
-                          message: SizedBox(
-                              width: 512, height: 512, child: qr),
-                          onConfirm: () {},
-                          title: "QR (Non-DUC)",
-                          icon: const Icon(Icons.qr_code_rounded)),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: Colors.black),
-                        child: Padding(
-                          padding: const EdgeInsets.all(24),
-                          child: SizedBox(
-                            width: 512,
-                            height: 512,
-                            child: qr,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 30),
+                  const InformationalHintsBlob(
+                      "Show to a scouting leader",
+                      "A scouting leader will be able to help you with collecting data. Data here is encoded in a CSV format"),
+                  if (commentsQr != null)
+                    const WarningHintsBlob("Comments are separated!",
+                        "Due to technical limitations, comments are scanned separately (scroll down)")
+                  else
+                    const InformationalHintsBlob("No Comments Data",
+                        "This match didn't have any comments attached to it."),
+                  const SizedBox(height: 20),
+                  const Text("Match Data",
+                      style: TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 8),
                   FilledButton.tonalIcon(
                       onPressed: () async => await Clipboard.setData(
                           ClipboardData(text: widget.match.csvData)),
                       icon: const Icon(Icons.copy_rounded),
                       label: const Text("Copy")),
-                  const SizedBox(
-                      height: 40), // idk why, just leave it
+                  const SizedBox(height: 8),
+                  GestureDetector(
+                    onTap: () async => launchConfirmDialog(context,
+                        message: SizedBox(
+                            width: 512, height: 512, child: qr),
+                        onConfirm: () {},
+                        title: "QR (Non-DUC)",
+                        icon: const Icon(Icons.qr_code_rounded)),
+                    child: Container(
+                      width: 512,
+                      height: 512,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.black),
+                      child: Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: qr,
+                      ),
+                    ),
+                  ),
+                  if (commentsQr != null) const Divider(),
+                  if (commentsQr != null) const SizedBox(height: 20),
+                  if (commentsQr != null)
+                    const Text("Comments Data",
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold)),
+                  if (commentsQr != null)
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: TextField(
+                        controller: TextEditingController(
+                            text: widget.match.comments.comment),
+                        readOnly: true,
+                        decoration: const InputDecoration(
+                          labelText: "Comments View",
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ),
+                  if (commentsQr != null)
+                    FilledButton.tonalIcon(
+                        onPressed: () async =>
+                            await Clipboard.setData(ClipboardData(
+                                text: widget.match.commentsCSVData)),
+                        icon: const Icon(Icons.copy_rounded),
+                        label: const Text("Copy")),
+                  if (commentsQr != null)
+                    GestureDetector(
+                      onTap: () async => launchConfirmDialog(context,
+                          message: SizedBox(
+                              width: 512,
+                              height: 512,
+                              child: commentsQr),
+                          onConfirm: () {},
+                          title: "Comments Data (QR)",
+                          icon: const Icon(Icons.qr_code_rounded)),
+                      child: Container(
+                        width: 512,
+                        height: 512,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Colors.black),
+                        child: Padding(
+                          padding: const EdgeInsets.all(24),
+                          child: commentsQr,
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -486,5 +542,3 @@ Widget _createPrettyQrDataWidget({
         includeImage ? decorationWithImage : decorationWithoutImage,
   );
 }
-
-

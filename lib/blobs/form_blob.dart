@@ -97,7 +97,7 @@ class _BetterGridDelegate extends SliverGridDelegate {
 
 typedef SectionId = ({String title, IconData icon});
 
-const double _prompt_label_strut_width = 10;
+const double _prompt_label_strut_width = 8;
 
 class _NumPickBtn extends StatefulWidget {
   final int maxValue;
@@ -201,13 +201,15 @@ Widget form_numpick(BuildContext context,
 
 @pragma("vm:prefer-inline")
 Widget form_grid_2(
-        {required int crossAxisCount,
+        {ScrollController? scrollController,
+        required int crossAxisCount,
         required double mainAxisSpacing,
         required double crossAxisSpacing,
         double minimumItemWidth = 500,
         required List<Widget> children}) =>
     ResponsiveGridList(
         listViewBuilderOptions: ListViewBuilderOptions(
+            controller: scrollController,
             physics: const AlwaysScrollableScrollPhysics(
                 parent: BouncingScrollPhysics())),
         maxItemsPerRow: crossAxisCount,
@@ -244,45 +246,61 @@ Widget form_label_rigid(String text,
 @pragma("vm:prefer-inline")
 Widget form_label(String text,
         {TextStyle? style,
+        String? hint,
         required Widget child,
         bool expandLabel = false,
         Widget? icon}) =>
     UserTelemetry().currentModel.useAltLayout
         ? Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
+  mainAxisSize: MainAxisSize.min,
+  crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-                Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      if (icon != null) icon,
-                      if (icon != null) const SizedBox(width: 6),
-                      Text(text,
+                SizedBox(
+                  child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        if (hint != null)
+                          IconButton(
+                              onPressed: () async {},
+                              icon: const Icon(
+                                  Icons.info_outline_rounded)),
+                        Text(
+                          text,
                           style: style ??
                               const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
-                                  overflow: TextOverflow.ellipsis)),
-                      const SizedBox(
-                          width: _prompt_label_strut_width),
-                    ]),
+                                  overflow: TextOverflow.ellipsis),
+                        ),
+                      ]),
+                ),
+                const SizedBox(height: 6),
                 child,
               ])
         : Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
                 Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       if (icon != null) icon,
                       if (icon != null) const SizedBox(width: 6),
-                      Text(text,
-                          style: style ??
-                              const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                  overflow: TextOverflow.ellipsis)),
+                      Text(
+                        text,
+                        style: style ??
+                            const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                overflow: TextOverflow.ellipsis),
+                      ),
+                      if (hint != null) const SizedBox(width: 4),
+                      if (hint != null)
+                        IconButton(
+                            onPressed: () async {},
+                            icon: const Icon(
+                                Icons.info_outline_rounded)),
                       const SizedBox(
                           width: _prompt_label_strut_width),
                     ]),

@@ -26,6 +26,7 @@ UserPrefModel _$UserPrefModelFromJson(Map<String, dynamic> json) =>
               $checkedConvert('preferCompact', (v) => v as bool? ?? false),
           preferTonal:
               $checkedConvert('preferTonal', (v) => v as bool? ?? true),
+          showHints: $checkedConvert('showHints', (v) => v as bool? ?? true),
           preferCanonical:
               $checkedConvert('preferCanonical', (v) => v as bool? ?? true),
           showFPSMonitor:
@@ -48,5 +49,6 @@ Map<String, dynamic> _$UserPrefModelToJson(UserPrefModel instance) =>
       'preferCanonical': instance.preferCanonical,
       'preferCompact': instance.preferCompact,
       'useAltLayout': instance.useAltLayout,
+      'showHints': instance.showHints,
       'usedTimeHours': instance.usedTimeHours,
     };

@@ -9,6 +9,7 @@ enum FlutterIconEnumMapper {
   eco_rounded(Icons.eco_rounded),
   android(Icons.android_rounded),
   layers(Icons.layers_rounded),
+  heart(Icons.favorite_rounded),
   nights_stay_rounded(Icons.nights_stay_rounded);
 
   final IconData data;

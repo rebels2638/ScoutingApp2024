@@ -22,11 +22,11 @@ enum MatchType { practice, qualification, playoff }
 
 enum MatchResult { win, loss, tie }
 
-enum MatchStartingPosition { left, middle, right }
+enum MatchStartingPosition { amp, middle, stage }
 
 enum EndStatus { on_chain, on_stage, failed }
 
-enum AutoPickup { l, m, r, no }
+enum AutoPickup { amp, middle, stage, no }
 
 enum Harmony { yes, no, missed }
 
@@ -42,15 +42,16 @@ class HollisticMatchScoutingData
   TeleOpInfo teleop;
   EndgameInfo endgame;
   MiscInfo misc;
+  CommentsInfo comments;
   late String id;
 
-  HollisticMatchScoutingData.idOptional({
-    required this.preliminary,
-    required this.misc,
-    required this.auto,
-    required this.teleop,
-    required this.endgame,
-  }) {
+  HollisticMatchScoutingData.idOptional(
+      {required this.preliminary,
+      required this.misc,
+      required this.auto,
+      required this.teleop,
+      required this.endgame,
+      required this.comments}) {
     Debug().warn("DEVELOPMENT FUNCTIONALITY IN PRODUCTION CODE");
 
     id = const Uuid().v1();
@@ -62,11 +63,12 @@ class HollisticMatchScoutingData
       required this.auto,
       required this.teleop,
       required this.endgame,
+      required this.comments,
       required this.id});
 
   @override
   String toString() {
-    return "ID: $id Preliminary: ${preliminary.exportMap().toString()}\nAuto: ${auto.exportMap().toString()}\nTeleop: ${teleop.exportMap().toString()}\nEndgame: ${endgame.exportMap().toString()}";
+    return "ID: $id Preliminary: ${preliminary.exportMap().toString()}\nAuto: ${auto.exportMap().toString()}\nTeleop: ${teleop.exportMap().toString()}\nEndgame: ${endgame.exportMap().toString()}\nComments:${comments.isNotEmpty ? comments.comment : "Empty"}";
   }
 
   /// VERY FUCKING EXPENSIVE ASS FUNCTION TO CALL LMAOOO
@@ -116,14 +118,25 @@ class HollisticMatchScoutingData
     return "$headerStr\n$valueStr";
   }
 
+  String get commentsCSVData {
+    return "Match,Team,Comment\n${comments.matchNumber},${comments.teamNumber},${comments.isEmpty ? "No Comments" : comments.comment}";
+  }
+
   static HollisticMatchScoutingData fromCompatibleFormat(
       String rawData) {
     Debug().info("Decoding a hollistic match scouting data...");
     final Map<dynamic, dynamic> data =
         jsonDecode(rawData) as Map<dynamic, dynamic>;
+    PrelimInfo prelim =
+        PrelimInfo.fromCompatibleFormat(data["prelim"].toString());
     return HollisticMatchScoutingData(
-      preliminary:
-          PrelimInfo.fromCompatibleFormat(data["prelim"].toString()),
+      comments: data.containsKey("cmt")
+          ? CommentsInfo.fromCompatibleFormat(data["cmt"].toString())
+          : CommentsInfo.optional(
+              associatedId: data["id"].toString(),
+              matchNumber: prelim.matchNumber,
+              teamNumber: prelim.teamNumber),
+      preliminary: prelim,
       auto: AutoInfo.fromCompatibleFormat(data["auto"].toString()),
       teleop:
           TeleOpInfo.fromCompatibleFormat(data["tele"].toString()),
@@ -142,13 +155,17 @@ class HollisticMatchScoutingData
 
   @override
   String toCompatibleFormat() {
-    return jsonEncode(<dynamic, dynamic>{
+    Map<dynamic, dynamic> map = <dynamic, dynamic>{
       "id": id,
       "prelim": preliminary.toCompatibleFormat(),
       "auto": auto.toCompatibleFormat(),
       "tele": teleop.toCompatibleFormat(),
       "end": endgame.toCompatibleFormat(),
       "misc": misc.toCompatibleFormat()
-    });
+    };
+    if (comments.isNotEmpty) {
+      map["cmt"] = comments.toCompatibleFormat();
+    }
+    return jsonEncode(map);
   }
 }

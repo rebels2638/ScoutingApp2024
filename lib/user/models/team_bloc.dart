@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 import 'package:bloc/bloc.dart';
+import 'package:get/get.dart';
 import 'package:scouting_app_2024/blobs/qr_converter_blob.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/user/models/team_model.dart';
@@ -395,6 +396,74 @@ class PrelimState extends ScoutingSessionStates {
   PrelimState(this.data);
 }
 
+// this class data is optimized af in order for us to utilize the QR code and DUC formatting
+class CommentsInfo extends ScoutingInfo
+    implements QRCompatibleData<CommentsInfo> {
+  String? comment;
+  String associatedId;
+  int matchNumber;
+  int teamNumber;
+
+  CommentsInfo(
+      {required this.comment,
+      required this.associatedId,
+      required this.matchNumber,
+      required this.teamNumber});
+
+  factory CommentsInfo.optional(
+          {String comment = "",
+          required String associatedId,
+          required int matchNumber,
+          required int teamNumber}) =>
+      CommentsInfo(
+          comment: comment,
+          associatedId: associatedId,
+          matchNumber: matchNumber,
+          teamNumber: teamNumber);
+
+  bool get isEmpty =>
+      comment == null || comment!.isEmpty || comment! == "";
+
+  bool get isNotEmpty =>
+      comment != null &&
+      comment!.isNotEmpty &&
+      comment != "" &&
+      comment.isBlank!;
+
+  @override
+  Map<String, dynamic> exportMap() => <String, dynamic>{
+        "cmt": comment,
+        "assoc": associatedId,
+        "match#": matchNumber,
+        "team#": teamNumber
+      };
+
+  @override
+  String toCompatibleFormat() => jsonEncode(<String, dynamic>{
+        "cmt": comment ?? "",
+        "assoc": associatedId,
+        "match#": matchNumber,
+        "team#": teamNumber
+      });
+
+  static CommentsInfo fromCompatibleFormat(String rawData) {
+    final Map<String, dynamic> data =
+        jsonDecode(rawData) as Map<String, dynamic>;
+    return CommentsInfo(
+        comment: data["cmt"].isBlank ? null : data["cmt"],
+        associatedId: data["assoc"],
+        matchNumber: data["match#"],
+        teamNumber: data["team#"]);
+  }
+}
+
+class CommentsUpdateEvent extends ScoutingSessionEvents {}
+
+class CommentsState extends ScoutingSessionStates {
+  final CommentsInfo data;
+  CommentsState(this.data);
+}
+
 /// represents the intermediate representation of the data between
 class ScoutingSessionBloc
     extends Bloc<ScoutingSessionEvents, ScoutingSessionStates> {
@@ -403,6 +472,8 @@ class ScoutingSessionBloc
   TeleOpInfo teleop;
   EndgameInfo endgame;
   MiscInfo misc;
+  CommentsInfo
+      comments; // this is routed differently as compared to the other data stuffs (whats data plural again?)
   late final String id;
 
   ScoutingSessionBloc()
@@ -410,10 +481,13 @@ class ScoutingSessionBloc
         auto = AutoInfo.optional(),
         teleop = TeleOpInfo.optional(),
         endgame = EndgameInfo.optional(),
+        comments = CommentsInfo.optional(
+            associatedId: "000", matchNumber: 0, teamNumber: 0),
         misc = MiscInfo.optional(),
         super(PrelimState(PrelimInfo.optional())) {
     id = const Uuid()
-        .v1(); // generatate UUID using v1 which is time based
+        .v1(); // generate UUID using v1 which is time based
+    comments.associatedId = id;
     on<PrelimUpdateEvent>((PrelimUpdateEvent event,
         Emitter<ScoutingSessionStates> emit) {
       emit(PrelimState(prelim));
@@ -444,6 +518,17 @@ class ScoutingSessionBloc
       Debug().info(
           "[Update] SCOUTING_SESSION$hashCode ENDGAME->updated");
     });
+    on<CommentsUpdateEvent>((CommentsUpdateEvent event,
+        Emitter<ScoutingSessionStates> emit) {
+      emit(CommentsState(comments));
+      Debug().info(
+          "[Update] SCOUTING_SESSION$hashCode COMMENTS#${comments.associatedId}->updated");
+    });
+  }
+
+  void _packCommentsClass() {
+    comments.matchNumber = prelim.matchNumber;
+    comments.teamNumber = prelim.teamNumber;
   }
 
   ({
@@ -451,37 +536,59 @@ class ScoutingSessionBloc
     AutoInfo auto,
     TeleOpInfo teleop,
     EndgameInfo endgame,
-    MiscInfo misc
-  }) export() => (
-        prelim: prelim,
+    MiscInfo misc,
+    CommentsInfo comments,
+  }) export() {
+    _packCommentsClass();
+    return (
+      prelim: prelim,
+      auto: auto,
+      teleop: teleop,
+      endgame: endgame,
+      misc: misc,
+      comments: comments
+    );
+  }
+
+  Map<String, dynamic> exportMapDeep() {
+    _packCommentsClass();
+    Map<String, dynamic> map = <String, dynamic>{
+      "prelim": prelim.exportMap(),
+      "auto": auto.exportMap(),
+      "teleop": teleop.exportMap(),
+      "endgame": endgame.exportMap(),
+      "misc": misc.exportMap(),
+    };
+    if (comments.isNotEmpty) {
+      map["cmt"] = comments.toCompatibleFormat();
+    }
+    return map;
+  }
+
+  Map<String, dynamic> exportMap() {
+    _packCommentsClass();
+    Map<String, dynamic> map = <String, dynamic>{
+      "prelim": prelim,
+      "auto": auto,
+      "teleop": teleop,
+      "endgame": endgame,
+      "misc": misc
+    };
+    if (comments.isNotEmpty) {
+      map["cmt"] = comments.comment;
+    }
+    return map;
+  }
+
+  HollisticMatchScoutingData exportHollistic() {
+    _packCommentsClass();
+    return HollisticMatchScoutingData(
+        id: id,
+        misc: misc,
+        preliminary: prelim,
         auto: auto,
         teleop: teleop,
-        endgame: endgame,
-        misc: misc
-      );
-
-  Map<String, dynamic> exportMapDeep() => <String, dynamic>{
-        "prelim": prelim.exportMap(),
-        "auto": auto.exportMap(),
-        "teleop": teleop.exportMap(),
-        "endgame": endgame.exportMap(),
-        "misc": misc.exportMap()
-      };
-
-  Map<String, dynamic> exportMap() => <String, dynamic>{
-        "prelim": prelim,
-        "auto": auto,
-        "teleop": teleop,
-        "endgame": endgame,
-        "misc": misc
-      };
-
-  HollisticMatchScoutingData exportHollistic() =>
-      HollisticMatchScoutingData(
-          id: id,
-          misc: misc,
-          preliminary: prelim,
-          auto: auto,
-          teleop: teleop,
-          endgame: endgame);
+        comments: comments,
+        endgame: endgame);
+  }
 }

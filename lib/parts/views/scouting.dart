@@ -8,12 +8,16 @@ import 'package:community_material_icon/community_material_icon.dart';
 
 import "package:scouting_app_2024/blobs/basic_toggle_switch.dart";
 import "package:scouting_app_2024/blobs/blobs.dart";
+import "package:scouting_app_2024/blobs/expandable_txtfield.dart";
 import "package:scouting_app_2024/blobs/form_blob.dart";
+import "package:scouting_app_2024/blobs/hints_blob.dart";
 import "package:scouting_app_2024/blobs/inc_dec_blob.dart";
+import "package:scouting_app_2024/extern/scroll_controller.dart";
 import "package:scouting_app_2024/extern/string.dart";
 import "package:scouting_app_2024/parts/bits/appbar_celebrate.dart";
 import "package:scouting_app_2024/parts/bits/prefer_compact.dart";
 import "package:scouting_app_2024/parts/bits/show_console.dart";
+import "package:scouting_app_2024/parts/bits/show_hints.dart";
 import "package:scouting_app_2024/parts/bits/use_alt_layout.dart";
 import "package:scouting_app_2024/parts/team.dart";
 import "package:scouting_app_2024/parts/views_delegate.dart";
@@ -195,10 +199,27 @@ class ScoutingView extends StatefulWidget {
 
 class _ScoutingViewState extends State<ScoutingView>
     with AutomaticKeepAliveClientMixin<ScoutingView> {
+  late ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
     List<Widget> bruh = <Widget>[
+      if (ShowHintsGuideModal.isShowingHints(context))
+        const ApexHintsBlob("Scouting Sessions are volatile!",
+            "Scouting data is not saved until you press the save button. If you exit the app or the app crashes, the data will be lost."),
       form_sec(context,
           backgroundColor: Colors.transparent,
           header: (
@@ -355,7 +376,8 @@ class _ScoutingViewState extends State<ScoutingView>
                           .read<ScoutingSessionBloc>()
                           .add(AutoUpdateEvent());
                     })),
-            form_label("Note(s) picked up",
+            form_label("Note(s) picked up\n",
+                hint: "Hello",
                 child: form_seg_btn_2(
                     segments: AutoPickup.values
                         .map<
@@ -785,6 +807,15 @@ class _ScoutingViewState extends State<ScoutingView>
                           .read<ScoutingSessionBloc>()
                           .add(MiscUpdateEvent());
                     })),
+            form_label("Comments",
+                child: ExpandedTextFieldBlob(context,
+                    prefixIcon: const Icon(Icons.comment_rounded),
+                    initialData: "",
+                    onChanged: (String r) {},
+                    labelText: "Comments",
+                    hintText: "Type comments here",
+                    maxChars: COMMENTS_MAX_CHARS,
+                    maxLines: 10)),
           ])),
     ];
     return Column(
@@ -936,6 +967,26 @@ class _ScoutingViewState extends State<ScoutingView>
                             "Exited & SAVED the current scouting session");
                       });
                     }),
+              if (PreferCompactModal.isCompactPreferred(context))
+                IconButton.filledTonal(
+                    onPressed: () =>
+                        _scrollController.animateToBottom(),
+                    icon: const Icon(Icons.arrow_downward_rounded))
+              else
+                FilledButton.tonalIcon(
+                    onPressed: () =>
+                        _scrollController.animateToBottom(),
+                    icon: const Icon(Icons.arrow_downward_rounded),
+                    label: const Text("Scroll Down")),
+              if (PreferCompactModal.isCompactPreferred(context))
+                IconButton.filledTonal(
+                    onPressed: () => _scrollController.animateToTop(),
+                    icon: const Icon(Icons.arrow_upward_rounded))
+              else
+                FilledButton.tonalIcon(
+                    onPressed: () => _scrollController.animateToTop(),
+                    icon: const Icon(Icons.arrow_upward_rounded),
+                    label: const Text("Scroll Up")),
               if (ShowConsoleModal.isShowingConsole(context))
                 FilledButton.icon(
                     style: ButtonStyle(
@@ -967,6 +1018,7 @@ class _ScoutingViewState extends State<ScoutingView>
             child: UseAlternativeLayoutModal
                     .isAlternativeLayoutPreferred(context)
                 ? SingleChildScrollView(
+                    controller: _scrollController,
                     physics: const AlwaysScrollableScrollPhysics(
                         parent: BouncingScrollPhysics()),
                     child: Column(
@@ -974,6 +1026,7 @@ class _ScoutingViewState extends State<ScoutingView>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: bruh))
                 : form_grid_2(
+                    scrollController: _scrollController,
                     crossAxisCount: 2,
                     mainAxisSpacing: 16,
                     crossAxisSpacing: 16,

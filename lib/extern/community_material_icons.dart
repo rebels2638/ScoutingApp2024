@@ -18,9 +18,11 @@ enum CommunityMaterialIconsEnumMapper {
   fruit_citrus(CommunityMaterialIcons.fruit_citrus),
   incognito(CommunityMaterialIcons.incognito),
   waves(CommunityMaterialIcons.waves),
+  fire(CommunityMaterialIcons.fire),
   drawing_box(CommunityMaterialIcons.drawing_box),
   drama_masks(CommunityMaterialIcons.drama_masks),
   script(CommunityMaterialIcons.script),
+  flower(CommunityMaterialIcons.flower),
   delete_variant(CommunityMaterialIcons.delete_variant),
   skull_scan(CommunityMaterialIcons.skull_scan);
 

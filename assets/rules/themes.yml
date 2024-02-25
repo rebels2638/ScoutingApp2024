@@ -34,6 +34,24 @@
   location: "assets/themes/classic_blue.json"
   icon: "flutter,android"
 
+- canonical_name: "Misty"
+  id: "exoad_misty"
+  author: "Jack Meng (exoad)"
+  location: "assets/themes/misty.json"
+  icon: "community,flower"
+
+- canonical_name: "Crimson Noir"
+  id: "exoad_crimson_noir"
+  location: "assets/themes/crimson_noir.json"
+  author: "Jack Meng (exoad)"
+  icon: "community,fire"
+
+- canonical_name: "Amore"
+  id: "exoad_amore"
+  author: "Jack Meng (exoad)"
+  location: "assets/themes/amore.json"
+  icon: "flutter,heart"
+
 - canonical_name: "Sepia"
   id: "exoad_sepia"
   author: "Jack Meng (exoad)"

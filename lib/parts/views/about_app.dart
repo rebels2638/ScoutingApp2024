@@ -10,6 +10,7 @@ import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/shared.dart';
 import 'package:theme_provider/theme_provider.dart';
+import 'package:themed/themed.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const String _DIVIDER = "\n\n";
@@ -63,34 +64,29 @@ class _AboutAppViewState extends State<AboutAppView> {
     return Stack(fit: StackFit.expand, children: <Widget>[
       Transform.translate(
         offset: Offset(
-            0, _scroller.hasClients ? -_scroller.offset / 3 : 0),
+            0, _scroller.hasClients ? -_scroller.offset / 2 : 0),
         child: ObfsBlob(
           sigmaX: 6,
           sigmaY: 6,
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.only(
-                  top: 60, bottom: 20, left: 20, right: 20),
-              child: Stack(
-                fit: StackFit.expand,
-                children: <Widget>[
-                  RepaintBoundary(
-                    child: Image.asset(
-                      "assets/2324_teampic.jpg",
-                      alignment: Alignment.center,
-                      fit: BoxFit.fitHeight,
-                    ),
+                padding: const EdgeInsets.only(
+                    top: 30, bottom: 20, left: 20, right: 20),
+                child: ChangeColors(
+                  brightness: -0.163,
+                  child: Image.asset(
+                    "assets/2324_teampic.jpg",
+                    alignment: Alignment.center,
+                    fit: BoxFit.fitHeight,
                   ),
-                  ColoredBox(color: Colors.black.withOpacity(0.35)),
-                ],
-              ),
-            ),
+                )),
           ),
         ),
       ),
       NotificationListener<ScrollNotification>(
           onNotification: (ScrollNotification notif) {
-            setState(() {});
+            WidgetsBinding.instance
+                .addPostFrameCallback((_) => setState(() {}));
             return false;
           },
           child: SingleChildScrollView(
@@ -180,13 +176,20 @@ class _AboutAppViewState extends State<AboutAppView> {
                             text: "26",
                             style: TextStyle(
                                 color:
-                                    RebelRoboticsShared.REBELS_BLUE)),
+                                    RebelRoboticsShared.REBELS_BLUE,
+                                fontSize: 24)),
                         TextSpan(
                             text: "38",
                             style: TextStyle(
-                                color: RebelRoboticsShared
-                                    .REBELS_ORANGE)),
-                        TextSpan(text: " Scouting App\n")
+                                color:
+                                    RebelRoboticsShared.REBELS_ORANGE,
+                                fontSize: 24)),
+                        TextSpan(text: " Scouting App\n"),
+                        TextSpan(
+                            text: "\n\"Argus\"\n\n",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontStyle: FontStyle.italic))
                       ],
                       style: TextStyle(
                         fontWeight: FontWeight.w800,
@@ -310,7 +313,7 @@ class _AboutAppViewState extends State<AboutAppView> {
                         )),
                     const TextSpan(
                       text:
-                          "John Motchkavitz\nMatthew Corrigan\nAndrea Zinn\nGeorge Motchkavitz\n",
+                          "John Motchkavitz\nMatthew Corrigan\nReid Fleishman\nAndrea Zinn\nGeorge Motchkavitz\n", // thank you! :)
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                       ),

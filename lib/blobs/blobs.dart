@@ -48,70 +48,37 @@ class _InternalNumberPickerState
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text(_combineDigits().toString(),
-                style: const TextStyle(
-                    fontSize: 30, fontWeight: FontWeight.w500)),
-            const SizedBox(height: 16),
-            const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(Icons.swipe_vertical_rounded),
-                  SizedBox(width: 6),
-                  Text("Swipe",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w300, fontSize: 14))
-                ]),
-            const SizedBox(height: 16),
-            Row(
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Text(_combineDigits().toString(),
+              style: const TextStyle(
+                  fontSize: 30, fontWeight: FontWeight.w500)),
+          const SizedBox(height: 16),
+          const Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                for (int i = 0; i < widget.itemCount; i++)
-                  if (i != widget.itemCount - 1)
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                                color: ThemeProvider.themeOf(context)
-                                    .data
-                                    .colorScheme
-                                    .primary)),
-                        child: NumberPicker(
-                          selectedTextStyle: TextStyle(
-                              color: ThemeProvider.themeOf(context)
-                                  .data
-                                  .iconTheme
-                                  .color,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold),
-                          textStyle: const TextStyle(fontSize: 16),
-                          infiniteLoop: widget.infiniteLoop,
-                          axis: widget.alignment ?? Axis.vertical,
-                          minValue: 0,
-                          maxValue: 9,
-                          itemHeight: 65,
-                          itemWidth: 50,
-                          value: _valueCounts[i],
-                          onChanged: (int value) {
-                            setState(() => _valueCounts[i] = value);
-                            widget.onChange.call(_combineDigits());
-                          },
-                        ),
-                      ),
-                    )
-                  else
-                    Container(
+                Icon(Icons.swipe_vertical_rounded),
+                SizedBox(width: 6),
+                Text("Swipe",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w300, fontSize: 14))
+              ]),
+          const SizedBox(height: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              for (int i = 0; i < widget.itemCount; i++)
+                if (i != widget.itemCount - 1)
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Container(
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(8),
                           border: Border.all(
                               color: ThemeProvider.themeOf(context)
                                   .data
@@ -139,10 +106,41 @@ class _InternalNumberPickerState
                         },
                       ),
                     ),
-              ],
-            ),
-          ],
-        ),
+                  )
+                else
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                            color: ThemeProvider.themeOf(context)
+                                .data
+                                .colorScheme
+                                .primary)),
+                    child: NumberPicker(
+                      selectedTextStyle: TextStyle(
+                          color: ThemeProvider.themeOf(context)
+                              .data
+                              .iconTheme
+                              .color,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold),
+                      textStyle: const TextStyle(fontSize: 16),
+                      infiniteLoop: widget.infiniteLoop,
+                      axis: widget.alignment ?? Axis.vertical,
+                      minValue: 0,
+                      maxValue: 9,
+                      itemHeight: 65,
+                      itemWidth: 50,
+                      value: _valueCounts[i],
+                      onChanged: (int value) {
+                        setState(() => _valueCounts[i] = value);
+                        widget.onChange.call(_combineDigits());
+                      },
+                    ),
+                  ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -175,23 +173,15 @@ void launchNumberPickerDialog(BuildContext context,
             const SizedBox(width: 8),
             Text(headerMessage)
           ])),
-          body: Padding(
-            padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.width * 0.45),
-            child: SingleChildScrollView(
-                child: Column(
-              children: <Widget>[
-                _InternalNumberPicker(
-                    infiniteLoop: infiniteLoop,
-                    alignment: alignment,
-                    itemCount:
-                        itemCount ?? maxValue.abs().toString().length,
-                    minValue: minValue,
-                    maxValue: maxValue,
-                    onChange: onChange)
-              ],
-            )),
-          ));
+          body: SingleChildScrollView(
+              child: _InternalNumberPicker(
+                  infiniteLoop: infiniteLoop,
+                  alignment: alignment,
+                  itemCount:
+                      itemCount ?? maxValue.abs().toString().length,
+                  minValue: minValue,
+                  maxValue: maxValue,
+                  onChange: onChange)));
     }));
 
 @pragma("vm:prefer-inline")

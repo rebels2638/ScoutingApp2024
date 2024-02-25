@@ -103,6 +103,9 @@ class UserPrefModel {
   @JsonKey(required: false, defaultValue: false)
   bool useAltLayout;
 
+  @JsonKey(required: false, defaultValue: true)
+  bool showHints;
+
   @JsonKey(required: false, defaultValue: 0)
   double usedTimeHours;
 
@@ -115,6 +118,7 @@ class UserPrefModel {
       this.usedTimeHours = 0,
       this.preferCompact = false,
       this.preferTonal = true,
+      this.showHints = true,
       this.preferCanonical = true,
       this.showFPSMonitor = false,
       this.showExperimental = false});

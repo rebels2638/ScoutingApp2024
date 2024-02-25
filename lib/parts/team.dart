@@ -42,7 +42,7 @@ class _TeamAllianceSwitchState extends State<TeamAllianceSwitch> {
               (Widget child, Animation<double> animation) {
             return SlideTransition(
               position: Tween<Offset>(
-                      begin: const Offset(0, 1),
+                      begin: const Offset(0, -1),
                       end: const Offset(0, 0))
                   .animate(animation),
               child: child,
