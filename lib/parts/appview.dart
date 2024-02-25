@@ -1,16 +1,20 @@
 import 'dart:math';
+import 'package:flutter/services.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:confetti/confetti.dart';
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
+import 'package:scouting_app_2024/blobs/animate_blob.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/parts/bits/appbar_celebrate.dart';
 import 'package:scouting_app_2024/parts/bits/lock_in.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
+import 'package:scouting_app_2024/parts/bits/seen_patchnotes.dart';
 import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
 import 'package:scouting_app_2024/parts/bits/show_fps_monitor.dart';
+import 'package:scouting_app_2024/parts/patchnotes.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/shared.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
@@ -20,10 +24,11 @@ import 'package:show_fps/show_fps.dart';
 import 'package:scouting_app_2024/blobs/extended_fab_blob.dart';
 import "package:theme_provider/theme_provider.dart";
 import 'package:url_launcher/url_launcher.dart';
+import 'package:yaml/yaml.dart';
 
 import 'theme_classifier.dart';
 
-GlobalKey<ScaffoldState> _globalScaffoldKey =
+GlobalKey<ScaffoldState> globalScaffoldKey =
     GlobalKey<ScaffoldState>();
 
 class IntermediateMaterialApp extends StatelessWidget {
@@ -186,14 +191,107 @@ class _AppViewState extends State<_AppView> {
     ];
     Future<void>.delayed(Duration.zero, () {
       if (ThemeClassifier.of(context) !=
-          AvaliableTheme.of(
+          AvailableTheme.of(
               UserTelemetry().currentModel.selectedTheme)) {
         setState(() => ThemeProvider.controllerOf(context)
             .setTheme(UserTelemetry().currentModel.selectedTheme));
       }
     });
+    if (!SeenPatchNotesModal.hasSeenPatchNotes(context)) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => showDialog(
+          context: context,
+          builder: (BuildContext ctxt) => AlertDialog(
+                  title: const Text("Updated!"),
+                  icon: const Icon(Icons.update_rounded),
+                  content: const Text(
+                    "Your app is updated with new features! Do you want to read the patch notes?",
+                    style: TextStyle(fontSize: 16),
+                    textAlign: TextAlign.center,
+                  ),
+                  actions: <Widget>[
+                    TextButton.icon(
+                        onPressed: () {
+                          Navigator.of(ctxt).pop();
+                          Navigator.of(ctxt).push(MaterialPageRoute<
+                                  Widget>(
+                              builder: (BuildContext ctxt) =>
+                                  Scaffold(
+                                      resizeToAvoidBottomInset: true,
+                                      appBar: AppBar(
+                                          title: const Row(
+                                        children: <Widget>[
+                                          Icon(CommunityMaterialIcons
+                                              .emoticon_excited),
+                                          SizedBox(width: 8),
+                                          Text("Patch Notes"),
+                                        ],
+                                      )),
+                                      body: Padding(
+                                          padding:
+                                              const EdgeInsets.only(
+                                                  left: 10),
+                                          child: FutureBuilder<
+                                                  String>(
+                                              future: rootBundle
+                                                  .loadString(
+                                                      "assets/rules/patch_notes.yml"),
+                                              builder: (BuildContext
+                                                      context,
+                                                  AsyncSnapshot<
+                                                          String>
+                                                      snapshot) {
+                                                if (snapshot
+                                                    .hasData) {
+                                                  YamlMap map =
+                                                      loadYaml(
+                                                          snapshot
+                                                              .data!);
+                                                  return PatchNotesDisplay(<String,
+                                                      dynamic>{
+                                                    "version": map[
+                                                        "version"],
+                                                    "date":
+                                                        map["date"],
+                                                    "author":
+                                                        map["author"],
+                                                    "additions": map[
+                                                        "additions"],
+                                                    "fixes":
+                                                        map["fixes"],
+                                                    "optimize": map[
+                                                        "optimize"]
+                                                  });
+                                                } else {
+                                                  return const Center(
+                                                    child: SpinBlob(
+                                                        child: Image(
+                                                      image: ExactAssetImage(
+                                                          "assets/appicon_header.png"),
+                                                      width: 148,
+                                                      height: 148,
+                                                    )),
+                                                  );
+                                                }
+                                              })))));
+                          Provider.of<SeenPatchNotesModal>(context,
+                                  listen: false)
+                              .seenPatches = true;
+                        },
+                        icon: const Icon(Icons.article_rounded),
+                        label: const Text("Yes")),
+                    TextButton.icon(
+                        onPressed: () {
+                          Provider.of<SeenPatchNotesModal>(context,
+                                  listen: false)
+                              .seenPatches = true;
+                          Navigator.of(ctxt).pop();
+                        },
+                        icon: const Icon(Icons.close_rounded),
+                        label: const Text("No"))
+                  ])));
+    }
     return Scaffold(
-        key: _globalScaffoldKey,
+        key: globalScaffoldKey,
         floatingActionButton: ExpFabBlob(
             defaultWidget:
                 const Icon(CommunityMaterialIcons.star_four_points),
@@ -285,7 +383,7 @@ class _AppViewState extends State<_AppView> {
                                   Text.rich(
                                       TextSpan(children: <InlineSpan>[
                                         TextSpan(
-                                            text: AvaliableTheme.of(
+                                            text: AvailableTheme.of(
                                                     ThemeClassifier.of(
                                                             context)
                                                         .id)
@@ -344,7 +442,7 @@ class _AppViewState extends State<_AppView> {
                                                 icon: Column(
                                                   children: <Widget>[
                                                     Icon(
-                                                        AvaliableTheme
+                                                        AvailableTheme
                                                             .of(
                                                       e.id,
                                                     ).icon),
@@ -367,7 +465,7 @@ class _AppViewState extends State<_AppView> {
                                                 ),
                                                 label: Text.rich(TextSpan(children: <InlineSpan>[
                                                   TextSpan(
-                                                      text: AvaliableTheme
+                                                      text: AvailableTheme
                                                               .of(e
                                                                   .id)
                                                           .properName,
@@ -380,7 +478,7 @@ class _AppViewState extends State<_AppView> {
                                                   const TextSpan(
                                                       text: "\nBy "),
                                                   TextSpan(
-                                                      text: AvaliableTheme
+                                                      text: AvailableTheme
                                                               .of(e
                                                                   .id)
                                                           .author,
@@ -413,7 +511,7 @@ class _AppViewState extends State<_AppView> {
                                                 icon: Column(
                                                   children: <Widget>[
                                                     Icon(
-                                                        AvaliableTheme
+                                                        AvailableTheme
                                                             .of(
                                                       e.id,
                                                     ).icon),
@@ -436,7 +534,7 @@ class _AppViewState extends State<_AppView> {
                                                 ),
                                                 label: Text.rich(TextSpan(children: <InlineSpan>[
                                                   TextSpan(
-                                                      text: AvaliableTheme
+                                                      text: AvailableTheme
                                                               .of(e
                                                                   .id)
                                                           .properName,
@@ -449,7 +547,7 @@ class _AppViewState extends State<_AppView> {
                                                   const TextSpan(
                                                       text: "\nBy "),
                                                   TextSpan(
-                                                      text: AvaliableTheme
+                                                      text: AvailableTheme
                                                               .of(e
                                                                   .id)
                                                           .author,

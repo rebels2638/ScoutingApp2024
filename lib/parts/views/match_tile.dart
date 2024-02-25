@@ -219,7 +219,7 @@ class _MatchTileState extends State<MatchTile> {
                                   await launchConfirmDialog(context,
                                       message: Column(
                                         children: <Widget>[
-                                          Text(widget.match.csvData),
+                                          Text("${widget.match.csvData}\n\n${widget.match.commentsCSVData}", softWrap: true),
                                           const SizedBox(height: 20),
                                           FilledButton.tonalIcon(
                                               onPressed: () async =>

@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 import 'package:bloc/bloc.dart';
-import 'package:get/get.dart';
 import 'package:scouting_app_2024/blobs/qr_converter_blob.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/user/models/team_model.dart';
@@ -425,10 +424,7 @@ class CommentsInfo extends ScoutingInfo
       comment == null || comment!.isEmpty || comment! == "";
 
   bool get isNotEmpty =>
-      comment != null &&
-      comment!.isNotEmpty &&
-      comment != "" &&
-      comment.isBlank!;
+      comment != null && comment!.isNotEmpty && comment != "";
 
   @override
   Map<String, dynamic> exportMap() => <String, dynamic>{
@@ -450,7 +446,9 @@ class CommentsInfo extends ScoutingInfo
     final Map<String, dynamic> data =
         jsonDecode(rawData) as Map<String, dynamic>;
     return CommentsInfo(
-        comment: data["cmt"].isBlank ? null : data["cmt"],
+        comment: data["cmt"] == null || data["cmt"].toString() == ""
+            ? null
+            : data["cmt"],
         associatedId: data["assoc"],
         matchNumber: data["match#"],
         teamNumber: data["team#"]);
@@ -560,7 +558,7 @@ class ScoutingSessionBloc
       "misc": misc.exportMap(),
     };
     if (comments.isNotEmpty) {
-      map["cmt"] = comments.toCompatibleFormat();
+      map["cmt"] = comments.exportMap();
     }
     return map;
   }
@@ -575,7 +573,7 @@ class ScoutingSessionBloc
       "misc": misc
     };
     if (comments.isNotEmpty) {
-      map["cmt"] = comments.comment;
+      map["cmt"] = comments;
     }
     return map;
   }

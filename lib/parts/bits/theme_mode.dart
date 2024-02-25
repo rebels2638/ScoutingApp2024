@@ -4,17 +4,17 @@ import 'package:scouting_app_2024/user/user_telemetry.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 class ThemeModeModal extends ChangeNotifier {
-  AvaliableTheme value =
-      AvaliableTheme.of(UserTelemetry().currentModel.selectedTheme);
+  AvailableTheme value =
+      AvailableTheme.of(UserTelemetry().currentModel.selectedTheme);
 
-  AvaliableTheme get mode => value;
+  AvailableTheme get mode => value;
 
-  set mode(AvaliableTheme v) {
+  set mode(AvailableTheme v) {
     value = v;
     notifyListeners();
   }
 
-  static AvaliableTheme getMode(BuildContext context) =>
-      AvaliableTheme.export.firstWhere((AvaliableTheme e) =>
+  static AvailableTheme getMode(BuildContext context) =>
+      AvailableTheme.export.firstWhere((AvailableTheme e) =>
           e.id == ThemeProvider.themeOf(context).id);
 }

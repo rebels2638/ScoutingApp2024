@@ -2,6 +2,7 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
+import 'package:scouting_app_2024/parts/appview.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_canonical.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_tonal.dart';
@@ -110,12 +111,12 @@ class _SettingsViewState extends State<SettingsView> {
                               UserTelemetry().reset();
                               UserTelemetry().resetHard();
                               UserTelemetry().save();
-                              ScaffoldMessenger.of(context)
+                              ScaffoldMessenger.of(globalScaffoldKey
+                                      .currentState!.context)
                                   .showSnackBar(yummySnackBar(
                                       duration: const Duration(
                                           milliseconds: 1500),
                                       margin: null,
-                                      width: 300,
                                       icon: Icon(Icons.save_rounded,
                                           color:
                                               ThemeProvider.themeOf(
@@ -141,12 +142,12 @@ class _SettingsViewState extends State<SettingsView> {
                               UserTelemetry().reset();
                               UserTelemetry().resetHard();
                               UserTelemetry().save();
-                              ScaffoldMessenger.of(context)
+                              ScaffoldMessenger.of(globalScaffoldKey
+                                      .currentState!.context)
                                   .showSnackBar(yummySnackBar(
                                       duration: const Duration(
                                           milliseconds: 1500),
                                       margin: null,
-                                      width: 300,
                                       icon: Icon(Icons.save_rounded,
                                           color:
                                               ThemeProvider.themeOf(
@@ -182,7 +183,6 @@ class _SettingsViewState extends State<SettingsView> {
                                   duration: const Duration(
                                       milliseconds: 1500),
                                   margin: null,
-                                  width: 300,
                                   icon: Icon(Icons.save_rounded,
                                       color: ThemeProvider.themeOf(
                                               context)
@@ -206,7 +206,6 @@ class _SettingsViewState extends State<SettingsView> {
                                   duration: const Duration(
                                       milliseconds: 1500),
                                   margin: null,
-                                  width: 300,
                                   icon: Icon(Icons.save_rounded,
                                       color: ThemeProvider.themeOf(
                                               context)

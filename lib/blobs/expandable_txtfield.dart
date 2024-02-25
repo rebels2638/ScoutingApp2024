@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/extern/string.dart';
 import 'package:theme_provider/theme_provider.dart';
@@ -153,11 +154,31 @@ class _ExpandedTextFieldBlobState
                           },
                         ),
                         const SizedBox(height: 10),
-                        ElevatedButton.icon(
-                            onPressed: () =>
-                                Navigator.of(context).pop(),
-                            icon: const Icon(Icons.check_rounded),
-                            label: const Text("Done"))
+                        Row(
+                          children: <Widget>[
+                            ElevatedButton.icon(
+                                onPressed: () async =>
+                                    await launchConfirmDialog(context,
+                                        message: const Text(
+                                            "Are you sure you want to delete all of your comments?",
+                                            textAlign:
+                                                TextAlign.center),
+                                        onConfirm: () {
+                                      _controller.clear();
+                                      widget.onChanged.call("");
+                                      setState(
+                                          () => _characterCount = 0);
+                                    }),
+                                icon: const Icon(Icons.clear_rounded),
+                                label: const Text("Clear")),
+                            const Spacer(),
+                            ElevatedButton.icon(
+                                onPressed: () =>
+                                    Navigator.of(context).pop(),
+                                icon: const Icon(Icons.check_rounded),
+                                label: const Text("Done")),
+                          ],
+                        )
                       ],
                     ),
                   ),

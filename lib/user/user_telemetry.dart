@@ -109,12 +109,16 @@ class UserPrefModel {
   @JsonKey(required: false, defaultValue: 0)
   double usedTimeHours;
 
+  @JsonKey(required: false, defaultValue: false)
+  bool seenPatchNotes;
+
   // make sure to run flutter pub run build_runner build
   UserPrefModel(
       {required this.selectedTheme,
       this.showConsole = false,
       this.showGameMap = true,
       this.useAltLayout = false,
+      this.seenPatchNotes = false,
       this.usedTimeHours = 0,
       this.preferCompact = false,
       this.preferTonal = true,

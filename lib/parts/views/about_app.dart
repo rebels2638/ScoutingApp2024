@@ -3,15 +3,19 @@ import 'dart:math';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:scouting_app_2024/blobs/animate_blob.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/blobs/obfs_blob.dart';
 import 'package:scouting_app_2024/debug.dart';
+import 'package:scouting_app_2024/parts/patchnotes.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/shared.dart';
 import 'package:theme_provider/theme_provider.dart';
 import 'package:themed/themed.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:yaml/yaml.dart';
 
 const String _DIVIDER = "\n\n";
 
@@ -75,7 +79,7 @@ class _AboutAppViewState extends State<AboutAppView> {
                 child: ChangeColors(
                   brightness: -0.163,
                   child: Image.asset(
-                    "assets/2324_teampic.jpg",
+                    "assets/2324_teampic.png",
                     alignment: Alignment.center,
                     fit: BoxFit.fitHeight,
                   ),
@@ -146,7 +150,7 @@ class _AboutAppViewState extends State<AboutAppView> {
                                   child: Align(
                                     alignment: Alignment.center,
                                     child: Image.asset(
-                                        "assets/2324_teampic.jpg",
+                                        "assets/2324_teampic.png",
                                         width: 530,
                                         height: 430),
                                   ),
@@ -352,6 +356,57 @@ class _AboutAppViewState extends State<AboutAppView> {
                               REBEL_ROBOTICS_APP_GITHUB_REPO_URL))),
                   label: const Text("Source Code"),
                   icon: const Icon(Icons.data_object_rounded)),
+              preferTonalButton(
+                  onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute<Widget>(
+                          builder: (BuildContext ctxt) => Scaffold(
+                              resizeToAvoidBottomInset: true,
+                              appBar: AppBar(
+                                  title: const Row(
+                                children: <Widget>[
+                                  Icon(CommunityMaterialIcons
+                                      .emoticon_excited),
+                                  SizedBox(width: 8),
+                                  Text("Patch Notes"),
+                                ],
+                              )),
+                              body: Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 10),
+                                  child: FutureBuilder<String>(
+                                      future: rootBundle.loadString(
+                                          "assets/rules/patch_notes.yml"),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<String>
+                                              snapshot) {
+                                        if (snapshot.hasData) {
+                                          YamlMap map = loadYaml(
+                                              snapshot.data!);
+                                          return PatchNotesDisplay(<String,
+                                              dynamic>{
+                                            "version": map["version"],
+                                            "date": map["date"],
+                                            "author": map["author"],
+                                            "additions":
+                                                map["additions"],
+                                            "fixes": map["fixes"],
+                                            "optimize":
+                                                map["optimize"]
+                                          });
+                                        } else {
+                                          return const Center(
+                                            child: SpinBlob(
+                                                child: Image(
+                                              image: ExactAssetImage(
+                                                  "assets/appicon_header.png"),
+                                              width: 148,
+                                              height: 148,
+                                            )),
+                                          );
+                                        }
+                                      }))))),
+                  label: const Text("Patch Notes"),
+                  icon: const Icon(Icons.history_edu_rounded)),
               preferTonalButton(
                   onPressed: () => showLicensePage(
                       context: context,

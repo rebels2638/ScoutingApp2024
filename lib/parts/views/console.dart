@@ -101,7 +101,6 @@ class ConsoleStateComponent extends State<_ConsoleComponent> {
                 onPressed: () => ScaffoldMessenger.of(context)
                     .showSnackBar(yummySnackBar(
                         margin: null,
-                        width: 300,
                         backgroundColor:
                             ThemeProvider.themeOf(context)
                                 .data

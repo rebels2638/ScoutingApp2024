@@ -8,6 +8,7 @@ import 'package:scouting_app_2024/parts/bits/lock_in.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_canonical.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_tonal.dart';
+import 'package:scouting_app_2024/parts/bits/seen_patchnotes.dart';
 import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
 import 'package:scouting_app_2024/parts/bits/show_fps_monitor.dart';
@@ -39,6 +40,9 @@ class ThemedAppBundle extends StatelessWidget {
                 builder: (BuildContext
                         themeCtxt) => /*lol this is very scuffed XD i hope you can forgive me*/
                     MultiProvider(providers: <SingleChildWidget>[
+                      ChangeNotifierProvider<SeenPatchNotesModal>(
+                          create: (BuildContext _) =>
+                              SeenPatchNotesModal()),
                       ChangeNotifierProvider<ShowHintsGuideModal>(
                           create: (BuildContext _) =>
                               ShowHintsGuideModal()),

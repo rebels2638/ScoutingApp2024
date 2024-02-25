@@ -20,6 +20,8 @@ UserPrefModel _$UserPrefModelFromJson(Map<String, dynamic> json) =>
               $checkedConvert('showGameMap', (v) => v as bool? ?? true),
           useAltLayout:
               $checkedConvert('useAltLayout', (v) => v as bool? ?? false),
+          seenPatchNotes:
+              $checkedConvert('seenPatchNotes', (v) => v as bool? ?? false),
           usedTimeHours: $checkedConvert(
               'usedTimeHours', (v) => (v as num?)?.toDouble() ?? 0),
           preferCompact:
@@ -51,4 +53,5 @@ Map<String, dynamic> _$UserPrefModelToJson(UserPrefModel instance) =>
       'useAltLayout': instance.useAltLayout,
       'showHints': instance.showHints,
       'usedTimeHours': instance.usedTimeHours,
+      'seenPatchNotes': instance.seenPatchNotes,
     };

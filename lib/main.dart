@@ -78,7 +78,7 @@ Future<void> _prepareAppLaunch() async {
           "Not saving probe time... Waiting for next save cycle.");
     }
   });
-  Debug().newPhase("COMPATABILITY_CHECK");
+  Debug().newPhase("COMPATIBILITY_CHECK");
   if (DeviceEnv.isPhone) {
     Debug().warn("Detected MOBILE, forcing COMPACT");
     UserTelemetry().currentModel.preferCompact = true;

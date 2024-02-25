@@ -620,14 +620,11 @@ class _ScoutingViewState extends State<ScoutingView>
             form_label("On chain",
                 child: form_seg_btn_1(
                     segments: EndStatus.values
-                        .map<
-                                ({
-                                  Icon? icon,
-                                  String label,
-                                  EndStatus value
-                                })>(
+                        .map<({Icon? icon, String label, EndStatus value})>(
                             (EndStatus e) => (
-                                  label: e.name.formalize,
+                                  label: e.name.formalize.replaceAll(
+                                      "_",
+                                      " "), // this is very hardcoded
                                   icon: null,
                                   value: e
                                 ))
@@ -810,8 +807,15 @@ class _ScoutingViewState extends State<ScoutingView>
             form_label("Comments",
                 child: ExpandedTextFieldBlob(context,
                     prefixIcon: const Icon(Icons.comment_rounded),
-                    initialData: "",
-                    onChanged: (String r) {},
+                    initialData: "", onChanged: (String r) {
+                  context
+                      .read<ScoutingSessionBloc>()
+                      .comments
+                      .comment = r;
+                  context
+                      .read<ScoutingSessionBloc>()
+                      .add(CommentsUpdateEvent());
+                },
                     labelText: "Comments",
                     hintText: "Type comments here",
                     maxChars: COMMENTS_MAX_CHARS,
@@ -1006,9 +1010,11 @@ class _ScoutingViewState extends State<ScoutingView>
                               child: Padding(
                                 padding: const EdgeInsets.only(
                                     top: 10, bottom: 10),
-                                child: Text.rich(TextSpan(
-                                    text:
-                                        "RAW\n${jsonEncode(BlocProvider.of<ScoutingSessionBloc>(context).exportMapDeep().toString())}\n\nHollistic\n${jsonEncode(BlocProvider.of<ScoutingSessionBloc>(context).exportHollistic().toString())}\n\nEphemeral\n${EphemeralScoutingData.fromHollistic(BlocProvider.of<ScoutingSessionBloc>(context).exportHollistic())}")),
+                                child: Text.rich(
+                                  TextSpan(
+                                      text:
+                                          "RAW\n${jsonEncode(BlocProvider.of<ScoutingSessionBloc>(context).exportMapDeep().toString())}\n\nHollistic\n${jsonEncode(BlocProvider.of<ScoutingSessionBloc>(context).exportHollistic().toString())}\n\nEphemeral\n${EphemeralScoutingData.fromHollistic(BlocProvider.of<ScoutingSessionBloc>(context).exportHollistic())}\n\nComments\n${BlocProvider.of<ScoutingSessionBloc>(context).comments.comment}",),
+                                ),
                               ),
                             ),
                             onConfirm: () {})),

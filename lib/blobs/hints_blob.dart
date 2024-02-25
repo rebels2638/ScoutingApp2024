@@ -14,8 +14,11 @@ class WarningHintsBlob extends StatelessWidget {
       onTap: () async => await launchInformDialog(context,
           message: const Text.rich(TextSpan(children: <InlineSpan>[
             TextSpan(
+                text: "This is a Warning Hint\n\n",
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            TextSpan(
                 text:
-                    "These are hints, they are meant to help you utilize the app better. They come in these flavors:\n 1. Informational - You can identify them by their blue bodies\n 2. Warning - You can identify them by their orange yellowish bodies indicating you should be mindful\n 3. Apex - You can identify them by their red bodies indicating that you should tread carefully"),
+                    "Hints they are meant to help you utilize the app better. They come in these flavors:\n 1. Informational - You can identify them by their blue bodies\n 2. Warning - You can identify them by their orange yellowish bodies indicating you should be mindful\n 3. Apex - You can identify them by their red bodies indicating that you should tread carefully"),
             TextSpan(
                 text:
                     "\n\nIf you don't want to see them, you can turn them off in the settings.",
@@ -74,8 +77,11 @@ class ApexHintsBlob extends StatelessWidget {
       onTap: () async => await launchInformDialog(context,
           message: const Text.rich(TextSpan(children: <InlineSpan>[
             TextSpan(
+                text: "This is an Apex Hint\n\n",
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            TextSpan(
                 text:
-                    "These are hints, they are meant to help you utilize the app better. They come in these flavors:\n 1. Informational - You can identify them by their blue bodies\n 2. Warning - You can identify them by their orange yellowish bodies indicating you should be mindful\n 3. Apex - You can identify them by their red bodies indicating that you should tread carefully"),
+                    "Hints are meant to help you utilize the app better. They come in these flavors:\n 1. Informational - You can identify them by their blue bodies\n 2. Warning - You can identify them by their orange yellowish bodies indicating you should be mindful\n 3. Apex - You can identify them by their red bodies indicating that you should tread carefully"),
             TextSpan(
                 text:
                     "\n\nIf you don't want to see them, you can turn them off in the settings.",
@@ -134,8 +140,11 @@ class InformationalHintsBlob extends StatelessWidget {
       onTap: () async => await launchInformDialog(context,
           message: const Text.rich(TextSpan(children: <InlineSpan>[
             TextSpan(
+                text: "This is an Informational Hint\n\n",
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            TextSpan(
                 text:
-                    "These are hints, they are meant to help you utilize the app better. They come in these flavors:\n 1. Informational - You can identify them by their blue bodies\n 2. Warning - You can identify them by their orange yellowish bodies indicating you should be mindful\n 3. Apex - You can identify them by their red bodies indicating that you should tread carefully"),
+                    "Hints are meant to help you utilize the app better. They come in these flavors:\n 1. Informational - You can identify them by their blue bodies\n 2. Warning - You can identify them by their orange yellowish bodies indicating you should be mindful\n 3. Apex - You can identify them by their red bodies indicating that you should tread carefully"),
             TextSpan(
                 text:
                     "\n\nIf you don't want to see them, you can turn them off in the settings.",

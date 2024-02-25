@@ -11,17 +11,17 @@ import 'package:scouting_app_2024/utils.dart';
 import 'package:theme_provider/theme_provider.dart';
 import 'package:yaml/yaml.dart';
 
-class AvaliableTheme {
+class AvailableTheme {
   final String properName;
   final bool isDarkMode;
   final String author;
   late String id;
   final IconData? icon;
 
-  AvaliableTheme(this.properName, this.id, this.icon, this.author,
+  AvailableTheme(this.properName, this.id, this.icon, this.author,
       [this.isDarkMode = true]);
 
-  static final List<AvaliableTheme> export = <AvaliableTheme>[
+  static final List<AvailableTheme> export = <AvailableTheme>[
     /*
     AvaliableTheme.builtin("Default Dark"),
     AvaliableTheme.builtin("Default Light", false),
@@ -33,8 +33,8 @@ class AvaliableTheme {
     */
   ];
 
-  static AvaliableTheme of(String name) {
-    for (AvaliableTheme theme in export) {
+  static AvailableTheme of(String name) {
+    for (AvailableTheme theme in export) {
       if (theme.id == name) {
         return theme;
       }
@@ -117,7 +117,7 @@ final class ThemeBlob {
                     data: better,
                     description:
                         "A ${better.brightness.name} theme"));
-                AvaliableTheme.export.add(AvaliableTheme(
+                AvailableTheme.export.add(AvailableTheme(
                     x['canonical_name'],
                     x['id'],
                     icon,
@@ -171,7 +171,7 @@ final class ThemeBlob {
               .apply(fontFamily: Shared.FONT_FAMILY_SANS),
         );
         export.add(_gen(id: r, data: better));
-        AvaliableTheme.export.add(AvaliableTheme(
+        AvailableTheme.export.add(AvailableTheme(
             r2, r, Icons.palette_rounded, "Builtin", true));
       } else {
         throw "BUG WITH LOADING DEFAULT THEME! 049_$i";

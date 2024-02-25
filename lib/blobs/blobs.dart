@@ -207,14 +207,12 @@ SnackBar yummyWarningSnackBar(String message, [double width = 300]) =>
     yummySnackBar(
         message: message,
         backgroundColor: Colors.amber[200],
-        width: width,
         icon: const Icon(Icons.warning_rounded, color: Colors.black));
 
 @pragma("vm:prefer-inline")
 SnackBar yummyDeadlySnackBar(String message, [double width = 300]) =>
     yummySnackBar(
         message: message,
-        width: width,
         backgroundColor: Colors.red[200],
         icon: const Icon(Icons.cancel_rounded, color: Colors.black));
 
@@ -230,13 +228,10 @@ SnackBar yummySnackBar(
         TextStyle textStyle = const TextStyle(
             fontWeight: FontWeight.w700,
             fontSize: 16,
-            color: Colors
-                .black), // lmao not following material design here
-        double? width}) =>
+            color: Colors.black)}) =>
     SnackBar(
         backgroundColor: backgroundColor,
-        width: margin == null ? width : null,
-        behavior: SnackBarBehavior.floating,
+        behavior: SnackBarBehavior.fixed,
         margin: margin,
         duration: duration,
         showCloseIcon: showCloseIcon,
@@ -292,6 +287,7 @@ Future<void> launchInformDialog(BuildContext context,
 Future<void> launchConfirmDialog(BuildContext context,
     {required Widget message,
     Icon? icon,
+    bool showTitle = true,
     String title = "Are you sure?",
     bool showOkLabel = true,
     String okLabel = "Yes",
@@ -305,7 +301,7 @@ Future<void> launchConfirmDialog(BuildContext context,
       context: context,
       builder: (BuildContext context) => AlertDialog(
               icon: icon ?? const Icon(Icons.warning_amber_rounded),
-              title: Text(title),
+              title: showTitle ? Text(title) : null,
               content: message,
               actions: <Widget>[
                 if (showOkLabel)
