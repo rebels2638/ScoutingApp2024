@@ -413,7 +413,6 @@ class _ScoutingViewState extends State<ScoutingView>
                           .add(AutoUpdateEvent());
                     })),
             form_label("Note(s) picked up\n",
-                hint: "Hello",
                 child: Flexible(
                   child: MultiSelectBlob<AutoPickup>(
                       items: <String, AutoPickup>{
