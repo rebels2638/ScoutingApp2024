@@ -964,8 +964,7 @@ class _ScoutingViewState extends State<ScoutingView>
       children: <Widget>[
         Flexible(
             flex: 0,
-            child: Wrap(
-                children: strutAll(<Widget>[
+            child: Wrap(runSpacing: 8, spacing: 8, children: <Widget>[
               if (PreferCompactModal.isCompactPreferred(context))
                 IconButton.filledTonal(
                     onPressed: () async => await launchConfirmDialog(
@@ -1157,7 +1156,7 @@ class _ScoutingViewState extends State<ScoutingView>
                               ),
                             ),
                             onConfirm: () {})),
-            ], width: 12))),
+            ])),
         const SizedBox(height: 20),
         Flexible(
             child: UseAlternativeLayoutModal
