@@ -91,28 +91,114 @@ class _SettingsViewState extends State<SettingsView> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Wrap(alignment: WrapAlignment.center, children: <Widget>[
-            AnimatedSwitcher(
-                transitionBuilder:
-                    (Widget child, Animation<double> animation) {
-                  return ScaleTransition(
-                      scale: animation, child: child);
-                },
-                duration: const Duration(milliseconds: 300),
-                switchInCurve: Curves.ease,
-                switchOutCurve: Curves.ease,
-                child: !PreferCompactModal.isCompactPreferred(context)
-                    ? // i could reverse the values, but thats just too many ctrl+c ctrl+v
-                    preferTonalButton(
-                        onPressed: () => launchConfirmDialog(context,
-                                message: const Text(
-                                    "Are you sure you want to reset all user telemetry? This means all of your usage statistics will be removed. However, your scouting data will not be."),
-                                onConfirm: () {
-                              UserTelemetry().reset();
-                              UserTelemetry().resetHard();
+          Wrap(
+              alignment: WrapAlignment.center,
+              runSpacing: 4,
+              spacing: 6,
+              children: <Widget>[
+                AnimatedSwitcher(
+                    transitionBuilder:
+                        (Widget child, Animation<double> animation) {
+                      return ScaleTransition(
+                          scale: animation, child: child);
+                    },
+                    duration: const Duration(milliseconds: 300),
+                    switchInCurve: Curves.ease,
+                    switchOutCurve: Curves.ease,
+                    child: !PreferCompactModal.isCompactPreferred(
+                            context)
+                        ? // i could reverse the values, but thats just too many ctrl+c ctrl+v
+                        preferTonalButton(
+                            onPressed:
+                                () => launchConfirmDialog(context,
+                                        message: const Text(
+                                            "Are you sure you want to reset all user telemetry? This means all of your usage statistics will be removed. However, your scouting data will not be."),
+                                        onConfirm: () {
+                                      UserTelemetry().reset();
+                                      UserTelemetry().resetHard();
+                                      UserTelemetry().save();
+                                      ScaffoldMessenger.of(
+                                              globalScaffoldKey
+                                                  .currentState!
+                                                  .context)
+                                          .showSnackBar(yummySnackBar(
+                                              duration:
+                                                  const Duration(
+                                                      milliseconds:
+                                                          1500),
+                                              margin: null,
+                                              icon: Icon(
+                                                  Icons.save_rounded,
+                                                  color: ThemeProvider
+                                                          .themeOf(
+                                                              context)
+                                                      .data
+                                                      .colorScheme
+                                                      .background),
+                                              backgroundColor:
+                                                  ThemeProvider.themeOf(
+                                                          context)
+                                                      .data
+                                                      .colorScheme
+                                                      .primary,
+                                              message:
+                                                  "Settings Reset!"));
+                                    }),
+                            icon: const Icon(Icons.replay_rounded),
+                            label: const Text("Reset Telemetry"))
+                        : FilledButton(
+                            onPressed:
+                                () => launchConfirmDialog(context,
+                                        message:
+                                            const Text("Are you sure you want to reset all user telemetry? This means all of your usage statistics will be removed. However, your scouting data will not be."),
+                                        onConfirm: () {
+                                      UserTelemetry().reset();
+                                      UserTelemetry().resetHard();
+                                      UserTelemetry().save();
+                                      ScaffoldMessenger.of(
+                                              globalScaffoldKey
+                                                  .currentState!
+                                                  .context)
+                                          .showSnackBar(yummySnackBar(
+                                              duration:
+                                                  const Duration(
+                                                      milliseconds:
+                                                          1500),
+                                              margin: null,
+                                              icon: Icon(
+                                                  Icons.save_rounded,
+                                                  color: ThemeProvider
+                                                          .themeOf(
+                                                              context)
+                                                      .data
+                                                      .colorScheme
+                                                      .background),
+                                              backgroundColor:
+                                                  ThemeProvider.themeOf(
+                                                          context)
+                                                      .data
+                                                      .colorScheme
+                                                      .primary,
+                                              message:
+                                                  "Settings Reset!"));
+                                    }),
+                            child: const Icon(Icons.replay_rounded))),
+                const SizedBox(width: 12),
+                AnimatedSwitcher(
+                    transitionBuilder:
+                        (Widget child, Animation<double> animation) {
+                      return ScaleTransition(
+                          scale: animation, child: child);
+                    },
+                    duration: const Duration(milliseconds: 300),
+                    switchInCurve: Curves.ease,
+                    switchOutCurve: Curves.ease,
+                    child: !PreferCompactModal.isCompactPreferred(
+                            context)
+                        ? preferTonalButton(
+                            onPressed: () {
                               UserTelemetry().save();
-                              ScaffoldMessenger.of(globalScaffoldKey
-                                      .currentState!.context)
+                              ScaffoldMessenger.of(context)
                                   .showSnackBar(yummySnackBar(
                                       duration: const Duration(
                                           milliseconds: 1500),
@@ -130,20 +216,14 @@ class _SettingsViewState extends State<SettingsView> {
                                               .data
                                               .colorScheme
                                               .primary,
-                                      message: "Settings Reset!"));
-                            }),
-                        icon: const Icon(Icons.replay_rounded),
-                        label: const Text("Reset Telemetry"))
-                    : FilledButton(
-                        onPressed: () => launchConfirmDialog(context,
-                                message: const Text(
-                                    "Are you sure you want to reset all user telemetry? This means all of your usage statistics will be removed. However, your scouting data will not be."),
-                                onConfirm: () {
-                              UserTelemetry().reset();
-                              UserTelemetry().resetHard();
+                                      message: "Settings Saved!"));
+                            },
+                            icon: const Icon(Icons.save_alt_rounded),
+                            label: const Text("Save Settings"))
+                        : FilledButton(
+                            onPressed: () {
                               UserTelemetry().save();
-                              ScaffoldMessenger.of(globalScaffoldKey
-                                      .currentState!.context)
+                              ScaffoldMessenger.of(context)
                                   .showSnackBar(yummySnackBar(
                                       duration: const Duration(
                                           milliseconds: 1500),
@@ -161,79 +241,24 @@ class _SettingsViewState extends State<SettingsView> {
                                               .data
                                               .colorScheme
                                               .primary,
-                                      message: "Settings Reset!"));
-                            }),
-                        child: const Icon(Icons.replay_rounded))),
-            const SizedBox(width: 12),
-            AnimatedSwitcher(
-                transitionBuilder:
-                    (Widget child, Animation<double> animation) {
-                  return ScaleTransition(
-                      scale: animation, child: child);
-                },
-                duration: const Duration(milliseconds: 300),
-                switchInCurve: Curves.ease,
-                switchOutCurve: Curves.ease,
-                child: !PreferCompactModal.isCompactPreferred(context)
-                    ? preferTonalButton(
-                        onPressed: () {
-                          UserTelemetry().save();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              yummySnackBar(
-                                  duration: const Duration(
-                                      milliseconds: 1500),
-                                  margin: null,
-                                  icon: Icon(Icons.save_rounded,
-                                      color: ThemeProvider.themeOf(
-                                              context)
-                                          .data
-                                          .colorScheme
-                                          .background),
-                                  backgroundColor:
-                                      ThemeProvider.themeOf(context)
-                                          .data
-                                          .colorScheme
-                                          .primary,
-                                  message: "Settings Saved!"));
-                        },
-                        icon: const Icon(Icons.save_alt_rounded),
-                        label: const Text("Save Settings"))
-                    : FilledButton(
-                        onPressed: () {
-                          UserTelemetry().save();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              yummySnackBar(
-                                  duration: const Duration(
-                                      milliseconds: 1500),
-                                  margin: null,
-                                  icon: Icon(Icons.save_rounded,
-                                      color: ThemeProvider.themeOf(
-                                              context)
-                                          .data
-                                          .colorScheme
-                                          .background),
-                                  backgroundColor:
-                                      ThemeProvider.themeOf(context)
-                                          .data
-                                          .colorScheme
-                                          .primary,
-                                  message: "Settings Saved!"));
-                        },
-                        child: const Icon(Icons.save_alt_rounded))),
-            if (ShowConsoleModal.isShowingConsole(context))
-              const SizedBox(width: 12),
-            if (ShowConsoleModal.isShowingConsole(context))
-              AnimatedSwitcher(
-                  transitionBuilder:
-                      (Widget child, Animation<double> animation) {
-                    return ScaleTransition(
-                        scale: animation, child: child);
-                  },
-                  duration: const Duration(milliseconds: 300),
-                  switchInCurve: Curves.ease,
-                  switchOutCurve: Curves.ease,
-                  child:
-                      !PreferCompactModal.isCompactPreferred(context)
+                                      message: "Settings Saved!"));
+                            },
+                            child:
+                                const Icon(Icons.save_alt_rounded))),
+                if (ShowConsoleModal.isShowingConsole(context))
+                  const SizedBox(width: 12),
+                if (ShowConsoleModal.isShowingConsole(context))
+                  AnimatedSwitcher(
+                      transitionBuilder: (Widget child,
+                          Animation<double> animation) {
+                        return ScaleTransition(
+                            scale: animation, child: child);
+                      },
+                      duration: const Duration(milliseconds: 300),
+                      switchInCurve: Curves.ease,
+                      switchOutCurve: Curves.ease,
+                      child: !PreferCompactModal.isCompactPreferred(
+                              context)
                           ? preferTonalButton(
                               onPressed: () async {
                                 await launchConfirmDialog(context,
@@ -257,7 +282,7 @@ class _SettingsViewState extends State<SettingsView> {
                               },
                               child: const Icon(
                                   Icons.developer_mode_rounded)))
-          ]),
+              ]),
           SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Padding(

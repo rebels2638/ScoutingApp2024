@@ -71,7 +71,7 @@ class ConsoleStateComponent extends State<_ConsoleComponent> {
             const ApexHintsBlob("Developer Section!",
                 "This part of the app is designed for debugging and development purposes, so some features may compromise the app's stability."),
           const SizedBox(height: 14),
-          Wrap(children: <Widget>[
+          Wrap(runSpacing: 6, spacing: 6, children: <Widget>[
             TextButton.icon(
                 onPressed: () =>
                     setState(() => internalConsoleBuffer.clear()),

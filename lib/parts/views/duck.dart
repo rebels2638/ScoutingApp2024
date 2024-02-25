@@ -1896,7 +1896,9 @@ class _DucMatchTileState extends State<DucMatchTile> {
                       overflow: TextOverflow.ellipsis),
                   child: Expanded(
                     child: Wrap(
-                      children: strutAll(<Widget>[
+                      runSpacing: 8,
+                      spacing: 8,
+                      children: <Widget>[
                         if (ShowConsoleModal.isShowingConsole(
                             context))
                           IconButton.filledTonal(
@@ -1975,7 +1977,7 @@ class _DucMatchTileState extends State<DucMatchTile> {
                               icon: const Icon(
                                   Icons.delete_forever_rounded),
                               label: const Text("Delete")),
-                      ], width: 6),
+                      ],
                     ),
                   ),
                   icon: const Icon(Icons.cell_tower_rounded),
