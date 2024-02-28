@@ -372,6 +372,16 @@ class _AboutAppViewState extends State<AboutAppView> {
                   onPressed: () async => await launchConfirmDialog(
                       context,
                       message: const Text(
+                          "You are about to visit this app's tutorial video (how-to) on YouTube."),
+                      onConfirm: () async => await launchUrl(
+                          Uri.parse(
+                              REBEL_ROBOTICS_APP_TUTORIAL_VIDEO_URL))),
+                  label: const Text("Tutorial Video"),
+                  icon: const Icon(Icons.live_help_rounded)),
+              preferTonalButton(
+                  onPressed: () async => await launchConfirmDialog(
+                      context,
+                      message: const Text(
                           "You are about to visit this app's source code on Github."),
                       onConfirm: () async => await launchUrl(
                           Uri.parse(
