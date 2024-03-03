@@ -280,26 +280,7 @@ class _AboutAppViewState extends State<AboutAppView> {
                         )),
                     const TextSpan(
                       text:
-                          "Chiming Wang\nRichard Xu\nAarav Minocha\nAiden Pan",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    const TextSpan(
-                      text: _DIVIDER,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    const TextSpan(
-                        text: "Helpers\n",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 17,
-                          //decoration:TextDecoration.underline,
-                        )),
-                    const TextSpan(
-                      text: "Conner Shea",
+                          "Chiming Wang\nRichard Xu\nAarav Minocha",
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                       ),
