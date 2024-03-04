@@ -58,9 +58,9 @@ They can be found under the <a href="https://github.com/rebels2638/ScoutingApp20
 
 **Build for iOS** `flutter build ipa --release --no-tree-shake-icons`
 
-*Not Supported:* web
+*Not Supported:* Web,Linux
 
-*Not tested:* Linux, OSX
+*Not tested:* OSX
 
 > [!CAUTION]
 > These commands are not going to certify or sign the built binary, so use the respective platform certification program!
