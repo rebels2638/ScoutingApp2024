@@ -73,11 +73,13 @@ class SingleSelectBlob<T> extends StatelessWidget {
   final bool wrap;
   final Icon checkedIndicator;
   final void Function(T selected) onSelected;
+  final String initialSelected;
 
   const SingleSelectBlob(
       {super.key,
       Icon? checkedIndicator,
       required this.items,
+      required this.initialSelected,
       required this.onSelected,
       this.wrap = true})
       : checkedIndicator =
@@ -85,7 +87,11 @@ class SingleSelectBlob<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(items.containsKey(initialSelected),
+        'initialSelected must be a key in items for $initialSelected not in ${items.keys.toString()}'); // for when im stupid
     return DropdownMenu<T>(
+      requestFocusOnTap:
+          false, // makes it so that the dropdown doesn't show the keyboard lmao
       initialSelection: items.entries.first.value,
       dropdownMenuEntries: <DropdownMenuEntry<T>>[
         for (MapEntry<String, T> e in items.entries)

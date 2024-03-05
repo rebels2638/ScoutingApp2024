@@ -1,37 +1,14 @@
-version: 1.0.5
+version: 1.0.6
 date: 2024-02-25
 author: Jack Meng (exoad)
 comments: "This is a major patch after the first release that hopes to flush out the app for week 1!"
 additions:
-  - Added dark theme "Amore"
-  - Added dark theme "Crimson Noir"
-  - Added dark theme "Misty"
-  - "Swapped out hardcoded warning blocs for dynamic hints that utilize three levels of criticality: Informational, Warning, and Apex"
-  - Altered some of the wording of the scouting form to be more clear
-  - Added semantics & hints to some of the scouting form fields to improve accessibility
-  - Altered the look of the number incrementor buttons to fit the theme better
-  - Added a new section to support qualitative data collection
-  - Some few more word choices for assured confirm dialogs
-  - Patch notes dialog
-  - Connected more components tonal controls
-  - Brought the insights button from DUC over to regular match history
+  - Added a Show Scroll bar setting which can be used to toggle the visibility of the scroll bar
+  - Made it so that most enums for some scouting data are first set to "unset"
 fixes:
-  - Fixed a bug where the number picker would provide a render error when rendering on smaller width displays
-  - Removed the underscore for On Chain section
-  - Typos throughout the app
-  - Changed DUC toggle in settings to "View App as Scouting Leader"
-  - Improved readability of About Page
-  - Black borders around about page image due to usage of JPEG
-  - Typo within the word choices for assured confirm dialogs
-  - A rendering fault occurring with the save and reset settings buttons
-  - Changed "Past Matches" to "Recorded Matches"
-  - Android has a chance to crash due to undisposed controllers
-  - Duplicate fields within match insights
+  - Crushed a major bug where the scouting form's scroll will cull and not persist states
+  - Fixed typos throughout the app
+  - Removed unworthy theme Lemon Berry & Lost
+  - Made it so that multi select and single select will not request keyboard focus when tapped outside of the dropdown arrow
 optimize:
-  - Optimized the layout rendering for the alternative scouting form
-  - Improved the backdrop parallax rendering of the About Page
-  - Compressed some of the about page images to reduce the app size
-  - Improved color rendering and color contrast for the app
-  - Improved animation tick rate for the app (this should help with smoother animations on lower end devices)
-  - App on Windows persisting with the wrong API version
-  - General Raster Jank fixes
+  - Optimized rendering of most scroll views in the app

@@ -26,6 +26,8 @@ UserPrefModel _$UserPrefModelFromJson(Map<String, dynamic> json) =>
               'usedTimeHours', (v) => (v as num?)?.toDouble() ?? 0),
           preferCompact:
               $checkedConvert('preferCompact', (v) => v as bool? ?? false),
+          showScrollbar:
+              $checkedConvert('showScrollbar', (v) => v as bool? ?? false),
           preferTonal:
               $checkedConvert('preferTonal', (v) => v as bool? ?? true),
           showHints: $checkedConvert('showHints', (v) => v as bool? ?? true),
@@ -54,4 +56,5 @@ Map<String, dynamic> _$UserPrefModelToJson(UserPrefModel instance) =>
       'showHints': instance.showHints,
       'usedTimeHours': instance.usedTimeHours,
       'seenPatchNotes': instance.seenPatchNotes,
+      'showScrollbar': instance.showScrollbar,
     };

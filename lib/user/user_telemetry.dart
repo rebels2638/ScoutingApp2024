@@ -112,6 +112,9 @@ class UserPrefModel {
   @JsonKey(required: false, defaultValue: false)
   bool seenPatchNotes;
 
+  @JsonKey(required: false, defaultValue: false)
+  bool showScrollbar;
+
   // make sure to run flutter pub run build_runner build
   UserPrefModel(
       {required this.selectedTheme,
@@ -121,6 +124,7 @@ class UserPrefModel {
       this.seenPatchNotes = false,
       this.usedTimeHours = 0,
       this.preferCompact = false,
+      this.showScrollbar = false,
       this.preferTonal = true,
       this.showHints = true,
       this.preferCanonical = true,

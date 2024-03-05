@@ -107,10 +107,12 @@ class _NumPickBtn extends StatefulWidget {
   final String label;
   final Icon icon;
   final String headerMessage;
+  final int initialData;
 
   const _NumPickBtn(
       {required this.label,
       required this.icon,
+      required this.initialData,
       required this.itemCount,
       required this.minValue,
       required this.maxValue,
@@ -127,7 +129,7 @@ class _NumPickBtnState extends State<_NumPickBtn> {
   @override
   void initState() {
     super.initState();
-    _initValue = -1;
+    _initValue = widget.initialData;
   }
 
   @override
@@ -183,6 +185,7 @@ Widget form_numpick(BuildContext context,
         {required String label,
         required Icon icon,
         Icon? headerIcon,
+        required int initialData,
         required int minValue,
         required int maxValue,
         bool infiniteLoop = true,
@@ -193,6 +196,7 @@ Widget form_numpick(BuildContext context,
     _NumPickBtn(
         label: label,
         icon: icon,
+        initialData: initialData,
         itemCount: maxValue.abs().toString().length,
         minValue: minValue,
         maxValue: maxValue,
@@ -252,14 +256,14 @@ Widget form_label(String text,
         Widget? icon}) =>
     UserTelemetry().currentModel.useAltLayout
         ? Column(
-  mainAxisSize: MainAxisSize.min,
-  crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
                 SizedBox(
                   child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         if (hint != null)
                           IconButton(

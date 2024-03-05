@@ -14,6 +14,7 @@ import 'package:scouting_app_2024/parts/bits/seen_patchnotes.dart';
 import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
 import 'package:scouting_app_2024/parts/bits/show_fps_monitor.dart';
+import 'package:scouting_app_2024/parts/bits/show_scrollbar.dart';
 import 'package:scouting_app_2024/parts/patchnotes.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/shared.dart';
@@ -38,16 +39,23 @@ class IntermediateMaterialApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget appView = ShowFPS(
+        alignment: Alignment.topLeft,
+        visible: ShowFPSMonitorModal.isShowingFPSMonitor(context),
+        showChart: true,
+        borderRadius:
+            const BorderRadius.only(bottomRight: Radius.circular(8)),
+        child: const _AppView());
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeProvider.themeOf(context).data,
-      home: ShowFPS(
-          alignment: Alignment.topLeft,
-          visible: ShowFPSMonitorModal.isShowingFPSMonitor(context),
-          showChart: true,
-          borderRadius: const BorderRadius.only(
-              bottomRight: Radius.circular(8)),
-          child: const _AppView()),
+      home: !Provider.of<ShowScrollBarModal>(context, listen: false)
+              .showingScrollbar
+          ? ScrollConfiguration(
+              behavior: ScrollConfiguration.of(context)
+                  .copyWith(scrollbars: false),
+              child: appView)
+          : appView,
     );
   }
 }
@@ -253,19 +261,20 @@ class _AppViewState extends State<_AppView> {
                                                           "version"],
                                                       "date":
                                                           map["date"],
-                                                      "author":
-                                                          map["author"],
+                                                      "author": map[
+                                                          "author"],
                                                       "additions": map[
                                                           "additions"],
-                                                      "fixes":
-                                                          map["fixes"],
+                                                      "fixes": map[
+                                                          "fixes"],
                                                       "optimize": map[
                                                           "optimize"]
                                                     });
                                                   } else {
                                                     return const Center(
                                                       child: SpinBlob(
-                                                          child: Image(
+                                                          child:
+                                                              Image(
                                                         image: ExactAssetImage(
                                                             "assets/appicon_header.png"),
                                                         width: 148,
@@ -357,8 +366,8 @@ class _AppViewState extends State<_AppView> {
                                     title: const Text("Game Info")),
                                 body: SafeArea(
                                   child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(left: 10),
+                                    padding: const EdgeInsets.only(
+                                        left: 10),
                                     child: gameInfoView.child,
                                   ),
                                 ),

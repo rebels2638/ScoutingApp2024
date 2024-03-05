@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:scouting_app_2024/debug.dart';
+import 'package:scouting_app_2024/extern/string.dart';
 
 typedef pair<A, B> = (A first, B second);
 
@@ -57,6 +58,17 @@ class GenericUtils {
       csvData.write("\n");
     }
     return csvData.toString();
+  }
+
+  /// strips all enums "unset"
+  static Map<String, T> mapEnumExcludeUnset<T extends Enum>(
+      List<T> values) {
+    // mainly used for ui based form building
+    Map<String, T> map = <String, T>{};
+    for (T e in values) {
+      map[e.name.formalize] = e;
+    }
+    return map;
   }
 }
 

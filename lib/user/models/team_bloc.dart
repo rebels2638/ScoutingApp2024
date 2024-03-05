@@ -75,12 +75,12 @@ class EndgameInfo extends ScoutingInfo
       required this.micScored});
 
   factory EndgameInfo.optional(
-          {EndStatus endState = EndStatus.on_stage,
-          Harmony harmony = Harmony.no,
+          {EndStatus endState = EndStatus.unset,
+          Harmony harmony = Harmony.unset,
           bool harmonyAttempted = false,
-          MatchResult matchResult = MatchResult.loss,
-          TrapScored trapScored = TrapScored.no,
-          MicScored micScored = MicScored.no}) =>
+          MatchResult matchResult = MatchResult.unset,
+          TrapScored trapScored = TrapScored.unset,
+          MicScored micScored = MicScored.unset}) =>
       EndgameInfo(
         harmonyAttempted: harmonyAttempted,
         matchResult: matchResult,
@@ -339,10 +339,10 @@ class PrelimInfo extends ScoutingInfo
           {int? timeStamp,
           int teamNumber = 0,
           int matchNumber = 0,
-          MatchType matchType = MatchType.qualification,
+          MatchType matchType = MatchType.unset,
           TeamAlliance alliance = TeamAlliance.red,
           MatchStartingPosition startingPosition =
-              MatchStartingPosition.middle}) =>
+              MatchStartingPosition.unset}) =>
       PrelimInfo(
           timeStamp:
               timeStamp ?? DateTime.now().millisecondsSinceEpoch,

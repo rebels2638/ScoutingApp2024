@@ -10,6 +10,7 @@ import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
 import 'package:scouting_app_2024/parts/bits/show_fps_monitor.dart';
 import 'package:scouting_app_2024/parts/bits/show_hints.dart';
+import 'package:scouting_app_2024/parts/bits/show_scrollbar.dart';
 import 'package:scouting_app_2024/parts/bits/use_alt_layout.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:scouting_app_2024/user/env.dart';
@@ -297,6 +298,27 @@ class _SettingsViewState extends State<SettingsView> {
                       children: strutAll(<Widget>[
                         SettingsView._labelIt(
                             icon: CommunityMaterialIcons
+                                .chemical_weapon,
+                            label: "Scouting Leader Mode",
+                            hint:
+                                "Enables the DUC collection tool for scouting leaders",
+                            child: BasicToggleSwitch(
+                                initialValue: UserTelemetry()
+                                    .currentModel
+                                    .showExperimental,
+                                onChanged: (bool val) {
+                                  Provider.of<ShowExperimentalModal>(
+                                              context,
+                                              listen: false)
+                                          .showingExperimental =
+                                      val; // the name is going to be off, but who cares lmao
+                                  UserTelemetry()
+                                      .currentModel
+                                      .showExperimental = val;
+                                  UserTelemetry().save();
+                                })),
+                        SettingsView._labelIt(
+                            icon: CommunityMaterialIcons
                                 .material_design,
                             label: "Prefer Tonal Components",
                             hint:
@@ -317,23 +339,23 @@ class _SettingsViewState extends State<SettingsView> {
                                     }))),
                         SettingsView._labelIt(
                             icon: CommunityMaterialIcons
-                                .chemical_weapon,
-                            label: "Scouting Leader Mode",
+                                .gesture_swipe_vertical,
+                            label: "Show Scroll Bars",
                             hint:
-                                "Enables the DUC collection tool for scouting leaders",
+                                "Makes scroll bars on certain pages disappear or appear (requires restart)",
                             child: BasicToggleSwitch(
                                 initialValue: UserTelemetry()
                                     .currentModel
-                                    .showExperimental,
+                                    .showScrollbar,
                                 onChanged: (bool val) {
-                                  Provider.of<ShowExperimentalModal>(
+                                  Provider.of<ShowScrollBarModal>(
                                               context,
                                               listen: false)
-                                          .showingExperimental =
+                                          .showingScrollbar =
                                       val; // the name is going to be off, but who cares lmao
                                   UserTelemetry()
                                       .currentModel
-                                      .showExperimental = val;
+                                      .showScrollbar = val;
                                   UserTelemetry().save();
                                 })),
                         SettingsView._labelIt(
