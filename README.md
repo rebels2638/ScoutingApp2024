@@ -1,88 +1,76 @@
 <div align="center">
 <img src="repo/assets/logo.png" width=88 />
 <br/>
-<h1>Rebel Robotics Scouting App</h1>
-    <img alt="img" src="https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white" />
-<h2><em>Argus</em></h2>
-<h3><em>CRESCENDO</em> 2024</h3>
+<h1>2638 Scouting App "<em>Argus</em>"</h1>
 
-Scouting App for the 2024 year built using the **Flutter Framework**.
+<strong><em>For 2024 FRC CRESCENDO</em></strong>
 
-<details>
-    <summary>
-        <h3>Preview</h3>
-    </summary>
-    <img src="./repo/assets/Screenshot.png" />
-    <br/>
-    <img src="./repo/assets/Screenshot_2.png" />
+Created using the **Flutter** framework with the hopes of improving the overall scouting experience. 
 
-> **Please note this is a development screenshot!**
+### Features
+<kbd> <strong>📡 Wireless Data Transfer[^1] </strong></kbd> <kbd><strong> 🧮 Builtin data analysis[^2] (DUC) </strong></kbd> <kbd><strong> 📱 Customizable Interface[^3] </strong></kbd> <kbd><strong> 📝 Local Data Storage[^4] </strong></kbd> <kbd><strong> 🌐 Blue Alliance interface[^5] </strong></kbd>
+<kbd> <strong>📈 CSV Exporting </strong></kbd> <kbd> <strong>🗂️ QR Code Exporting[^6] </strong></kbd> <kbd> <strong>🖥️ Cross Platform[^7] </strong></kbd> <kbd> <strong>⚙️ Multi Platform Compatible[^8] </strong></kbd> ... and more
 
-</details>
+<br/>
+
+<kbd>
+<a href="https://github.com/rebels2638/ScoutingApp2024/releases"><img src="https://img.shields.io/badge/Download Here-f0b630.svg?style=for-the-badge" height=46 /></a>
+</kbd>
+<br/>
+<kbd>
+<a href="https://apps.apple.com/us/app/2638-scout/id1460336620?platform=ipad"><img src="https://img.shields.io/badge/App_Store-0D96F6?style=for-the-badge&logo=app-store&logoColor=white" height=26 /></a>
+</kbd>
+
+### Team
+
+<kbd>
+<a href="https://github.com/exoad">
+<img src="https://avatars.githubusercontent.com/u/45053009?v=4" width=102> <h1><strong>Jack Meng</strong></h1><h3>exoad</h3><br/><strong><em>Developer</em></strong>
+</a>
+</kbd>
+<br/>
+<br/>
+
+<div>
+    
+<kbd>
+<a href="https://github.com/aaravmin">
+<img src="https://avatars.githubusercontent.com/u/34218396?s=64&v=4" width=54> <h3><strong>Aarav Minocha</strong></h3><br/><em>Contributor</em>
+</a>
+</kbd>
+
+<kbd>
+<a href="https://github.com/2bf">
+<img src="https://avatars.githubusercontent.com/u/88217123?s=54&v=4" width=54> <h3><strong>Chiming Wang</strong></h3><br/><em>Contributor</em>
+</a>
+</kbd>
+<kbd>
+<a href="https://github.com/Richard28277">
+<img src="https://avatars.githubusercontent.com/u/95157603?s=54&v=4" width=54> <h3><strong>Richard Xu</strong></h3><br/><em>Contributor</em>
+</a>
+</kbd>
 
 </div>
+<br/>
+<br/>
 
-## Snapshots
+*Have a suggestion or bug report? Head over to the `Issues` tab!*
 
-Snapshots are releases & patches of the app.
-
-**Snapshots**
-[![build windows](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder3.yml/badge.svg)](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder3.yml) [![build android (apk)](https://github.com/rebels2638/ScoutingApp2024/actions/workflows/builder_android.yml/badge.svg)](https://github.com/rebels2638/ScoutingApp2024/actions/workflows/builder_android.yml) [![build ipadOS (ios)](https://github.com/rebels2638/ScoutingApp2024/actions/workflows/builder_ios.yml/badge.svg)](https://github.com/rebels2638/ScoutingApp2024/actions/workflows/builder_ios.yml)
-
-[**Apple AppStore**](https://apps.apple.com/us/app/2638-scout/id1460336620)
-
-![](https://img.shields.io/github/repo-size/rebels2638/ScoutingApp2024?style=for-the-badge)
-
-> [!CAUTION]
-> Use snapshot releases at your own risk
+</div>
+<br/>
 
 
-**Last Snapshot** ![](https://img.shields.io/github/release-date-pre/rebels2638/ScoutingApp2024)
+[^1]: Wireless Data transfer is implemented using a Bluetooth PAN backed by TCP
+[^2]: The built-in data collector (DUC) is used to simplify data calculations by providing on-demand statistics 
+[^3]: The user can choose from various themes built right into the app along with also customizing the look and feel of the app via the settings
+[^4]: A scouter's data will be stored on their device and can be collected at any time
+[^5]: Blue Alliance's API is built into the app to help you directly find information regarding your team's matches
+[^6]: QR Codes come in two flavors: DUC formatted and raw formatted. DUC is a compressed internal format while raw is either JSON or CSV
+[^7]: Argus supports various platforms, from iOS to Android to OSX to Windows to Linux
+[^8]: Since Argus is cross-platform, it can stay compatible & consistent when data is exchanged between various platforms
 
-They can be found under the <a href="https://github.com/rebels2638/ScoutingApp2024/releases"><kbd>Releases</kbd></a> tab and labeled "Snapshot" (aka Preleases).
 
-## Building
 
-**Prerequisite**
-* Make sure you have the Flutter SDK downloaded, you can find how to install it for your platform [here](https://docs.flutter.dev/get-started/install)
-* If you want to test the App in a mobile environment, make sure you have set up either **Android Studio** or **XCode** for development on those platforms.
 
-1. Clone this repository either through GitHub web or through `git` using `git clone https://github.com/rebels2638/ScoutingApp2024.git`
-2. Go into the project folder
-3. Run `flutter pub get`
-> [!CAUTION]
-> Do not run upgrades unless it is for the Flutter framework or Dart framework itself.
-4. After pub has cached all of the dependencies, determine the platform you want to build for; here is a list of platforms supported:
-
-**Build for Android** `flutter build apk --release --no-tree-shake-icons` or `flutter build aab --release --no-tree-shake-icons`
-
-**Build for Windows** `flutter build windows --release`
-
-**Build for iOS** `flutter build ipa --release --no-tree-shake-icons`
-
-*Not Supported:* Web,Linux
-
-*Not tested:* OSX
-
-> [!CAUTION]
-> These commands will not certify or sign the built binary, so use the respective platform certification program!
-
-## Testing
-
-First, follow the steps in [Building](#building), then just run `flutter run -d [device]`.
-
-`[device]` may vary depending on where you run it. For example, running it directly on a Windows Environment is just `flutter run -d windows`
-
-## Our Team
-
-**Lead Developer**
-
-* Jack Meng ([exoad](https://github.com/exoad))
-
-**Contributors**
-
-* Chiming Wang ([2bf](https://github.com/2bf))
-* Richard Xu ([Richard28277](https://github.com/Richard28277))
-* Aarav Minocha ([aaravmin](https://github.com/aaravmin))
-
-![Contributors List](https://contrib.rocks/image?repo=rebels2638/ScoutingApp2024)
+                   Copyright (C) Jack Meng (exoad) 2023-2024. 
+                    All Rights Reserved.
