@@ -27,7 +27,7 @@ Scouting App for the 2024 year built using the **Flutter Framework**.
 Snapshots are releases & patches of the app.
 
 **Snapshots**
-[![Codemagic build status](https://api.codemagic.io/apps/65d3baea1707304169bc131e/65d3baea1707304169bc131d/status_badge.svg)](https://codemagic.io/apps/65d3baea1707304169bc131e/65d3baea1707304169bc131d/latest_build) [![build windows](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder3.yml/badge.svg)](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder3.yml) [![build android (apk)](https://github.com/rebels2638/ScoutingApp2024/actions/workflows/builder_android.yml/badge.svg)](https://github.com/rebels2638/ScoutingApp2024/actions/workflows/builder_android.yml) [![build ipadOS (ios)](https://github.com/rebels2638/ScoutingApp2024/actions/workflows/builder_ios.yml/badge.svg)](https://github.com/rebels2638/ScoutingApp2024/actions/workflows/builder_ios.yml)
+[![build windows](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder3.yml/badge.svg)](https://github.com/rebels2638/ScoutingApp/actions/workflows/builder3.yml) [![build android (apk)](https://github.com/rebels2638/ScoutingApp2024/actions/workflows/builder_android.yml/badge.svg)](https://github.com/rebels2638/ScoutingApp2024/actions/workflows/builder_android.yml) [![build ipadOS (ios)](https://github.com/rebels2638/ScoutingApp2024/actions/workflows/builder_ios.yml/badge.svg)](https://github.com/rebels2638/ScoutingApp2024/actions/workflows/builder_ios.yml)
 
 [**Apple AppStore**](https://apps.apple.com/us/app/2638-scout/id1460336620)
 
