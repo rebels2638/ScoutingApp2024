@@ -79,8 +79,10 @@ First, follow the steps in [Building](#building), then just run `flutter run -d 
 
 * Jack Meng ([exoad](https://github.com/exoad))
 
-**Developers**
+**Contributors**
 
 * Chiming Wang ([2bf](https://github.com/2bf))
 * Richard Xu ([Richard28277](https://github.com/Richard28277))
 * Aarav Minocha ([aaravmin](https://github.com/aaravmin))
+
+![Contributors List](https://contrib.rocks/image?repo=rebels2638/ScoutingApp2024)
