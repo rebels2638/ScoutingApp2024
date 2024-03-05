@@ -39,7 +39,7 @@ Snapshots are releases & patches of the app.
 
 **Last Snapshot** ![](https://img.shields.io/github/release-date-pre/rebels2638/ScoutingApp2024)
 
-They can be found under the <a href="https://github.com/rebels2638/ScoutingApp2024/releases"><kbd>Releases</kbd></a> tab and labelled "Snapshot" (aka Preleases).
+They can be found under the <a href="https://github.com/rebels2638/ScoutingApp2024/releases"><kbd>Releases</kbd></a> tab and labeled "Snapshot" (aka Preleases).
 
 ## Building
 
@@ -52,7 +52,7 @@ They can be found under the <a href="https://github.com/rebels2638/ScoutingApp20
 3. Run `flutter pub get`
 > [!CAUTION]
 > Do not run upgrades unless it is for the Flutter framework or Dart framework itself.
-4. After pub has cached all of the dependencies, determine the platform you want to build for; here are a list of platforms supported:
+4. After pub has cached all of the dependencies, determine the platform you want to build for; here is a list of platforms supported:
 
 **Build for Android** `flutter build apk --release --no-tree-shake-icons` or `flutter build aab --release --no-tree-shake-icons`
 
@@ -65,13 +65,13 @@ They can be found under the <a href="https://github.com/rebels2638/ScoutingApp20
 *Not tested:* OSX
 
 > [!CAUTION]
-> These commands are not going to certify or sign the built binary, so use the respective platform certification program!
+> These commands will not certify or sign the built binary, so use the respective platform certification program!
 
 ## Testing
 
 First, follow the steps in [Building](#building), then just run `flutter run -d [device]`.
 
-`[device]` may vary depending on where you are going to run it. For example running it directly on a Windows Environment is just `flutter run -d windows`
+`[device]` may vary depending on where you run it. For example, running it directly on a Windows Environment is just `flutter run -d windows`
 
 ## Our Team
 
