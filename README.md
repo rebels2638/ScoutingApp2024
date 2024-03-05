@@ -84,23 +84,3 @@ First, follow the steps in [Building](#building), then just run `flutter run -d 
 * Chiming Wang ([2bf](https://github.com/2bf))
 * Richard Xu ([Richard28277](https://github.com/Richard28277))
 * Aarav Minocha ([aaravmin](https://github.com/aaravmin))
-
-## Resources
-
-**Flutter & Dart**
-
-1. [flutter.dev](https://flutter.dev)
-2. [Flutter API Docs](https://api.flutter.dev/)
-3. [Pub Package Repository](https://pub.dev/)
-4. [dart.dev](https://dart.dev)
-
-**FRC 2024 CRESCENDO**
-
-1. [Game Arena Manual PDF](http://firstfrc.blob.core.windows.net/frc2024/Manual/Sections/2024GameManual-05ARENA.pdf)
-2. [Game Overview PDF](http://firstfrc.blob.core.windows.net/frc2024/Manual/Sections/2024GameManual-04GameOverview.pdf)
-3. [Library](https://www.firstinspires.org/resource-library/frc/competition-manual-qa-system)
-
-**Tools**
-
-1. [Image Background Remover](https://www.remove.bg/)
-2. [Material 3 Theme Builder](https://appainter.dev/)
