@@ -3,6 +3,7 @@ import 'package:scouting_app_2024/extern/color.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_canonical.dart';
 import 'package:scouting_app_2024/parts/bits/use_alt_layout.dart';
 import 'package:scouting_app_2024/user/models/team_model.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class TeamAllianceSwitch extends StatefulWidget {
   final void Function(TeamAlliance alliance) onChanged;
@@ -30,6 +31,8 @@ class _TeamAllianceSwitchState extends State<TeamAllianceSwitch> {
 
   @override
   Widget build(BuildContext context) {
+    bool darkMode = ThemeProvider.themeOf(context).data.brightness ==
+        Brightness.dark;
     return Row(
       mainAxisAlignment:
           UseAlternativeLayoutModal.isAlternativeLayoutPreferred(
@@ -40,11 +43,9 @@ class _TeamAllianceSwitchState extends State<TeamAllianceSwitch> {
         AnimatedSwitcher(
           transitionBuilder:
               (Widget child, Animation<double> animation) {
-            return SlideTransition(
-              position: Tween<Offset>(
-                      begin: const Offset(0, -1),
-                      end: const Offset(0, 0))
-                  .animate(animation),
+            return FadeTransition(
+              opacity:
+                  Tween<double>(begin: 0, end: 1).animate(animation),
               child: child,
             );
           },
@@ -60,12 +61,16 @@ class _TeamAllianceSwitchState extends State<TeamAllianceSwitch> {
                                   context)
                               ? TeamAlliance.red.toColor()
                               : null),
-                  child: const Padding(
-                    padding: EdgeInsets.only(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
                         top: 2, bottom: 2, left: 3, right: 3),
                     child: Text("Red",
-                        style:
-                            TextStyle(fontWeight: FontWeight.w500)),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: darkMode
+                                ? Colors.black
+                                : Colors
+                                    .white)), // so text can still be readable on a multitude of themes
                   ))
               : const Padding(
                   padding: EdgeInsets.only(
@@ -136,11 +141,9 @@ class _TeamAllianceSwitchState extends State<TeamAllianceSwitch> {
         AnimatedSwitcher(
           transitionBuilder:
               (Widget child, Animation<double> animation) {
-            return SlideTransition(
-              position: Tween<Offset>(
-                      begin: const Offset(0, 1),
-                      end: const Offset(0, 0))
-                  .animate(animation),
+            return FadeTransition(
+              opacity:
+                  Tween<double>(begin: 0, end: 1).animate(animation),
               child: child,
             );
           },
@@ -156,12 +159,16 @@ class _TeamAllianceSwitchState extends State<TeamAllianceSwitch> {
                                   context)
                               ? TeamAlliance.blue.toColor()
                               : null),
-                  child: const Padding(
-                    padding: EdgeInsets.only(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
                         top: 2, bottom: 2, left: 3, right: 3),
                     child: Text("Blue",
-                        style:
-                            TextStyle(fontWeight: FontWeight.w500)),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: darkMode
+                                ? Colors.black
+                                : Colors
+                                    .white)), // Color.white prevents some themes from fucking the coloring up and making it unreadable (see above)
                   ))
               : const Padding(
                   padding: EdgeInsets.only(
