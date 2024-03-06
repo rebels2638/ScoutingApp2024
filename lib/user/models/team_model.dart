@@ -19,21 +19,21 @@ enum TeamAlliance {
 }
 
 
-enum MatchType { practice, qualification, playoff, unset }
+enum MatchType { unset, practice, qualification, playoff }
 
-enum MatchResult { win, loss, tie, unset }
+enum MatchResult { unset, win, loss, tie }
 
-enum MatchStartingPosition { amp, middle, stage, unset }
+enum MatchStartingPosition { unset, amp, middle, stage }
 
-enum EndStatus { on_chain, on_stage, failed, unset }
+enum EndStatus { unset, on_chain, on_stage, failed }
 
 enum AutoPickup { amp, middle, stage, no }
 
-enum Harmony { yes, no, missed, unset }
+enum Harmony { unset, yes, no, missed }
 
-enum TrapScored { yes, no, missed, unset }
+enum TrapScored { unset, yes, no, missed }
 
-enum MicScored { yes, no, missed, unset }
+enum MicScored { unset, yes, no, missed }
 
 class HollisticMatchScoutingData
     extends QRCompatibleData<HollisticMatchScoutingData>
