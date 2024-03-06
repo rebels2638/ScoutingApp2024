@@ -171,7 +171,7 @@ class TeleOpInfo extends ScoutingInfo
           scoredSpeaker: scoredSpeaker,
           missedSpeaker: missedSpeaker,
           scoredAmp: scoredAmp,
-          piecesScored: piecesScored,
+          piecesScored: /*piecesScored*/ scoredSpeaker + scoredAmp + scoredWhileAmped,
           missedAmp: missedAmp,
           scoredWhileAmped: scoredWhileAmped,
           driverRating: driverRating);
@@ -183,7 +183,7 @@ class TeleOpInfo extends ScoutingInfo
         "scoredSpeaker": scoredSpeaker,
         "missedSpeaker": missedSpeaker,
         "scoredAmp": scoredAmp,
-        "piecesScored": piecesScored,
+        "piecesScored": /*piecesScored*/ scoredSpeaker + scoredAmp + scoredWhileAmped,
         "missedAmp": missedAmp,
         "scoredWhileAmped": scoredWhileAmped,
         "driverRating": driverRating
@@ -208,7 +208,7 @@ class TeleOpInfo extends ScoutingInfo
   String toCompatibleFormat() {
     return jsonEncode(<String, dynamic>{
       "def": playsDefense,
-      "pieces": piecesScored,
+      "pieces": /*piecesScored*/ scoredSpeaker + scoredAmp + scoredWhileAmped,
       "undSpker": underStage,
       "spker": scoredSpeaker,
       "missSpker": missedSpeaker,
