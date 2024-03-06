@@ -632,22 +632,6 @@ class _ScoutingViewState extends State<ScoutingView>
                         .add(TeleOpUpdateEvent());
                   },
                 )),
-            form_label("Driver rating (1-10)",
-                child: PlusMinusRating(
-                  initialValue: context
-                      .read<ScoutingSessionBloc>()
-                      .teleop
-                      .driverRating,
-                  onValueChanged: (int value) {
-                    context
-                        .read<ScoutingSessionBloc>()
-                        .teleop
-                        .driverRating = value;
-                    context
-                        .read<ScoutingSessionBloc>()
-                        .add(TeleOpUpdateEvent());
-                  },
-                )),
           ])),
       form_sec(context,
           backgroundColor: Colors.transparent,
@@ -788,6 +772,22 @@ class _ScoutingViewState extends State<ScoutingView>
           backgroundColor: Colors.transparent,
           header: (icon: Icons.more_horiz_rounded, title: "Other"),
           child: form_col(<Widget>[
+            form_label("Driver rating (1-10)",
+                child: PlusMinusRating(
+                  initialValue: context
+                      .read<ScoutingSessionBloc>()
+                      .teleop
+                      .driverRating,
+                  onValueChanged: (int value) {
+                    context
+                        .read<ScoutingSessionBloc>()
+                        .teleop
+                        .driverRating = value;
+                    context
+                        .read<ScoutingSessionBloc>()
+                        .add(TeleOpUpdateEvent());
+                  },
+                )),
             form_label("Coopertition",
                 child: BasicToggleSwitch(
                     initialValue: context
