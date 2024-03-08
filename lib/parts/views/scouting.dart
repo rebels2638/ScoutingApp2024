@@ -486,6 +486,7 @@ class _ScoutingViewState extends State<ScoutingView>
             title: "Tele-op"
           ),
           child: form_col(<Widget>[
+            /*
             form_label("Pieces Scored",
                 child: PlusMinus(
                   initialValue: context
@@ -502,6 +503,7 @@ class _ScoutingViewState extends State<ScoutingView>
                         .add(TeleOpUpdateEvent());
                   },
                 )),
+            */
             form_label("Plays Defense",
                 child: BasicToggleSwitch(
                     initialValue: context
