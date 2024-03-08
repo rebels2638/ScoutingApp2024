@@ -21,17 +21,7 @@ class AvailableTheme {
   AvailableTheme(this.properName, this.id, this.icon, this.author,
       [this.isDarkMode = true]);
 
-  static final List<AvailableTheme> export = <AvailableTheme>[
-    /*
-    AvaliableTheme.builtin("Default Dark"),
-    AvaliableTheme.builtin("Default Light", false),
-    AvaliableTheme.builtin("Mint", false),
-    AvaliableTheme.builtin("Forest"),
-    AvaliableTheme.builtin("Bamboo", false),
-    AvaliableTheme.builtin("Peach", false),
-    AvaliableTheme.builtin("Plum")
-    */
-  ];
+  static final List<AvailableTheme> export = <AvailableTheme>[];
 
   static AvailableTheme of(String name) {
     for (AvailableTheme theme in export) {
@@ -181,45 +171,5 @@ final class ThemeBlob {
     }
   }
 
-  static List<AppTheme> export = <AppTheme>[
-    /*
-        _gen(
-            id: "Default Light",
-            data: ThemeData(
-                useMaterial3: true,
-                fontFamily: Shared.FONT_FAMILY_SANS,
-                colorScheme: lightColorScheme3)),
-        _gen(
-            id: "Bamboo",
-            data: ThemeData(
-                useMaterial3: true,
-                fontFamily: Shared.FONT_FAMILY_SANS,
-                colorScheme: matcha)),
-        _gen(
-            id: "Mint",
-            data: ThemeData(
-                useMaterial3: true,
-                fontFamily: Shared.FONT_FAMILY_SANS,
-                colorScheme: lightColorScheme)),
-        _gen(
-            id: "Forest",
-            data: ThemeData(
-                useMaterial3: true,
-                fontFamily: Shared.FONT_FAMILY_SANS,
-                colorScheme: darkColorScheme
-                )),
-        _gen(
-            id: "Peach",
-            data: ThemeData(
-                useMaterial3: true,
-                fontFamily: Shared.FONT_FAMILY_SANS,
-                colorScheme: lightColorScheme2)),
-        _gen(
-            id: "Plum",
-            data: ThemeData(
-                useMaterial3: true,
-                fontFamily: Shared.FONT_FAMILY_SANS,
-                colorScheme: darkColorScheme2)),
-                */
-  ];
+  static List<AppTheme> export = <AppTheme>[];
 }

@@ -8,7 +8,7 @@ import 'package:scouting_app_2024/blobs/animate_blob.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/blobs/obfs_blob.dart';
 import 'package:scouting_app_2024/debug.dart';
-import 'package:scouting_app_2024/parts/patchnotes.dart';
+import 'package:scouting_app_2024/parts/patch_notes.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/shared.dart';

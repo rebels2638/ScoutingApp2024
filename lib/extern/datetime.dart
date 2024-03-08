@@ -26,4 +26,11 @@ extension UsefulChronos on DateTime {
                                                           .december
                                                   ? "December"
                                                   : "Unknown";
+  DateTime operator -(DateTime other) =>
+      DateTime.fromMillisecondsSinceEpoch(
+          millisecondsSinceEpoch - other.millisecondsSinceEpoch);
+
+  DateTime operator +(DateTime other) =>
+      DateTime.fromMillisecondsSinceEpoch(
+          millisecondsSinceEpoch + other.millisecondsSinceEpoch);
 }

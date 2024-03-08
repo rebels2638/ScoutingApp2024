@@ -26,11 +26,12 @@ import "package:scouting_app_2024/shared.dart";
 import "package:scouting_app_2024/user/models/ephemeral_data.dart";
 import "package:scouting_app_2024/user/models/shared.dart";
 import "package:scouting_app_2024/user/scouting_telemetry.dart";
-import "package:scouting_app_2024/user/user_telemetry.dart";
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/user/models/team_bloc.dart';
 import 'package:scouting_app_2024/user/models/team_model.dart';
 import "package:scouting_app_2024/utils.dart";
+
+import "usage_time_display.dart";
 
 typedef SectionId = ({String title, IconData icon});
 
@@ -104,28 +105,7 @@ class _ScoutingSessionViewDelegateState
                                 fontWeight: FontWeight.w800,
                                 fontSize: 32)),
                         const SizedBox(height: 34),
-                        Tooltip(
-                          message:
-                              "${UserTelemetry().currentModel.usedTimeHours} hours",
-                          child: Text.rich(
-                              TextSpan(children: <InlineSpan>[
-                            const WidgetSpan(
-                                child: Padding(
-                              padding: EdgeInsets.only(right: 8),
-                              child: Icon(Icons.timeline_rounded,
-                                  size: 18),
-                            )),
-                            const TextSpan(
-                                text: "Usage Time:",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold)),
-                            TextSpan(
-                                text:
-                                    " ${UserTelemetry().currentModel.usedTimeHours.toStringAsFixed(2)} hours",
-                                style: const TextStyle(fontSize: 18)),
-                          ])),
-                        ),
+                        const UsageTimeDisplay(),
                         const SizedBox(height: 34),
                         const Text(
                             "Scouting Revision: v$EPHEMERAL_MODELS_VERSION"),

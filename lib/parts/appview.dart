@@ -15,7 +15,7 @@ import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
 import 'package:scouting_app_2024/parts/bits/show_fps_monitor.dart';
 import 'package:scouting_app_2024/parts/bits/show_scrollbar.dart';
-import 'package:scouting_app_2024/parts/patchnotes.dart';
+import 'package:scouting_app_2024/parts/patch_notes.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/shared.dart';
 import 'package:scouting_app_2024/parts/theme.dart';

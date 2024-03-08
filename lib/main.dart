@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:scouting_app_2024/parts/loader.dart';
+import 'package:scouting_app_2024/user/awards/awards_telemetry.dart';
 import 'package:scouting_app_2024/user/duc_telemetry.dart';
 import 'package:scouting_app_2024/user/env.dart';
 import 'package:scouting_app_2024/user/models/ephemeral_data.dart';
@@ -58,6 +59,8 @@ Future<void> _prepareAppLaunch() async {
   }
   Debug().newPhase("LOAD_USER_TELEMETRY");
   await UserTelemetry().init();
+  Debug().newPhase("LOAD_USER_AWARDS");
+  await AwardsTelemetry().init();
   Debug().newPhase("HOOK_LIFECYCLE");
   WidgetsBinding.instance.addObserver(AppLifecycleListener(
       onStateChange: (AppLifecycleState value) =>
