@@ -292,9 +292,6 @@ class _DataHostingViewState extends State<DataHostingView> {
         double autoPercentGetMovementPoints = 0.0;
         double autoAvgScoredSpeaker = 0.0;
         double autoAvgScoredInAmp = 0.0;
-        double autoPercentOfPickupAmpSideNote = 0.0;
-        double autoPercentOfPickupStageSideNote = 0.0;
-        double autoPercentOfPickupMiddleSideNote = 0.0;
         double autoPercentStartLeft = 0.0;
         double autoPercentStartRight = 0.0;
         double autoPercentStartMiddle = 0.0;
@@ -303,8 +300,6 @@ class _DataHostingViewState extends State<DataHostingView> {
         double teleopAvgScoredInAmp = 0.0;
         double teleopAvgNotesScored = 0.0;
         bool teleopGoesUnderStage = false;
-        double teleopDriverRating = 0.0;
-        double teleopAvgScoredWhileAmped = 0.0;
         // ENDGAME CALCULATIONS
         bool endgameCanClimb = false;
         double endgameHarmonyAttemptSuccessRate = 0.0;
@@ -317,17 +312,6 @@ class _DataHostingViewState extends State<DataHostingView> {
           }
           autoAvgScoredSpeaker += d.auto.scoredSpeaker;
           autoAvgScoredInAmp += d.auto.scoredAmp;
-          if (d.auto.notesPickedUp.isNotEmpty) {
-            autoPercentOfPickupAmpSideNote += d.auto.notesPickedUp
-                .where((AutoPickup e) => e == AutoPickup.amp)
-                .length;
-            autoPercentOfPickupStageSideNote += d.auto.notesPickedUp
-                .where((AutoPickup e) => e == AutoPickup.stage)
-                .length;
-            autoPercentOfPickupMiddleSideNote += d.auto.notesPickedUp
-                .where((AutoPickup e) => e == AutoPickup.middle)
-                .length;
-          }
           if (d.preliminary.startingPosition ==
               MatchStartingPosition.amp) {
             autoPercentStartLeft++;
@@ -341,8 +325,6 @@ class _DataHostingViewState extends State<DataHostingView> {
           teleopAvgScoredInAmp += d.teleop.scoredAmp;
           teleopAvgNotesScored += d.teleop.piecesScored;
           teleopGoesUnderStage = d.teleop.underStage;
-          teleopDriverRating += d.teleop.driverRating;
-          teleopAvgScoredWhileAmped += d.teleop.scoredWhileAmped;
           endgameCanClimb = d.endgame.endState == EndStatus.on_chain;
           endgameHarmonyAttemptSuccessRate +=
               d.endgame.harmonyAttempted &&
@@ -357,17 +339,12 @@ class _DataHostingViewState extends State<DataHostingView> {
         autoPercentGetMovementPoints /= data.length;
         autoAvgScoredSpeaker /= data.length;
         autoAvgScoredInAmp /= data.length;
-        autoPercentOfPickupAmpSideNote /= data.length;
-        autoPercentOfPickupStageSideNote /= data.length;
-        autoPercentOfPickupMiddleSideNote /= data.length;
         autoPercentStartLeft /= data.length;
         autoPercentStartRight /= data.length;
         autoPercentStartMiddle /= data.length;
         teleopAvgScoredInSpeaker /= data.length;
         teleopAvgScoredInAmp /= data.length;
         teleopAvgNotesScored /= data.length;
-        teleopDriverRating /= data.length;
-        teleopAvgScoredWhileAmped /= data.length;
         endgameHarmonyAttemptSuccessRate /= data.length;
         endgamePercentOfGamesScoredTrap /= data.length;
         miscWinLikelihoods /= data.length;
@@ -513,44 +490,6 @@ class _DataHostingViewState extends State<DataHostingView> {
                                                                   fontWeight:
                                                                       FontWeight.bold),
                                                             ),
-                                                            TextSpan(
-                                                              text:
-                                                                  "${(autoPercentOfPickupAmpSideNote * 100).toStringAsFixed(2)}%",
-                                                              style: TextStyle(
-                                                                  color:
-                                                                      heat(autoPercentOfPickupAmpSideNote),
-                                                                  backgroundColor: Colors.black),
-                                                            ),
-                                                            const TextSpan(
-                                                              text:
-                                                                  "\n% of Pickups Stage Side: ",
-                                                              style: TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight.bold),
-                                                            ),
-                                                            TextSpan(
-                                                              text:
-                                                                  "${(autoPercentOfPickupStageSideNote * 100).toStringAsFixed(2)}%",
-                                                              style: TextStyle(
-                                                                  color:
-                                                                      heat(autoPercentOfPickupStageSideNote),
-                                                                  backgroundColor: Colors.black),
-                                                            ),
-                                                            const TextSpan(
-                                                              text:
-                                                                  "\n% of Pickups Middle: ",
-                                                              style: TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight.bold),
-                                                            ),
-                                                            TextSpan(
-                                                              text:
-                                                                  "${(autoPercentOfPickupMiddleSideNote * 100).toStringAsFixed(2)}%",
-                                                              style: TextStyle(
-                                                                  color:
-                                                                      heat(autoPercentOfPickupMiddleSideNote),
-                                                                  backgroundColor: Colors.black),
-                                                            ),
                                                             const TextSpan(
                                                               text:
                                                                   "\n% of Start AMP Side: ",
@@ -672,29 +611,6 @@ class _DataHostingViewState extends State<DataHostingView> {
                                                                 text: teleopGoesUnderStage
                                                                     ? "Yes"
                                                                     : "No",
-                                                              ),
-                                                              const TextSpan(
-                                                                text:
-                                                                    "\nDriver Rating: ",
-                                                                style:
-                                                                    TextStyle(fontWeight: FontWeight.bold),
-                                                              ),
-                                                              TextSpan(
-                                                                text:
-                                                                    "${teleopDriverRating.toStringAsFixed(2)}/10",
-                                                                style: TextStyle(
-                                                                    color: heat(teleopDriverRating / 10),
-                                                                    backgroundColor: Colors.black),
-                                                              ),
-                                                              const TextSpan(
-                                                                text:
-                                                                    "\nAvg Scored While Amped: ",
-                                                                style:
-                                                                    TextStyle(fontWeight: FontWeight.bold),
-                                                              ),
-                                                              TextSpan(
-                                                                text:
-                                                                    teleopAvgScoredWhileAmped.toStringAsFixed(2),
                                                               ),
                                                             ],
                                                             style: const TextStyle(
@@ -930,9 +846,6 @@ class _DataHostingViewState extends State<DataHostingView> {
                                     > **% Movement Points** ${(autoPercentGetMovementPoints * 100).toStringAsFixed(2)}%
                                     > **Avg Scored in Speaker** ${autoAvgScoredSpeaker.toStringAsFixed(2)}
                                     > **Avg Scored in Amp** ${autoAvgScoredInAmp.toStringAsFixed(2)}
-                                    > **% of Pickups AMP Side** ${(autoPercentOfPickupAmpSideNote * 100).toStringAsFixed(2)}%
-                                    > **% of Pickups Stage Side** ${(autoPercentOfPickupStageSideNote * 100).toStringAsFixed(2)}%
-                                    > **% of Pickups Speaker Side** ${(autoPercentOfPickupMiddleSideNote * 100).toStringAsFixed(2)}%
                                     > **% of Start Left** ${(autoPercentStartLeft * 100).toStringAsFixed(2)}%
                                     > **% of Start Right** ${(autoPercentStartRight * 100).toStringAsFixed(2)}%
                                     > **% of Start Middle** ${(autoPercentStartMiddle * 100).toStringAsFixed(2)}%
@@ -941,8 +854,6 @@ class _DataHostingViewState extends State<DataHostingView> {
                                     > **Avg Scored in AMP** ${teleopAvgScoredInAmp.toStringAsFixed(2)}
                                     > **Avg Notes Scored** ${teleopAvgNotesScored.toStringAsFixed(2)}
                                     > **Goes Under Stage** ${teleopGoesUnderStage ? "Yes" : "No"}
-                                    > **Driver Rating** ${teleopDriverRating.toStringAsFixed(2)}/10
-                                    > **Avg Scored While Amped** ${teleopAvgScoredWhileAmped.toStringAsFixed(2)}
                                     ## End Game
                                     > **Can Climb** ${endgameCanClimb ? "Yes" : "No"}
                                     > **Harmony Attempt Success Rate** ${(endgameHarmonyAttemptSuccessRate * 100).toStringAsFixed(2)}%
@@ -1429,16 +1340,6 @@ class _DucMatchTileState extends State<DucMatchTile> {
                                     : "No",
                               ),
                               const TextSpan(
-                                  text: "\nNotes Picked up: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget
-                                      .match.auto.notesPickedUp
-                                      .map((AutoPickup e) =>
-                                          e.name.formalize)
-                                      .join(", ")),
-                              const TextSpan(
                                   text: "\nAMP Missed: ",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold)),
@@ -1505,22 +1406,6 @@ class _DucMatchTileState extends State<DucMatchTile> {
                                   text: widget.match.teleop.underStage
                                       ? "Yes"
                                       : "No"),
-                              const TextSpan(
-                                  text: "\nDriver Rating: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget
-                                      .match.teleop.driverRating
-                                      .toString()),
-                              const TextSpan(
-                                  text: "\nScored While Amped: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget
-                                      .match.teleop.scoredWhileAmped
-                                      .toString()),
                               const TextSpan(
                                   text: "\nMissed Amp: ",
                                   style: TextStyle(
@@ -1631,7 +1516,12 @@ class _DucMatchTileState extends State<DucMatchTile> {
                                         child: Container(
                                             decoration: BoxDecoration(
                                                 border: Border.all(
-                                                    color: ThemeProvider.themeOf(context).data.iconTheme.color!),
+                                                    color: ThemeProvider
+                                                            .themeOf(
+                                                                context)
+                                                        .data
+                                                        .iconTheme
+                                                        .color!),
                                                 borderRadius:
                                                     BorderRadius
                                                         .circular(2)),
@@ -1831,30 +1721,6 @@ class _DucMatchTileState extends State<DucMatchTile> {
                         TextSpan(
                             text:
                                 "${widget.match.teleop.missedAmp + widget.match.teleop.missedSpeaker}\n",
-                            style: const TextStyle(
-                                height: 1.6,
-                                overflow: TextOverflow.ellipsis)),
-                        const TextSpan(
-                            text: "- Driver Rating: ",
-                            style: TextStyle(
-                                height: 1.6,
-                                fontWeight: FontWeight.w700,
-                                overflow: TextOverflow.ellipsis)),
-                        TextSpan(
-                            text:
-                                "${widget.match.teleop.driverRating}\n",
-                            style: const TextStyle(
-                                height: 1.6,
-                                overflow: TextOverflow.ellipsis)),
-                        const TextSpan(
-                            text: "- TeleOp Scored Amped: ",
-                            style: TextStyle(
-                                height: 1.6,
-                                fontWeight: FontWeight.w700,
-                                overflow: TextOverflow.ellipsis)),
-                        TextSpan(
-                            text:
-                                "${widget.match.teleop.scoredWhileAmped}\n",
                             style: const TextStyle(
                                 height: 1.6,
                                 overflow: TextOverflow.ellipsis)),

@@ -367,10 +367,6 @@ class _ScoutingViewState extends State<ScoutingView>
                       onSelected: (List<AutoPickup> e) {
                         context
                             .read<ScoutingSessionBloc>()
-                            .auto
-                            .notesPickedUp = e;
-                        context
-                            .read<ScoutingSessionBloc>()
                             .add(AutoUpdateEvent());
                       }),
                 )
@@ -502,21 +498,6 @@ class _ScoutingViewState extends State<ScoutingView>
                         .add(TeleOpUpdateEvent());
                   },
                 )),
-            form_label("Plays Defense",
-                child: BasicToggleSwitch(
-                    initialValue: context
-                        .read<ScoutingSessionBloc>()
-                        .teleop
-                        .playsDefense,
-                    onChanged: (bool e) {
-                      context
-                          .read<ScoutingSessionBloc>()
-                          .teleop
-                          .playsDefense = e;
-                      context
-                          .read<ScoutingSessionBloc>()
-                          .add(TeleOpUpdateEvent());
-                    })),
             form_label("Goes under stage?",
                 child: BasicToggleSwitch(
                     initialValue: context
@@ -543,22 +524,6 @@ class _ScoutingViewState extends State<ScoutingView>
                         .read<ScoutingSessionBloc>()
                         .teleop
                         .scoredSpeaker = value;
-                    context
-                        .read<ScoutingSessionBloc>()
-                        .add(TeleOpUpdateEvent());
-                  },
-                )),
-            form_label("Scored while AMPed",
-                child: PlusMinus(
-                  initialValue: context
-                      .read<ScoutingSessionBloc>()
-                      .teleop
-                      .scoredWhileAmped,
-                  onValueChanged: (int value) {
-                    context
-                        .read<ScoutingSessionBloc>()
-                        .teleop
-                        .scoredWhileAmped = value;
                     context
                         .read<ScoutingSessionBloc>()
                         .add(TeleOpUpdateEvent());
@@ -752,22 +717,6 @@ class _ScoutingViewState extends State<ScoutingView>
           backgroundColor: Colors.transparent,
           header: (icon: Icons.more_horiz_rounded, title: "Other"),
           child: form_col(<Widget>[
-            form_label("Driver rating (1-10)",
-                child: PlusMinusRating(
-                  initialValue: context
-                      .read<ScoutingSessionBloc>()
-                      .teleop
-                      .driverRating,
-                  onValueChanged: (int value) {
-                    context
-                        .read<ScoutingSessionBloc>()
-                        .teleop
-                        .driverRating = value;
-                    context
-                        .read<ScoutingSessionBloc>()
-                        .add(TeleOpUpdateEvent());
-                  },
-                )),
             form_label("Coopertition",
                 child: BasicToggleSwitch(
                     initialValue: context

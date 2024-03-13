@@ -158,16 +158,6 @@ class _MatchTileState extends State<MatchTile> {
                                     : "No",
                               ),
                               const TextSpan(
-                                  text: "\nNotes Picked up: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget
-                                      .match.auto.notesPickedUp
-                                      .map((AutoPickup e) =>
-                                          e.name.formalize)
-                                      .join(", ")),
-                              const TextSpan(
                                   text: "\nAMP Missed: ",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold)),
@@ -234,22 +224,6 @@ class _MatchTileState extends State<MatchTile> {
                                   text: widget.match.teleop.underStage
                                       ? "Yes"
                                       : "No"),
-                              const TextSpan(
-                                  text: "\nDriver Rating: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget
-                                      .match.teleop.driverRating
-                                      .toString()),
-                              const TextSpan(
-                                  text: "\nScored While Amped: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget
-                                      .match.teleop.scoredWhileAmped
-                                      .toString()),
                               const TextSpan(
                                   text: "\nMissed Amp: ",
                                   style: TextStyle(
@@ -567,30 +541,6 @@ class _MatchTileState extends State<MatchTile> {
                         TextSpan(
                             text:
                                 "${widget.match.teleop.missedAmp + widget.match.teleop.missedSpeaker}\n",
-                            style: const TextStyle(
-                                height: 1.6,
-                                overflow: TextOverflow.ellipsis)),
-                        const TextSpan(
-                            text: "- Driver Rating: ",
-                            style: TextStyle(
-                                height: 1.6,
-                                fontWeight: FontWeight.w700,
-                                overflow: TextOverflow.ellipsis)),
-                        TextSpan(
-                            text:
-                                "${widget.match.teleop.driverRating}\n",
-                            style: const TextStyle(
-                                height: 1.6,
-                                overflow: TextOverflow.ellipsis)),
-                        const TextSpan(
-                            text: "- TeleOp Scored Amped: ",
-                            style: TextStyle(
-                                height: 1.6,
-                                fontWeight: FontWeight.w700,
-                                overflow: TextOverflow.ellipsis)),
-                        TextSpan(
-                            text:
-                                "${widget.match.teleop.scoredWhileAmped}\n",
                             style: const TextStyle(
                                 height: 1.6,
                                 overflow: TextOverflow.ellipsis)),

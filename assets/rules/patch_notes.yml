@@ -12,5 +12,7 @@ fixes:
   - Made it so that multi select and single select will not request keyboard focus when tapped outside of the dropdown arrow
   - Made the canonical team switch actually be readable on certain themes like crimson where the red messed with the foreground color
   - Changed the animation of the canonical team switch to use fade transition instead of a slide transition
+  - Removed some useless/unnecessary scouting fields
 optimize:
   - Optimized rendering of most scroll views in the app
+  - Optimized rigid grid rendering of past matches when using alt. layout

@@ -85,65 +85,53 @@ class _PastMatchesViewState extends State<PastMatchesView> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              runAlignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: 14,
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    const Icon(Icons.calendar_month),
-                    const SizedBox(width: 8.0),
-                    Text("Recorded ${matches.length} Match${matches.length > 2 ? "es" : ""}",
-                        style: const TextStyle(fontSize: 20.0)),
-                  ],
-                ),
-                Row(
-                  children: strutAll(<Widget>[
-                    IconButton.filledTonal(
-                        icon: _sortAscending
-                            ? const Icon(Icons.arrow_upward_rounded)
-                            : const Icon(
-                                Icons.arrow_downward_rounded),
-                        onPressed: () {
+                Text(
+                    "Recorded ${matches.length} Match${matches.length != 1 ? "es" : ""}",
+                    style: const TextStyle(fontSize: 20.0)),
+                IconButton.filledTonal(
+                    icon: _sortAscending
+                        ? const Icon(Icons.arrow_upward_rounded)
+                        : const Icon(Icons.arrow_downward_rounded),
+                    onPressed: () {
+                      setState(() {
+                        _sortAscending = !_sortAscending;
+                        matches.sort((HollisticMatchScoutingData a,
+                                HollisticMatchScoutingData b) =>
+                            _sortAscending
+                                ? a.preliminary.timeStamp.compareTo(
+                                    b.preliminary.timeStamp)
+                                : b.preliminary.timeStamp.compareTo(
+                                    a.preliminary.timeStamp));
+                      });
+                    }),
+                IconButton.filledTonal(
+                    onPressed: () => loadMatches(),
+                    icon: const Icon(Icons.refresh_rounded)),
+                IconButton.filledTonal(
+                    icon: const Icon(Icons.delete_forever),
+                    onPressed: () async =>
+                        await launchAssuredConfirmDialog(context,
+                            message:
+                                "Are you sure you want to DELETE ALL ${matches.length} entries?",
+                            title: "Delete ${matches.length} entries",
+                            onConfirm: () {
                           setState(() {
-                            _sortAscending = !_sortAscending;
-                            matches.sort((HollisticMatchScoutingData
-                                        a,
-                                    HollisticMatchScoutingData b) =>
-                                _sortAscending
-                                    ? a.preliminary.timeStamp
-                                        .compareTo(
-                                            b.preliminary.timeStamp)
-                                    : b.preliminary.timeStamp
-                                        .compareTo(
-                                            a.preliminary.timeStamp));
+                            matches.clear();
                           });
-                        }),
-                    IconButton.filledTonal(
-                        onPressed: () => loadMatches(),
-                        icon: const Icon(Icons.refresh_rounded)),
-                    IconButton.filledTonal(
-                        icon: const Icon(Icons.delete_forever),
-                        onPressed: () async =>
-                            await launchAssuredConfirmDialog(context,
-                                message:
-                                    "Are you sure you want to DELETE ALL ${matches.length} entries?",
-                                title:
-                                    "Delete ${matches.length} entries",
-                                onConfirm: () {
-                              setState(() {
-                                matches.clear();
-                              });
-                              _matchIdsCache.clear();
-                              ScoutingTelemetry().clear();
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(
-                                const SnackBar(
-                                    content: Text(
-                                        "All past matches deleted!")),
-                              );
-                            })),
-                  ], width: 14),
-                ),
+                          _matchIdsCache.clear();
+                          ScoutingTelemetry().clear();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text(
+                                    "All past matches deleted!")),
+                          );
+                        })),
               ],
             ),
           ),

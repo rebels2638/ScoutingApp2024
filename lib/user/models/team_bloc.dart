@@ -134,59 +134,46 @@ class EndgameState extends ScoutingSessionStates {
 
 class TeleOpInfo extends ScoutingInfo
     implements QRCompatibleData<TeleOpInfo> {
-  bool playsDefense;
   bool underStage;
   int scoredSpeaker;
   int missedSpeaker;
   int scoredAmp;
   int piecesScored;
   int missedAmp;
-  int scoredWhileAmped; // such a goofy name
-  int driverRating;
 
   TeleOpInfo(
-      {required this.playsDefense,
+      {
       required this.underStage,
       required this.scoredSpeaker,
       required this.missedSpeaker,
       required this.scoredAmp,
       required this.piecesScored,
-      required this.missedAmp,
-      required this.scoredWhileAmped,
-      required this.driverRating});
+      required this.missedAmp});
 
   factory TeleOpInfo.optional(
-          {bool playsDefense = false,
+          {
           bool underStage = false,
           int scoredSpeaker = 0,
           int missedSpeaker = 0,
           int scoredAmp = 0,
           int piecesScored = 0,
-          int missedAmp = 0,
-          int scoredWhileAmped = 0,
-          int driverRating = 0}) =>
+          int missedAmp = 0}) =>
       TeleOpInfo(
-          playsDefense: playsDefense,
           underStage: underStage,
           scoredSpeaker: scoredSpeaker,
           missedSpeaker: missedSpeaker,
           scoredAmp: scoredAmp,
           piecesScored: piecesScored,
-          missedAmp: missedAmp,
-          scoredWhileAmped: scoredWhileAmped,
-          driverRating: driverRating);
+          missedAmp: missedAmp);
 
   @override
   Map<String, dynamic> exportMap() => <String, dynamic>{
-        "playsDefense": playsDefense,
         "underStage": underStage,
         "scoredSpeaker": scoredSpeaker,
         "missedSpeaker": missedSpeaker,
         "scoredAmp": scoredAmp,
         "piecesScored": piecesScored,
         "missedAmp": missedAmp,
-        "scoredWhileAmped": scoredWhileAmped,
-        "driverRating": driverRating
       };
 
   static TeleOpInfo fromCompatibleFormat(String csv) {
@@ -194,28 +181,22 @@ class TeleOpInfo extends ScoutingInfo
         jsonDecode(csv) as Map<String, dynamic>;
     return TeleOpInfo(
         piecesScored: data["pieces"],
-        playsDefense: data["def"],
         underStage: data["undSpker"],
         scoredSpeaker: data["spker"],
         missedSpeaker: data["missSpker"],
         scoredAmp: data["amp"],
-        missedAmp: data["missAmp"],
-        scoredWhileAmped: data["whileAmp"],
-        driverRating: data["driverting"]);
+        missedAmp: data["missAmp"]);
   }
 
   @override
   String toCompatibleFormat() {
     return jsonEncode(<String, dynamic>{
-      "def": playsDefense,
       "pieces": piecesScored,
       "undSpker": underStage,
       "spker": scoredSpeaker,
       "missSpker": missedSpeaker,
       "amp": scoredAmp,
-      "missAmp": missedAmp,
-      "whileAmp": scoredWhileAmped,
-      "driverting": driverRating
+      "missAmp": missedAmp
     });
   }
 }
@@ -230,7 +211,6 @@ class TeleOpState extends ScoutingSessionStates {
 class AutoInfo extends ScoutingInfo
     implements QRCompatibleData<AutoInfo> {
   bool notePreloaded;
-  List<AutoPickup> notesPickedUp;
   bool taxi;
   int scoredSpeaker;
   int missedSpeaker;
@@ -239,7 +219,6 @@ class AutoInfo extends ScoutingInfo
 
   AutoInfo(
       {required this.notePreloaded,
-      required this.notesPickedUp,
       required this.taxi,
       required this.scoredSpeaker,
       required this.missedSpeaker,
@@ -248,9 +227,6 @@ class AutoInfo extends ScoutingInfo
 
   factory AutoInfo.optional(
           {bool notePreloaded = false,
-          List<AutoPickup> notesPickedUp = const <AutoPickup>[
-            AutoPickup.no,
-          ],
           bool taxi = false,
           int scoredSpeaker = 0,
           int missedSpeaker = 0,
@@ -258,7 +234,6 @@ class AutoInfo extends ScoutingInfo
           int missedAmp = 0}) =>
       AutoInfo(
           notePreloaded: notePreloaded,
-          notesPickedUp: notesPickedUp,
           taxi: taxi,
           scoredSpeaker: scoredSpeaker,
           missedSpeaker: missedSpeaker,
@@ -268,7 +243,6 @@ class AutoInfo extends ScoutingInfo
   @override
   Map<String, dynamic> exportMap() => <String, dynamic>{
         "notePreloaded": notePreloaded,
-        "notesPickedUp": notesPickedUp,
         "taxi": taxi,
         "scoredSpeaker": scoredSpeaker,
         "missedSpeaker": missedSpeaker,
@@ -285,7 +259,6 @@ class AutoInfo extends ScoutingInfo
     }
     return AutoInfo(
         notePreloaded: data["preload"],
-        notesPickedUp: notesPickedUp,
         taxi: data["taxi"],
         scoredSpeaker: data["spker"],
         missedSpeaker: data["missSpker"],
@@ -295,13 +268,8 @@ class AutoInfo extends ScoutingInfo
 
   @override
   String toCompatibleFormat() {
-    final List<int> notesPickedUpIndexes = <int>[];
-    for (AutoPickup element in notesPickedUp) {
-      notesPickedUpIndexes.add(element.index);
-    }
     return jsonEncode(<String, dynamic>{
       "preload": notePreloaded,
-      "pickup": notesPickedUpIndexes,
       "taxi": taxi,
       "spker": scoredSpeaker,
       "missSpker": missedSpeaker,

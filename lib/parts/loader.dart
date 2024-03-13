@@ -49,10 +49,10 @@ class _LoadingAppViewScreenState extends State<LoadingAppViewScreen> {
                   } else {
                     return Scaffold(
                         body: SafeArea(
-                          child: Container(
-                                                decoration:
+                      child: Container(
+                        decoration:
                             BoxDecoration(color: Colors.grey[900]),
-                                                child: const Center(
+                        child: const Center(
                             child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -66,9 +66,9 @@ class _LoadingAppViewScreenState extends State<LoadingAppViewScreen> {
                             SizedBox(height: 30),
                             _UpdaterPhaseString()
                           ],
-                                                )),
-                                              ),
-                        ));
+                        )),
+                      ),
+                    ));
                   }
                 })));
   }

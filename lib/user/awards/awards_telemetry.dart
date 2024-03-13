@@ -108,12 +108,12 @@ abstract class Award {
       {String? identifier,
       required String description,
       required String formalName,
-      required int timeUnlocked})
+      int? timeUnlocked})
       : _identifier = identifier ??
             formalName.toLowerCase().trim().replaceAll(" ", "_"),
         _description = description,
         _formalName = formalName,
-        _timeUnlocked = timeUnlocked {
+        _timeUnlocked = timeUnlocked ?? -1 {
     Award.allAwards.add(this);
     Debug().info(
         "Registered Award: $_formalName as $_identifier (IS UNLOCKED? $isUnlocked)");
