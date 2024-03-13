@@ -13,12 +13,18 @@ Created using the **Flutter** framework with the hopes of improving the overall 
 
 <br/>
 
+### Download
+
 <kbd>
-<a href="https://github.com/rebels2638/ScoutingApp2024/releases"><img src="https://img.shields.io/badge/Download Here-f0b630.svg?style=for-the-badge" height=46 /></a>
+<a href="https://github.com/rebels2638/ScoutingApp2024/releases"><img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows-10&logoColor=white" height=36 /></a>
 </kbd>
-<br/>
+ 
 <kbd>
-<a href="https://apps.apple.com/us/app/2638-scout/id1460336620?platform=ipad"><img src="https://img.shields.io/badge/App_Store-0D96F6?style=for-the-badge&logo=app-store&logoColor=white" height=26 /></a>
+<a href="https://apps.apple.com/us/app/2638-scout/id1460336620?platform=ipad"><img src="https://img.shields.io/badge/App Store-0D96F6?style=for-the-badge&logo=app-store&logoColor=white" height=36 /></a>
+</kbd>
+ 
+<kbd>
+<a href="https://apps.apple.com/us/app/2638-scout/id1460336620?platform=ipad"><img src="https://img.shields.io/badge/Android-34A853?style=for-the-badge&logo=android&logoColor=white" height=36 /></a>
 </kbd>
 
 ### Team
