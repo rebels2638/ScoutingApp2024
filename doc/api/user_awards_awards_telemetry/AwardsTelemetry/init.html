@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the init method from the AwardsTelemetry class, for the Dart programming language.">
+  <title>init method - AwardsTelemetry class - awards_telemetry library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">scouting_app_2024</a></li>
+    <li><a href="../../user_awards_awards_telemetry/user_awards_awards_telemetry-library.html">user\awards\awards_telemetry.dart</a></li>
+    <li><a href="../../user_awards_awards_telemetry/AwardsTelemetry-class.html">AwardsTelemetry</a></li>
+    <li class="self-crumb">init method</li>
+  </ol>
+  <div class="self-name">init</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="user_awards_awards_telemetry&#47;AwardsTelemetry-class-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-method">init</span> method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+<span class="name ">init</span>(<wbr>)
+
+      
+
+    </section>
+    
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; init() async =&gt;
+    await Hive.openBox&lt;String&gt;(_USER_TELEMETRY_BOX_NAME)
+        .then((Box&lt;String&gt; e) {
+      awardsTelemetryBox = e;
+      Debug().info(
+          &quot;Loading Awards Telemetry. Box content is: ${awardsTelemetryBox.values.toString()}&quot;);
+      if (!awardsTelemetryBox.containsKey(awardsDBName)) {
+        Debug()
+            .warn(&quot;COULD NOT FIND USER_AWARDS, CREATING NEW MODEL&quot;);
+        reset();
+        save();
+      } else {
+        Debug().info(&quot;FOUND USER_AWARDS, LOADING MODEL&quot;);
+        _currentModel = AwardsModel.fromJson(
+            jsonDecode(awardsTelemetryBox.get(awardsDBName)!));
+      }
+      Debug().info(
+          &quot;USER_AWARDS:\nUnlocked Awards: ${_currentModel.unlockedAwards.length}\nLocked Awards: ${_currentModel.lockedAwards.length}&quot;);
+      Debug().info(
+          &quot;Validating loaded awards against ${Award.allAwards.length} registered awards&quot;);
+      if (Award.allAwards.isNotEmpty ||
+          (currentModel.unlockedAwards.isNotEmpty &amp;&amp;
+              currentModel.lockedAwards.isNotEmpty)) {
+        for (String unlocked in currentModel.unlockedAwards) {
+          if (Award.allAwards
+              .where((Award e) =&gt; e.identifier == unlocked)
+              .isEmpty) {
+            Debug().warn(
+                &quot;Award $unlocked is not registered, removing from unlocked list&quot;);
+            currentModel.unlockedAwards.remove(unlocked);
+          }
+        }
+        for (String locked in currentModel.lockedAwards) {
+          if (Award.allAwards
+              .where((Award e) =&gt; e.identifier == locked)
+              .isEmpty) {
+            Debug().warn(
+                &quot;Award $locked is not registered, removing from locked list&quot;);
+            currentModel.lockedAwards.remove(locked);
+          }
+        }
+      } else {
+        Debug().warn(
+            &quot;Validation for awards is not possible. Skipping.&quot;);
+      }
+      Timer.periodic(
+          const Duration(seconds: Shared.USER_TELEMETRY_SAVE_CYCLE),
+          (Timer _) async =&gt; await save());
+    });</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">scouting_app_2024</a></li>
+    <li><a href="../../user_awards_awards_telemetry/user_awards_awards_telemetry-library.html">awards_telemetry</a></li>
+    <li><a href="../../user_awards_awards_telemetry/AwardsTelemetry-class.html">AwardsTelemetry</a></li>
+    <li class="self-crumb">init method</li>
+</ol>
+
+
+    <h5>AwardsTelemetry class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    scouting_app_2024
+      1.0.5+7
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+

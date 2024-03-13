@@ -65,7 +65,6 @@ Future<void> _prepareAppLaunch() async {
   WidgetsBinding.instance.addObserver(AppLifecycleListener(
       onStateChange: (AppLifecycleState value) =>
           Debug().warn("{APP_LIFE_CYCLE} => $value")));
-
   Debug().newPhase("APP_LAUNCH");
   Timer.periodic(
       const Duration(seconds: Shared.USER_USAGE_TIME_PROBE_PERIODIC),

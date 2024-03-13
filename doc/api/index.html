@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="generator" content="made with love by dartdoc 8.0.3">
+  <meta name="description" content="scouting_app_2024 API docs, for the Dart programming language.">
+  <title>scouting_app_2024 - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li class="self-crumb">scouting_app_2024 package</li>
+  </ol>
+  <div class="self-name">scouting_app_2024</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <div align="center">
+<img src="repo/assets/logo.png" width="88">
+<br>
+<h1>2638 Scouting App "<em>Argus</em>"</h1>
+<p><strong><em>For 2024 FRC CRESCENDO</em></strong></p>
+<p>Created using the <strong>Flutter</strong> framework with the hopes of improving the overall scouting experience.</p>
+<h3 id="features">Features</h3>
+<p><kbd> <strong>📡 Wireless Data Transfer<code>^1</code> </strong></kbd> <kbd><strong> 🧮 Builtin data analysis<code>^2</code> (DUC) </strong></kbd> <kbd><strong> 📱 Customizable Interface<code>^3</code> </strong></kbd> <kbd><strong> 📝 Local Data Storage<code>^4</code> </strong></kbd> <kbd><strong> 🌐 Blue Alliance interface<code>^5</code> </strong></kbd>
+<kbd> <strong>📈 CSV Exporting </strong></kbd> <kbd> <strong>🗂️ QR Code Exporting<code>^6</code> </strong></kbd> <kbd> <strong>🖥️ Cross Platform<code>^7</code> </strong></kbd> <kbd> <strong>⚙️ Multi Platform Compatible<code>^8</code> </strong></kbd> ... and more</p>
+<br>
+<kbd>
+<a href="https://github.com/rebels2638/ScoutingApp2024/releases"><img src="https://img.shields.io/badge/Download Here-f0b630.svg?style=for-the-badge" height="46"></a>
+</kbd>
+<br>
+<kbd>
+<a href="https://apps.apple.com/us/app/2638-scout/id1460336620?platform=ipad"><img src="https://img.shields.io/badge/App_Store-0D96F6?style=for-the-badge&amp;logo=app-store&amp;logoColor=white" height="26"></a>
+</kbd>
+<h3 id="team">Team</h3>
+<kbd>
+<a href="https://github.com/exoad">
+<img src="https://avatars.githubusercontent.com/u/45053009?v=4" width="102"> <h1><strong>Jack Meng</strong></h1><h3>exoad</h3><br><strong><em>Developer</em></strong>
+</a>
+</kbd>
+<br>
+<br>
+<div>
+<kbd>
+<a href="https://github.com/aaravmin">
+<img src="https://avatars.githubusercontent.com/u/34218396?s=64&amp;v=4" width="54"> <h3><strong>Aarav Minocha</strong></h3><br><em>Contributor</em>
+</a>
+</kbd>
+<kbd>
+<a href="https://github.com/2bf">
+<img src="https://avatars.githubusercontent.com/u/88217123?s=54&amp;v=4" width="54"> <h3><strong>Chiming Wang</strong></h3><br><em>Contributor</em>
+</a>
+</kbd>
+<kbd>
+<a href="https://github.com/Richard28277">
+<img src="https://avatars.githubusercontent.com/u/95157603?s=54&amp;v=4" width="54"> <h3><strong>Richard Xu</strong></h3><br><em>Contributor</em>
+</a>
+</kbd>
+</div>
+<br>
+<br>
+<p><em>Have a suggestion or bug report? Head over to the <code>Issues</code> tab!</em></p>
+</div>
+<br>
+<p><code>^1</code>: Wireless Data transfer is implemented using a Bluetooth PAN backed by TCP
+<code>^2</code>: The built-in data collector (DUC) is used to simplify data calculations by providing on-demand statistics
+<code>^3</code>: The user can choose from various themes built right into the app along with also customizing the look and feel of the app via the settings
+<code>^4</code>: A scouter's data will be stored on their device and can be collected at any time
+<code>^5</code>: Blue Alliance's API is built into the app to help you directly find information regarding your team's matches
+<code>^6</code>: QR Codes come in two flavors: DUC formatted and raw formatted. DUC is a compressed internal format while raw is either JSON or CSV
+<code>^7</code>: Argus supports various platforms, from iOS to Android to OSX to Windows to Linux
+<code>^8</code>: Since Argus is cross-platform, it can stay compatible &amp; consistent when data is exchanged between various platforms</p>
+<pre class="language-dart"><code>               Copyright (C) Jack Meng (exoad) 2023-2024. 
+                All Rights Reserved.
+</code></pre>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="about_app">
+  <span class="name"><a href="parts_views_about_app/parts_views_about_app-library.html">parts\views\about_app</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="animate_blob">
+  <span class="name"><a href="blobs_animate_blob/blobs_animate_blob-library.html">blobs\animate_blob</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="app_theme">
+  <span class="name"><a href="extern_app_theme/extern_app_theme-library.html">extern\app_theme</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="appbar_celebrate">
+  <span class="name"><a href="parts_bits_appbar_celebrate/parts_bits_appbar_celebrate-library.html">parts\bits\appbar_celebrate</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="appview">
+  <span class="name"><a href="parts_appview/parts_appview-library.html">parts\appview</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="assured_dialog">
+  <span class="name"><a href="blobs_assured_dialog/blobs_assured_dialog-library.html">blobs\assured_dialog</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="awards_telemetry">
+  <span class="name"><a href="user_awards_awards_telemetry/user_awards_awards_telemetry-library.html">user\awards\awards_telemetry</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="basic_toggle_switch">
+  <span class="name"><a href="blobs_basic_toggle_switch/blobs_basic_toggle_switch-library.html">blobs\basic_toggle_switch</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="blobs">
+  <span class="name"><a href="blobs_blobs/blobs_blobs-library.html">blobs\blobs</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="color">
+  <span class="name"><a href="extern_color/extern_color-library.html">extern\color</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="community_material_icons">
+  <span class="name"><a href="extern_community_material_icons/extern_community_material_icons-library.html">extern\community_material_icons</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="console">
+  <span class="name"><a href="parts_views_console/parts_views_console-library.html">parts\views\console</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="counter">
+  <span class="name"><a href="parts_bits_counter/parts_bits_counter-library.html">parts\bits\counter</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="datetime">
+  <span class="name"><a href="extern_datetime/extern_datetime-library.html">extern\datetime</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="debug">
+  <span class="name"><a href="debug/debug-library.html">debug</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="duc_bit">
+  <span class="name"><a href="parts_bits_duc_bit/parts_bits_duc_bit-library.html">parts\bits\duc_bit</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="duc_telemetry">
+  <span class="name"><a href="user_duc_telemetry/user_duc_telemetry-library.html">user\duc_telemetry</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="duck">
+  <span class="name"><a href="parts_views_duck/parts_views_duck-library.html">parts\views\duck</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="dynamic_user_capture">
+  <span class="name"><a href="extern_dynamic_user_capture/extern_dynamic_user_capture-library.html">extern\dynamic_user_capture</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="enum">
+  <span class="name"><a href="extern_enum/extern_enum-library.html">extern\enum</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="env">
+  <span class="name"><a href="user_env/user_env-library.html">user\env</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="ephemeral_data">
+  <span class="name"><a href="user_models_ephemeral_data/user_models_ephemeral_data-library.html">user\models\ephemeral_data</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="expandable_txtfield">
+  <span class="name"><a href="blobs_expandable_txtfield/blobs_expandable_txtfield-library.html">blobs\expandable_txtfield</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="extended_fab_blob">
+  <span class="name"><a href="blobs_extended_fab_blob/blobs_extended_fab_blob-library.html">blobs\extended_fab_blob</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="flutter_icons">
+  <span class="name"><a href="extern_flutter_icons/extern_flutter_icons-library.html">extern\flutter_icons</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="form_blob">
+  <span class="name"><a href="blobs_form_blob/blobs_form_blob-library.html">blobs\form_blob</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="game_info">
+  <span class="name"><a href="parts_views_game_info/parts_views_game_info-library.html">parts\views\game_info</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="hints_blob">
+  <span class="name"><a href="blobs_hints_blob/blobs_hints_blob-library.html">blobs\hints_blob</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="inc_dec_blob">
+  <span class="name"><a href="blobs_inc_dec_blob/blobs_inc_dec_blob-library.html">blobs\inc_dec_blob</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="int">
+  <span class="name"><a href="extern_int/extern_int-library.html">extern\int</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="loader">
+  <span class="name"><a href="parts_loader/parts_loader-library.html">parts\loader</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="locale_blob">
+  <span class="name"><a href="blobs_locale_blob/blobs_locale_blob-library.html">blobs\locale_blob</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="lock_in">
+  <span class="name"><a href="parts_bits_lock_in/parts_bits_lock_in-library.html">parts\bits\lock_in</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="main">
+  <span class="name"><a href="main/main-library.html">main</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="match_tile">
+  <span class="name"><a href="parts_views_match_tile/parts_views_match_tile-library.html">parts\views\match_tile</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="match_utils">
+  <span class="name"><a href="user_match_utils/user_match_utils-library.html">user\match_utils</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="multi_select_blob">
+  <span class="name"><a href="blobs_multi_select_blob/blobs_multi_select_blob-library.html">blobs\multi_select_blob</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="mystify_scoutinginfo">
+  <span class="name"><a href="extern_mystify_scoutinginfo/extern_mystify_scoutinginfo-library.html">extern\mystify_scoutinginfo</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="obfs_blob">
+  <span class="name"><a href="blobs_obfs_blob/blobs_obfs_blob-library.html">blobs\obfs_blob</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="partition_blob">
+  <span class="name"><a href="blobs_partition_blob/blobs_partition_blob-library.html">blobs\partition_blob</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="past_matches">
+  <span class="name"><a href="parts_views_past_matches/parts_views_past_matches-library.html">parts\views\past_matches</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="patch_notes">
+  <span class="name"><a href="parts_patch_notes/parts_patch_notes-library.html">parts\patch_notes</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="platform">
+  <span class="name"><a href="extern_platform/extern_platform-library.html">extern\platform</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="prefer_canonical">
+  <span class="name"><a href="parts_bits_prefer_canonical/parts_bits_prefer_canonical-library.html">parts\bits\prefer_canonical</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="prefer_compact">
+  <span class="name"><a href="parts_bits_prefer_compact/parts_bits_prefer_compact-library.html">parts\bits\prefer_compact</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="prefer_tonal">
+  <span class="name"><a href="parts_bits_prefer_tonal/parts_bits_prefer_tonal-library.html">parts\bits\prefer_tonal</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="qr_converter_blob">
+  <span class="name"><a href="blobs_qr_converter_blob/blobs_qr_converter_blob-library.html">blobs\qr_converter_blob</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="scouting">
+  <span class="name"><a href="parts_views_scouting/parts_views_scouting-library.html">parts\views\scouting</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="scouting_telemetry">
+  <span class="name"><a href="user_scouting_telemetry/user_scouting_telemetry-library.html">user\scouting_telemetry</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="scroll_controller">
+  <span class="name"><a href="extern_scroll_controller/extern_scroll_controller-library.html">extern\scroll_controller</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="seen_patchnotes">
+  <span class="name"><a href="parts_bits_seen_patchnotes/parts_bits_seen_patchnotes-library.html">parts\bits\seen_patchnotes</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="settings">
+  <span class="name"><a href="parts_views_settings/parts_views_settings-library.html">parts\views\settings</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="shared">
+  <span class="name"><a href="user_shared/user_shared-library.html">user\shared</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="shared">
+  <span class="name"><a href="user_models_shared/user_models_shared-library.html">user\models\shared</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="shared">
+  <span class="name"><a href="shared/shared-library.html">shared</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="show_console">
+  <span class="name"><a href="parts_bits_show_console/parts_bits_show_console-library.html">parts\bits\show_console</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="show_experimental">
+  <span class="name"><a href="parts_bits_show_experimental/parts_bits_show_experimental-library.html">parts\bits\show_experimental</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="show_fps_monitor">
+  <span class="name"><a href="parts_bits_show_fps_monitor/parts_bits_show_fps_monitor-library.html">parts\bits\show_fps_monitor</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="show_hints">
+  <span class="name"><a href="parts_bits_show_hints/parts_bits_show_hints-library.html">parts\bits\show_hints</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="show_scrollbar">
+  <span class="name"><a href="parts_bits_show_scrollbar/parts_bits_show_scrollbar-library.html">parts\bits\show_scrollbar</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="string">
+  <span class="name"><a href="extern_string/extern_string-library.html">extern\string</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="switch_icon_position">
+  <span class="name"><a href="blobs_switch_icon_position/blobs_switch_icon_position-library.html">blobs\switch_icon_position</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="team">
+  <span class="name"><a href="parts_team/parts_team-library.html">parts\team</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="team_bloc">
+  <span class="name"><a href="user_models_team_bloc/user_models_team_bloc-library.html">user\models\team_bloc</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="team_model">
+  <span class="name"><a href="user_models_team_model/user_models_team_model-library.html">user\models\team_model</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="theme">
+  <span class="name"><a href="parts_theme/parts_theme-library.html">parts\theme</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="theme_classifier">
+  <span class="name"><a href="parts_theme_classifier/parts_theme_classifier-library.html">parts\theme_classifier</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="theme_mode">
+  <span class="name"><a href="parts_bits_theme_mode/parts_bits_theme_mode-library.html">parts\bits\theme_mode</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="themed_app_bundle">
+  <span class="name"><a href="parts_themed_app_bundle/parts_themed_app_bundle-library.html">parts\themed_app_bundle</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="usage_time_display">
+  <span class="name"><a href="parts_views_usage_time_display/parts_views_usage_time_display-library.html">parts\views\usage_time_display</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="use_alt_layout">
+  <span class="name"><a href="parts_bits_use_alt_layout/parts_bits_use_alt_layout-library.html">parts\bits\use_alt_layout</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="user_telemetry">
+  <span class="name"><a href="user_user_telemetry/user_user_telemetry-library.html">user\user_telemetry</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="utils">
+  <span class="name"><a href="utils/utils-library.html">utils</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="views">
+  <span class="name"><a href="parts_views_views/parts_views_views-library.html">parts\views\views</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="views_delegate">
+  <span class="name"><a href="parts_views_delegate/parts_views_delegate-library.html">parts\views_delegate</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+        </dl>
+      </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li class="self-crumb">scouting_app_2024 package</li>
+</ol>
+
+
+    <h5 class="hidden-xs"><span class="package-name">scouting_app_2024</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="parts_views_about_app/parts_views_about_app-library.html">parts\views\about_app</a></li>
+      <li><a href="blobs_animate_blob/blobs_animate_blob-library.html">blobs\animate_blob</a></li>
+      <li><a href="extern_app_theme/extern_app_theme-library.html">extern\app_theme</a></li>
+      <li><a href="parts_bits_appbar_celebrate/parts_bits_appbar_celebrate-library.html">parts\bits\appbar_celebrate</a></li>
+      <li><a href="parts_appview/parts_appview-library.html">parts\appview</a></li>
+      <li><a href="blobs_assured_dialog/blobs_assured_dialog-library.html">blobs\assured_dialog</a></li>
+      <li><a href="user_awards_awards_telemetry/user_awards_awards_telemetry-library.html">user\awards\awards_telemetry</a></li>
+      <li><a href="blobs_basic_toggle_switch/blobs_basic_toggle_switch-library.html">blobs\basic_toggle_switch</a></li>
+      <li><a href="blobs_blobs/blobs_blobs-library.html">blobs\blobs</a></li>
+      <li><a href="extern_color/extern_color-library.html">extern\color</a></li>
+      <li><a href="extern_community_material_icons/extern_community_material_icons-library.html">extern\community_material_icons</a></li>
+      <li><a href="parts_views_console/parts_views_console-library.html">parts\views\console</a></li>
+      <li><a href="parts_bits_counter/parts_bits_counter-library.html">parts\bits\counter</a></li>
+      <li><a href="extern_datetime/extern_datetime-library.html">extern\datetime</a></li>
+      <li><a href="debug/debug-library.html">debug</a></li>
+      <li><a href="parts_bits_duc_bit/parts_bits_duc_bit-library.html">parts\bits\duc_bit</a></li>
+      <li><a href="user_duc_telemetry/user_duc_telemetry-library.html">user\duc_telemetry</a></li>
+      <li><a href="parts_views_duck/parts_views_duck-library.html">parts\views\duck</a></li>
+      <li><a href="extern_dynamic_user_capture/extern_dynamic_user_capture-library.html">extern\dynamic_user_capture</a></li>
+      <li><a href="extern_enum/extern_enum-library.html">extern\enum</a></li>
+      <li><a href="user_env/user_env-library.html">user\env</a></li>
+      <li><a href="user_models_ephemeral_data/user_models_ephemeral_data-library.html">user\models\ephemeral_data</a></li>
+      <li><a href="blobs_expandable_txtfield/blobs_expandable_txtfield-library.html">blobs\expandable_txtfield</a></li>
+      <li><a href="blobs_extended_fab_blob/blobs_extended_fab_blob-library.html">blobs\extended_fab_blob</a></li>
+      <li><a href="extern_flutter_icons/extern_flutter_icons-library.html">extern\flutter_icons</a></li>
+      <li><a href="blobs_form_blob/blobs_form_blob-library.html">blobs\form_blob</a></li>
+      <li><a href="parts_views_game_info/parts_views_game_info-library.html">parts\views\game_info</a></li>
+      <li><a href="blobs_hints_blob/blobs_hints_blob-library.html">blobs\hints_blob</a></li>
+      <li><a href="blobs_inc_dec_blob/blobs_inc_dec_blob-library.html">blobs\inc_dec_blob</a></li>
+      <li><a href="extern_int/extern_int-library.html">extern\int</a></li>
+      <li><a href="parts_loader/parts_loader-library.html">parts\loader</a></li>
+      <li><a href="blobs_locale_blob/blobs_locale_blob-library.html">blobs\locale_blob</a></li>
+      <li><a href="parts_bits_lock_in/parts_bits_lock_in-library.html">parts\bits\lock_in</a></li>
+      <li><a href="main/main-library.html">main</a></li>
+      <li><a href="parts_views_match_tile/parts_views_match_tile-library.html">parts\views\match_tile</a></li>
+      <li><a href="user_match_utils/user_match_utils-library.html">user\match_utils</a></li>
+      <li><a href="blobs_multi_select_blob/blobs_multi_select_blob-library.html">blobs\multi_select_blob</a></li>
+      <li><a href="extern_mystify_scoutinginfo/extern_mystify_scoutinginfo-library.html">extern\mystify_scoutinginfo</a></li>
+      <li><a href="blobs_obfs_blob/blobs_obfs_blob-library.html">blobs\obfs_blob</a></li>
+      <li><a href="blobs_partition_blob/blobs_partition_blob-library.html">blobs\partition_blob</a></li>
+      <li><a href="parts_views_past_matches/parts_views_past_matches-library.html">parts\views\past_matches</a></li>
+      <li><a href="parts_patch_notes/parts_patch_notes-library.html">parts\patch_notes</a></li>
+      <li><a href="extern_platform/extern_platform-library.html">extern\platform</a></li>
+      <li><a href="parts_bits_prefer_canonical/parts_bits_prefer_canonical-library.html">parts\bits\prefer_canonical</a></li>
+      <li><a href="parts_bits_prefer_compact/parts_bits_prefer_compact-library.html">parts\bits\prefer_compact</a></li>
+      <li><a href="parts_bits_prefer_tonal/parts_bits_prefer_tonal-library.html">parts\bits\prefer_tonal</a></li>
+      <li><a href="blobs_qr_converter_blob/blobs_qr_converter_blob-library.html">blobs\qr_converter_blob</a></li>
+      <li><a href="parts_views_scouting/parts_views_scouting-library.html">parts\views\scouting</a></li>
+      <li><a href="user_scouting_telemetry/user_scouting_telemetry-library.html">user\scouting_telemetry</a></li>
+      <li><a href="extern_scroll_controller/extern_scroll_controller-library.html">extern\scroll_controller</a></li>
+      <li><a href="parts_bits_seen_patchnotes/parts_bits_seen_patchnotes-library.html">parts\bits\seen_patchnotes</a></li>
+      <li><a href="parts_views_settings/parts_views_settings-library.html">parts\views\settings</a></li>
+      <li><a href="user_shared/user_shared-library.html">user\shared</a></li>
+      <li><a href="user_models_shared/user_models_shared-library.html">user\models\shared</a></li>
+      <li><a href="shared/shared-library.html">shared</a></li>
+      <li><a href="parts_bits_show_console/parts_bits_show_console-library.html">parts\bits\show_console</a></li>
+      <li><a href="parts_bits_show_experimental/parts_bits_show_experimental-library.html">parts\bits\show_experimental</a></li>
+      <li><a href="parts_bits_show_fps_monitor/parts_bits_show_fps_monitor-library.html">parts\bits\show_fps_monitor</a></li>
+      <li><a href="parts_bits_show_hints/parts_bits_show_hints-library.html">parts\bits\show_hints</a></li>
+      <li><a href="parts_bits_show_scrollbar/parts_bits_show_scrollbar-library.html">parts\bits\show_scrollbar</a></li>
+      <li><a href="extern_string/extern_string-library.html">extern\string</a></li>
+      <li><a href="blobs_switch_icon_position/blobs_switch_icon_position-library.html">blobs\switch_icon_position</a></li>
+      <li><a href="parts_team/parts_team-library.html">parts\team</a></li>
+      <li><a href="user_models_team_bloc/user_models_team_bloc-library.html">user\models\team_bloc</a></li>
+      <li><a href="user_models_team_model/user_models_team_model-library.html">user\models\team_model</a></li>
+      <li><a href="parts_theme/parts_theme-library.html">parts\theme</a></li>
+      <li><a href="parts_theme_classifier/parts_theme_classifier-library.html">parts\theme_classifier</a></li>
+      <li><a href="parts_bits_theme_mode/parts_bits_theme_mode-library.html">parts\bits\theme_mode</a></li>
+      <li><a href="parts_themed_app_bundle/parts_themed_app_bundle-library.html">parts\themed_app_bundle</a></li>
+      <li><a href="parts_views_usage_time_display/parts_views_usage_time_display-library.html">parts\views\usage_time_display</a></li>
+      <li><a href="parts_bits_use_alt_layout/parts_bits_use_alt_layout-library.html">parts\bits\use_alt_layout</a></li>
+      <li><a href="user_user_telemetry/user_user_telemetry-library.html">user\user_telemetry</a></li>
+      <li><a href="utils/utils-library.html">utils</a></li>
+      <li><a href="parts_views_views/parts_views_views-library.html">parts\views\views</a></li>
+      <li><a href="parts_views_delegate/parts_views_delegate-library.html">parts\views_delegate</a></li>
+</ol>
+
+  </div>
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+
+</main>
+
+<footer>
+  <span class="no-break">
+    scouting_app_2024
+      1.0.5+7
+  </span>
+
+  
+</footer>
+
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+

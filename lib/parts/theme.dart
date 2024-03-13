@@ -11,18 +11,30 @@ import 'package:scouting_app_2024/utils.dart';
 import 'package:theme_provider/theme_provider.dart';
 import 'package:yaml/yaml.dart';
 
+/// Represents any theme be it builtin or intricate, but does not represent the actual theme data.  Thus it is mostly used to represent the theme in a theme picker, where looking through the raw theme data can be bad.
 class AvailableTheme {
+  /// The name displayed to the user
   final String properName;
+
+  /// Whether the theme is dark or not
   final bool isDarkMode;
+
+  /// The author of the theme
   final String author;
+
+  /// The id of the theme. Usually "[author].[name]" all in lower case
   late String id;
+
+  /// The icon of the theme (This is highly volatile). Look for [flutter_icon] and [community_icon]
   final IconData? icon;
 
   AvailableTheme(this.properName, this.id, this.icon, this.author,
       [this.isDarkMode = true]);
 
+  /// The list of all available themes. This is a static list and should not be modified
   static final List<AvailableTheme> export = <AvailableTheme>[];
 
+  /// Returns the theme with the given name. If the theme is not found, it will return the first theme in the list
   static AvailableTheme of(String name) {
     for (AvailableTheme theme in export) {
       if (theme.id == name) {
@@ -141,6 +153,7 @@ final class ThemeBlob {
           data: data,
           description: id);
 
+  /// These are hard coded themes that are loaded before anything so the program wont crash
   static Future<void> loadBuiltinThemes() async {
     const List<String> builtinThemes = <String>[
       "Default Dark",

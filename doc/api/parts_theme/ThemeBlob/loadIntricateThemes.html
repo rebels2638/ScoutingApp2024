@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the loadIntricateThemes method from the ThemeBlob class, for the Dart programming language.">
+  <title>loadIntricateThemes method - ThemeBlob class - theme library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">scouting_app_2024</a></li>
+    <li><a href="../../parts_theme/parts_theme-library.html">parts\theme.dart</a></li>
+    <li><a href="../../parts_theme/ThemeBlob-class.html">ThemeBlob</a></li>
+    <li class="self-crumb">loadIntricateThemes static method</li>
+  </ol>
+  <div class="self-name">loadIntricateThemes</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="parts_theme&#47;ThemeBlob-class-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-method">loadIntricateThemes</span> static method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+<span class="name ">loadIntricateThemes</span>(<wbr>)
+
+      
+
+    </section>
+    
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">static Future&lt;void&gt; loadIntricateThemes() async {
+  &#47;&#47; get all .json files in the assets&#47;themes folder
+  &#47;&#47; for each file, load the json and create a new AppTheme
+  _intricateThemes = &lt;AppTheme&gt;[];
+  dynamic rule = loadYaml(
+      await rootBundle.loadString(&quot;assets&#47;rules&#47;themes.yml&quot;));
+  int i = 0;
+  int f = 0;
+  if (rule.runtimeType == YamlList &amp;&amp; rule.isNotEmpty) {
+    await Future.forEach(rule, (dynamic x) async {
+      if (x is YamlMap) {
+        try {
+          ThemeData? theme = ThemeDecoder.decodeThemeData(
+              jsonDecode(
+                  await rootBundle.loadString(x[&#39;location&#39;])));
+          if (theme == null) {
+            Debug().ohno(&quot;Failed to DECODE theme $x, skipping&quot;);
+            f++;
+          } else {
+            &#47;&#47; this might look like idiot proof code, but we have to add our own touch to mapping icons from static attributes to enums, just look at flutter_icons and community_material_icons D: it is very sad
+            ThemeData better = theme.copyWith(
+              textTheme: theme.textTheme
+                  .apply(fontFamily: Shared.FONT_FAMILY_SANS),
+              primaryTextTheme: theme.primaryTextTheme
+                  .apply(fontFamily: Shared.FONT_FAMILY_SANS),
+            );
+            List&lt;String&gt; iconDescriptor = x[&#39;icon&#39;].split(&quot;,&quot;);
+            if (iconDescriptor.length == 2 &amp;&amp;
+                GenericUtils.matchesOfAny(iconDescriptor[0],
+                    &lt;String&gt;[&quot;community&quot;, &quot;flutter&quot;])) {
+              IconData? icon = Icons.palette_rounded;
+              if (iconDescriptor[0] == &quot;community&quot;) {
+                for (CommunityMaterialIconsEnumMapper v
+                    in CommunityMaterialIconsEnumMapper.values) {
+                  if (v.name == iconDescriptor[1]) {
+                    icon = v.data;
+                  }
+                }
+              } else if (iconDescriptor[0] == &quot;flutter&quot;) {
+                for (FlutterIconEnumMapper v
+                    in FlutterIconEnumMapper.values) {
+                  if (v.name == iconDescriptor[1]) {
+                    icon = v.data;
+                  }
+                }
+              } else {
+                throw &quot;&#39;${iconDescriptor[0]}&#39; is not a valid store to look for icons. Expecting &#39;community&#39; or &#39;flutter&#39;&quot;;
+              }
+              if (icon == null) {
+                throw &quot;Failed to find the icon ${iconDescriptor[1]} under ${iconDescriptor[0]}! Make sure ${iconDescriptor[0] == &quot;community&quot; ? &quot;lib&#47;extern&#47;community_material_icons.dart&quot; : &quot;lib&#47;extern&#47;flutter_icons.dart&quot;} is properly updated!&quot;;
+              }
+              _intricateThemes.add(AppTheme(
+                  id: x[&#39;id&#39;],
+                  data: better,
+                  description:
+                      &quot;A ${better.brightness.name} theme&quot;));
+              AvailableTheme.export.add(AvailableTheme(
+                  x[&#39;canonical_name&#39;],
+                  x[&#39;id&#39;],
+                  icon,
+                  x[&#39;author&#39;],
+                  better.brightness == Brightness.dark));
+              Debug().info(
+                  &quot;Registered: ${x[&#39;id&#39;]} to the intricate theme list!&quot;);
+              i++;
+            } else {
+              Debug().ohno(
+                  &quot;Failed to load theme ${x[&#39;id&#39;]} because the &#39;icon&#39; field does not follow &#39;[community&#47;flutter],[icon_name]&#39; format!&quot;);
+            }
+          }
+        } catch (e) {
+          Debug().ohno(&quot;Failed to load a theme $x because of $e&quot;);
+          f++;
+        }
+      } else {
+        Debug().ohno(
+            &quot;Cannot proceed with $x because typeof($x) != YamlMap. Instead it is ${x.runtimeType}.&quot;);
+      }
+    });
+  }
+  Debug().info(&quot;Loaded $i themes. Failed $f themes&quot;);
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">scouting_app_2024</a></li>
+    <li><a href="../../parts_theme/parts_theme-library.html">theme</a></li>
+    <li><a href="../../parts_theme/ThemeBlob-class.html">ThemeBlob</a></li>
+    <li class="self-crumb">loadIntricateThemes static method</li>
+</ol>
+
+
+    <h5>ThemeBlob class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    scouting_app_2024
+      1.0.5+7
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+

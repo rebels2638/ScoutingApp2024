@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the build method from the ConsoleStateComponent class, for the Dart programming language.">
+  <title>build method - ConsoleStateComponent class - console library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">scouting_app_2024</a></li>
+    <li><a href="../../parts_views_console/parts_views_console-library.html">parts\views\console.dart</a></li>
+    <li><a href="../../parts_views_console/ConsoleStateComponent-class.html">ConsoleStateComponent</a></li>
+    <li class="self-crumb">build method</li>
+  </ol>
+  <div class="self-name">build</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="parts_views_console&#47;ConsoleStateComponent-class-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-method">build</span> method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+  <div>
+    <ol class="annotation-list">
+        <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
+    </ol>
+  </div>
+
+<span class="returntype"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a></span>
+<span class="name ">build</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="build-param-context"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span></span></li>
+</ol>)
+
+      <div class="features"><span class="feature">override</span></div>
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Describes the part of the user interface represented by this widget.</p>
+<p>The framework calls this method in a number of different situations. For
+example:</p>
+<ul>
+<li>After calling <a href="../../parts_views_console/ConsoleStateComponent/initState.html">initState</a>.</li>
+<li>After calling <a href="https://api.flutter.dev/flutter/widgets/State/didUpdateWidget.html">didUpdateWidget</a>.</li>
+<li>After receiving a call to <a href="https://api.flutter.dev/flutter/widgets/State/setState.html">setState</a>.</li>
+<li>After a dependency of this <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> object changes (e.g., an
+<a href="https://api.flutter.dev/flutter/widgets/InheritedWidget-class.html">InheritedWidget</a> referenced by the previous <a href="../../parts_views_console/ConsoleStateComponent/build.html">build</a> changes).</li>
+<li>After calling <a href="https://api.flutter.dev/flutter/widgets/State/deactivate.html">deactivate</a> and then reinserting the <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> object into
+the tree at another location.</li>
+</ul>
+<p>This method can potentially be called in every frame and should not have
+any side effects beyond building a widget.</p>
+<p>The framework replaces the subtree below this widget with the widget
+returned by this method, either by updating the existing subtree or by
+removing the subtree and inflating a new subtree, depending on whether the
+widget returned by this method can update the root of the existing
+subtree, as determined by calling <a href="https://api.flutter.dev/flutter/widgets/Widget/canUpdate.html">Widget.canUpdate</a>.</p>
+<p>Typically implementations return a newly created constellation of widgets
+that are configured with information from this widget's constructor, the
+given <a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a>, and the internal state of this <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> object.</p>
+<p>The given <a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a> contains information about the location in the
+tree at which this widget is being built. For example, the context
+provides the set of inherited widgets for this location in the tree. The
+<a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a> argument is always the same as the <code>context</code> property of
+this <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> object and will remain the same for the lifetime of this
+object. The <a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a> argument is provided redundantly here so that
+this method matches the signature for a <a href="https://api.flutter.dev/flutter/widgets/WidgetBuilder.html">WidgetBuilder</a>.</p>
+<h2 id="design-discussion">Design discussion</h2>
+<h3 id="why-is-the-build-method-on-state-and-not-statefulwidget">Why is the <a href="../../parts_views_console/ConsoleStateComponent/build.html">build</a> method on <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a>, and not <a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a>?</h3>
+<p>Putting a <code>Widget build(BuildContext context)</code> method on <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> rather
+than putting a <code>Widget build(BuildContext context, State state)</code> method
+on <a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a> gives developers more flexibility when subclassing
+<a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a>.</p>
+<p>For example, <a href="https://api.flutter.dev/flutter/widgets/AnimatedWidget-class.html">AnimatedWidget</a> is a subclass of <a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a> that
+introduces an abstract <code>Widget build(BuildContext context)</code> method for its
+subclasses to implement. If <a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a> already had a <a href="../../parts_views_console/ConsoleStateComponent/build.html">build</a> method
+that took a <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> argument, <a href="https://api.flutter.dev/flutter/widgets/AnimatedWidget-class.html">AnimatedWidget</a> would be forced to provide
+its <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> object to subclasses even though its <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> object is an
+internal implementation detail of <a href="https://api.flutter.dev/flutter/widgets/AnimatedWidget-class.html">AnimatedWidget</a>.</p>
+<p>Conceptually, <a href="https://api.flutter.dev/flutter/widgets/StatelessWidget-class.html">StatelessWidget</a> could also be implemented as a subclass of
+<a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a> in a similar manner. If the <a href="../../parts_views_console/ConsoleStateComponent/build.html">build</a> method were on
+<a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a> rather than <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a>, that would not be possible anymore.</p>
+<p>Putting the <a href="../../parts_views_console/ConsoleStateComponent/build.html">build</a> function on <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> rather than <a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a> also
+helps avoid a category of bugs related to closures implicitly capturing
+<code>this</code>. If you defined a closure in a <a href="../../parts_views_console/ConsoleStateComponent/build.html">build</a> function on a
+<a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a>, that closure would implicitly capture <code>this</code>, which is
+the current widget instance, and would have the (immutable) fields of that
+instance in scope:</p>
+<pre class="language-dart"><code class="language-dart">// (this is not valid Flutter code)
+class MyButton extends StatefulWidgetX {
+  MyButton({super.key, required this.color});
+
+  final Color color;
+
+  @override
+  Widget build(BuildContext context, State state) {
+    return SpecialWidget(
+      handler: () { print('color: $color'); },
+    );
+  }
+}
+</code></pre>
+<p>For example, suppose the parent builds <code>MyButton</code> with <code>color</code> being blue,
+the <code>$color</code> in the print function refers to blue, as expected. Now,
+suppose the parent rebuilds <code>MyButton</code> with green. The closure created by
+the first build still implicitly refers to the original widget and the
+<code>$color</code> still prints blue even through the widget has been updated to
+green; should that closure outlive its widget, it would print outdated
+information.</p>
+<p>In contrast, with the <a href="../../parts_views_console/ConsoleStateComponent/build.html">build</a> function on the <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> object, closures
+created during <a href="../../parts_views_console/ConsoleStateComponent/build.html">build</a> implicitly capture the <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> instance instead of
+the widget instance:</p>
+<pre class="language-dart"><code class="language-dart">class MyButton extends StatefulWidget {
+  const MyButton({super.key, this.color = Colors.teal});
+
+  final Color color;
+  // ...
+}
+
+class MyButtonState extends State&lt;MyButton&gt; {
+  // ...
+  @override
+  Widget build(BuildContext context) {
+    return SpecialWidget(
+      handler: () { print('color: ${widget.color}'); },
+    );
+  }
+}
+</code></pre>
+<p>Now when the parent rebuilds <code>MyButton</code> with green, the closure created by
+the first build still refers to <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> object, which is preserved across
+rebuilds, but the framework has updated that <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> object's <a href="https://api.flutter.dev/flutter/widgets/State/widget.html">widget</a>
+property to refer to the new <code>MyButton</code> instance and <code>${widget.color}</code>
+prints green, as expected.</p>
+<p>See also:</p>
+<ul>
+<li><a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a>, which contains the discussion on performance considerations.</li>
+</ul>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">@override
+Widget build(BuildContext context) {
+  return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: &lt;Widget&gt;[
+        if (ShowHintsGuideModal.isShowingHints(context))
+          const ApexHintsBlob(&quot;Developer Section!&quot;,
+              &quot;This part of the app is designed for debugging and development purposes, so some features may compromise the app&#39;s stability.&quot;),
+        const SizedBox(height: 14),
+        Wrap(runSpacing: 6, spacing: 6, children: &lt;Widget&gt;[
+          TextButton.icon(
+              onPressed: () =&gt;
+                  setState(() =&gt; internalConsoleBuffer.clear()),
+              icon: const Icon(Icons.cleaning_services_rounded),
+              label: const Text(&quot;Clear&quot;,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontFamily: &quot;IBM Plex Mono&quot;))),
+          TextButton.icon(
+              onPressed: () =&gt; setState(() {}),
+              icon: const Icon(Icons.refresh_rounded),
+              label: const Text(&quot;Refresh&quot;,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontFamily: &quot;IBM Plex Mono&quot;))),
+          TextButton.icon(
+              onPressed: () async =&gt; await Clipboard.setData(
+                  ClipboardData(
+                      text: collateListString(
+                          internalConsoleBuffer))),
+              icon: const Icon(Icons.copy_all_rounded),
+              label: const Text(&quot;Copy&quot;,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontFamily: &quot;IBM Plex Mono&quot;))),
+          TextButton.icon(
+              onPressed: () =&gt; ScaffoldMessenger.of(context)
+                  .showSnackBar(yummySnackBar(
+                      margin: null,
+                      backgroundColor:
+                          ThemeProvider.themeOf(context)
+                              .data
+                              .colorScheme
+                              .primary,
+                      message: &quot;Amogus&quot;,
+                      icon: Icon(Icons.adb_rounded,
+                          color: ThemeProvider.themeOf(context)
+                              .data
+                              .colorScheme
+                              .background))),
+              icon: const Icon(Icons.window_rounded),
+              label: const Text(&quot;Yummy Regular&quot;,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontFamily: &quot;IBM Plex Mono&quot;))),
+          TextButton.icon(
+              onPressed: () =&gt; ScaffoldMessenger.of(context)
+                  .showSnackBar(yummyWarningSnackBar(&quot;Amogus&quot;)),
+              icon: const Icon(Icons.window_rounded),
+              label: const Text(&quot;Yummy Warning&quot;,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontFamily: &quot;IBM Plex Mono&quot;))),
+          TextButton.icon(
+              onPressed: () =&gt; ScaffoldMessenger.of(context)
+                  .showSnackBar(yummyDeadlySnackBar(&quot;Amogus&quot;)),
+              icon: const Icon(Icons.window_rounded),
+              label: const Text(&quot;Yummy Deadly&quot;,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontFamily: &quot;IBM Plex Mono&quot;))),
+          TextButton.icon(
+              onPressed: () =&gt; launchConfirmDialog(context,
+                  message: Container(
+                    decoration: BoxDecoration(
+                        color: ThemeProvider.themeOf(context)
+                            .data
+                            .colorScheme
+                            .background
+                            .withOpacity(0.8),
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Column(
+                      children: &lt;Widget&gt;[
+                        TextButton.icon(
+                            onPressed: () async =&gt;
+                                await Clipboard.setData(
+                                    ClipboardData(
+                                        text: jsonEncode(
+                                            UserTelemetry()
+                                                .currentModel
+                                                .toJson()))),
+                            icon: const Icon(Icons.copy_rounded),
+                            label: const Text(&quot;Copy&quot;,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: &quot;IBM Plex Mono&quot;))),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(
+                              jsonEncode(UserTelemetry()
+                                  .currentModel
+                                  .toJson()),
+                              style: const TextStyle(
+                                  fontFamily: &quot;IBM Plex Mono&quot;,
+                                  fontWeight: FontWeight.w600)),
+                        ),
+                      ],
+                    ),
+                  ),
+                  title: &quot;User Prefs RAW&quot;,
+                  onConfirm: () {}),
+              icon: const Icon(Icons.subscript_rounded),
+              label: const Text(&quot;User Prefs&quot;,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontFamily: &quot;IBM Plex Mono&quot;))),
+          TextButton.icon(
+              onPressed: () =&gt; launchNumberPickerDialog(context,
+                  minValue: 0,
+                  maxValue: 999,
+                  headerMessage: &quot;Number Picker (ig)&quot;,
+                  onChange: (int res) {}),
+              icon: const Icon(Icons.check_box_rounded),
+              label: const Text(&quot;NumberPicker Dialog&quot;,
+                  style: TextStyle(fontWeight: FontWeight.bold))),
+          TextButton.icon(
+              onPressed: () =&gt; launchConfirmDialog(context,
+                  message: const Text(&quot;Debug Show CONFIRM_DIALOG&quot;),
+                  onConfirm: () {}),
+              icon: const Icon(Icons.check_box_rounded),
+              label: const Text(&quot;CONFIRM_DIALOG&quot;,
+                  style: TextStyle(fontWeight: FontWeight.bold))),
+          TextButton.icon(
+              onPressed: () async =&gt;
+                  await launchAssuredConfirmDialog(context,
+                      message: &quot;TEST&quot;,
+                      title: &quot;TEST&quot;,
+                      onConfirm: () {}),
+              icon: const Icon(Icons.add_box_rounded),
+              label: const Text(&quot;AssureInfBox&quot;,
+                  style: TextStyle(fontWeight: FontWeight.bold))),
+          TextButton.icon(
+              onPressed: () =&gt; throw &quot;Debug Error box.&quot;,
+              icon:
+                  const Icon(Icons.security_update_warning_rounded),
+              label: const Text(&quot;THROW_NOW&quot;,
+                  style: TextStyle(fontWeight: FontWeight.bold))),
+          TextButton.icon(
+              onPressed: () async {
+                List&lt;String&gt; pms = &lt;String&gt;[];
+                ScoutingTelemetry()
+                    .forEach((EphemeralScoutingData? data) {
+                  pms.add(data?.compressedFormat ?? &quot;null&quot;);
+                });
+                await launchConfirmDialog(context,
+                    message: SingleChildScrollView(
+                        child: Text.rich(TextSpan(
+                            children: &lt;InlineSpan&gt;[
+                          for (String pm in pms)
+                            TextSpan(text: &quot;$pm\n\n&quot;)
+                        ]))),
+                    onConfirm: () {});
+              },
+              icon: const Icon(Icons.list_rounded),
+              label: const Text(&quot;PMs&quot;,
+                  style: TextStyle(fontWeight: FontWeight.bold))),
+          FilledButton.tonal(
+              onPressed: () {
+                _scrollController.animateTo(
+                    _scrollController.position.maxScrollExtent,
+                    duration: const Duration(milliseconds: 200),
+                    curve:
+                        Curves.easeOut); &#47;&#47; reference for later :D
+              },
+              child: const Text(&quot;Scroll to Bottom&quot;)),
+          FilledButton.tonal(
+              onPressed: () {
+                Debug().info(
+                    &quot;BUFFER_USAGE: ${internalConsoleBuffer.length} of ${Shared.MAX_LOG_LENGTH} (${(internalConsoleBuffer.length &#47; Shared.MAX_LOG_LENGTH) * 100}%)&quot;);
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    showCloseIcon: true,
+                    behavior: SnackBarBehavior.fixed,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                    content: Center(
+                      child: Text(
+                          &quot;${internalConsoleBuffer.length} of ${Shared.MAX_LOG_LENGTH} (${(internalConsoleBuffer.length &#47; Shared.MAX_LOG_LENGTH) * 100}%)&quot;),
+                    )));
+              },
+              child: const Text(&quot;Display buffer usage&quot;))
+        ]),
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(14)),
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: &lt;Widget&gt;[
+                    for (String t in internalConsoleBuffer)
+                      Padding(
+                        padding: &#47;&#47; shitty way to do a strut lol
+                            const EdgeInsets.only(bottom: 10),
+                        child: Container(
+                            decoration: BoxDecoration(
+                              color: ThemeProvider.themeOf(context)
+                                          .data
+                                          .colorScheme
+                                          .brightness ==
+                                      Brightness.dark
+                                  ? ThemeProvider.themeOf(context)
+                                      .data
+                                      .colorScheme
+                                      .onSurface
+                                  : ThemeProvider.themeOf(context)
+                                      .data
+                                      .colorScheme
+                                      .onInverseSurface,
+                              borderRadius:
+                                  BorderRadius.circular(8),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(t,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: ThemeProvider.themeOf(
+                                                      context)
+                                                  .data
+                                                  .colorScheme
+                                                  .brightness ==
+                                              Brightness.light
+                                          ? ThemeProvider.themeOf(
+                                                  context)
+                                              .data
+                                              .colorScheme
+                                              .onSurface
+                                          : ThemeProvider.themeOf(
+                                                  context)
+                                              .data
+                                              .colorScheme
+                                              .onInverseSurface,
+                                      fontFamily: &quot;IBM Plex Mono&quot;)),
+                            )),
+                      )
+                  ]),
+            ),
+          ),
+        )
+      ]);
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">scouting_app_2024</a></li>
+    <li><a href="../../parts_views_console/parts_views_console-library.html">console</a></li>
+    <li><a href="../../parts_views_console/ConsoleStateComponent-class.html">ConsoleStateComponent</a></li>
+    <li class="self-crumb">build method</li>
+</ol>
+
+
+    <h5>ConsoleStateComponent class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    scouting_app_2024
+      1.0.5+7
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+
