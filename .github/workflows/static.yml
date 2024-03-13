@@ -2,12 +2,13 @@
 name: deploy docs
 
 on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: ["master"]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      comments:
+        description: "Comments"
+        required: false
+        default: "Nothing"
+        type: string
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -37,7 +38,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: './doc'
+          path: 'doc'
       - name: Deploy to GitHub
         id: deployment
         uses: actions/deploy-pages@v4
