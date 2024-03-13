@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/shared.dart';
+
+import 'package:fluentui_emoji_icon/fluentui_emoji_icon.dart';
 
 part "awards_telemetry.g.dart";
 
@@ -56,8 +57,10 @@ final class AwardsTelemetry {
             (currentModel.unlockedAwards.isNotEmpty &&
                 currentModel.lockedAwards.isNotEmpty)) {
           for (String unlocked in currentModel.unlockedAwards) {
-            if (Award.allAwards
-                .where((Award e) => e.identifier == unlocked)
+            if (Award.allAwards.entries
+                .toList()
+                .where(
+                    (MapEntry<String, Award> e) => e.key == unlocked)
                 .isEmpty) {
               Debug().warn(
                   "Award $unlocked is not registered, removing from unlocked list");
@@ -65,8 +68,9 @@ final class AwardsTelemetry {
             }
           }
           for (String locked in currentModel.lockedAwards) {
-            if (Award.allAwards
-                .where((Award e) => e.identifier == locked)
+            if (Award.allAwards.entries
+                .toList()
+                .where((MapEntry<String, Award> e) => e.key == locked)
                 .isEmpty) {
               Debug().warn(
                   "Award $locked is not registered, removing from locked list");
@@ -88,6 +92,38 @@ final class AwardsTelemetry {
     _currentModel = AwardsModel.defaultModel;
   }
 
+  bool isUnlocked(String award) =>
+      _currentModel.unlockedAwards.contains(award);
+
+  bool isLocked(String award) =>
+      _currentModel.lockedAwards.contains(award);
+
+  void unlock(String award) {
+    if (isUnlocked(award)) {
+      Debug().warn("Award $award is already unlocked, skipping");
+      return;
+    }
+    if (isLocked(award)) {
+      Debug().info("Unlocking Award $award");
+      _currentModel.lockedAwards.remove(award);
+    }
+    Debug().info("Unlocking Award $award");
+    _currentModel.unlockedAwards.add(award);
+  }
+
+  void lock(String award) {
+    if (isLocked(award)) {
+      Debug().warn("Award $award is already locked, skipping");
+      return;
+    }
+    if (isUnlocked(award)) {
+      Debug().info("Locking Award $award");
+      _currentModel.unlockedAwards.remove(award);
+    }
+    Debug().info("Locking Award $award");
+    _currentModel.lockedAwards.add(award);
+  }
+
   Future<void> save() async {
     Debug().info(
         "Saving User Awards...Entries: ${_currentModel.toJson()}");
@@ -96,33 +132,57 @@ final class AwardsTelemetry {
   }
 }
 
-abstract class Award {
-  static final Set<Award> allAwards = <Award>{};
+class Award {
+  static final Map<String, Award> allAwards = <String, Award>{
+    "first_launch": Award(
+        description: "Launch the app for the first time",
+        formalName: "First",
+        icon: Fluents.flStar),
+    "first_scouted_match": Award(
+        description: "Scout a match for the first time",
+        formalName: "Rookie",
+        icon: Fluents.flPottedPlant),
+    "dedicated_scouter_1": Award(
+        description: "Scout 10 matches",
+        formalName: "Dedicated Scouter",
+        icon: Fluents.fl3rdPlaceMedal),
+    "dedicated_scouter_2": Award(
+        description: "Scout 25 matches",
+        formalName: "Dedicated Scouter",
+        icon: Fluents.fl2ndPlaceMedal),
+    "dedicated_scouter_3": Award(
+        description: "Scout 50 matches",
+        formalName: "Dedicated Scouter",
+        icon: Fluents.fl1stPlaceMedal),
+    "progressive_scouter": Award(
+        description: "Earn 5 awards",
+        formalName: "Progressive Scouter",
+        icon: Fluents.flTrophy),
+  };
 
-  final String _identifier;
   final String _description;
   final String _formalName;
   final int? _timeUnlocked;
+  final FluentData _icon;
 
   Award(
-      {String? identifier,
-      required String description,
+      {required String description,
       required String formalName,
+      required FluentData icon,
       int? timeUnlocked})
-      : _identifier = identifier ??
-            formalName.toLowerCase().trim().replaceAll(" ", "_"),
-        _description = description,
+      : _description = description,
         _formalName = formalName,
+        _icon = icon,
         _timeUnlocked = timeUnlocked ?? -1 {
-    Award.allAwards.add(this);
+    final String id =
+        formalName.toLowerCase().trim().replaceAll(" ", "_");
     Debug().info(
-        "Registered Award: $_formalName as $_identifier (IS UNLOCKED? $isUnlocked)");
+        "Registered Award: $_formalName as $id (IS UNLOCKED? $isUnlocked)");
   }
 
-  String get identifier => _identifier;
   String get description => _description;
   String get formalName => _formalName;
-  Widget get icon;
+  FluentData get icon => _icon;
   int get timeUnlocked => _timeUnlocked ?? -1;
   bool get isUnlocked => timeUnlocked != -1;
 }
