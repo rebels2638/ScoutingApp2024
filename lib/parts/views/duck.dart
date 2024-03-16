@@ -16,6 +16,7 @@ import 'package:scouting_app_2024/parts/bits/prefer_canonical.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
 import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/parts/bits/show_hints.dart';
+import 'package:scouting_app_2024/parts/views/shared_dialogs.dart';
 import 'dart:io';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:scouting_app_2024/shared.dart';
@@ -23,7 +24,6 @@ import 'package:scouting_app_2024/user/duc_telemetry.dart';
 import 'package:scouting_app_2024/user/match_utils.dart';
 import 'package:scouting_app_2024/user/models/shared.dart';
 import 'package:scouting_app_2024/user/models/team_model.dart';
-import 'package:theme_provider/theme_provider.dart';
 /*
   __
 <(o )___
@@ -362,485 +362,402 @@ class _DataHostingViewState extends State<DataHostingView> {
         widgets.add(Padding(
           padding: const EdgeInsets.only(left: 12, right: 12),
           child: Card(
-              child: form_sec_rigid(context,
+              child: form_sec_rigid(
                   headerIcon: const Icon(Icons.group_rounded),
                   title: Text("Team $teamNumber",
                       style: const TextStyle(
                           fontSize: 24, fontWeight: FontWeight.bold)),
                   child: Builder(builder: (BuildContext context) {
-            return Column(children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Text.rich(
-                          TextSpan(children: <InlineSpan>[
-                            const TextSpan(
-                                text: "Matches Recorded: ",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold)),
-                            TextSpan(text: data.length.toString()),
-                            const TextSpan(
-                                text: "\nWinrate: ",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold)),
-                            TextSpan(
-                                text:
-                                    "${(miscWinLikelihoods * 100).toStringAsFixed(2)}%",
-                                style: TextStyle(
-                                    color: heat(miscWinLikelihoods),
-                                    backgroundColor: Colors.black)),
-                          ]),
-                          style: const TextStyle(fontSize: 16)),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Wrap(runSpacing: 8, spacing: 8, children: <Widget>[
-                FilledButton.tonalIcon(
-                    onPressed:
-                        () => Navigator.of(context)
-                                .push(MaterialPageRoute<Widget>(
-                              builder: (BuildContext context) =>
-                                  Scaffold(
-                                resizeToAvoidBottomInset: false,
-                                appBar: AppBar(
-                                    title: Row(
-                                  children: <Widget>[
-                                    const Icon(
-                                        Icons.auto_graph_rounded),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                        "Stats for team $teamNumber"),
-                                  ],
-                                )),
-                                body: SingleChildScrollView(
-                                    physics:
-                                        const AlwaysScrollableScrollPhysics(
-                                            parent:
-                                                BouncingScrollPhysics()),
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsets.all(16),
-                                      child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: <Widget>[
-                                            Card(
-                                              child: form_sec_rigid(
-                                                context,
-                                                title: const Text(
-                                                    "Auto",
-                                                    style: TextStyle(
-                                                        fontSize: 32,
-                                                        fontWeight:
-                                                            FontWeight
-                                                                .bold)),
-                                                headerIcon:
-                                                    const Icon(Icons
-                                                        .auto_awesome_rounded),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets
-                                                          .all(8.0),
-                                                  child: Row(
-                                                    children: <Widget>[
-                                                      Text.rich(
-                                                        TextSpan(
-                                                          children: <InlineSpan>[
-                                                            const TextSpan(
-                                                              text:
-                                                                  "% Movement Points: ",
-                                                              style: TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight.bold),
+                    return Column(children: <Widget>[
+                      Column(
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Text.rich(
+                                  TextSpan(children: <InlineSpan>[
+                                    const TextSpan(
+                                        text: "Matches Recorded: ",
+                                        style: TextStyle(
+                                            fontWeight:
+                                                FontWeight.bold)),
+                                    TextSpan(
+                                        text: data.length.toString()),
+                                    const TextSpan(
+                                        text: "\nWinrate: ",
+                                        style: TextStyle(
+                                            fontWeight:
+                                                FontWeight.bold)),
+                                    TextSpan(
+                                        text:
+                                            "${(miscWinLikelihoods * 100).toStringAsFixed(2)}%",
+                                        style: TextStyle(
+                                            color: heat(
+                                                miscWinLikelihoods),
+                                            backgroundColor:
+                                                Colors.black)),
+                                  ]),
+                                  style:
+                                      const TextStyle(fontSize: 16)),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      Wrap(
+                          runSpacing: 8,
+                          spacing: 8,
+                          children: <Widget>[
+                            FilledButton.tonalIcon(
+                                onPressed:
+                                    () => Navigator.of(context).push(
+                                            MaterialPageRoute<Widget>(
+                                          builder: (BuildContext
+                                                  context) =>
+                                              Scaffold(
+                                            resizeToAvoidBottomInset:
+                                                false,
+                                            appBar: AppBar(
+                                                title: Row(
+                                              children: <Widget>[
+                                                const Icon(Icons
+                                                    .auto_graph_rounded),
+                                                const SizedBox(
+                                                    width: 8),
+                                                Text(
+                                                    "Stats for team $teamNumber"),
+                                              ],
+                                            )),
+                                            body:
+                                                SingleChildScrollView(
+                                                    physics:
+                                                        const AlwaysScrollableScrollPhysics(
+                                                            parent:
+                                                                BouncingScrollPhysics()),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets
+                                                              .all(
+                                                              16),
+                                                      child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          children: <Widget>[
+                                                            Card(
+                                                              child:
+                                                                  form_sec_rigid(
+                                                                title: const Text(
+                                                                    "Auto",
+                                                                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
+                                                                headerIcon:
+                                                                    const Icon(Icons.auto_awesome_rounded),
+                                                                child:
+                                                                    Padding(
+                                                                  padding:
+                                                                      const EdgeInsets.all(8.0),
+                                                                  child:
+                                                                      Row(
+                                                                    children: <Widget>[
+                                                                      Text.rich(
+                                                                        TextSpan(
+                                                                          children: <InlineSpan>[
+                                                                            const TextSpan(
+                                                                              text: "% Movement Points: ",
+                                                                              style: TextStyle(fontWeight: FontWeight.bold),
+                                                                            ),
+                                                                            TextSpan(text: "${(autoPercentGetMovementPoints * 100).toStringAsFixed(2)}%", style: TextStyle(color: heat(autoPercentGetMovementPoints), backgroundColor: Colors.black)),
+                                                                            const TextSpan(text: "\nAvg Scored in Speaker: ", style: TextStyle(fontWeight: FontWeight.bold)),
+                                                                            TextSpan(
+                                                                              text: autoAvgScoredSpeaker.toStringAsFixed(2),
+                                                                            ),
+                                                                            const TextSpan(
+                                                                              text: "\nAvg Scored in Amp: ",
+                                                                              style: TextStyle(fontWeight: FontWeight.bold),
+                                                                            ),
+                                                                            TextSpan(
+                                                                              text: autoAvgScoredInAmp.toStringAsFixed(2),
+                                                                            ),
+                                                                            const TextSpan(
+                                                                              text: "\n% of Pickups AMP Side: ",
+                                                                              style: TextStyle(fontWeight: FontWeight.bold),
+                                                                            ),
+                                                                            const TextSpan(
+                                                                              text: "\n% of Start AMP Side: ",
+                                                                              style: TextStyle(fontWeight: FontWeight.bold),
+                                                                            ),
+                                                                            TextSpan(
+                                                                              text: "${(autoPercentStartLeft * 100).toStringAsFixed(2)}%",
+                                                                              style: TextStyle(color: heat(autoPercentStartLeft), backgroundColor: Colors.black),
+                                                                            ),
+                                                                            const TextSpan(
+                                                                              text: "\n% of Start Stage Side: ",
+                                                                              style: TextStyle(fontWeight: FontWeight.bold),
+                                                                            ),
+                                                                            TextSpan(
+                                                                              text: "${(autoPercentStartRight * 100).toStringAsFixed(2)}%",
+                                                                              style: TextStyle(color: heat(autoPercentStartRight), backgroundColor: Colors.black),
+                                                                            ),
+                                                                            const TextSpan(
+                                                                              text: "\n% of Start Middle: ",
+                                                                              style: TextStyle(fontWeight: FontWeight.bold),
+                                                                            ),
+                                                                            TextSpan(
+                                                                              text: "${(autoPercentStartMiddle * 100).toStringAsFixed(2)}%",
+                                                                              style: TextStyle(color: heat(autoPercentStartMiddle), backgroundColor: Colors.black),
+                                                                            ),
+                                                                          ],
+                                                                          style: const TextStyle(fontSize: 18),
+                                                                        ),
+                                                                      ),
+                                                                      const Spacer(), // this is a scuffed solution
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
                                                             ),
-                                                            TextSpan(
-                                                                text:
-                                                                    "${(autoPercentGetMovementPoints * 100).toStringAsFixed(2)}%",
-                                                                style: TextStyle(
-                                                                    color: heat(autoPercentGetMovementPoints),
-                                                                    backgroundColor: Colors.black)),
-                                                            const TextSpan(
-                                                                text:
-                                                                    "\nAvg Scored in Speaker: ",
-                                                                style:
-                                                                    TextStyle(fontWeight: FontWeight.bold)),
-                                                            TextSpan(
-                                                              text: autoAvgScoredSpeaker
-                                                                  .toStringAsFixed(2),
+                                                            const SizedBox(
+                                                                height:
+                                                                    16),
+                                                            Card(
+                                                              child:
+                                                                  form_sec_rigid(
+                                                                title: const Text(
+                                                                    "Tele-Op",
+                                                                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
+                                                                headerIcon:
+                                                                    const Icon(Icons.group_rounded),
+                                                                child:
+                                                                    Padding(
+                                                                  padding:
+                                                                      const EdgeInsets.all(8.0),
+                                                                  child:
+                                                                      Row(
+                                                                    children: <Widget>[
+                                                                      Text.rich(
+                                                                        TextSpan(children: <InlineSpan>[
+                                                                          const TextSpan(
+                                                                            text: "Avg Scored in Speaker: ",
+                                                                            style: TextStyle(fontWeight: FontWeight.bold),
+                                                                          ),
+                                                                          TextSpan(
+                                                                            text: teleopAvgScoredInSpeaker.toStringAsFixed(2),
+                                                                          ),
+                                                                          const TextSpan(
+                                                                            text: "\nAvg Scored in Amp: ",
+                                                                            style: TextStyle(fontWeight: FontWeight.bold),
+                                                                          ),
+                                                                          TextSpan(
+                                                                            text: teleopAvgScoredInAmp.toStringAsFixed(2),
+                                                                          ),
+                                                                          const TextSpan(
+                                                                            text: "\nAvg Notes Scored: ",
+                                                                            style: TextStyle(fontWeight: FontWeight.bold),
+                                                                          ),
+                                                                          TextSpan(
+                                                                            text: teleopAvgNotesScored.toStringAsFixed(2),
+                                                                          ),
+                                                                          const TextSpan(
+                                                                            text: "\nGoes Under Stage: ",
+                                                                            style: TextStyle(fontWeight: FontWeight.bold),
+                                                                          ),
+                                                                          TextSpan(
+                                                                            text: teleopGoesUnderStage ? "Yes" : "No",
+                                                                          ),
+                                                                        ], style: const TextStyle(fontSize: 18)),
+                                                                      ),
+                                                                      const Spacer(),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
                                                             ),
-                                                            const TextSpan(
-                                                              text:
-                                                                  "\nAvg Scored in Amp: ",
-                                                              style: TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight.bold),
+                                                            const SizedBox(
+                                                                height:
+                                                                    16),
+                                                            Card(
+                                                              child:
+                                                                  form_sec_rigid(
+                                                                title: const Text(
+                                                                    "End Game",
+                                                                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
+                                                                headerIcon:
+                                                                    const Icon(Icons.commit_rounded),
+                                                                child:
+                                                                    Padding(
+                                                                  padding:
+                                                                      const EdgeInsets.all(8.0),
+                                                                  child:
+                                                                      Row(
+                                                                    children: <Widget>[
+                                                                      Text.rich(
+                                                                        TextSpan(children: <InlineSpan>[
+                                                                          const TextSpan(
+                                                                            text: "Can Climb: ",
+                                                                            style: TextStyle(fontWeight: FontWeight.bold),
+                                                                          ),
+                                                                          TextSpan(
+                                                                            text: endgameCanClimb ? "Yes" : "No",
+                                                                          ),
+                                                                          const TextSpan(
+                                                                            text: "\nHarmony Attempt Success Rate: ",
+                                                                            style: TextStyle(fontWeight: FontWeight.bold),
+                                                                          ),
+                                                                          TextSpan(
+                                                                            text: "${(endgameHarmonyAttemptSuccessRate * 100).toStringAsFixed(2)}% ",
+                                                                            style: TextStyle(color: heat(endgameHarmonyAttemptSuccessRate), backgroundColor: Colors.black),
+                                                                          ),
+                                                                          const TextSpan(
+                                                                            text: "\n% of Games Scored Trap: ",
+                                                                            style: TextStyle(fontWeight: FontWeight.bold),
+                                                                          ),
+                                                                          TextSpan(
+                                                                            text: "${(endgamePercentOfGamesScoredTrap * 100).toStringAsFixed(2)}% ",
+                                                                            style: TextStyle(color: heat(endgamePercentOfGamesScoredTrap), backgroundColor: Colors.black),
+                                                                          ),
+                                                                        ], style: const TextStyle(fontSize: 18)),
+                                                                      ),
+                                                                      const Spacer(),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
                                                             ),
-                                                            TextSpan(
-                                                              text: autoAvgScoredInAmp
-                                                                  .toStringAsFixed(2),
+                                                            const SizedBox(
+                                                                height:
+                                                                    16),
+                                                            Card(
+                                                              child:
+                                                                  form_sec_rigid(
+                                                                title: const Text(
+                                                                    "Misc",
+                                                                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
+                                                                headerIcon:
+                                                                    const Icon(Icons.miscellaneous_services_rounded),
+                                                                child:
+                                                                    Padding(
+                                                                  padding:
+                                                                      const EdgeInsets.all(8.0),
+                                                                  child:
+                                                                      Row(
+                                                                    children: <Widget>[
+                                                                      Text.rich(
+                                                                        TextSpan(children: <InlineSpan>[
+                                                                          const TextSpan(
+                                                                            text: "Win Likelihood: ",
+                                                                            style: TextStyle(fontWeight: FontWeight.bold),
+                                                                          ),
+                                                                          TextSpan(
+                                                                            text: "${(miscWinLikelihoods * 100).toStringAsFixed(2)}%",
+                                                                            style: TextStyle(color: heat(miscWinLikelihoods), backgroundColor: Colors.black),
+                                                                          ),
+                                                                        ], style: const TextStyle(fontSize: 18)),
+                                                                      ),
+                                                                      const Spacer(),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
                                                             ),
-                                                            const TextSpan(
-                                                              text:
-                                                                  "\n% of Pickups AMP Side: ",
-                                                              style: TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight.bold),
-                                                            ),
-                                                            const TextSpan(
-                                                              text:
-                                                                  "\n% of Start AMP Side: ",
-                                                              style: TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight.bold),
-                                                            ),
-                                                            TextSpan(
-                                                              text:
-                                                                  "${(autoPercentStartLeft * 100).toStringAsFixed(2)}%",
-                                                              style: TextStyle(
-                                                                  color:
-                                                                      heat(autoPercentStartLeft),
-                                                                  backgroundColor: Colors.black),
-                                                            ),
-                                                            const TextSpan(
-                                                              text:
-                                                                  "\n% of Start Stage Side: ",
-                                                              style: TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight.bold),
-                                                            ),
-                                                            TextSpan(
-                                                              text:
-                                                                  "${(autoPercentStartRight * 100).toStringAsFixed(2)}%",
-                                                              style: TextStyle(
-                                                                  color:
-                                                                      heat(autoPercentStartRight),
-                                                                  backgroundColor: Colors.black),
-                                                            ),
-                                                            const TextSpan(
-                                                              text:
-                                                                  "\n% of Start Middle: ",
-                                                              style: TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight.bold),
-                                                            ),
-                                                            TextSpan(
-                                                              text:
-                                                                  "${(autoPercentStartMiddle * 100).toStringAsFixed(2)}%",
-                                                              style: TextStyle(
-                                                                  color:
-                                                                      heat(autoPercentStartMiddle),
-                                                                  backgroundColor: Colors.black),
-                                                            ),
-                                                          ],
-                                                          style: const TextStyle(
-                                                              fontSize:
-                                                                  18),
-                                                        ),
-                                                      ),
-                                                      const Spacer(), // this is a scuffed solution
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                                height: 16),
-                                            Card(
-                                              child: form_sec_rigid(
-                                                context,
-                                                title: const Text(
-                                                    "Tele-Op",
-                                                    style: TextStyle(
-                                                        fontSize: 32,
-                                                        fontWeight:
-                                                            FontWeight
-                                                                .bold)),
-                                                headerIcon:
-                                                    const Icon(Icons
-                                                        .group_rounded),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets
-                                                          .all(8.0),
-                                                  child: Row(
-                                                    children: <Widget>[
-                                                      Text.rich(
-                                                        TextSpan(
-                                                            children: <InlineSpan>[
-                                                              const TextSpan(
-                                                                text:
-                                                                    "Avg Scored in Speaker: ",
-                                                                style:
-                                                                    TextStyle(fontWeight: FontWeight.bold),
-                                                              ),
-                                                              TextSpan(
-                                                                text:
-                                                                    teleopAvgScoredInSpeaker.toStringAsFixed(2),
-                                                              ),
-                                                              const TextSpan(
-                                                                text:
-                                                                    "\nAvg Scored in Amp: ",
-                                                                style:
-                                                                    TextStyle(fontWeight: FontWeight.bold),
-                                                              ),
-                                                              TextSpan(
-                                                                text:
-                                                                    teleopAvgScoredInAmp.toStringAsFixed(2),
-                                                              ),
-                                                              const TextSpan(
-                                                                text:
-                                                                    "\nAvg Notes Scored: ",
-                                                                style:
-                                                                    TextStyle(fontWeight: FontWeight.bold),
-                                                              ),
-                                                              TextSpan(
-                                                                text:
-                                                                    teleopAvgNotesScored.toStringAsFixed(2),
-                                                              ),
-                                                              const TextSpan(
-                                                                text:
-                                                                    "\nGoes Under Stage: ",
-                                                                style:
-                                                                    TextStyle(fontWeight: FontWeight.bold),
-                                                              ),
-                                                              TextSpan(
-                                                                text: teleopGoesUnderStage
-                                                                    ? "Yes"
-                                                                    : "No",
-                                                              ),
-                                                            ],
-                                                            style: const TextStyle(
-                                                                fontSize:
-                                                                    18)),
-                                                      ),
-                                                      const Spacer(),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                                height: 16),
-                                            Card(
-                                              child: form_sec_rigid(
-                                                context,
-                                                title: const Text(
-                                                    "End Game",
-                                                    style: TextStyle(
-                                                        fontSize: 32,
-                                                        fontWeight:
-                                                            FontWeight
-                                                                .bold)),
-                                                headerIcon:
-                                                    const Icon(Icons
-                                                        .commit_rounded),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets
-                                                          .all(8.0),
-                                                  child: Row(
-                                                    children: <Widget>[
-                                                      Text.rich(
-                                                        TextSpan(
-                                                            children: <InlineSpan>[
-                                                              const TextSpan(
-                                                                text:
-                                                                    "Can Climb: ",
-                                                                style:
-                                                                    TextStyle(fontWeight: FontWeight.bold),
-                                                              ),
-                                                              TextSpan(
-                                                                text: endgameCanClimb
-                                                                    ? "Yes"
-                                                                    : "No",
-                                                              ),
-                                                              const TextSpan(
-                                                                text:
-                                                                    "\nHarmony Attempt Success Rate: ",
-                                                                style:
-                                                                    TextStyle(fontWeight: FontWeight.bold),
-                                                              ),
-                                                              TextSpan(
-                                                                text:
-                                                                    "${(endgameHarmonyAttemptSuccessRate * 100).toStringAsFixed(2)}% ",
-                                                                style: TextStyle(
-                                                                    color: heat(endgameHarmonyAttemptSuccessRate),
-                                                                    backgroundColor: Colors.black),
-                                                              ),
-                                                              const TextSpan(
-                                                                text:
-                                                                    "\n% of Games Scored Trap: ",
-                                                                style:
-                                                                    TextStyle(fontWeight: FontWeight.bold),
-                                                              ),
-                                                              TextSpan(
-                                                                text:
-                                                                    "${(endgamePercentOfGamesScoredTrap * 100).toStringAsFixed(2)}% ",
-                                                                style: TextStyle(
-                                                                    color: heat(endgamePercentOfGamesScoredTrap),
-                                                                    backgroundColor: Colors.black),
-                                                              ),
-                                                            ],
-                                                            style: const TextStyle(
-                                                                fontSize:
-                                                                    18)),
-                                                      ),
-                                                      const Spacer(),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                                height: 16),
-                                            Card(
-                                              child: form_sec_rigid(
-                                                context,
-                                                title: const Text(
-                                                    "Misc",
-                                                    style: TextStyle(
-                                                        fontSize: 32,
-                                                        fontWeight:
-                                                            FontWeight
-                                                                .bold)),
-                                                headerIcon:
-                                                    const Icon(Icons
-                                                        .miscellaneous_services_rounded),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets
-                                                          .all(8.0),
-                                                  child: Row(
-                                                    children: <Widget>[
-                                                      Text.rich(
-                                                        TextSpan(
-                                                            children: <InlineSpan>[
-                                                              const TextSpan(
-                                                                text:
-                                                                    "Win Likelihood: ",
-                                                                style:
-                                                                    TextStyle(fontWeight: FontWeight.bold),
-                                                              ),
-                                                              TextSpan(
-                                                                text:
-                                                                    "${(miscWinLikelihoods * 100).toStringAsFixed(2)}%",
-                                                                style: TextStyle(
-                                                                    color: heat(miscWinLikelihoods),
-                                                                    backgroundColor: Colors.black),
-                                                              ),
-                                                            ],
-                                                            style: const TextStyle(
-                                                                fontSize:
-                                                                    18)),
-                                                      ),
-                                                      const Spacer(),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                                height: 40),
-                                          ]),
-                                    )),
-                              ),
-                            )),
-                    icon: const Icon(Icons.auto_graph_rounded),
-                    label: const Text("View Stats")),
-                const SizedBox(height: 8),
-                FilledButton.tonalIcon(
-                    onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute<Widget>(
-                            builder: (BuildContext context) =>
-                                Scaffold(
-                                    body: PreferCompactModal
-                                            .isCompactPreferred(
-                                                context)
-                                        ? Builder(
-                                            // this could be optimized further with a futurebuilder
-                                            builder: (BuildContext
-                                                context) {
-                                              List<Widget> widgets =
-                                                  <Widget>[];
-                                              for (HollisticMatchScoutingData match
-                                                  in data) {
-                                                Debug().info(
-                                                    "DUC_TEAM_MATCH_HISTORY: Adding match ${match.id}");
-                                                widgets
-                                                    .add(DucMatchTile(
-                                                  match: match,
-                                                  onDelete:
-                                                      (String id) {
-                                                    Provider.of<DucBaseBit>(
-                                                            context,
-                                                            listen:
-                                                                false)
-                                                        .removeID(id);
-                                                    Provider.of<DucBaseBit>(
-                                                            context,
-                                                            listen:
-                                                                false)
-                                                        .save();
-                                                  },
-                                                ));
-                                              }
-                                              return form_grid_2(
-                                                crossAxisCount: 2,
-                                                mainAxisSpacing: 14,
-                                                crossAxisSpacing: 14,
-                                                children: widgets,
-                                              );
-                                            },
-                                          )
-                                        : ListView.builder(
-                                            physics: const AlwaysScrollableScrollPhysics(
-                                                parent: BouncingScrollPhysics(
-                                                    decelerationRate:
-                                                        ScrollDecelerationRate
-                                                            .normal)),
-                                            padding:
-                                                const EdgeInsets.only(
-                                                    bottom: 40),
-                                            itemCount: data.length,
-                                            itemBuilder:
-                                                (BuildContext context,
-                                                    int index) {
-                                              return DucMatchTile(
-                                                match: data[index],
-                                                onDelete:
-                                                    (String id) {
-                                                  Provider.of<DucBaseBit>(
-                                                          context,
-                                                          listen:
-                                                              false)
-                                                      .removeID(id);
-                                                  Provider.of<DucBaseBit>(
-                                                          context,
-                                                          listen:
-                                                              false)
-                                                      .save();
-                                                },
-                                              );
-                                            },
+                                                            const SizedBox(
+                                                                height:
+                                                                    40),
+                                                          ]),
+                                                    )),
                                           ),
-                                    appBar: AppBar(
-                                        title: Row(children: <Widget>[
-                                      const Icon(
-                                          Icons.history_rounded),
-                                      const SizedBox(width: 8),
-                                      Text(
-                                          "Match History for Team $teamNumber"),
-                                    ]))))),
-                    icon: const Icon(Icons.search_rounded),
-                    label: const Text("View Matches")),
-                const SizedBox(height: 8),
-                FilledButton.tonalIcon(
-                    onPressed: () async => await Clipboard.setData(
-                            ClipboardData(text: """
+                                        )),
+                                icon: const Icon(
+                                    Icons.auto_graph_rounded),
+                                label: const Text("View Stats")),
+                            const SizedBox(height: 8),
+                            FilledButton.tonalIcon(
+                                onPressed: () => Navigator.of(context)
+                                    .push(MaterialPageRoute<Widget>(
+                                        builder: (BuildContext
+                                                context) =>
+                                            Scaffold(
+                                                body:
+                                                    PreferCompactModal
+                                                            .isCompactPreferred(
+                                                                context)
+                                                        ? Builder(
+                                                            // this could be optimized further with a futurebuilder
+                                                            builder:
+                                                                (BuildContext
+                                                                    context) {
+                                                              List<Widget>
+                                                                  widgets =
+                                                                  <Widget>[];
+                                                              for (HollisticMatchScoutingData match
+                                                                  in data) {
+                                                                Debug()
+                                                                    .info("DUC_TEAM_MATCH_HISTORY: Adding match ${match.id}");
+                                                                widgets
+                                                                    .add(DucMatchTile(
+                                                                  match:
+                                                                      match,
+                                                                  onDelete:
+                                                                      (String id) {
+                                                                    Provider.of<DucBaseBit>(context, listen: false).removeID(id);
+                                                                    Provider.of<DucBaseBit>(context, listen: false).save();
+                                                                  },
+                                                                ));
+                                                              }
+                                                              return form_grid_2(
+                                                                crossAxisCount:
+                                                                    2,
+                                                                mainAxisSpacing:
+                                                                    14,
+                                                                crossAxisSpacing:
+                                                                    14,
+                                                                children:
+                                                                    widgets,
+                                                              );
+                                                            },
+                                                          )
+                                                        : ListView
+                                                            .builder(
+                                                            physics: const AlwaysScrollableScrollPhysics(
+                                                                parent:
+                                                                    BouncingScrollPhysics(decelerationRate: ScrollDecelerationRate.normal)),
+                                                            padding: const EdgeInsets
+                                                                .only(
+                                                                bottom:
+                                                                    40),
+                                                            itemCount:
+                                                                data.length,
+                                                            itemBuilder:
+                                                                (BuildContext context,
+                                                                    int index) {
+                                                              return DucMatchTile(
+                                                                match:
+                                                                    data[index],
+                                                                onDelete:
+                                                                    (String id) {
+                                                                  Provider.of<DucBaseBit>(context, listen: false).removeID(id);
+                                                                  Provider.of<DucBaseBit>(context, listen: false).save();
+                                                                },
+                                                              );
+                                                            },
+                                                          ),
+                                                appBar: AppBar(
+                                                    title: Row(
+                                                        children: <Widget>[
+                                                      const Icon(Icons
+                                                          .history_rounded),
+                                                      const SizedBox(
+                                                          width: 8),
+                                                      Text(
+                                                          "Match History for Team $teamNumber"),
+                                                    ]))))),
+                                icon:
+                                    const Icon(Icons.search_rounded),
+                                label: const Text("View Matches")),
+                            const SizedBox(height: 8),
+                            FilledButton.tonalIcon(
+                                onPressed: () async => await Clipboard
+                                        .setData(
+                                            ClipboardData(text: """
                                     # Team $teamNumber
                                     ## Auto
                                     > **% Movement Points** ${(autoPercentGetMovementPoints * 100).toStringAsFixed(2)}%
@@ -863,30 +780,36 @@ class _DataHostingViewState extends State<DataHostingView> {
 
                                     `Timestamp: ${DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now())} UTC`
                                     """))
-                        .then((_) => ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                                content: Text(
-                                    "Copied to Clipboard! Now send it on Discord!")))),
-                    icon: const Icon(Icons.discord_rounded),
-                    label: const Text("Discord Copy")),
-                FilledButton.tonalIcon(
-                    onPressed: () async => await launchAssuredConfirmDialog(
-                        context,
-                        message:
-                            "Are you sure you want to delete all DUC data for team $teamNumber? This is irreversible!",
-                        title: "Delete Team $teamNumber",
-                        onConfirm: () async => await Provider.of<
-                                DucBaseBit>(context, listen: false)
-                            .removeWhere((HollisticMatchScoutingData d) =>
-                                d.preliminary.teamNumber ==
-                                teamNumber)
-                            .then((_) => Debug().info(
-                                "Removed all DUC data for team $teamNumber..."))),
-                    icon: const Icon(Icons.delete_forever_rounded),
-                    label: const Text("Delete"))
-              ])
-            ]);
-          }))),
+                                    .then((_) => ScaffoldMessenger.of(
+                                            context)
+                                        .showSnackBar(const SnackBar(
+                                            content: Text(
+                                                "Copied to Clipboard! Now send it on Discord!")))),
+                                icon:
+                                    const Icon(Icons.discord_rounded),
+                                label: const Text("Discord Copy")),
+                            FilledButton.tonalIcon(
+                                onPressed: () async => await launchAssuredConfirmDialog(
+                                    context,
+                                    message:
+                                        "Are you sure you want to delete all DUC data for team $teamNumber? This is irreversible!",
+                                    title: "Delete Team $teamNumber",
+                                    onConfirm: () async =>
+                                        await Provider.of<DucBaseBit>(
+                                                context,
+                                                listen: false)
+                                            .removeWhere(
+                                                (HollisticMatchScoutingData d) =>
+                                                    d.preliminary
+                                                        .teamNumber ==
+                                                    teamNumber)
+                                            .then((_) =>
+                                                Debug().info("Removed all DUC data for team $teamNumber..."))),
+                                icon: const Icon(Icons.delete_forever_rounded),
+                                label: const Text("Delete"))
+                          ])
+                    ]);
+                  }))),
         ));
       });
       return widgets;
@@ -1213,378 +1136,10 @@ class DucMatchTile extends StatefulWidget {
 class _DucMatchTileState extends State<DucMatchTile> {
   @override
   Widget build(BuildContext context) {
-    void launchInsightView() {
-      Navigator.of(context)
-          .push(MaterialPageRoute<Widget>(builder: (BuildContext _) {
-        return Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(
-                  parent: BouncingScrollPhysics()),
-              child: Padding(
-                padding: const EdgeInsets.all(14),
-                child: Column(children: <Widget>[
-                  const Row(children: <Widget>[
-                    Icon(Icons.info_rounded),
-                    SizedBox(width: 8),
-                    Text("Preliminary",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20)),
-                  ]),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: <Widget>[
-                      Flexible(
-                        child: Text.rich(
-                            TextSpan(children: <InlineSpan>[
-                              const TextSpan(
-                                  text: "Time: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: DateFormat(
-                                          Shared.GENERAL_TIME_FORMAT)
-                                      .format(DateTime
-                                          .fromMillisecondsSinceEpoch(
-                                              widget.match.preliminary
-                                                  .timeStamp))),
-                              const TextSpan(
-                                  text: "\nMatch: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text:
-                                      "${widget.match.preliminary.matchType.name.formalize} #${widget.match.preliminary.matchNumber}"),
-                              const TextSpan(
-                                  text: "\nTeam: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text:
-                                      "${widget.match.preliminary.teamNumber}"),
-                              const TextSpan(
-                                  text: "\nAlliance: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget.match.preliminary
-                                      .alliance.name.formalize,
-                                  style: TextStyle(
-                                      color: widget
-                                          .match.preliminary.alliance
-                                          .toColor(),
-                                      backgroundColor: Colors.black)),
-                              const TextSpan(
-                                  text: "\nStarting Position: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget
-                                      .match
-                                      .preliminary
-                                      .startingPosition
-                                      .name
-                                      .formalize),
-                            ]),
-                            style: const TextStyle(fontSize: 16)),
-                      ),
-                      const Spacer() // more scuffed solutions XD (see above)
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  const Row(children: <Widget>[
-                    Icon(CommunityMaterialIcons.robot),
-                    SizedBox(width: 8),
-                    Text("Auto",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20)),
-                  ]),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: <Widget>[
-                      Flexible(
-                        child: Text.rich(
-                            TextSpan(children: <InlineSpan>[
-                              const TextSpan(
-                                  text: "Taxi: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget.match.auto.taxi
-                                      ? "Yes"
-                                      : "No"),
-                              const TextSpan(
-                                  text: "\nScored Speaker: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget
-                                      .match.auto.scoredSpeaker
-                                      .toString()),
-                              const TextSpan(
-                                  text: "\nScored Amp: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget.match.auto.scoredAmp
-                                      .toString()),
-                              const TextSpan(
-                                  text: "\nNotes Preloaded: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                text: widget.match.auto.notePreloaded
-                                    ? "Yes"
-                                    : "No",
-                              ),
-                              const TextSpan(
-                                  text: "\nAMP Missed: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget.match.auto.missedAmp
-                                      .toString()),
-                              const TextSpan(
-                                  text: "\nSpeaker Missed: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget
-                                      .match.auto.missedSpeaker
-                                      .toString()),
-                            ]),
-                            style: const TextStyle(fontSize: 16)),
-                      ),
-                      const Spacer()
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  const Row(children: <Widget>[
-                    Icon(Icons.group_rounded),
-                    SizedBox(width: 8),
-                    Text("Tele-Op",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20)),
-                  ]),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: <Widget>[
-                      Flexible(
-                        child: Text.rich(
-                            TextSpan(children: <InlineSpan>[
-                              const TextSpan(
-                                  text: "Scored Speaker: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget
-                                      .match.teleop.scoredSpeaker
-                                      .toString()),
-                              const TextSpan(
-                                  text: "\nScored Amp: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget.match.teleop.scoredAmp
-                                      .toString()),
-                              const TextSpan(
-                                  text: "\nPieces Scored: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget
-                                      .match.teleop.piecesScored
-                                      .toString()),
-                              const TextSpan(
-                                  text: "\nUnder Stage: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget.match.teleop.underStage
-                                      ? "Yes"
-                                      : "No"),
-                              const TextSpan(
-                                  text: "\nMissed Amp: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget.match.teleop.missedAmp
-                                      .toString()),
-                              const TextSpan(
-                                  text: "\nMissed Speaker: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget
-                                      .match.teleop.missedSpeaker
-                                      .toString()),
-                            ]),
-                            style: const TextStyle(fontSize: 16)),
-                      ),
-                      const Spacer()
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  const Row(children: <Widget>[
-                    Icon(Icons.commit_rounded),
-                    SizedBox(width: 8),
-                    Text("Endgame",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20)),
-                  ]),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: <Widget>[
-                      Flexible(
-                        child: Text.rich(
-                            TextSpan(children: <InlineSpan>[
-                              const TextSpan(
-                                  text: "End State: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget.match.endgame.endState
-                                      .name.formalize),
-                              const TextSpan(
-                                  text: "\nHarmony: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget.match.endgame.harmony
-                                      .name.formalize),
-                              const TextSpan(
-                                  text: "\nHarmony Attempted: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget.match.endgame
-                                          .harmonyAttempted
-                                      ? "Yes"
-                                      : "No"),
-                              const TextSpan(
-                                  text: "\nTrap Scored: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget.match.endgame
-                                      .trapScored.name.formalize),
-                              const TextSpan(
-                                  text: "\nCoopertition: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget.match.misc.coopertition
-                                      .toString()),
-                              const TextSpan(
-                                  text: "\nMatch Result: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: widget.match.endgame
-                                      .matchResult.name.formalize),
-                            ]),
-                            style: const TextStyle(fontSize: 16)),
-                      ),
-                      const Spacer()
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  const Row(children: <Widget>[
-                    Icon(Icons.miscellaneous_services_rounded),
-                    SizedBox(width: 8),
-                    Text("Misc",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20)),
-                  ]),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: <Widget>[
-                      Flexible(
-                        child: Text.rich(
-                            TextSpan(children: <InlineSpan>[
-                              TextSpan(
-                                  text: "Comments:\n",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
-                                  children: <InlineSpan>[
-                                    WidgetSpan(
-                                        child: Container(
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: ThemeProvider
-                                                            .themeOf(
-                                                                context)
-                                                        .data
-                                                        .iconTheme
-                                                        .color!),
-                                                borderRadius:
-                                                    BorderRadius
-                                                        .circular(2)),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets
-                                                      .all(2),
-                                              child: Text(
-                                                  widget
-                                                          .match
-                                                          .comments
-                                                          .comment ??
-                                                      "None",
-                                                  style:
-                                                      const TextStyle(
-                                                          fontSize:
-                                                              16),
-                                                  softWrap: true),
-                                            ))),
-                                  ]),
-                              const TextSpan(
-                                  text: "\nID: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(text: widget.match.id),
-                              const TextSpan(
-                                  text: "\nTimestamp: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text: DateFormat(
-                                          Shared.GENERAL_TIME_FORMAT)
-                                      .format(DateTime
-                                          .fromMillisecondsSinceEpoch(
-                                              widget.match.preliminary
-                                                  .timeStamp))),
-                            ]),
-                            style: const TextStyle(fontSize: 16)),
-                      ),
-                      const Spacer()
-                    ],
-                  ),
-                  const SizedBox(height: 40)
-                ]),
-              )),
-          appBar: AppBar(
-              title: Row(
-            children: <Widget>[
-              const Icon(Icons.insights_rounded),
-              const SizedBox(width: 8),
-              Text(
-                  "Insights for match ${widget.match.preliminary.matchNumber} of team ${widget.match.preliminary.teamNumber}"),
-            ],
-          )),
-        );
-      }));
-    }
-
     return Padding(
       padding: const EdgeInsets.only(left: 8.0, right: 8, top: 8),
       child: Card(
         child: form_sec_rigid(
-          context,
           headerIcon: Icon(Icons.flag_circle_rounded,
               size: 40,
               color:
@@ -1736,18 +1291,21 @@ class _DucMatchTileState extends State<DucMatchTile> {
                     child: Expanded(
                       child: Row(
                         children: <Widget>[
-                          PreferCompactModal.isCompactPreferred(
-                                  context)
+                          PreferCompactModal.isCompactPreferred(context)
                               ? IconButton.filledTonal(
                                   onPressed: () =>
-                                      launchInsightView(),
+                                      SharedDialogsMatches
+                                          .launchInsightView(
+                                              context, widget.match),
                                   icon: const Icon(
                                       Icons.search_rounded))
                               : FilledButton.tonalIcon(
                                   onPressed: () =>
-                                      launchInsightView(),
-                                  icon: const Icon(
-                                      Icons.search_rounded),
+                                      SharedDialogsMatches
+                                          .launchInsightView(
+                                              context, widget.match),
+                                  icon:
+                                      const Icon(Icons.search_rounded),
                                   label: const Text("View")),
                         ],
                       ),

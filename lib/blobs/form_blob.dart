@@ -7,8 +7,6 @@ import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
 import 'package:theme_provider/theme_provider.dart';
 
-import 'basic_toggle_switch.dart';
-
 class _BetterGridLayout extends SliverGridLayout {
   final int crossAxisCount;
   final double dim;
@@ -180,20 +178,36 @@ class _NumPickBtnState extends State<_NumPickBtn> {
   }
 }
 
-@pragma("vm:prefer-inline")
-Widget form_numpick(BuildContext context,
-        {required String label,
-        required Icon icon,
-        Icon? headerIcon,
-        required int initialData,
-        required int minValue,
-        required int maxValue,
-        bool infiniteLoop = true,
-        Axis alignment = Axis.vertical,
-        required String headerMessage,
-        String? comment,
-        required void Function(int res) onChange}) =>
-    _NumPickBtn(
+class form_numpick extends StatelessWidget {
+  final String label;
+  final Icon icon;
+  final Icon? headerIcon;
+  final int initialData;
+  final int minValue;
+  final int maxValue;
+  final bool infiniteLoop;
+  final Axis alignment;
+  final String headerMessage;
+  final String? comment;
+  final void Function(int res) onChange;
+
+  const form_numpick(
+      {super.key,
+      required this.label,
+      required this.icon,
+      this.headerIcon,
+      required this.initialData,
+      required this.minValue,
+      required this.maxValue,
+      this.infiniteLoop = true,
+      this.alignment = Axis.vertical,
+      required this.headerMessage,
+      this.comment,
+      required this.onChange});
+
+  @override
+  Widget build(BuildContext context) {
+    return _NumPickBtn(
         label: label,
         icon: icon,
         initialData: initialData,
@@ -202,16 +216,29 @@ Widget form_numpick(BuildContext context,
         maxValue: maxValue,
         headerMessage: headerMessage,
         onChange: onChange);
+  }
+}
 
-@pragma("vm:prefer-inline")
-Widget form_grid_2(
-        {ScrollController? scrollController,
-        required int crossAxisCount,
-        required double mainAxisSpacing,
-        required double crossAxisSpacing,
-        double minimumItemWidth = 500,
-        required List<Widget> children}) =>
-    ResponsiveGridList(
+class form_grid_2 extends StatelessWidget {
+  final ScrollController? scrollController;
+  final int crossAxisCount;
+  final double mainAxisSpacing;
+  final double crossAxisSpacing;
+  final double minimumItemWidth;
+  final List<Widget> children;
+
+  const form_grid_2(
+      {super.key,
+      this.scrollController,
+      required this.crossAxisCount,
+      required this.mainAxisSpacing,
+      required this.crossAxisSpacing,
+      this.minimumItemWidth = 500,
+      required this.children});
+
+  @override
+  Widget build(BuildContext context) {
+    return ResponsiveGridList(
         listViewBuilderOptions: ListViewBuilderOptions(
             controller: scrollController,
             physics: const AlwaysScrollableScrollPhysics(
@@ -221,20 +248,32 @@ Widget form_grid_2(
         horizontalGridSpacing: mainAxisSpacing,
         minItemWidth: minimumItemWidth,
         children: children);
+  }
+}
 
-@pragma("vm:prefer-inline")
-Widget form_label_rigid(String text,
-        {TextStyle? style,
-        required Widget child,
-        bool expandLabel = false,
-        Widget? icon}) =>
-    Row(
+class form_label_rigid extends StatelessWidget {
+  final String text;
+  final TextStyle? style;
+  final Widget child;
+  final bool expandLabel;
+  final Widget? icon;
+
+  const form_label_rigid(this.text,
+      {super.key,
+      required this.child,
+      this.style,
+      this.expandLabel = false,
+      this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                if (icon != null) icon,
+                if (icon != null) icon!,
                 if (icon != null) const SizedBox(width: 6),
                 Text(text,
                     style: style ??
@@ -246,15 +285,28 @@ Widget form_label_rigid(String text,
               ]),
           child
         ]);
+  }
+}
 
-@pragma("vm:prefer-inline")
-Widget form_label(String text,
-        {TextStyle? style,
-        String? hint,
-        required Widget child,
-        bool expandLabel = false,
-        Widget? icon}) =>
-    UserTelemetry().currentModel.useAltLayout
+class form_label extends StatelessWidget {
+  final String text;
+  final TextStyle? style;
+  final String? hint;
+  final Widget child;
+  final bool expandLabel;
+  final Widget? icon;
+
+  const form_label(this.text,
+      {super.key,
+      required this.child,
+      this.style,
+      this.hint,
+      this.expandLabel = false,
+      this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return UserTelemetry().currentModel.useAltLayout
         ? Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -289,7 +341,7 @@ Widget form_label(String text,
                 Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      if (icon != null) icon,
+                      if (icon != null) icon!,
                       if (icon != null) const SizedBox(width: 6),
                       Text(
                         text,
@@ -310,18 +362,30 @@ Widget form_label(String text,
                     ]),
                 child
               ]);
+  }
+}
 
-@pragma("vm:prefer-inline")
-Widget form_label_2(String text,
-        {TextStyle? style,
-        required Widget child,
-        Widget? icon,
-        bool allowRigid = true}) =>
-    Column(
+class form_label_2 extends StatelessWidget {
+  final String text;
+  final TextStyle? style;
+  final Widget child;
+  final Widget? icon;
+  final bool allowRigid;
+
+  const form_label_2(this.text,
+      {super.key,
+      required this.child,
+      this.style,
+      this.icon,
+      this.allowRigid = true});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(children: <Widget>[
-            if (icon != null) icon,
+            if (icon != null) icon!,
             if (icon != null) const SizedBox(width: 6),
             Text(text,
                 style: style ??
@@ -332,38 +396,49 @@ Widget form_label_2(String text,
             const SizedBox(width: _prompt_label_strut_width),
           ]),
           const SizedBox(height: 6),
-          Row(
-            children: <Widget>[
-              if (allowRigid)
-                const SizedBox(
-                    width:
-                        10), // fuck const SizedBox() its not compile const
-              child,
-            ],
-          )
+          Row(children: <Widget>[
+            if (allowRigid) const SizedBox(width: 10),
+            child,
+          ])
         ]);
+  }
+}
 
-@pragma("vm:prefer-inline")
-Widget form_txt(String label, [TextStyle? style]) =>
-    Text(label, style: style);
+class form_grid_1 extends StatelessWidget {
+  final int? itemCount;
+  final List<Widget> children;
+  final double dim;
 
-@pragma("vm:prefer-inline")
-Widget form_grid_1(
-        {int? itemCount,
-        required List<Widget> children,
-        double dim = 240}) =>
-    GridView.builder(
+  const form_grid_1(
+      {super.key,
+      this.itemCount,
+      required this.children,
+      this.dim = 240});
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
         gridDelegate: _BetterGridDelegate(dim: dim),
         itemCount: itemCount ?? children.length,
         itemBuilder: (BuildContext context, int index) =>
             GridTile(child: children[index]));
+  }
+}
 
-@pragma("vm:prefer-inline")
-Widget form_grid_sec(BuildContext context,
-        {required SectionId header,
-        Gradient? gradient,
-        required Widget child}) =>
-    Container(
+class form_grid_sec extends StatelessWidget {
+  final SectionId header;
+  final Gradient? gradient;
+  final Widget child;
+
+  const form_grid_sec(
+      {super.key,
+      required this.header,
+      this.gradient,
+      required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
         margin: const EdgeInsets.all(12),
         decoration: ShapeDecoration(
             shape: RoundedRectangleBorder(
@@ -400,15 +475,27 @@ Widget form_grid_sec(BuildContext context,
                 )
               ]),
         ));
+  }
+}
 
-@pragma("vm:prefer-inline")
-Widget form_sec_rigid(BuildContext context,
-        {required Icon headerIcon,
-        required Widget title,
-        Color? iconColor,
-        required Widget child,
-        Gradient? gradient}) =>
-    Container(
+class form_sec_rigid extends StatelessWidget {
+  final Gradient? gradient;
+  final Widget child;
+  final Color? iconColor;
+  final Widget title;
+  final Icon headerIcon;
+
+  const form_sec_rigid(
+      {super.key,
+      required this.headerIcon,
+      required this.title,
+      this.iconColor,
+      required this.child,
+      this.gradient});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
         decoration: BoxDecoration(
             gradient: gradient,
             color: ThemeProvider.themeOf(context)
@@ -432,15 +519,27 @@ Widget form_sec_rigid(BuildContext context,
             )
           ]),
         ));
+  }
+}
 
-@pragma("vm:prefer-inline")
-Widget form_sec_2(BuildContext context,
-        {required Icon headerIcon,
-        required Widget title,
-        Color? iconColor,
-        required Widget child,
-        Gradient? gradient}) =>
-    Container(
+class form_sec_2 extends StatelessWidget {
+  final Gradient? gradient;
+  final Widget child;
+  final Color? iconColor;
+  final Widget title;
+  final Icon headerIcon;
+
+  const form_sec_2(
+      {super.key,
+      required this.headerIcon,
+      required this.title,
+      this.iconColor,
+      required this.child,
+      this.gradient});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
         decoration: BoxDecoration(
             gradient: gradient,
             color: ThemeProvider.themeOf(context)
@@ -471,13 +570,23 @@ Widget form_sec_2(BuildContext context,
                 )
               ]),
         ));
+  }
+}
 
-@pragma("vm:prefer-inline")
-Widget form_sec(BuildContext context,
-        {required SectionId header,
-        required Widget child,
-        Color? backgroundColor}) =>
-    Padding(
+class form_sec extends StatelessWidget {
+  final SectionId header;
+  final Widget child;
+  final Color? backgroundColor;
+
+  const form_sec(
+      {super.key,
+      required this.header,
+      required this.child,
+      this.backgroundColor});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
         padding: const EdgeInsets.all(8.0),
         child: Padding(
           padding: const EdgeInsets.all(8),
@@ -497,57 +606,26 @@ Widget form_sec(BuildContext context,
                 )
               ]),
         ));
+  }
+}
 
-@pragma("vm:prefer-inline")
-Widget form_switch_1<T>(
-        {required void Function(bool res) onChanged,
-        bool initialValue = false}) =>
-    BasicToggleSwitch(
-        onChanged: onChanged, initialValue: initialValue);
-
-@pragma("vm:prefer-inline")
-Widget form_seg_btn_1<T>(
-        {required List<({T value, String label, Icon? icon})>
-            segments,
-        required T initialSelection,
-        required void Function(T res) onSelect}) =>
-    Flexible(
-        child: _SegSingleBtn<T>(
-      segments: segments,
-      onSelect: onSelect,
-      initialSelection: initialSelection,
-    ));
-
-@pragma("vm:prefer-inline")
-Widget form_seg_btn_2<T>(
-        {required List<({T value, String label, Icon? icon})>
-            segments,
-        required Set<T> initialSelection,
-        required void Function(List<T> res) onSelect}) =>
-    Flexible(
-        child: _MSegSingleBtn<T>(
-      segments: segments,
-      onSelect: onSelect,
-      initialSelection: initialSelection,
-    ));
-
-class _MSegSingleBtn<T> extends StatefulWidget {
+class MSegSingleBtn<T> extends StatefulWidget {
   final List<({T value, String label, Icon? icon})> segments;
   final Set<T> initialSelection;
   final void Function(List<T> res) onSelect;
   final ButtonStyle? style;
 
-  const _MSegSingleBtn(
+  const MSegSingleBtn(
       {super.key,
       this.style,
       required this.onSelect,
       required this.segments,
       required this.initialSelection});
   @override
-  State<_MSegSingleBtn<T>> createState() => _MSegSingleBtnState<T>();
+  State<MSegSingleBtn<T>> createState() => MSegSingleBtnState<T>();
 }
 
-class _MSegSingleBtnState<T> extends State<_MSegSingleBtn<T>> {
+class MSegSingleBtnState<T> extends State<MSegSingleBtn<T>> {
   late Set<T> _selection;
 
   @override
@@ -583,13 +661,13 @@ class _MSegSingleBtnState<T> extends State<_MSegSingleBtn<T>> {
   }
 }
 
-class _SegSingleBtn<T> extends StatefulWidget {
+class SegSingleBtn<T> extends StatefulWidget {
   final List<({T value, String label, Icon? icon})> segments;
   final T initialSelection;
   final void Function(T res) onSelect;
   final ButtonStyle? style;
 
-  const _SegSingleBtn(
+  const SegSingleBtn(
       {super.key,
       this.style,
       required this.onSelect,
@@ -597,10 +675,10 @@ class _SegSingleBtn<T> extends StatefulWidget {
       required this.initialSelection});
 
   @override
-  State<_SegSingleBtn<T>> createState() => _SegSingleBtnState<T>();
+  State<SegSingleBtn<T>> createState() => SegSingleBtnState<T>();
 }
 
-class _SegSingleBtnState<T> extends State<_SegSingleBtn<T>> {
+class SegSingleBtnState<T> extends State<SegSingleBtn<T>> {
   late T _selection;
 
   @override
@@ -635,42 +713,73 @@ class _SegSingleBtnState<T> extends State<_SegSingleBtn<T>> {
   }
 }
 
-@pragma("vm:prefer-inline")
-Widget form_col(List<Widget> children,
-        {MainAxisAlignment mainAxisAlignment =
-            MainAxisAlignment.start,
-        MainAxisSize mainAxisSize = MainAxisSize.max,
-        CrossAxisAlignment crossAxisAlignment =
-            CrossAxisAlignment.center}) =>
-    Column(
+class form_col extends StatelessWidget {
+  final List<Widget> children;
+  final MainAxisAlignment mainAxisAlignment;
+  final MainAxisSize mainAxisSize;
+  final CrossAxisAlignment crossAxisAlignment;
+
+  const form_col(
+    this.children, {
+    super.key,
+    this.mainAxisAlignment = MainAxisAlignment.start,
+    this.mainAxisSize = MainAxisSize.max,
+    this.crossAxisAlignment = CrossAxisAlignment.center,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
         mainAxisAlignment: mainAxisAlignment,
         mainAxisSize: mainAxisSize,
         crossAxisAlignment: crossAxisAlignment,
         children: strutAll(children, height: 18));
+  }
+}
 
-@pragma("vm:prefer-inline")
-Widget form_row(List<Widget> children,
-        {MainAxisAlignment mainAxisAlignment =
-            MainAxisAlignment.start,
-        MainAxisSize mainAxisSize = MainAxisSize.max,
-        CrossAxisAlignment crossAxisAlignment =
-            CrossAxisAlignment.center}) =>
-    Row(
+class form_row extends StatelessWidget {
+  final List<Widget> children;
+  final MainAxisAlignment mainAxisAlignment;
+  final MainAxisSize mainAxisSize;
+  final CrossAxisAlignment crossAxisAlignment;
+
+  const form_row(
+      {super.key,
+      this.mainAxisAlignment = MainAxisAlignment.start,
+      this.mainAxisSize = MainAxisSize.max,
+      this.crossAxisAlignment = CrossAxisAlignment.center,
+      required this.children});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
         mainAxisAlignment: mainAxisAlignment,
         mainAxisSize: mainAxisSize,
         crossAxisAlignment: crossAxisAlignment,
         children: strutAll(children, width: 10));
+  }
+}
 
-@pragma("vm:prefer-inline")
-Widget form_txtin({
-  String? hint,
-  String? label,
-  Icon? prefixIcon,
-  Icon? suffixIcon,
-  void Function(String)? onChanged,
-  TextInputType? inputType,
-}) =>
-    SizedBox(
+class form_txtin extends StatelessWidget {
+  final String? hint;
+  final String? label;
+  final Icon? prefixIcon;
+  final Icon? suffixIcon;
+  final void Function(String)? onChanged;
+  final TextInputType? inputType;
+
+  const form_txtin(
+      {super.key,
+      this.hint,
+      this.label,
+      this.prefixIcon,
+      this.suffixIcon,
+      this.onChanged,
+      this.inputType});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
       width: 150,
       child: TextFormField(
         onChanged: (String e) => onChanged?.call(e),
@@ -685,3 +794,5 @@ Widget form_txtin({
         ),
       ),
     );
+  }
+}

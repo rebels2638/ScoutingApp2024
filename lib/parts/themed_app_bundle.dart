@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:scouting_app_2024/debug.dart';
+import 'package:scouting_app_2024/parts/appview.dart';
 import 'package:scouting_app_2024/parts/bits/appbar_celebrate.dart';
 import 'package:scouting_app_2024/parts/bits/duc_bit.dart';
 import 'package:scouting_app_2024/parts/bits/lock_in.dart';
@@ -23,7 +24,8 @@ import 'package:theme_provider/theme_provider.dart';
 class ThemedAppBundle extends StatelessWidget {
   final Widget child;
 
-  const ThemedAppBundle({super.key, required this.child});
+  const ThemedAppBundle(
+      {super.key, this.child = const IntermediateMaterialApp()});
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,17 @@ class ThemedAppBundle extends StatelessWidget {
       ...ThemeBlob.export,
       ...ThemeBlob.intricateThemes
     ].length}");
+    return _Bundler(child: child);
+  }
+}
+
+class _Bundler extends StatelessWidget {
+  final Widget child;
+
+  const _Bundler({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
     return ThemeProvider(
         themes: <AppTheme>[
           ...ThemeBlob.export,

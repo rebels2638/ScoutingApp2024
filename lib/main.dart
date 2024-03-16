@@ -76,6 +76,7 @@ Future<void> _prepareAppLaunch() async {
       await UserTelemetry().save();
       Debug().info("Saved probe time...");
     } else {
+      // this fucking piece of code does not help with reducing stress on the disk usage
       Debug().warn(
           "Not saving probe time... Waiting for next save cycle.");
     }

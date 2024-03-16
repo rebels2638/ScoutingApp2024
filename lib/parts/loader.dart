@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:scouting_app_2024/blobs/animate_blob.dart';
 import 'package:scouting_app_2024/main.dart';
-import 'package:scouting_app_2024/parts/appview.dart';
 import 'package:scouting_app_2024/debug.dart';
 
 import 'themed_app_bundle.dart';
@@ -44,8 +43,7 @@ class _LoadingAppViewScreenState extends State<LoadingAppViewScreen> {
                       ConnectionState.done) {
                     Debug().warn(
                         "Took ${DateTime.now().difference(APP_START_TIME).inMilliseconds}ms to load the app.");
-                    return const ThemedAppBundle(
-                        child: IntermediateMaterialApp());
+                    return const ThemedAppBundle();
                   } else {
                     return Scaffold(
                         body: SafeArea(
@@ -64,7 +62,11 @@ class _LoadingAppViewScreenState extends State<LoadingAppViewScreen> {
                               height: 148,
                             )),
                             SizedBox(height: 30),
-                            _UpdaterPhaseString()
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: 28, right: 28),
+                              child: _UpdaterPhaseString(),
+                            )
                           ],
                         )),
                       ),

@@ -26,7 +26,7 @@ class PastMatchesView extends StatefulWidget
       item: (
         activeIcon: const Icon(Icons.receipt_rounded),
         icon: const Icon(Icons.receipt_outlined),
-        label: "Recorded",
+        label: "History",
         tooltip: "View data collected from past matches"
       )
     );

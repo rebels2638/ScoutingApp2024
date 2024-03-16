@@ -205,7 +205,7 @@ class _ScoutingViewState extends State<ScoutingView>
       if (ShowHintsGuideModal.isShowingHints(context))
         const ApexHintsBlob("Scouting Sessions are volatile!",
             "Scouting data is not saved until you press the save button. If you exit the app or the app crashes, the data will be lost."),
-      form_sec(context,
+      form_sec(
           backgroundColor: Colors.transparent,
           header: (
             icon: Icons.account_tree_rounded,
@@ -223,7 +223,7 @@ class _ScoutingViewState extends State<ScoutingView>
                         fontWeight: FontWeight.bold))),
             form_label(
               "Number ",
-              child: form_numpick(context,
+              child: form_numpick(
                   initialData: context
                       .read<ScoutingSessionBloc>()
                       .prelim
@@ -234,14 +234,14 @@ class _ScoutingViewState extends State<ScoutingView>
                   maxValue: 999,
                   headerMessage: "Match Number",
                   onChange: (int number) {
-                context
-                    .read<ScoutingSessionBloc>()
-                    .prelim
-                    .matchNumber = number;
-                context
-                    .read<ScoutingSessionBloc>()
-                    .add(PrelimUpdateEvent());
-              }),
+                    context
+                        .read<ScoutingSessionBloc>()
+                        .prelim
+                        .matchNumber = number;
+                    context
+                        .read<ScoutingSessionBloc>()
+                        .add(PrelimUpdateEvent());
+                  }),
             ),
             form_label("Type",
                 child: Flexible(
@@ -266,7 +266,7 @@ class _ScoutingViewState extends State<ScoutingView>
                       }),
                 ))
           ])),
-      form_sec(context,
+      form_sec(
           backgroundColor: Colors.transparent,
           header: (
             icon: Icons.people_outline_rounded,
@@ -276,7 +276,7 @@ class _ScoutingViewState extends State<ScoutingView>
           child: form_col(<Widget>[
             form_label(
               "Number",
-              child: form_numpick(context,
+              child: form_numpick(
                   label: "Picker",
                   initialData: context
                       .read<ScoutingSessionBloc>()
@@ -287,14 +287,14 @@ class _ScoutingViewState extends State<ScoutingView>
                   maxValue: 9999,
                   headerMessage: "Team Number",
                   onChange: (int number) {
-                context
-                    .read<ScoutingSessionBloc>()
-                    .prelim
-                    .teamNumber = number;
-                context
-                    .read<ScoutingSessionBloc>()
-                    .add(PrelimUpdateEvent());
-              }),
+                    context
+                        .read<ScoutingSessionBloc>()
+                        .prelim
+                        .teamNumber = number;
+                    context
+                        .read<ScoutingSessionBloc>()
+                        .add(PrelimUpdateEvent());
+                  }),
             ),
             form_label("Alliance",
                 child: TeamAllianceSwitch(
@@ -335,7 +335,7 @@ class _ScoutingViewState extends State<ScoutingView>
                       }),
                 ))
           ])),
-      form_sec(context,
+      form_sec(
           backgroundColor: Colors.transparent,
           header: (
             icon: Icons.smart_toy_rounded,
@@ -475,7 +475,7 @@ class _ScoutingViewState extends State<ScoutingView>
                   },
                 )),
           ])),
-      form_sec(context,
+      form_sec(
           backgroundColor: Colors.transparent,
           header: (
             icon: Icons.accessibility_rounded,
@@ -578,7 +578,7 @@ class _ScoutingViewState extends State<ScoutingView>
                   },
                 )),
           ])),
-      form_sec(context,
+      form_sec(
           backgroundColor: Colors.transparent,
           header: (icon: Icons.flag_rounded, title: "Endgame"),
           child: form_col(<Widget>[
@@ -713,7 +713,7 @@ class _ScoutingViewState extends State<ScoutingView>
                       }),
                 )),
           ])),
-      form_sec(context,
+      form_sec(
           backgroundColor: Colors.transparent,
           header: (icon: Icons.more_horiz_rounded, title: "Other"),
           child: form_col(<Widget>[

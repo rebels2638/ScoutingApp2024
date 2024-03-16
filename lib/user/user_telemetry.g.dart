@@ -22,6 +22,10 @@ UserPrefModel _$UserPrefModelFromJson(Map<String, dynamic> json) =>
               $checkedConvert('useAltLayout', (v) => v as bool? ?? false),
           seenPatchNotes:
               $checkedConvert('seenPatchNotes', (v) => v as bool? ?? false),
+          profileArmed:
+              $checkedConvert('profileArmed', (v) => v as bool? ?? false),
+          profileName: $checkedConvert(
+              'profileName', (v) => v as String? ?? 'Unspecified User'),
           usedTimeHours: $checkedConvert(
               'usedTimeHours', (v) => (v as num?)?.toDouble() ?? 0),
           preferCompact:
@@ -57,4 +61,6 @@ Map<String, dynamic> _$UserPrefModelToJson(UserPrefModel instance) =>
       'usedTimeHours': instance.usedTimeHours,
       'seenPatchNotes': instance.seenPatchNotes,
       'showScrollbar': instance.showScrollbar,
+      'profileName': instance.profileName,
+      'profileArmed': instance.profileArmed,
     };

@@ -115,6 +115,12 @@ class UserPrefModel {
   @JsonKey(required: false, defaultValue: false)
   bool showScrollbar;
 
+  @JsonKey(required: false, defaultValue: "Unspecified User")
+  String profileName;
+
+  @JsonKey(required: false, defaultValue: false)
+  bool profileArmed;
+
   // make sure to run flutter pub run build_runner build
   UserPrefModel(
       {required this.selectedTheme,
@@ -122,6 +128,8 @@ class UserPrefModel {
       this.showGameMap = true,
       this.useAltLayout = false,
       this.seenPatchNotes = false,
+      this.profileArmed = false,
+      this.profileName = "Unspecified User",
       this.usedTimeHours = 0,
       this.preferCompact = false,
       this.showScrollbar = false,
