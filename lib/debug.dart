@@ -39,7 +39,7 @@ class Debug {
     // this makes sure we capture all of the data before the app runs or any states that are not yet initted.
     // thus make sure to call init before the app itself starts!!
     listen((LogRecord record) {
-      if (ConsoleStateComponent.internalConsoleBuffer.length >=   
+      if (ConsoleStateComponent.internalConsoleBuffer.length >=
           Shared.MAX_LOG_LENGTH) {
         ConsoleStateComponent.internalConsoleBuffer.clear();
       }
@@ -53,5 +53,6 @@ class Debug {
       _logger.onRecord.asBroadcastStream().listen(listener);
   void warn(dynamic msg) => _logger.warning(msg);
   void ohno(dynamic msg) => _logger.severe(msg);
+  void watchdog(dynamic msg) => _logger.info(" [[ WATCHDOG ]] : $msg");
   void info(dynamic msg) => _logger.info(msg);
 }

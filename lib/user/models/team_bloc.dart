@@ -253,10 +253,6 @@ class AutoInfo extends ScoutingInfo
   static AutoInfo fromCompatibleFormat(String rawData) {
     final Map<String, dynamic> data =
         jsonDecode(rawData) as Map<String, dynamic>;
-    final List<AutoPickup> notesPickedUp = <AutoPickup>[];
-    for (int element in data["pickup"]) {
-      notesPickedUp.add(AutoPickup.values[element]);
-    }
     return AutoInfo(
         notePreloaded: data["preload"],
         taxi: data["taxi"],

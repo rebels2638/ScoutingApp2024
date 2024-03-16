@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:provider/provider.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/blobs/form_blob.dart';
@@ -1318,6 +1317,7 @@ class _DucMatchTileState extends State<DucMatchTile> {
                       fontSize: 18,
                       fontStyle: FontStyle.italic,
                       overflow: TextOverflow.ellipsis),
+                  icon: const Icon(Icons.cell_tower_rounded),
                   child: Expanded(
                     child: Wrap(
                       runSpacing: 8,
@@ -1352,12 +1352,16 @@ class _DucMatchTileState extends State<DucMatchTile> {
                           IconButton.filledTonal(
                             icon: const Icon(
                                 CommunityMaterialIcons.duck),
-                            onPressed: () => ducSharedDialog(context),
+                            onPressed: () =>
+                                SharedDialogsMatches.ducSharedDialog(
+                                    context, widget.match),
                           )
                         else
                           FilledButton.icon(
                               onPressed: () async =>
-                                  ducSharedDialog(context),
+                                  SharedDialogsMatches
+                                      .ducSharedDialog(
+                                          context, widget.match),
                               icon: const Icon(
                                   CommunityMaterialIcons.duck),
                               label: const Text(
@@ -1366,12 +1370,15 @@ class _DucMatchTileState extends State<DucMatchTile> {
                             context))
                           IconButton.filledTonal(
                             icon: const Icon(Icons.qr_code_rounded),
-                            onPressed: () => qrSharedDialog(context),
+                            onPressed: () =>
+                                SharedDialogsMatches.qrSharedDialog(
+                                    context, widget.match),
                           )
                         else
                           FilledButton.icon(
                               onPressed: () =>
-                                  qrSharedDialog(context),
+                                  SharedDialogsMatches.qrSharedDialog(
+                                      context, widget.match),
                               icon: const Icon(Icons.qr_code_rounded),
                               label: const Text("QR Share")),
                         if (PreferCompactModal.isCompactPreferred(
@@ -1404,7 +1411,6 @@ class _DucMatchTileState extends State<DucMatchTile> {
                       ],
                     ),
                   ),
-                  icon: const Icon(Icons.cell_tower_rounded),
                 ),
                 if (widget.match.comments.isNotEmpty)
                   const SizedBox(height: 8),
@@ -1446,218 +1452,4 @@ class _DucMatchTileState extends State<DucMatchTile> {
       ),
     );
   }
-
-  void ducSharedDialog(BuildContext context) {
-    Widget qr =
-        _createPrettyQrDataWidget(data: widget.match.toDucFormat());
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (BuildContext context) {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Row(
-                children: <Widget>[
-                  Icon(CommunityMaterialIcons.duck),
-                  Text("DUC Share"),
-                ],
-              ),
-            ),
-            body: Stack(children: <Widget>[
-              Icon(CommunityMaterialIcons.duck,
-                  size: 248, color: Colors.black..withOpacity(0.4)),
-              SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(
-                    parent: BouncingScrollPhysics()),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    const SizedBox(height: 20),
-                    const InformationalHintsBlob(
-                        "Show to a scouting leader",
-                        "A scouting leader will be able to help you with collecting data. Data here is encoded in a CSV format"),
-                    const SizedBox(height: 20),
-                    const Text("Match Data",
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 8),
-                    FilledButton.tonalIcon(
-                        onPressed: () async =>
-                            await Clipboard.setData(ClipboardData(
-                                text: widget.match.toDucFormat())),
-                        icon: const Icon(Icons.copy_rounded),
-                        label: const Text("Copy")),
-                    const SizedBox(height: 8),
-                    Center(
-                      child: GestureDetector(
-                        onTap: () async => launchConfirmDialog(
-                            context,
-                            message: SizedBox(
-                                width: 512, height: 512, child: qr),
-                            onConfirm: () {},
-                            title: "DUC Share",
-                            icon: const Icon(Icons.qr_code_rounded)),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.black),
-                          child: Padding(
-                            padding: const EdgeInsets.all(24),
-                            child: SizedBox(
-                              width: 512,
-                              child: qr,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                        height: 40), // idk why, just leave it
-                  ],
-                ),
-              )
-            ]),
-          );
-        },
-      ),
-    );
-  }
-
-  void qrSharedDialog(BuildContext context) {
-    Widget qr = _createPrettyQrDataWidget(data: widget.match.csvData);
-    Widget? commentsQr;
-    if (widget.match.comments.isNotEmpty) {
-      commentsQr = _createPrettyQrDataWidget(
-          data: widget.match.commentsCSVData);
-    }
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (BuildContext context) {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text("QR Share (Non-DUC)"),
-            ),
-            body: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(
-                  parent: BouncingScrollPhysics()),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const SizedBox(height: 20),
-                  const InformationalHintsBlob(
-                      "Show to a scouting leader",
-                      "A scouting leader will be able to help you with collecting data. Data here is encoded in a CSV format"),
-                  if (commentsQr != null)
-                    const WarningHintsBlob("Comments are separated!",
-                        "Due to technical limitations, comments are scanned separately (scroll down)")
-                  else
-                    const InformationalHintsBlob("No Comments Data",
-                        "This match didn't have any comments attached to it."),
-                  const SizedBox(height: 20),
-                  const Text("Match Data",
-                      style: TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 8),
-                  FilledButton.tonalIcon(
-                      onPressed: () async => await Clipboard.setData(
-                          ClipboardData(text: widget.match.csvData)),
-                      icon: const Icon(Icons.copy_rounded),
-                      label: const Text("Copy")),
-                  const SizedBox(height: 8),
-                  GestureDetector(
-                    onTap: () async => launchConfirmDialog(context,
-                        message: SizedBox(
-                            width: 512, height: 512, child: qr),
-                        onConfirm: () {},
-                        title: "QR (Non-DUC)",
-                        icon: const Icon(Icons.qr_code_rounded)),
-                    child: Container(
-                      width: 512,
-                      height: 512,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: Colors.black),
-                      child: Padding(
-                        padding: const EdgeInsets.all(24),
-                        child: qr,
-                      ),
-                    ),
-                  ),
-                  if (commentsQr != null) const Divider(),
-                  if (commentsQr != null)
-                    const Text("Comments Data",
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold)),
-                  if (commentsQr != null)
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: TextField(
-                        controller: TextEditingController(
-                            text: widget.match.comments.comment),
-                        readOnly: true,
-                        decoration: const InputDecoration(
-                          labelText: "Comments View",
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                    ),
-                  if (commentsQr != null)
-                    FilledButton.tonalIcon(
-                        onPressed: () async =>
-                            await Clipboard.setData(ClipboardData(
-                                text: widget.match.commentsCSVData)),
-                        icon: const Icon(Icons.copy_rounded),
-                        label: const Text("Copy")),
-                  const SizedBox(height: 8),
-                  if (commentsQr != null)
-                    GestureDetector(
-                      onTap: () async => launchConfirmDialog(context,
-                          message: SizedBox(
-                              width: 512,
-                              height: 512,
-                              child: commentsQr),
-                          onConfirm: () {},
-                          title: "Comments Data (QR)",
-                          icon: const Icon(Icons.qr_code_rounded)),
-                      child: Container(
-                        width: 512,
-                        height: 512,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: Colors.black),
-                        child: Padding(
-                          padding: const EdgeInsets.all(24),
-                          child: commentsQr,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-Widget _createPrettyQrDataWidget({
-  required String data,
-  bool includeImage = true,
-}) {
-  const PrettyQrDecoration decorationWithImage = PrettyQrDecoration(
-    shape: PrettyQrRoundedSymbol(
-        color: Colors.white, borderRadius: BorderRadius.zero),
-  );
-  const PrettyQrDecoration decorationWithoutImage =
-      PrettyQrDecoration(
-    shape: PrettyQrRoundedSymbol(color: Colors.white),
-  );
-  return PrettyQrView.data(
-    data: data,
-    errorCorrectLevel: QrErrorCorrectLevel.M,
-    decoration:
-        includeImage ? decorationWithImage : decorationWithoutImage,
-  );
 }
