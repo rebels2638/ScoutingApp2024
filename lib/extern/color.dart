@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2024/debug.dart';
 
@@ -7,6 +9,25 @@ typedef ColorFloatStrip = ({
   double blue,
   double alpha
 });
+
+class ColorUtils {
+  static Random rng = Random();
+
+  static Color randomColor(
+      {double saturation = 0.6, double brightness = 0.75}) {
+    double hue = rng.nextDouble();
+    return HSVColor.fromAHSV(1.0, hue * 360.0, saturation, brightness)
+        .toColor();
+  }
+
+  static List<Color> randomColors(int min, int max) {
+    List<Color> colors = <Color>[];
+    for (int i = 0; i < rng.nextInt(max - min) + min; i++) {
+      colors.add(randomColor());
+    }
+    return colors;
+  }
+}
 
 extension UsefulColor on Color {
   Color grayScale() {

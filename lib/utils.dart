@@ -1,10 +1,13 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/services.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/extern/string.dart';
 
 typedef pair<A, B> = (A first, B second);
+
+Random rng = Random();
 
 class GenericUtils {
   static List<bool> boolOptions() => const <bool>[true, false];
@@ -16,6 +19,10 @@ class GenericUtils {
       }
     }
     return false;
+  }
+
+  static T pickRandom<T>(List<T> elements) {
+    return elements[rng.nextInt(elements.length)];
   }
 
   static String repeatStr(String r, int reps) {

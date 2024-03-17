@@ -123,3 +123,7 @@ flutter:
         - asset: assets/fonts/mono/IBMPlexMono-Italic.ttf
           weight: 400
           style: italic
+    - family: Damion
+      fonts:
+        - asset: assets/fonts/Damion-Regular.ttf
+          weight: 400
