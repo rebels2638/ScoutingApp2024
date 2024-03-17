@@ -13,6 +13,10 @@ Created using the **Flutter** framework with the hopes of improving the overall 
 
 <br/>
 
+<kbd>
+<a href="https://rebels2638.github.io/ArgusGuide/home"><img src="https://img.shields.io/badge/Get Started-53e09e?style=for-the-badge&logoColor=black&color=black" height=36 /></a>
+</kbd>
+
 ### Download
 
 <kbd>
