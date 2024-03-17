@@ -120,18 +120,22 @@ class _AppSetupViewState extends State<AppSetupView>
                         ),
                       ),
                       _UserProfileSetup(_pageController),
-                      _FinalHelpfulTipsPage(() =>
-                          Future<void>.delayed(
-                              const Duration(milliseconds: 400),
-                              () => WidgetsBinding.instance
-                                      .addPostFrameCallback((_) {
-                                    Navigator.of(context).pop();
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute<Widget>(
-                                            builder: (BuildContext
-                                                    context) =>
+                      _FinalHelpfulTipsPage(() => Future<
+                              void>.delayed(
+                          const Duration(milliseconds: 400),
+                          () => WidgetsBinding.instance
+                                  .addPostFrameCallback((_) {
+                                UserTelemetry()
+                                    .currentModel
+                                    .profileArmed = true;
+                                Debug().info("User viewed the setup");
+                                Navigator.of(context).pop();
+                                Navigator.of(context).push(
+                                    MaterialPageRoute<Widget>(
+                                        builder:
+                                            (BuildContext context) =>
                                                 widget.routineChild));
-                                  })))
+                              })))
                     ]),
               );
             }),
