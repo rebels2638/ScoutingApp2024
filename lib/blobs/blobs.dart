@@ -7,6 +7,7 @@ import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
 import 'package:scouting_app_2024/utils.dart';
 import 'package:theme_provider/theme_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // there is no much boilerplate shitty code for this number picker thing, just look below, there are like 2 delegate functions for this lmfao
 class _InternalNumberPicker extends StatefulWidget {
@@ -173,16 +174,16 @@ void launchNumberPickerDialog(BuildContext context,
             const SizedBox(width: 8),
             Text(headerMessage)
           ])),
-          body: SafeArea(child: SingleChildScrollView(
-              child: _InternalNumberPicker(
-                  infiniteLoop: infiniteLoop,
-                  alignment: alignment,
-                  itemCount:
-                      itemCount ?? maxValue.abs().toString().length,
-                  minValue: minValue,
-                  maxValue: maxValue,
-                  onChange: onChange))))
-                  ;
+          body: SafeArea(
+              child: SingleChildScrollView(
+                  child: _InternalNumberPicker(
+                      infiniteLoop: infiniteLoop,
+                      alignment: alignment,
+                      itemCount: itemCount ??
+                          maxValue.abs().toString().length,
+                      minValue: minValue,
+                      maxValue: maxValue,
+                      onChange: onChange))));
     }));
 
 @pragma("vm:prefer-inline")
@@ -282,6 +283,12 @@ Future<void> launchInformDialog(BuildContext context,
                         Navigator.of(context).pop();
                       }),
                 ]));
+
+Future<void> launchURLLaunchDialog(BuildContext context,
+        {required String url, required String message}) async =>
+    await launchConfirmDialog(context,
+        message: Text(message),
+        onConfirm: () async => await launchUrl(Uri.parse(url)));
 
 /// generic confirmation dialog
 @pragma("vm:prefer-inline")

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:scouting_app_2024/extern/alignment.dart';
 import 'package:scouting_app_2024/extern/color.dart';
 import 'package:scouting_app_2024/utils.dart';
@@ -9,7 +8,6 @@ abstract class GradientDescriptor {
 }
 
 /// Describes the object layout of a [LinearGradient] class
-@JsonSerializable()
 class LinearGradientDescriptor implements GradientDescriptor {
   List<Color> colors;
   Alignment beginAlign;
