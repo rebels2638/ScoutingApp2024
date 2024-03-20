@@ -121,10 +121,18 @@ class UserPrefModel {
   @JsonKey(required: false, defaultValue: false)
   bool profileArmed;
 
+  @JsonKey(required: false, defaultValue: "")
+  String profileId;
+
+  @JsonKey(required: false, defaultValue: 0)
+  int totalScoutedMatches;
+
   // make sure to run flutter pub run build_runner build
   UserPrefModel(
       {required this.selectedTheme,
       this.showConsole = false,
+      this.profileId = "",
+      this.totalScoutedMatches = 0,
       this.showGameMap = true,
       this.useAltLayout = false,
       this.seenPatchNotes = false,

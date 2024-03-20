@@ -16,6 +16,7 @@ UserPrefModel _$UserPrefModelFromJson(Map<String, dynamic> json) =>
               'selectedTheme', (v) => v as String? ?? 'default_dark'),
           showConsole:
               $checkedConvert('showConsole', (v) => v as bool? ?? false),
+          profileId: $checkedConvert('profileId', (v) => v as String? ?? ''),
           showGameMap:
               $checkedConvert('showGameMap', (v) => v as bool? ?? true),
           useAltLayout:
@@ -63,4 +64,5 @@ Map<String, dynamic> _$UserPrefModelToJson(UserPrefModel instance) =>
       'showScrollbar': instance.showScrollbar,
       'profileName': instance.profileName,
       'profileArmed': instance.profileArmed,
+      'profileId': instance.profileId,
     };

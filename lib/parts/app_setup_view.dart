@@ -2,11 +2,18 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/blobs/special_button.dart';
-import 'package:scouting_app_2024/parts/descriptors/gradient_descriptor.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/shared.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
+
+import 'avatar_representator.dart';
+
+bool _userNameChecker(String r) {
+  return r.isNotEmpty &&
+      r.contains(RegExp(
+          r"^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$"));
+}
 
 class AppSetupView extends StatefulWidget {
   final Widget routineChild;
@@ -14,7 +21,9 @@ class AppSetupView extends StatefulWidget {
   const AppSetupView({super.key, required this.routineChild});
 
   @override
-  State<AppSetupView> createState() => _AppSetupViewState();
+  State<AppSetupView> createState() {
+    return _AppSetupViewState();
+  }
 }
 
 class _AppSetupViewState extends State<AppSetupView>
@@ -30,6 +39,7 @@ class _AppSetupViewState extends State<AppSetupView>
   @override
   void initState() {
     super.initState();
+    Debug().watchdog("App Setup View Launched (First State Step)");
     isTappedDown = false;
     isTappedOver = false;
     _pageController =
@@ -97,45 +107,40 @@ class _AppSetupViewState extends State<AppSetupView>
                                     label: "Get Started",
                                     icon: const Icon(
                                         Icons.navigate_next_rounded),
-                                    onPressed: () => Future<
-                                            void>.delayed(
-                                        const Duration(
-                                            milliseconds: 400),
-                                        () => WidgetsBinding.instance
-                                                .addPostFrameCallback(
-                                                    (_) {
-                                              _pageController.animateToPage(
-                                                  1,
-                                                  duration:
-                                                      const Duration(
-                                                          milliseconds:
-                                                              750),
-                                                  curve: Curves.ease);
-                                              _controller
-                                                  .stop(); // no memory leaks ewww
-                                            })),
+                                    onPressed: () =>
+                                        Future<void>.delayed(
+                                            const Duration(
+                                                milliseconds: 400),
+                                            () {
+                                      _pageController.animateToPage(1,
+                                          duration: const Duration(
+                                              milliseconds: 750),
+                                          curve: Curves.ease);
+                                      _controller
+                                          .stop(); // no memory leaks ewww
+                                    }),
                                   ))
                             ],
                           ),
                         ),
                       ),
                       _UserProfileSetup(_pageController),
-                      _FinalHelpfulTipsPage(() => Future<
-                              void>.delayed(
-                          const Duration(milliseconds: 400),
-                          () => WidgetsBinding.instance
-                                  .addPostFrameCallback((_) {
-                                UserTelemetry()
-                                    .currentModel
-                                    .profileArmed = true;
-                                Debug().info("User viewed the setup");
-                                Navigator.of(context).pop();
-                                Navigator.of(context).push(
-                                    MaterialPageRoute<Widget>(
-                                        builder:
-                                            (BuildContext context) =>
-                                                widget.routineChild));
-                              })))
+                      _FinalHelpfulTipsPage(() =>
+                          Future<void>.delayed(
+                              const Duration(milliseconds: 400), () {
+                            UserTelemetry()
+                                .currentModel
+                                .profileArmed = true;
+                            UserTelemetry().currentModel.profileId =
+                                Shared.uuid.v4();
+                            UserTelemetry().save();
+                            Debug().info("User viewed the setup");
+                            Navigator.of(context).pop();
+                            Navigator.of(context).push(
+                                MaterialPageRoute<Widget>(
+                                    builder: (BuildContext context) =>
+                                        widget.routineChild));
+                          }))
                     ]),
               );
             }),
@@ -254,10 +259,12 @@ class _UserProfileSetup extends StatefulWidget {
 
 class _UserProfileSetupState extends State<_UserProfileSetup> {
   late final TextEditingController _controller;
+  late bool isFuckedUsername;
 
   @override
   void initState() {
     super.initState();
+    isFuckedUsername = false;
     _controller = TextEditingController();
   }
 
@@ -307,6 +314,9 @@ class _UserProfileSetupState extends State<_UserProfileSetup> {
         TextFormField(
           controller: _controller,
           decoration: InputDecoration(
+              errorText: isFuckedUsername
+                  ? "The supplied name does not meet the requirements!"
+                  : null,
               labelText: "Your Name",
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8))),
@@ -315,66 +325,53 @@ class _UserProfileSetupState extends State<_UserProfileSetup> {
             "This is the name that will be used to identify you in the app and to your scouting leader(s).",
             textAlign: TextAlign.left,
             style: TextStyle(
-                fontSize: 14, fontWeight: FontWeight.normal)),
+                fontSize: 12,
+                fontWeight: FontWeight.normal,
+                fontStyle: FontStyle.italic)),
+        const SizedBox(height: 6),
+        const Align(
+          alignment: Alignment.centerLeft,
+          child: Text.rich(
+            TextSpan(children: <InlineSpan>[
+              TextSpan(
+                  text: "Name requirements:\n",
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              TextSpan(text: "• 8-20 characters long\n"),
+              TextSpan(text: "• No special characters\n"),
+              TextSpan(text: "• Only a-z A-Z 0-9\n"),
+            ]),
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.only(top: 40),
           child: SpecialButton.premade1(
             label: "Submit",
             icon: const Icon(Icons.check_rounded),
-            onPressed: () => Future<void>.delayed(
-                const Duration(milliseconds: 400), () {
-              FocusScopeNode currentFocus = FocusScope.of(context);
-              if (!currentFocus.hasPrimaryFocus) {
-                currentFocus.unfocus();
+            onPressed: () {
+              if (_userNameChecker(_controller.text)) {
+                Future<void>.delayed(
+                    const Duration(milliseconds: 400), () {
+                  FocusScopeNode currentFocus =
+                      FocusScope.of(context);
+                  if (!currentFocus.hasPrimaryFocus) {
+                    currentFocus.unfocus();
+                  }
+                  if (_controller.text.isNotEmpty) {
+                    Debug().info("SET NAME TO ${_controller.text}");
+                    UserTelemetry().currentModel.profileName =
+                        _controller.text;
+                    widget._controllerInstance.animateToPage(2,
+                        duration: const Duration(milliseconds: 750),
+                        curve: Curves.ease);
+                  }
+                });
+              } else {
+                setState(() => isFuckedUsername = true);
               }
-              if (_controller.text.isNotEmpty) {
-                Debug().info("SET NAME TO ${_controller.text}");
-                UserTelemetry().currentModel.profileName =
-                    _controller.text;
-                widget._controllerInstance.animateToPage(2,
-                    duration: const Duration(milliseconds: 750),
-                    curve: Curves.ease);
-              }
-            }),
+            },
           ),
         )
       ]),
     ));
-  }
-}
-
-class AvatarRepresentator extends StatefulWidget {
-  const AvatarRepresentator({
-    super.key,
-  });
-
-  @override
-  State<AvatarRepresentator> createState() =>
-      _AvatarRepresentatorState();
-}
-
-class _AvatarRepresentatorState extends State<AvatarRepresentator> {
-  late LinearGradientDescriptor _descriptor;
-
-  @override
-  void initState() {
-    super.initState();
-    _descriptor = LinearGradientDescriptor.random();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => setState(
-          () => _descriptor = LinearGradientDescriptor.random()),
-      child: SizedBox(
-        width: 124,
-        height: 124,
-        child: Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(9999),
-                gradient: _descriptor.gr)),
-      ),
-    );
   }
 }
