@@ -15,9 +15,9 @@ import 'package:scouting_app_2024/parts/bits/prefer_canonical.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
 import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/parts/bits/show_hints.dart';
+import 'package:scouting_app_2024/parts/views/duck/duck_view_navigator.dart';
 import 'package:scouting_app_2024/parts/views/shared_dialogs.dart';
 import 'dart:io';
-import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/duc_telemetry.dart';
 import 'package:scouting_app_2024/user/match_utils.dart';
@@ -57,28 +57,20 @@ import 'package:scouting_app_2024/user/models/team_model.dart';
  */
 
 class DataHostingView extends StatefulWidget
-    implements AppPageViewExporter {
+    implements DuckNavigatorViewTrait {
   const DataHostingView({super.key});
 
   @override
   State<DataHostingView> createState() => _DataHostingViewState();
 
   @override
-  ({
-    Widget child,
-    ({Icon activeIcon, Icon icon, String label, String tooltip}) item
-  }) exportAppPageView() {
-    return (
-      child: this,
-      item: (
-        activeIcon:
-            const Icon(CommunityMaterialIcons.account_tie_outline),
-        icon: const Icon(CommunityMaterialIcons.duck),
-        label: "Duc",
-        tooltip: "Integrated Data Collection"
-      )
-    );
-  }
+  Widget get icon => const Icon(Icons.folder_off_rounded);
+
+  @override
+  String get label => "Legacy DUC";
+
+  @override
+  Widget get view => this;
 }
 
 class _DataHostingViewState extends State<DataHostingView> {

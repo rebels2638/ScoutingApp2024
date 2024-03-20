@@ -15,6 +15,7 @@ import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
 import 'package:scouting_app_2024/parts/bits/show_fps_monitor.dart';
 import 'package:scouting_app_2024/parts/bits/show_hints.dart';
+import 'package:scouting_app_2024/parts/bits/show_legacy_items.dart';
 import 'package:scouting_app_2024/parts/bits/show_scrollbar.dart';
 import 'package:scouting_app_2024/parts/bits/theme_mode.dart';
 import 'package:scouting_app_2024/parts/bits/use_alt_layout.dart';
@@ -45,6 +46,9 @@ class ThemedAppBundle extends StatelessWidget {
                 builder: (BuildContext
                         themeCtxt) => /*lol this is very scuffed XD i hope you can forgive me*/
                     MultiProvider(providers: <SingleChildWidget>[
+                      ChangeNotifierProvider<ShowLegacyItemsModal>(
+                          create: (BuildContext _) =>
+                              ShowLegacyItemsModal()),
                       ChangeNotifierProvider<ShowScrollBarModal>(
                           create: (BuildContext _) =>
                               ShowScrollBarModal()),

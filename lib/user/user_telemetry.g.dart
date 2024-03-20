@@ -17,8 +17,12 @@ UserPrefModel _$UserPrefModelFromJson(Map<String, dynamic> json) =>
           showConsole:
               $checkedConvert('showConsole', (v) => v as bool? ?? false),
           profileId: $checkedConvert('profileId', (v) => v as String? ?? ''),
+          totalScoutedMatches:
+              $checkedConvert('totalScoutedMatches', (v) => v as int? ?? 0),
           showGameMap:
               $checkedConvert('showGameMap', (v) => v as bool? ?? true),
+          showLegacyItems:
+              $checkedConvert('showLegacyItems', (v) => v as bool? ?? false),
           useAltLayout:
               $checkedConvert('useAltLayout', (v) => v as bool? ?? false),
           seenPatchNotes:
@@ -64,5 +68,7 @@ Map<String, dynamic> _$UserPrefModelToJson(UserPrefModel instance) =>
       'showScrollbar': instance.showScrollbar,
       'profileName': instance.profileName,
       'profileArmed': instance.profileArmed,
+      'showLegacyItems': instance.showLegacyItems,
       'profileId': instance.profileId,
+      'totalScoutedMatches': instance.totalScoutedMatches,
     };

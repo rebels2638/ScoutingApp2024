@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/parts/appview.dart';
-import 'package:scouting_app_2024/parts/bits/prefer_canonical.dart';
+import "package:scouting_app_2024/parts/bits/prefer_canonical.dart";
 import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_tonal.dart';
 import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
 import 'package:scouting_app_2024/parts/bits/show_fps_monitor.dart';
 import 'package:scouting_app_2024/parts/bits/show_hints.dart';
+import 'package:scouting_app_2024/parts/bits/show_legacy_items.dart';
 import 'package:scouting_app_2024/parts/bits/show_scrollbar.dart';
 import 'package:scouting_app_2024/parts/bits/use_alt_layout.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
@@ -39,13 +40,25 @@ class SettingsView extends StatefulWidget
 
   const SettingsView({super.key});
 
-  @pragma("vm:prefer-inline")
-  static Widget _labelIt(
-          {IconData? icon,
-          required String label,
-          String? hint,
-          required Widget child}) =>
-      Center(
+  @override
+  State<SettingsView> createState() => _SettingsViewState();
+}
+
+class _SettingsLabeledItem extends StatelessWidget {
+  const _SettingsLabeledItem({
+    required this.icon,
+    required this.label,
+    required this.hint,
+    required this.child,
+  });
+
+  final IconData? icon;
+  final String label;
+  final String? hint;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => Center(
         child: Row(children: <Widget>[
           if (!DeviceEnv.isPhone) const Spacer(flex: 2),
           // this might need fixing if we ever need to support phones fully
@@ -78,9 +91,6 @@ class SettingsView extends StatefulWidget
           if (!DeviceEnv.isPhone) const Spacer(flex: 2),
         ]),
       );
-
-  @override
-  State<SettingsView> createState() => _SettingsViewState();
 }
 
 class _SettingsViewState extends State<SettingsView> {
@@ -296,7 +306,7 @@ class _SettingsViewState extends State<SettingsView> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: strutAll(<Widget>[
-                        SettingsView._labelIt(
+                        _SettingsLabeledItem(
                             icon: CommunityMaterialIcons
                                 .chemical_weapon,
                             label: "Scouting Leader Mode",
@@ -317,7 +327,7 @@ class _SettingsViewState extends State<SettingsView> {
                                       .showExperimental = val;
                                   UserTelemetry().save();
                                 })),
-                        SettingsView._labelIt(
+                        _SettingsLabeledItem(
                             icon: CommunityMaterialIcons
                                 .material_design,
                             label: "Prefer Tonal Components",
@@ -337,7 +347,7 @@ class _SettingsViewState extends State<SettingsView> {
                                           .preferTonal = val;
                                       UserTelemetry().save();
                                     }))),
-                        SettingsView._labelIt(
+                        _SettingsLabeledItem(
                             icon: CommunityMaterialIcons
                                 .gesture_swipe_vertical,
                             label: "Show Scroll Bars",
@@ -358,7 +368,48 @@ class _SettingsViewState extends State<SettingsView> {
                                       .showScrollbar = val;
                                   UserTelemetry().save();
                                 })),
-                        SettingsView._labelIt(
+                        _SettingsLabeledItem(
+                            icon: Icons.history_rounded,
+                            label: "Show Legacy Items",
+                            hint:
+                                "Certain app features that were once deprecated will be shown again. Use with caution",
+                            child: BasicToggleSwitch(
+                                initialValue: UserTelemetry()
+                                    .currentModel
+                                    .showLegacyItems,
+                                onChanged: (bool val) {
+                                  if (val) {
+                                    launchInformDialog(
+                                      context,
+                                      title: "Warning!",
+                                      message: const Text.rich(
+                                          TextSpan(
+                                              children: <InlineSpan>[
+                                            TextSpan(
+                                                text:
+                                                    "Legacy components are "),
+                                            TextSpan(
+                                                text: "deprecated",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight
+                                                            .bold)),
+                                            TextSpan(
+                                                text:
+                                                    ". They are not guaranteed to work properly and may be removed in the future!"),
+                                          ])),
+                                    );
+                                  }
+                                  Provider.of<ShowLegacyItemsModal>(
+                                          context,
+                                          listen: false)
+                                      .showingLegacyItems = val;
+                                  UserTelemetry()
+                                      .currentModel
+                                      .showLegacyItems = val;
+                                  UserTelemetry().save();
+                                })),
+                        _SettingsLabeledItem(
                             icon: CommunityMaterialIcons
                                 .skull_crossbones_outline,
                             label: "Show Hints",
@@ -378,7 +429,7 @@ class _SettingsViewState extends State<SettingsView> {
                                       .showHints = val;
                                   UserTelemetry().save();
                                 })),
-                        SettingsView._labelIt(
+                        _SettingsLabeledItem(
                             icon: CommunityMaterialIcons.book_account,
                             label: "Use canonical components",
                             hint:
@@ -397,7 +448,7 @@ class _SettingsViewState extends State<SettingsView> {
                                           .preferCanonical = val;
                                       UserTelemetry().save();
                                     }))),
-                        SettingsView._labelIt(
+                        _SettingsLabeledItem(
                             icon: CommunityMaterialIcons.nuke, // lmao
                             label: "Compact layout",
                             hint:
@@ -416,7 +467,7 @@ class _SettingsViewState extends State<SettingsView> {
                                           .preferCompact = val;
                                       UserTelemetry().save();
                                     }))),
-                        SettingsView._labelIt(
+                        _SettingsLabeledItem(
                             icon:
                                 CommunityMaterialIcons.layers_outline,
                             label: "Use Alternative Layout",
@@ -436,7 +487,7 @@ class _SettingsViewState extends State<SettingsView> {
                                           .useAltLayout = val;
                                       UserTelemetry().save();
                                     }))),
-                        SettingsView._labelIt(
+                        _SettingsLabeledItem(
                             icon: Icons.terminal_rounded,
                             label: "Show Development Tools",
                             hint:
@@ -455,7 +506,7 @@ class _SettingsViewState extends State<SettingsView> {
                                       .showConsole = val;
                                   UserTelemetry().save();
                                 })),
-                        SettingsView._labelIt(
+                        _SettingsLabeledItem(
                             icon: Icons.numbers_rounded,
                             label: "Show FPS Monitor",
                             hint:

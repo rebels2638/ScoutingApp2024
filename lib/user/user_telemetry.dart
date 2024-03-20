@@ -121,6 +121,9 @@ class UserPrefModel {
   @JsonKey(required: false, defaultValue: false)
   bool profileArmed;
 
+  @JsonKey(required: false, defaultValue: false)
+  bool showLegacyItems;
+
   @JsonKey(required: false, defaultValue: "")
   String profileId;
 
@@ -134,6 +137,7 @@ class UserPrefModel {
       this.profileId = "",
       this.totalScoutedMatches = 0,
       this.showGameMap = true,
+      this.showLegacyItems = false,
       this.useAltLayout = false,
       this.seenPatchNotes = false,
       this.profileArmed = false,

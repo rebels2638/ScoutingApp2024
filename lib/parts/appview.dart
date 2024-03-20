@@ -16,6 +16,7 @@ import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
 import 'package:scouting_app_2024/parts/bits/show_fps_monitor.dart';
 import 'package:scouting_app_2024/parts/bits/show_scrollbar.dart';
 import 'package:scouting_app_2024/parts/patch_notes.dart';
+import 'package:scouting_app_2024/parts/views/duck/duck_view.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/shared.dart';
 import 'package:scouting_app_2024/parts/theme.dart';
@@ -157,7 +158,7 @@ class _AppViewState extends State<_AppView> {
         String tooltip
       }) item
     }) dataHostView;
-    dataHostView = const DataHostingView().exportAppPageView();
+    dataHostView = DuckView().exportAppPageView();
     List<NavigationDestination> bottomItems = <NavigationDestination>[
       // plsplsplspls make sure this matches with the following PageView's children ordering D:
       if (ShowExperimentalModal.isShowingExperimental(context))
