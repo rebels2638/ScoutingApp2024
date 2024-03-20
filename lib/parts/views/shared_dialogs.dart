@@ -253,7 +253,12 @@ final class SharedDialogsMatches {
                       child: Text.rich(
                           TextSpan(children: <InlineSpan>[
                             const TextSpan(
-                                text: "Time: ",
+                                text: "Scouter: ",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold)),
+                            TextSpan(text: match.preliminary.scouter),
+                            const TextSpan(
+                                text: "\nTime: ",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold)),
                             TextSpan(

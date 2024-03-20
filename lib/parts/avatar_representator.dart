@@ -87,12 +87,15 @@ class _GlowingAvatarRepresentatorState
         child: Container(
             decoration: BoxDecoration(
                 boxShadow: <BoxShadow>[
-              for (Color r in _descriptor.colors)
+              for (int i = 0, x = 0, y = 0;
+                  i < _descriptor.colors.length;
+                  i++, x += 4, y += 6)
                 BoxShadow(
-                    color: r.withAlpha(rng.nextInt(200) + 150),
+                    color: _descriptor.colors[i]
+                        .withAlpha(rng.nextInt(160) + 130),
                     blurRadius: widget.glowBlurRadius,
                     spreadRadius: widget.glowSpreadRadius,
-                    offset: const Offset(0, 0))
+                    offset: Offset(x.toDouble(), y.toDouble()))
             ],
                 borderRadius: BorderRadius.circular(widget.radius),
                 gradient: _descriptor.gr)),

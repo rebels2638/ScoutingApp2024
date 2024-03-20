@@ -5,6 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:scouting_app_2024/blobs/qr_converter_blob.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/user/models/team_model.dart';
+import 'package:scouting_app_2024/user/user_telemetry.dart';
 import 'package:uuid/uuid.dart';
 
 // there is hella boilerplate written here
@@ -142,8 +143,7 @@ class TeleOpInfo extends ScoutingInfo
   int missedAmp;
 
   TeleOpInfo(
-      {
-      required this.underStage,
+      {required this.underStage,
       required this.scoredSpeaker,
       required this.missedSpeaker,
       required this.scoredAmp,
@@ -151,8 +151,7 @@ class TeleOpInfo extends ScoutingInfo
       required this.missedAmp});
 
   factory TeleOpInfo.optional(
-          {
-          bool underStage = false,
+          {bool underStage = false,
           int scoredSpeaker = 0,
           int missedSpeaker = 0,
           int scoredAmp = 0,
@@ -287,6 +286,7 @@ class PrelimInfo extends ScoutingInfo
   int timeStamp; // this is in ms since epoch
   int teamNumber;
   int matchNumber;
+  String scouter;
   MatchType matchType;
   TeamAlliance alliance;
   MatchStartingPosition startingPosition;
@@ -297,7 +297,9 @@ class PrelimInfo extends ScoutingInfo
       required this.matchNumber,
       required this.matchType,
       required this.alliance,
-      required this.startingPosition});
+      String? scouter,
+      required this.startingPosition})
+      : scouter = scouter ?? UserTelemetry().currentModel.profileName;
 
   factory PrelimInfo.optional(
           {int? timeStamp,
@@ -323,6 +325,7 @@ class PrelimInfo extends ScoutingInfo
         "matchNumber": matchNumber,
         "matchType": matchType,
         "alliance": alliance,
+        "scouter": scouter,
         "startingPosition": startingPosition
       };
 
@@ -333,6 +336,7 @@ class PrelimInfo extends ScoutingInfo
         timeStamp: data["time"],
         teamNumber: data["team#"],
         matchNumber: data["match#"],
+        scouter: data["scouter"],
         matchType: MatchType.values[data["match"]],
         alliance: TeamAlliance.values[data["allies"]],
         startingPosition:
@@ -347,6 +351,7 @@ class PrelimInfo extends ScoutingInfo
       "match#": matchNumber,
       "match": matchType.index,
       "allies": alliance.index,
+      "scouter": scouter,
       "start": startingPosition.index
     });
   }

@@ -1,6 +1,5 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:scouting_app_2024/parts/avatar_representator.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
 import 'package:scouting_app_2024/parts/bits/show_hints.dart';
@@ -134,7 +133,7 @@ class _PastMatchesViewState extends State<PastMatchesView> {
                                   glowBlurRadius: 10,
                                   width: 116,
                                   height: 116),
-                              const Spacer(),
+                              const SizedBox(width: 42),
                               Column(
                                 crossAxisAlignment:
                                     CrossAxisAlignment.start,
