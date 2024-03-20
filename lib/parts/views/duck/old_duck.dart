@@ -56,35 +56,6 @@ import 'package:scouting_app_2024/user/models/team_model.dart';
   quack quack quack
  */
 
-@pragma("vm:prefer-inline")
-Widget _expander(
-        {required Widget icon,
-        required String title,
-        String? subtitle,
-        required Widget body}) =>
-    ExpansionTile(
-        title: Row(children: <Widget>[
-          icon,
-          const SizedBox(width: 6),
-          Text(
-            title,
-            style: const TextStyle(
-                fontSize: 16, fontWeight: FontWeight.w600),
-          )
-        ]),
-        subtitle: subtitle != null
-            ? Text(subtitle,
-                style: const TextStyle(
-                    fontSize: 12, fontWeight: FontWeight.w400))
-            : null,
-        controlAffinity: ListTileControlAffinity.leading,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top: 12, bottom: 12),
-            child: body,
-          )
-        ]);
-
 class DataHostingView extends StatefulWidget
     implements AppPageViewExporter {
   const DataHostingView({super.key});
