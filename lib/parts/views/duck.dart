@@ -315,7 +315,7 @@ class _DataHostingViewState extends State<DataHostingView> {
               MatchStartingPosition.amp) {
             autoPercentStartLeft++;
           } else if (d.preliminary.startingPosition ==
-              MatchStartingPosition.stage) {
+              MatchStartingPosition.source) {
             autoPercentStartRight++;
           } else {
             autoPercentStartMiddle++;
