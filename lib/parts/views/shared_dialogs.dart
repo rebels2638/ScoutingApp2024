@@ -412,10 +412,13 @@ final class SharedDialogsMatches {
                                 text: match.teleop.underStage
                                     ? "Yes"
                                     : "No"),
+                            const TextSpan(
+                                text: "\nLobs: ",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold)),
                             TextSpan(
-                                text: match.teleop.lobs
-                                ? "Yes"
-                                : "No"),
+                                text:
+                                    match.teleop.lobs ? "Yes" : "No"),
                             const TextSpan(
                                 text: "\nMissed Amp: ",
                                 style: TextStyle(
