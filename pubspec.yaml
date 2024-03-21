@@ -1,7 +1,7 @@
 name: scouting_app_2024
 description: "Rebel Robotics FRC 2638 Scouting App 2024"
 publish_to: "none"
-version: 1.0.5+7
+version: 1.0.7+7
 
 environment:
   sdk: ">=3.2.5 <4.0.0"
