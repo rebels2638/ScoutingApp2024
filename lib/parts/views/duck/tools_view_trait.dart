@@ -16,6 +16,18 @@ class DuckToolsView extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return const Text("Amogus");
+    return const Center(
+        child: Text.rich(TextSpan(
+            text: "Coming Soon",
+            style:
+                TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+            children: <InlineSpan>[
+          TextSpan(
+              text: "\nUse Legacy Tools for now.",
+              style: TextStyle(
+                  fontSize: 18,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w400))
+        ])));
   }
 }
