@@ -482,22 +482,6 @@ class _ScoutingViewState extends State<ScoutingView>
             title: "Tele-op"
           ),
           child: form_col(<Widget>[
-            form_label("Pieces Scored",
-                child: PlusMinus(
-                  initialValue: context
-                      .read<ScoutingSessionBloc>()
-                      .teleop
-                      .piecesScored,
-                  onValueChanged: (int value) {
-                    context
-                        .read<ScoutingSessionBloc>()
-                        .teleop
-                        .piecesScored = value;
-                    context
-                        .read<ScoutingSessionBloc>()
-                        .add(TeleOpUpdateEvent());
-                  },
-                )),
             form_label("Goes under stage?",
                 child: BasicToggleSwitch(
                     initialValue: context

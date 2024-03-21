@@ -286,7 +286,8 @@ class _DataHostingViewState extends State<DataHostingView> {
           }
           teleopAvgScoredInSpeaker += d.teleop.scoredSpeaker;
           teleopAvgScoredInAmp += d.teleop.scoredAmp;
-          teleopAvgNotesScored += d.teleop.piecesScored;
+          teleopAvgNotesScored +=
+              d.teleop.scoredAmp + d.teleop.scoredSpeaker;
           teleopGoesUnderStage = d.teleop.underStage;
           teleopLobs = d.teleop.lobs;
           endgameCanClimb = d.endgame.endState == EndStatus.on_chain;

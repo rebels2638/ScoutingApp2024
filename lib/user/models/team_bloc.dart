@@ -140,7 +140,6 @@ class TeleOpInfo extends ScoutingInfo
   int scoredSpeaker;
   int missedSpeaker;
   int scoredAmp;
-  int piecesScored;
   int missedAmp;
 
   TeleOpInfo(
@@ -149,7 +148,6 @@ class TeleOpInfo extends ScoutingInfo
       required this.scoredSpeaker,
       required this.missedSpeaker,
       required this.scoredAmp,
-      required this.piecesScored,
       required this.missedAmp});
 
   factory TeleOpInfo.optional(
@@ -166,7 +164,6 @@ class TeleOpInfo extends ScoutingInfo
           scoredSpeaker: scoredSpeaker,
           missedSpeaker: missedSpeaker,
           scoredAmp: scoredAmp,
-          piecesScored: piecesScored,
           missedAmp: missedAmp);
 
   @override
@@ -176,7 +173,6 @@ class TeleOpInfo extends ScoutingInfo
         "scoredSpeaker": scoredSpeaker,
         "missedSpeaker": missedSpeaker,
         "scoredAmp": scoredAmp,
-        "piecesScored": piecesScored,
         "missedAmp": missedAmp,
       };
 
@@ -184,7 +180,6 @@ class TeleOpInfo extends ScoutingInfo
     final Map<String, dynamic> data =
         jsonDecode(csv) as Map<String, dynamic>;
     return TeleOpInfo(
-        piecesScored: data["pieces"],
         underStage: data["undSpker"],
         lobs: data["lob"],
         scoredSpeaker: data["spker"],
@@ -196,7 +191,6 @@ class TeleOpInfo extends ScoutingInfo
   @override
   String toCompatibleFormat() {
     return jsonEncode(<String, dynamic>{
-      "pieces": piecesScored,
       "undSpker": underStage,
       "lob": lobs,
       "spker": scoredSpeaker,

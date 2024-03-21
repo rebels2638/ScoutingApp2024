@@ -402,7 +402,8 @@ final class SharedDialogsMatches {
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold)),
                             TextSpan(
-                                text: match.teleop.piecesScored
+                                text: (match.teleop.scoredAmp +
+                                        match.teleop.scoredSpeaker)
                                     .toString()),
                             const TextSpan(
                                 text: "\nUnder Stage: ",
