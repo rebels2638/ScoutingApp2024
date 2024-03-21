@@ -136,6 +136,7 @@ class EndgameState extends ScoutingSessionStates {
 class TeleOpInfo extends ScoutingInfo
     implements QRCompatibleData<TeleOpInfo> {
   bool underStage;
+  bool lobs;
   int scoredSpeaker;
   int missedSpeaker;
   int scoredAmp;
@@ -144,6 +145,7 @@ class TeleOpInfo extends ScoutingInfo
 
   TeleOpInfo(
       {required this.underStage,
+      required this.lobs,
       required this.scoredSpeaker,
       required this.missedSpeaker,
       required this.scoredAmp,
@@ -152,6 +154,7 @@ class TeleOpInfo extends ScoutingInfo
 
   factory TeleOpInfo.optional(
           {bool underStage = false,
+          bool lobs = false,
           int scoredSpeaker = 0,
           int missedSpeaker = 0,
           int scoredAmp = 0,
@@ -159,6 +162,7 @@ class TeleOpInfo extends ScoutingInfo
           int missedAmp = 0}) =>
       TeleOpInfo(
           underStage: underStage,
+          lobs: lobs,
           scoredSpeaker: scoredSpeaker,
           missedSpeaker: missedSpeaker,
           scoredAmp: scoredAmp,
@@ -168,6 +172,7 @@ class TeleOpInfo extends ScoutingInfo
   @override
   Map<String, dynamic> exportMap() => <String, dynamic>{
         "underStage": underStage,
+        "lobs": lobs,
         "scoredSpeaker": scoredSpeaker,
         "missedSpeaker": missedSpeaker,
         "scoredAmp": scoredAmp,
@@ -181,6 +186,7 @@ class TeleOpInfo extends ScoutingInfo
     return TeleOpInfo(
         piecesScored: data["pieces"],
         underStage: data["undSpker"],
+        lobs: data["lob"],
         scoredSpeaker: data["spker"],
         missedSpeaker: data["missSpker"],
         scoredAmp: data["amp"],
@@ -192,6 +198,7 @@ class TeleOpInfo extends ScoutingInfo
     return jsonEncode(<String, dynamic>{
       "pieces": piecesScored,
       "undSpker": underStage,
+      "lob": lobs,
       "spker": scoredSpeaker,
       "missSpker": missedSpeaker,
       "amp": scoredAmp,

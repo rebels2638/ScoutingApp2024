@@ -513,6 +513,21 @@ class _ScoutingViewState extends State<ScoutingView>
                           .read<ScoutingSessionBloc>()
                           .add(TeleOpUpdateEvent());
                     })),
+            form_label("Lobs?",
+                child: BasicToggleSwitch(
+                    initialValue: context
+                        .read<ScoutingSessionBloc>()
+                        .teleop
+                        .lobs,
+                    onChanged: (bool e) {
+                      context
+                          .read<ScoutingSessionBloc>()
+                          .teleop
+                          .lobs = e;
+                      context
+                          .read<ScoutingSessionBloc>()
+                          .add(TeleOpUpdateEvent());
+                    })),
             form_label("Scored in Speaker",
                 child: PlusMinus(
                   initialValue: context
