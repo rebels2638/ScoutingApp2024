@@ -3,6 +3,7 @@ date: 2024-02-25
 author: Jack Meng (exoad)
 comments: "This is a major patch after the first release that hopes to flush out the app for week 1!"
 additions:
+  - Added button to record information on whether or not the scouted team uses Lobbing as a strategy during the match.
   - Added a Show Scroll bar setting which can be used to toggle the visibility of the scroll bar
   - Made it so that most enums for some scouting data are first set to "unset"
 fixes:
