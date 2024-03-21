@@ -262,6 +262,7 @@ class _DataHostingViewState extends State<DataHostingView> {
         double teleopAvgScoredInAmp = 0.0;
         double teleopAvgNotesScored = 0.0;
         bool teleopGoesUnderStage = false;
+        bool teleopLobs = false;
         // ENDGAME CALCULATIONS
         bool endgameCanClimb = false;
         double endgameHarmonyAttemptSuccessRate = 0.0;
@@ -287,6 +288,7 @@ class _DataHostingViewState extends State<DataHostingView> {
           teleopAvgScoredInAmp += d.teleop.scoredAmp;
           teleopAvgNotesScored += d.teleop.piecesScored;
           teleopGoesUnderStage = d.teleop.underStage;
+          teleopLobs = d.teleop.lobs;
           endgameCanClimb = d.endgame.endState == EndStatus.on_chain;
           endgameHarmonyAttemptSuccessRate +=
               d.endgame.harmonyAttempted &&
@@ -526,6 +528,9 @@ class _DataHostingViewState extends State<DataHostingView> {
                                                                           TextSpan(
                                                                             text: teleopGoesUnderStage ? "Yes" : "No",
                                                                           ),
+                                                                          TextSpan(
+                                                                            text: teleopLobs ? "Yes" : "No",
+                                                                          ),
                                                                         ], style: const TextStyle(fontSize: 18)),
                                                                       ),
                                                                       const Spacer(),
@@ -733,6 +738,7 @@ class _DataHostingViewState extends State<DataHostingView> {
                                     > **Avg Scored in AMP** ${teleopAvgScoredInAmp.toStringAsFixed(2)}
                                     > **Avg Notes Scored** ${teleopAvgNotesScored.toStringAsFixed(2)}
                                     > **Goes Under Stage** ${teleopGoesUnderStage ? "Yes" : "No"}
+                                    > **Lobs** ${teleopLobs ? "Yes" : "No"}
                                     ## End Game
                                     > **Can Climb** ${endgameCanClimb ? "Yes" : "No"}
                                     > **Harmony Attempt Success Rate** ${(endgameHarmonyAttemptSuccessRate * 100).toStringAsFixed(2)}%
