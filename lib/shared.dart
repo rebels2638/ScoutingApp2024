@@ -29,8 +29,8 @@ const int REBEL_ROBOTICS_APP_VERSION =
 const String REBEL_ROBOTICS_APP_NAME =
     "2638 Scouting \"$APP_CANONICAL_NAME\"";
 const String REBEL_ROBOTICS_APP_LEGALESE =
-    "Copyright (c) 2024, Jack Meng (exoad) and Chiming Wang (2bf) All rights reserved.";
+    "Copyright (c) 2024, Jack Meng (exoad). All rights reserved.";
 const String REBEL_ROBOTICS_APP_GITHUB_REPO_URL =
     "https://github.com/rebels2638/ScoutingApp2024";
-const String REBEL_ROBOTICS_APP_TUTORIAL_VIDEO_URL = 
+const String REBEL_ROBOTICS_APP_TUTORIAL_VIDEO_URL =
     "https://www.youtube.com/watch?v=-5jyO0sAhnA";
