@@ -13,6 +13,7 @@ class SpecialButton extends StatefulWidget {
   final Color antiShadow;
   final bool shrinkwrap;
   final void Function() onPressed;
+  final bool keepState;
 
   const SpecialButton(
       {super.key,
@@ -22,6 +23,7 @@ class SpecialButton extends StatefulWidget {
       required this.antiEndAlign,
       required this.label,
       required this.icon,
+      this.keepState = true,
       required this.shadow,
       this.shrinkwrap = true,
       required this.antiShadow,
@@ -208,7 +210,7 @@ class SpecialButton extends StatefulWidget {
 }
 
 class _SpecialButtonState extends State<SpecialButton>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late final AnimationController _shadowController;
   late final Animation<Offset> _shadowTween;
 
@@ -240,6 +242,7 @@ class _SpecialButtonState extends State<SpecialButton>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     Widget base = AnimatedContainer(
       duration: const Duration(milliseconds: 400),
       decoration: BoxDecoration(
@@ -276,4 +279,7 @@ class _SpecialButtonState extends State<SpecialButton>
       child: widget.shrinkwrap ? FittedBox(child: base) : base,
     );
   }
+
+  @override
+  bool get wantKeepAlive => widget.keepState;
 }

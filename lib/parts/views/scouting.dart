@@ -369,36 +369,7 @@ class _ScoutingViewState extends State<ScoutingView>
                             .read<ScoutingSessionBloc>()
                             .add(AutoUpdateEvent());
                       }),
-                )
-                /*form_seg_btn_2(
-                    segments: AutoPickup.values
-                        .map<
-                                ({
-                                  Icon? icon,
-                                  String label,
-                                  AutoPickup value
-                                })>(
-                            (AutoPickup e) => (
-                                  label: e.name.formalize,
-                                  icon: null,
-                                  value: e
-                                ))
-                        .toList(),
-                    initialSelection:
-                        context.read<ScoutingSessionBloc>()
-                            .auto
-                            .notesPickedUp
-                            .toSet(),
-                    onSelect: (List<AutoPickup> e) {
-                      context
-                          .read<ScoutingSessionBloc>()
-                          .auto
-                          .notesPickedUp = e;
-                      context
-                          .read<ScoutingSessionBloc>()
-                          .add(AutoUpdateEvent());
-                    })*/
-                ),
+                )),
             form_label("Taxis?",
                 child: BasicToggleSwitch(
                     initialValue:

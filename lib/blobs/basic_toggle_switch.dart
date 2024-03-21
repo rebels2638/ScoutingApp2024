@@ -22,7 +22,8 @@ class BasicToggleSwitch extends StatefulWidget {
   State<BasicToggleSwitch> createState() => _BasicToggleSwitchState();
 }
 
-class _BasicToggleSwitchState extends State<BasicToggleSwitch> {
+class _BasicToggleSwitchState extends State<BasicToggleSwitch>
+    with AutomaticKeepAliveClientMixin {
   late bool _toggleState;
 
   @override
@@ -33,6 +34,7 @@ class _BasicToggleSwitchState extends State<BasicToggleSwitch> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return widget.onIcon != null &&
             widget.offIcon != null &&
             widget.position == SwitchIconPosition.aroundSwitch
@@ -67,4 +69,7 @@ class _BasicToggleSwitchState extends State<BasicToggleSwitch> {
                   widget.onChanged.call(result);
                 });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -12,11 +12,11 @@ class PlusMinus extends StatefulWidget {
       {super.key, this.initialValue = 0, this.onValueChanged});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _PlusMinusState createState() => _PlusMinusState();
+  State<PlusMinus> createState() => _PlusMinusState();
 }
 
-class _PlusMinusState extends State<PlusMinus> {
+class _PlusMinusState extends State<PlusMinus>
+    with AutomaticKeepAliveClientMixin {
   late int _val;
 
   @override
@@ -27,6 +27,7 @@ class _PlusMinusState extends State<PlusMinus> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: strutAll(<Widget>[
@@ -81,6 +82,9 @@ class _PlusMinusState extends State<PlusMinus> {
       ], width: 6),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class PlusMinusRating extends StatefulWidget {
@@ -96,7 +100,8 @@ class PlusMinusRating extends StatefulWidget {
   _PlusMinusRatingState createState() => _PlusMinusRatingState();
 }
 
-class _PlusMinusRatingState extends State<PlusMinusRating> {
+class _PlusMinusRatingState extends State<PlusMinusRating>
+    with AutomaticKeepAliveClientMixin {
   late int _val;
 
   @override
@@ -107,6 +112,7 @@ class _PlusMinusRatingState extends State<PlusMinusRating> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: strutAll(<Widget>[
@@ -160,4 +166,7 @@ class _PlusMinusRatingState extends State<PlusMinusRating> {
       ], width: 6),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

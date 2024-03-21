@@ -121,7 +121,8 @@ class _NumPickBtn extends StatefulWidget {
   State<_NumPickBtn> createState() => _NumPickBtnState();
 }
 
-class _NumPickBtnState extends State<_NumPickBtn> {
+class _NumPickBtnState extends State<_NumPickBtn>
+    with AutomaticKeepAliveClientMixin {
   late int _initValue;
 
   @override
@@ -132,6 +133,7 @@ class _NumPickBtnState extends State<_NumPickBtn> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Row(
         mainAxisAlignment: UserTelemetry().currentModel.useAltLayout
             ? MainAxisAlignment.center
@@ -176,6 +178,9 @@ class _NumPickBtnState extends State<_NumPickBtn> {
           ]))
         ]);
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class form_numpick extends StatelessWidget {
@@ -625,7 +630,8 @@ class MSegSingleBtn<T> extends StatefulWidget {
   State<MSegSingleBtn<T>> createState() => MSegSingleBtnState<T>();
 }
 
-class MSegSingleBtnState<T> extends State<MSegSingleBtn<T>> {
+class MSegSingleBtnState<T> extends State<MSegSingleBtn<T>>
+    with AutomaticKeepAliveClientMixin {
   late Set<T> _selection;
 
   @override
@@ -638,6 +644,7 @@ class MSegSingleBtnState<T> extends State<MSegSingleBtn<T>> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return SegmentedButton<T>(
       segments: <ButtonSegment<T>>[
         for (({T value, String label, Icon? icon}) e
@@ -659,6 +666,9 @@ class MSegSingleBtnState<T> extends State<MSegSingleBtn<T>> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class SegSingleBtn<T> extends StatefulWidget {
@@ -678,7 +688,8 @@ class SegSingleBtn<T> extends StatefulWidget {
   State<SegSingleBtn<T>> createState() => SegSingleBtnState<T>();
 }
 
-class SegSingleBtnState<T> extends State<SegSingleBtn<T>> {
+class SegSingleBtnState<T> extends State<SegSingleBtn<T>>
+    with AutomaticKeepAliveClientMixin {
   late T _selection;
 
   @override
@@ -689,6 +700,7 @@ class SegSingleBtnState<T> extends State<SegSingleBtn<T>> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return SegmentedButton<T>(
       segments: <ButtonSegment<T>>[
         for (({T value, String label, Icon? icon}) e
@@ -711,6 +723,9 @@ class SegSingleBtnState<T> extends State<SegSingleBtn<T>> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class form_col extends StatelessWidget {

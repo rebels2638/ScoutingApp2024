@@ -20,7 +20,8 @@ class TeamAllianceSwitch extends StatefulWidget {
       _TeamAllianceSwitchState();
 }
 
-class _TeamAllianceSwitchState extends State<TeamAllianceSwitch> {
+class _TeamAllianceSwitchState extends State<TeamAllianceSwitch>
+    with AutomaticKeepAliveClientMixin {
   late bool _toggled;
 
   @override
@@ -31,6 +32,7 @@ class _TeamAllianceSwitchState extends State<TeamAllianceSwitch> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     bool darkMode = ThemeProvider.themeOf(context).data.brightness ==
         Brightness.dark;
     return Row(
@@ -180,4 +182,7 @@ class _TeamAllianceSwitchState extends State<TeamAllianceSwitch> {
       ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
