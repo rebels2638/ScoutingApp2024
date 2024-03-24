@@ -163,7 +163,7 @@ class _ScoutingSessionViewDelegateState
                 : BlocProvider<ScoutingSessionBloc>(
                     create: (BuildContext _) {
                       Debug().info(
-                          "Dispatched SCOUING_SESSION_BLOC ${_currBloc.hashCode}");
+                          "Dispatched SCOUTING_SESSION_BLOC ${_currBloc.hashCode}");
                       return _currBloc!;
                     },
                     child: const ScoutingView()));

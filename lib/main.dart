@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:scouting_app_2024/agent/parts/superagent.dart';
 import 'package:scouting_app_2024/parts/loader.dart';
 import 'package:scouting_app_2024/user/awards/awards_telemetry.dart';
 import 'package:scouting_app_2024/user/duc_telemetry.dart';
@@ -61,6 +62,8 @@ Future<void> _prepareAppLaunch() async {
   await UserTelemetry().init();
   Debug().newPhase("LOAD_USER_AWARDS");
   await AwardsTelemetry().init();
+  Debug().newPhase("LOAD_ARGUS_AGENT");
+  await ArgusSuperagent.init();
   Debug().newPhase("HOOK_LIFECYCLE");
   WidgetsBinding.instance.addObserver(AppLifecycleListener(
       onStateChange: (AppLifecycleState value) =>
@@ -101,7 +104,6 @@ void main() async {
     FlutterError.presentError.call(details);
     Debug().warn("${details.summary} ${details.context}");
   };
-
   // I LOVE THE THEN FUNCTION OH MY GOD HOLY SHIT, I LOVE THIS FUNCTION, WE SHOULD MAKE EVERYTHING WITH THIS FUNCTION
   runApp(LoadingAppViewScreen(task: _prepareAppLaunch()));
   if (Platform.I.isWindows) {

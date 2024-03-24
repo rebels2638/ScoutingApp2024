@@ -20,6 +20,7 @@ dependencies:
   get: ^4.6.6
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  http_requests: ^3.2.0
   intl: ^0.19.0
   json_annotation: ^4.8.1
   json_serializable: ^6.7.1

@@ -384,6 +384,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  http_requests:
+    dependency: "direct main"
+    description:
+      name: http_requests
+      sha256: a7b4e5825b22a7598d70db9d203f1ca1b8750379580ec54a8cff68375d132574
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.0"
   infinite_listview:
     dependency: transitive
     description:
