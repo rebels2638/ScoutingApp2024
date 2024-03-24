@@ -3,5 +3,7 @@ date: 2024-02-25
 author: Jack Meng (exoad)
 comments: "This is a major patch after the first release that hopes to flush out the app for week 1!"
 additions:
+  - Improved the theme chooser view
 fixes:
+  - More typo fixes
 optimize:
