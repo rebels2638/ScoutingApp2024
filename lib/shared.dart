@@ -34,3 +34,5 @@ const String REBEL_ROBOTICS_APP_GITHUB_REPO_URL =
     "https://github.com/rebels2638/ScoutingApp2024";
 const String REBEL_ROBOTICS_APP_TUTORIAL_VIDEO_URL =
     "https://www.youtube.com/watch?v=-5jyO0sAhnA";
+const String ARGUSGUIDE_URL =
+    "https://rebels2638.github.io/ArgusGuide/";

@@ -204,6 +204,35 @@ class SpecialButton extends StatefulWidget {
             Color.fromARGB(255, 0, 0, 230),
             Color.fromARGB(255, 0, 0, 186)
           ]);
+          
+  factory SpecialButton.premade7(
+          {required String label,
+          required Widget icon,
+          required void Function() onPressed,
+          bool shrinkWrap = true}) =>
+      SpecialButton(
+          beginAlign: Alignment.topRight,
+          endAlign: Alignment.bottomLeft,
+          antiBeginAlign: Alignment.topLeft,
+          antiEndAlign: Alignment.bottomRight,
+          shrinkwrap: shrinkWrap,
+          label: Text(label,
+              style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFFFFFFFF))),
+          icon: icon,
+          shadow: const Color.fromARGB(166, 255, 193, 7),
+          antiShadow: const Color.fromARGB(188, 205, 135, 102),
+          antiColors: const <Color>[
+            Color.fromARGB(255, 255, 140, 0),
+            Color.fromARGB(255, 255, 204, 0)
+          ],
+          onPressed: onPressed,
+          colors: const <Color>[
+            Color.fromARGB(255, 230, 81, 0),
+            Color.fromARGB(255, 186, 128, 0)
+          ]);
 
   @override
   State<SpecialButton> createState() => _SpecialButtonState();
