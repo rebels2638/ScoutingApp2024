@@ -64,9 +64,14 @@
       
       <span class="name ">UserPrefModel</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-selectedTheme">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">selectedTheme</span>, </span></li>
 <li><span class="parameter" id="-param-showConsole"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">showConsole</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="-param-profileId"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">profileId</span> = <span class="default-value">&quot;&quot;</span>, </span></li>
+<li><span class="parameter" id="-param-totalScoutedMatches"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">totalScoutedMatches</span> = <span class="default-value">0</span>, </span></li>
 <li><span class="parameter" id="-param-showGameMap"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">showGameMap</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="-param-showLegacyItems"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">showLegacyItems</span> = <span class="default-value">false</span>, </span></li>
 <li><span class="parameter" id="-param-useAltLayout"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">useAltLayout</span> = <span class="default-value">false</span>, </span></li>
 <li><span class="parameter" id="-param-seenPatchNotes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">seenPatchNotes</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="-param-profileArmed"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">profileArmed</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="-param-profileName"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">profileName</span> = <span class="default-value">&quot;Unspecified User&quot;</span>, </span></li>
 <li><span class="parameter" id="-param-usedTimeHours"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">usedTimeHours</span> = <span class="default-value">0</span>, </span></li>
 <li><span class="parameter" id="-param-preferCompact"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">preferCompact</span> = <span class="default-value">false</span>, </span></li>
 <li><span class="parameter" id="-param-showScrollbar"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">showScrollbar</span> = <span class="default-value">false</span>, </span></li>
@@ -87,9 +92,14 @@
   <pre class="language-dart"><code class="language-dart">UserPrefModel(
     {required this.selectedTheme,
     this.showConsole = false,
+    this.profileId = &quot;&quot;,
+    this.totalScoutedMatches = 0,
     this.showGameMap = true,
+    this.showLegacyItems = false,
     this.useAltLayout = false,
     this.seenPatchNotes = false,
+    this.profileArmed = false,
+    this.profileName = &quot;Unspecified User&quot;,
     this.usedTimeHours = 0,
     this.preferCompact = false,
     this.showScrollbar = false,
@@ -131,7 +141,7 @@
 <footer>
   <span class="no-break">
     scouting_app_2024
-      1.0.5+7
+      1.0.8+2
   </span>
 
   

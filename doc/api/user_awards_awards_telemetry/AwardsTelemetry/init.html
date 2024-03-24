@@ -99,8 +99,10 @@
           (currentModel.unlockedAwards.isNotEmpty &amp;&amp;
               currentModel.lockedAwards.isNotEmpty)) {
         for (String unlocked in currentModel.unlockedAwards) {
-          if (Award.allAwards
-              .where((Award e) =&gt; e.identifier == unlocked)
+          if (Award.allAwards.entries
+              .toList()
+              .where(
+                  (MapEntry&lt;String, Award&gt; e) =&gt; e.key == unlocked)
               .isEmpty) {
             Debug().warn(
                 &quot;Award $unlocked is not registered, removing from unlocked list&quot;);
@@ -108,8 +110,9 @@
           }
         }
         for (String locked in currentModel.lockedAwards) {
-          if (Award.allAwards
-              .where((Award e) =&gt; e.identifier == locked)
+          if (Award.allAwards.entries
+              .toList()
+              .where((MapEntry&lt;String, Award&gt; e) =&gt; e.key == locked)
               .isEmpty) {
             Debug().warn(
                 &quot;Award $locked is not registered, removing from locked list&quot;);
@@ -157,7 +160,7 @@
 <footer>
   <span class="no-break">
     scouting_app_2024
-      1.0.5+7
+      1.0.8+2
   </span>
 
   

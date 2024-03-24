@@ -62,9 +62,9 @@
 
     <section class="multi-line-signature">
       
-      <span class="name ">Award</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-identifier">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">identifier</span>, </span></li>
-<li><span class="parameter" id="-param-description"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">description</span>, </span></li>
+      <span class="name ">Award</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-description">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">description</span>, </span></li>
 <li><span class="parameter" id="-param-formalName"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">formalName</span>, </span></li>
+<li><span class="parameter" id="-param-icon"><span>required</span> <span class="type-annotation"><a href="https://pub.dev/documentation/fluentui_emoji_icon/0.0.2/fluentui_emoji_icon/FluentData-class.html">FluentData</a></span> <span class="parameter-name">icon</span>, </span></li>
 <li><span class="parameter" id="-param-timeUnlocked"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">timeUnlocked</span>}</span></li>
 </ol>)
     </section>
@@ -76,18 +76,18 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Award(
-    {String? identifier,
-    required String description,
+    {required String description,
     required String formalName,
+    required FluentData icon,
     int? timeUnlocked})
-    : _identifier = identifier ??
-          formalName.toLowerCase().trim().replaceAll(&quot; &quot;, &quot;_&quot;),
-      _description = description,
+    : _description = description,
       _formalName = formalName,
+      _icon = icon,
       _timeUnlocked = timeUnlocked ?? -1 {
-  Award.allAwards.add(this);
+  final String id =
+      formalName.toLowerCase().trim().replaceAll(&quot; &quot;, &quot;_&quot;);
   Debug().info(
-      &quot;Registered Award: $_formalName as $_identifier (IS UNLOCKED? $isUnlocked)&quot;);
+      &quot;Registered Award: $_formalName as $id (IS UNLOCKED? $isUnlocked)&quot;);
 }</code></pre>
 </section>
 
@@ -122,7 +122,7 @@
 <footer>
   <span class="no-break">
     scouting_app_2024
-      1.0.5+7
+      1.0.8+2
   </span>
 
   

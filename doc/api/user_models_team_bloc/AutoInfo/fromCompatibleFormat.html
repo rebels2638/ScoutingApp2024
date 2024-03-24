@@ -79,10 +79,6 @@
   <pre class="language-dart"><code class="language-dart">static AutoInfo fromCompatibleFormat(String rawData) {
   final Map&lt;String, dynamic&gt; data =
       jsonDecode(rawData) as Map&lt;String, dynamic&gt;;
-  final List&lt;AutoPickup&gt; notesPickedUp = &lt;AutoPickup&gt;[];
-  for (int element in data[&quot;pickup&quot;]) {
-    notesPickedUp.add(AutoPickup.values[element]);
-  }
   return AutoInfo(
       notePreloaded: data[&quot;preload&quot;],
       taxi: data[&quot;taxi&quot;],
@@ -124,7 +120,7 @@
 <footer>
   <span class="no-break">
     scouting_app_2024
-      1.0.5+7
+      1.0.8+2
   </span>
 
   

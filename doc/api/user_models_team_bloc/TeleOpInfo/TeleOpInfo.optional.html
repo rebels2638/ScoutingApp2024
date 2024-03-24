@@ -63,6 +63,7 @@
     <section class="multi-line-signature">
       
       <span class="name ">TeleOpInfo.optional</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="optional-param-underStage">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">underStage</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="optional-param-lobs"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">lobs</span> = <span class="default-value">false</span>, </span></li>
 <li><span class="parameter" id="optional-param-scoredSpeaker"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">scoredSpeaker</span> = <span class="default-value">0</span>, </span></li>
 <li><span class="parameter" id="optional-param-missedSpeaker"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">missedSpeaker</span> = <span class="default-value">0</span>, </span></li>
 <li><span class="parameter" id="optional-param-scoredAmp"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">scoredAmp</span> = <span class="default-value">0</span>, </span></li>
@@ -78,8 +79,8 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">factory TeleOpInfo.optional(
-        {
-        bool underStage = false,
+        {bool underStage = false,
+        bool lobs = false,
         int scoredSpeaker = 0,
         int missedSpeaker = 0,
         int scoredAmp = 0,
@@ -87,10 +88,10 @@
         int missedAmp = 0}) =&gt;
     TeleOpInfo(
         underStage: underStage,
+        lobs: lobs,
         scoredSpeaker: scoredSpeaker,
         missedSpeaker: missedSpeaker,
         scoredAmp: scoredAmp,
-        piecesScored: piecesScored,
         missedAmp: missedAmp);</code></pre>
 </section>
 
@@ -125,7 +126,7 @@
 <footer>
   <span class="no-break">
     scouting_app_2024
-      1.0.5+7
+      1.0.8+2
   </span>
 
   

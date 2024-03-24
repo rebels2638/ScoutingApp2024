@@ -122,16 +122,19 @@ Widget build(BuildContext context) {
     ...ThemeBlob.export,
     ...ThemeBlob.intricateThemes
   ].length}&quot;);
-  return ThemeProvider(
-      themes: &lt;AppTheme&gt;[
-        ...ThemeBlob.export,
-        ...ThemeBlob.intricateThemes
-      ],
-      child: ThemeConsumer(
-          child: Builder(
+  Debug().watchdog(
+      &quot;Received pArmed=${UserTelemetry().currentModel.profileArmed}&quot;);
+  return _Bundler(
+      &#47;&#47; dont care about the ternary bullshit crap of a repetitve shit it is
+      &#47;&#47; fuck it, u want to refactor it? well it works fine, fuck your morals!
+      child: UserTelemetry().currentModel.profileArmed
+          ? Builder(
               builder: (BuildContext
                       themeCtxt) =&gt; &#47;*lol this is very scuffed XD i hope you can forgive me*&#47;
                   MultiProvider(providers: &lt;SingleChildWidget&gt;[
+                    ChangeNotifierProvider&lt;ShowLegacyItemsModal&gt;(
+                        create: (BuildContext _) =&gt;
+                            ShowLegacyItemsModal()),
                     ChangeNotifierProvider&lt;ShowScrollBarModal&gt;(
                         create: (BuildContext _) =&gt;
                             ShowScrollBarModal()),
@@ -176,7 +179,76 @@ Widget build(BuildContext context) {
                     ChangeNotifierProvider&lt;LockedInScoutingModal&gt;(
                         create: (BuildContext _) =&gt;
                             LockedInScoutingModal())
-                  ], child: child))));
+                  ], child: child))
+          : AppSetupView(
+              routineChild: Builder(
+                  builder: (BuildContext
+                          themeCtxt) =&gt; &#47;*lol this is very scuffed XD i hope you can forgive me*&#47;
+                      MultiProvider(
+                          providers: &lt;SingleChildWidget&gt;[
+                            ChangeNotifierProvider&lt;
+                                    ShowScrollBarModal&gt;(
+                                create: (BuildContext _) =&gt;
+                                    ShowScrollBarModal()),
+                            ChangeNotifierProvider&lt;
+                                    SeenPatchNotesModal&gt;(
+                                create: (BuildContext _) =&gt;
+                                    SeenPatchNotesModal()),
+                            ChangeNotifierProvider&lt;
+                                    ShowHintsGuideModal&gt;(
+                                create: (BuildContext _) =&gt;
+                                    ShowHintsGuideModal()),
+                            ChangeNotifierProvider&lt;DucBaseBit&gt;(
+                                create: (BuildContext _) =&gt;
+                                    DucBaseBit(DucTelemetry()
+                                        .allHollisticEntries)), &#47;&#47; loaded cuz fuck yes &gt;:)
+                            ChangeNotifierProvider&lt;
+                                    AppBarCelebrationModal&gt;(
+                                create: (BuildContext _) =&gt;
+                                    AppBarCelebrationModal()),
+                            ChangeNotifierProvider&lt;
+                                    PreferCompactModal&gt;(
+                                create: (BuildContext _) =&gt;
+                                    PreferCompactModal()),
+                            ChangeNotifierProvider&lt;
+                                    UseAlternativeLayoutModal&gt;(
+                                create: (BuildContext _) =&gt;
+                                    UseAlternativeLayoutModal()),
+                            ChangeNotifierProvider&lt;
+                                    PreferCanonicalModal&gt;(
+                                create: (BuildContext _) =&gt;
+                                    PreferCanonicalModal()),
+                            ChangeNotifierProvider&lt;
+                                    PreferTonalModal&gt;(
+                                create: (BuildContext _) =&gt;
+                                    PreferTonalModal()),
+                            ChangeNotifierProvider&lt;
+                                    ShowFPSMonitorModal&gt;(
+                                create: (BuildContext _) =&gt;
+                                    ShowFPSMonitorModal()),
+                            ChangeNotifierProvider&lt;
+                                    ShowExperimentalModal&gt;(
+                                create: (BuildContext _) =&gt;
+                                    ShowExperimentalModal()),
+                            ChangeNotifierProvider&lt;ThemeModeModal&gt;(
+                                create: (BuildContext _) =&gt;
+                                    ThemeModeModal()),
+                            ChangeNotifierProvider&lt;
+                                    ShowConsoleModal&gt;(
+                                create: (BuildContext _) =&gt;
+                                    ShowConsoleModal()),
+                            ChangeNotifierProvider&lt;
+                                    LockedInScoutingModal&gt;(
+                                create: (BuildContext _) =&gt;
+                                    LockedInScoutingModal())
+                          ],
+                          child: ThemeProvider(
+                              themes: &lt;AppTheme&gt;[
+                                ...ThemeBlob.export,
+                                ...ThemeBlob.intricateThemes
+                              ],
+                              child:
+                                  ThemeConsumer(child: child))))));
 }</code></pre>
 </section>
 
@@ -211,7 +283,7 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     scouting_app_2024
-      1.0.5+7
+      1.0.8+2
   </span>
 
   

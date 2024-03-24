@@ -63,10 +63,10 @@
     <section class="multi-line-signature">
       
       <span class="name ">TeleOpInfo</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-underStage">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">underStage</span>, </span></li>
+<li><span class="parameter" id="-param-lobs"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">lobs</span>, </span></li>
 <li><span class="parameter" id="-param-scoredSpeaker"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">scoredSpeaker</span>, </span></li>
 <li><span class="parameter" id="-param-missedSpeaker"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">missedSpeaker</span>, </span></li>
 <li><span class="parameter" id="-param-scoredAmp"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">scoredAmp</span>, </span></li>
-<li><span class="parameter" id="-param-piecesScored"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">piecesScored</span>, </span></li>
 <li><span class="parameter" id="-param-missedAmp"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">missedAmp</span>}</span></li>
 </ol>)
     </section>
@@ -78,12 +78,11 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">TeleOpInfo(
-    {
-    required this.underStage,
+    {required this.underStage,
+    required this.lobs,
     required this.scoredSpeaker,
     required this.missedSpeaker,
     required this.scoredAmp,
-    required this.piecesScored,
     required this.missedAmp});</code></pre>
 </section>
 
@@ -118,7 +117,7 @@
 <footer>
   <span class="no-break">
     scouting_app_2024
-      1.0.5+7
+      1.0.8+2
   </span>
 
   

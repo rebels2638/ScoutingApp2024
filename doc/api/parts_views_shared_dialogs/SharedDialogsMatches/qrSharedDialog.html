@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the qrSharedDialog method from the SharedDialogsMatches class, for the Dart programming language.">
+  <title>qrSharedDialog method - SharedDialogsMatches class - shared_dialogs library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">scouting_app_2024</a></li>
+    <li><a href="../../parts_views_shared_dialogs/parts_views_shared_dialogs-library.html">parts\views\shared_dialogs.dart</a></li>
+    <li><a href="../../parts_views_shared_dialogs/SharedDialogsMatches-class.html">SharedDialogsMatches</a></li>
+    <li class="self-crumb">qrSharedDialog static method</li>
+  </ol>
+  <div class="self-name">qrSharedDialog</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="parts_views_shared_dialogs&#47;SharedDialogsMatches-class-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-method">qrSharedDialog</span> static method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+
+<span class="returntype">void</span>
+<span class="name ">qrSharedDialog</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="qrSharedDialog-param-context"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span>, </span></li>
+<li><span class="parameter" id="qrSharedDialog-param-match"><span class="type-annotation"><a href="../../user_models_team_model/HollisticMatchScoutingData-class.html">HollisticMatchScoutingData</a></span> <span class="parameter-name">match</span></span></li>
+</ol>)
+
+      
+
+    </section>
+    
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">static void qrSharedDialog(
+    BuildContext context, HollisticMatchScoutingData match) {
+  Widget qr = _createPrettyQrDataWidget(data: match.csvData);
+  Widget? commentsQr;
+  if (match.comments.isNotEmpty) {
+    commentsQr =
+        _createPrettyQrDataWidget(data: match.commentsCSVData);
+  }
+  Navigator.of(context).push(
+    MaterialPageRoute&lt;void&gt;(
+      builder: (BuildContext context) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text(&quot;QR Share (Non-DUC)&quot;),
+          ),
+          body: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(
+                parent: BouncingScrollPhysics()),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: &lt;Widget&gt;[
+                const SizedBox(height: 20),
+                const InformationalHintsBlob(
+                    &quot;Show to a scouting leader&quot;,
+                    &quot;A scouting leader will be able to help you with collecting data. Data here is encoded in a CSV format&quot;),
+                if (commentsQr != null)
+                  const WarningHintsBlob(&quot;Comments are separated!&quot;,
+                      &quot;Due to technical limitations, comments are scanned separately (scroll down)&quot;)
+                else
+                  const InformationalHintsBlob(&quot;No Comments Data&quot;,
+                      &quot;This match didn&#39;t have any comments attached to it.&quot;),
+                const SizedBox(height: 20),
+                const Text(&quot;Match Data&quot;,
+                    style: TextStyle(
+                        fontSize: 24, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 8),
+                FilledButton.tonalIcon(
+                    onPressed: () async =&gt; await Clipboard.setData(
+                        ClipboardData(text: match.csvData)),
+                    icon: const Icon(Icons.copy_rounded),
+                    label: const Text(&quot;Copy&quot;)),
+                const SizedBox(height: 8),
+                GestureDetector(
+                  onTap: () async =&gt; launchConfirmDialog(context,
+                      message: SizedBox(
+                          width: 512, height: 512, child: qr),
+                      onConfirm: () {},
+                      title: &quot;QR (Non-DUC)&quot;,
+                      icon: const Icon(Icons.qr_code_rounded)),
+                  child: Container(
+                    width: 512,
+                    height: 512,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.black),
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: qr,
+                    ),
+                  ),
+                ),
+                if (commentsQr != null) const Divider(),
+                if (commentsQr != null)
+                  const Text(&quot;Comments Data&quot;,
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold)),
+                if (commentsQr != null)
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: TextField(
+                      controller: TextEditingController(
+                          text: match.comments.comment),
+                      readOnly: true,
+                      decoration: const InputDecoration(
+                        labelText: &quot;Comments View&quot;,
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                if (commentsQr != null)
+                  FilledButton.tonalIcon(
+                      onPressed: () async =&gt;
+                          await Clipboard.setData(ClipboardData(
+                              text: match.commentsCSVData)),
+                      icon: const Icon(Icons.copy_rounded),
+                      label: const Text(&quot;Copy&quot;)),
+                const SizedBox(height: 8),
+                if (commentsQr != null)
+                  GestureDetector(
+                    onTap: () async =&gt; launchConfirmDialog(context,
+                        message: SizedBox(
+                            width: 512,
+                            height: 512,
+                            child: commentsQr),
+                        onConfirm: () {},
+                        title: &quot;Comments Data (QR)&quot;,
+                        icon: const Icon(Icons.qr_code_rounded)),
+                    child: Container(
+                      width: 512,
+                      height: 512,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.black),
+                      child: Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: commentsQr,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        );
+      },
+    ),
+  );
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">scouting_app_2024</a></li>
+    <li><a href="../../parts_views_shared_dialogs/parts_views_shared_dialogs-library.html">shared_dialogs</a></li>
+    <li><a href="../../parts_views_shared_dialogs/SharedDialogsMatches-class.html">SharedDialogsMatches</a></li>
+    <li class="self-crumb">qrSharedDialog static method</li>
+</ol>
+
+
+    <h5>SharedDialogsMatches class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    scouting_app_2024
+      1.0.8+2
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+
