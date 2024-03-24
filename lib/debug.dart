@@ -17,6 +17,19 @@ class Debug {
   late final Logger _logger;
   bool useStdIO = true;
 
+  static void timed(String actionName,
+      {required void Function() action,
+      void Function(Duration time)? onDone}) {
+    final Stopwatch sw = Stopwatch()..start();
+    action();
+    sw.stop();
+    if (onDone != null) {
+      onDone(sw.elapsed);
+    } else {
+      Debug().watchdog("** Action $actionName took ${sw.elapsed}");
+    }
+  }
+
   void newPhase(String phaseName) {
     final String diamonds = GenericUtils.repeatStr(
         GenericUtils.HAZARD_DIAMOND,
@@ -53,6 +66,7 @@ class Debug {
       _logger.onRecord.asBroadcastStream().listen(listener);
   void warn(dynamic msg) => _logger.warning(msg);
   void ohno(dynamic msg) => _logger.severe(msg);
-  void watchdog(dynamic msg) => _logger.info(" [[ WATCHDOG ]] : $msg");
+  void watchdog(dynamic msg) =>
+      _logger.info(" [[ WATCHDOG ]] : $msg");
   void info(dynamic msg) => _logger.info(msg);
 }

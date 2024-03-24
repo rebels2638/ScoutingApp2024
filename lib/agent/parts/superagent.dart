@@ -18,15 +18,12 @@ sealed class Superagent {
 final class ArgusSuperagent {
   static bool doesApiExists = false;
 
-  static Future<void> init() async {
-    (await pollDelegator())
-      ..onBad((String reason) => doesApiExists = false)
-      ..onGood((JsonBody value) {
-        doesApiExists = true;
-        Debug()
-            .info("Superagent API exists with ${value.toString()}");
-      });
-  }
+  static Future<void> init() async => (await pollDelegator())
+    ..onBad((String reason) => doesApiExists = false)
+    ..onGood((JsonBody value) {
+      doesApiExists = true;
+      Debug().info("Superagent API exists with ${value.toString()}");
+    });
 
   static Future<JsonResponse> pollDelegator() async {
     try {

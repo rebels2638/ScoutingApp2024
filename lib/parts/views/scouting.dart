@@ -26,10 +26,10 @@ import "package:scouting_app_2024/shared.dart";
 import "package:scouting_app_2024/user/models/ephemeral_data.dart";
 import "package:scouting_app_2024/user/models/shared.dart";
 import "package:scouting_app_2024/user/scouting_telemetry.dart";
+import "package:scouting_app_2024/utils.dart";
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/user/models/team_bloc.dart';
 import 'package:scouting_app_2024/user/models/team_model.dart';
-import "package:scouting_app_2024/utils.dart";
 
 import "usage_time_display.dart";
 
