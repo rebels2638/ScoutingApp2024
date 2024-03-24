@@ -205,8 +205,7 @@ class _FinalHelpfulTipsPage extends StatelessWidget {
                 shrinkWrap: false,
                 onPressed: () async => await launchURLLaunchDialog(
                     context,
-                    url:
-                        "https://rebels2638.github.io/ArgusGuide/home",
+                    url: ARGUSGUIDE_URL,
                     message: // https://rebels2638.github.io/ArgusGuide/home
                         "You are about to leave the app to visit our Website Guide. Do you want to continue?"),
               ),
