@@ -11,7 +11,7 @@ linter:
       prefer_double_quotes: false
       use_string_buffers: true
       non_constant_identifier_names: false
-      unnecessary_new: false
+      unnecessary_new: true
       camel_case_types: false
       avoid_print: false
       constant_identifier_names: false
