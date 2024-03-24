@@ -1,19 +1,7 @@
-version: 1.0.7
+version: 1.0.8
 date: 2024-02-25
 author: Jack Meng (exoad)
 comments: "This is a major patch after the first release that hopes to flush out the app for week 1!"
 additions:
-  - Added button to record information on whether or not the scouted team uses Lobbing as a strategy during the match.
-  - Added a Show Scroll bar setting which can be used to toggle the visibility of the scroll bar
-  - Made it so that most enums for some scouting data are first set to "unset"
 fixes:
-  - Crushed a major bug where the scouting form's scroll will cull and not persist states
-  - Fixed typos throughout the app
-  - Removed unworthy theme Lemon Berry & Lost
-  - Made it so that multi select and single select will not request keyboard focus when tapped outside of the dropdown arrow
-  - Made the canonical team switch actually be readable on certain themes like crimson where the red messed with the foreground color
-  - Changed the animation of the canonical team switch to use fade transition instead of a slide transition
-  - Removed some useless/unnecessary scouting fields
 optimize:
-  - Optimized rendering of most scroll views in the app
-  - Optimized rigid grid rendering of past matches when using alt. layout
