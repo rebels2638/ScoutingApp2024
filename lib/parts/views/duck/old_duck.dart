@@ -172,7 +172,7 @@ class _DataHostingViewState extends State<DataHostingView> {
                     onPressed: () async => await Provider.of<
                             DucBaseBit>(context, listen: false)
                         .save()
-                        .then((_) => Debug().info("[DUC] Saved!")),
+                        .then((_) => Debug().info("[DUC] Saved! Mrs. Wang!!!")),
                     icon: const Icon(Icons.save_rounded),
                     label: const Text("Save")),
               if (!_searched)
