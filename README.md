@@ -22,7 +22,7 @@ Created using the **Flutter** framework with the hopes of improving the overall 
 <kbd>
 <a href="https://github.com/rebels2638/ScoutingApp2024/releases"><img src="https://img.shields.io/badge/Nightly Release-0078D6?style=for-the-badge&logo=github&logoColor=white" height=36 /></a>
 </kbd>
- 
+<br/>
 <kbd>
 <a href="https://apps.apple.com/us/app/2638-scout/id1460336620?platform=ipad"><img src="https://img.shields.io/badge/App Store-0D96F6?style=for-the-badge&logo=app-store&logoColor=white" height=36 /></a>
 </kbd>
