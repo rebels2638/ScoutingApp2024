@@ -20,7 +20,7 @@ Created using the **Flutter** framework with the hopes of improving the overall 
 ### Download
 
 <kbd>
-<a href="https://github.com/rebels2638/ScoutingApp2024/releases"><img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows-10&logoColor=white" height=36 /></a>
+<a href="https://github.com/rebels2638/ScoutingApp2024/releases"><img src="https://img.shields.io/badge/Nightly Release-0078D6?style=for-the-badge&logo=github&logoColor=white" height=36 /></a>
 </kbd>
  
 <kbd>
