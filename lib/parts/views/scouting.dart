@@ -312,28 +312,6 @@ class _ScoutingViewState extends State<ScoutingView>
                           .read<ScoutingSessionBloc>()
                           .add(PrelimUpdateEvent());
                     })),
-            form_label("Starting Position",
-                child: Flexible(
-                  child: SingleSelectBlob<MatchStartingPosition>(
-                      initialSelected: context
-                          .read<ScoutingSessionBloc>()
-                          .prelim
-                          .startingPosition
-                          .name
-                          .formalize,
-                      items: GenericUtils.mapEnumExcludeUnset<
-                              MatchStartingPosition>(
-                          MatchStartingPosition.values),
-                      onSelected: (MatchStartingPosition e) {
-                        context
-                            .read<ScoutingSessionBloc>()
-                            .prelim
-                            .startingPosition = e;
-                        context
-                            .read<ScoutingSessionBloc>()
-                            .add(PrelimUpdateEvent());
-                      }),
-                ))
           ])),
       form_sec(
           backgroundColor: Colors.transparent,

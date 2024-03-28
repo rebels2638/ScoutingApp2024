@@ -247,65 +247,51 @@ final class SharedDialogsMatches {
                           fontWeight: FontWeight.bold, fontSize: 20)),
                 ]),
                 const SizedBox(height: 8),
-                Row(
-                  children: <Widget>[
-                    Flexible(
+                Row(children: <Widget>[
+                  Flexible(
                       child: Text.rich(
-                          TextSpan(children: <InlineSpan>[
-                            const TextSpan(
-                                text: "Scouter: ",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold)),
-                            TextSpan(text: match.preliminary.scouter),
-                            const TextSpan(
-                                text: "\nTime: ",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold)),
-                            TextSpan(
-                                text: DateFormat(
-                                        Shared.GENERAL_TIME_FORMAT)
-                                    .format(DateTime
-                                        .fromMillisecondsSinceEpoch(
-                                            match.preliminary
-                                                .timeStamp))),
-                            const TextSpan(
-                                text: "\nMatch: ",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold)),
-                            TextSpan(
-                                text:
-                                    "${match.preliminary.matchType.name.formalize} #${match.preliminary.matchNumber}"),
-                            const TextSpan(
-                                text: "\nTeam: ",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold)),
-                            TextSpan(
-                                text:
-                                    "${match.preliminary.teamNumber}"),
-                            const TextSpan(
-                                text: "\nAlliance: ",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold)),
-                            TextSpan(
-                                text: match.preliminary.alliance.name
-                                    .formalize,
-                                style: TextStyle(
-                                    color: match.preliminary.alliance
-                                        .toColor(),
-                                    backgroundColor: Colors.black)),
-                            const TextSpan(
-                                text: "\nStarting Position: ",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold)),
-                            TextSpan(
-                                text: match.preliminary
-                                    .startingPosition.name.formalize),
-                          ]),
-                          style: const TextStyle(fontSize: 16)),
-                    ),
-                    const Spacer() // more scuffed solutions XD (see above)
-                  ],
-                ),
+                    TextSpan(children: <InlineSpan>[
+                      const TextSpan(
+                          text: "Scouter: ",
+                          style:
+                              TextStyle(fontWeight: FontWeight.bold)),
+                      TextSpan(text: match.preliminary.scouter),
+                      const TextSpan(
+                          text: "\nTime: ",
+                          style:
+                              TextStyle(fontWeight: FontWeight.bold)),
+                      TextSpan(
+                          text: DateFormat(Shared.GENERAL_TIME_FORMAT)
+                              .format(
+                                  DateTime.fromMillisecondsSinceEpoch(
+                                      match.preliminary.timeStamp))),
+                      const TextSpan(
+                          text: "\nMatch: ",
+                          style:
+                              TextStyle(fontWeight: FontWeight.bold)),
+                      TextSpan(
+                          text:
+                              "${match.preliminary.matchType.name.formalize} #${match.preliminary.matchNumber}"),
+                      const TextSpan(
+                          text: "\nTeam: ",
+                          style:
+                              TextStyle(fontWeight: FontWeight.bold)),
+                      TextSpan(
+                          text: "${match.preliminary.teamNumber}"),
+                      const TextSpan(
+                          text: "\nAlliance: ",
+                          style:
+                              TextStyle(fontWeight: FontWeight.bold)),
+                      TextSpan(
+                          text: match
+                              .preliminary.alliance.name.formalize,
+                          style: TextStyle(
+                              color: match.preliminary.alliance
+                                  .toColor(),
+                              backgroundColor: Colors.black)),
+                    ]),
+                  ))
+                ]),
                 const SizedBox(height: 16),
                 const Row(children: <Widget>[
                   Icon(CommunityMaterialIcons.robot),

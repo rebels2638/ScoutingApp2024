@@ -348,6 +348,7 @@ class _UserProfileSetupState extends State<_UserProfileSetup> {
               TextSpan(text: "• 8-20 characters long\n"),
               TextSpan(text: "• No special characters\n"),
               TextSpan(text: "• Only a-z A-Z 0-9\n"),
+              TextSpan(text: "• No spaces\n")
             ]),
           ),
         ),

@@ -18,6 +18,8 @@ import 'package:scouting_app_2024/parts/theme.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
 
+List<String> failedIds = <String>[]; // this is scuffed ik, dont reassign outside of here
+
 Future<void> _prepareAppLaunch() async {
   Debug().newPhase("DEVICE_ENV");
   await DeviceEnv.initItems();
@@ -37,15 +39,15 @@ Future<void> _prepareAppLaunch() async {
       .loadBoxes(); // lol DucTelemetry is a carbon copy of ScoutingTelemetry
   Debug().newPhase("VALIDATE_BOXES");
   // eval all scouting stuffs
-  ({bool res, List<String> failedIds}) r =
+  ({bool res, List<EphemeralScoutingData> failedData}) r =
       ScoutingTelemetry().validateAllEntriesVersion();
   Debug().info("Current model version: $EPHEMERAL_MODELS_VERSION");
   Debug().warn(
-      "Check validation for boxes is good? ${r.res} with ${r.failedIds.length} failed");
-  for (String rr in r.failedIds) {
+      "Check validation for boxes is good? ${r.res} with ${r.failedData.length} failed");
+  for (EphemeralScoutingData rr in r.failedData) {
     Debug().warn(
-        "[RMF] version_not_compatible -> $rr ($rr =/= $EPHEMERAL_MODELS_VERSION)");
-    ScoutingTelemetry().deleteID(rr);
+        "[RMF] version_not_compatible -> $rr (${rr.id} =/= $EPHEMERAL_MODELS_VERSION)");
+    ScoutingTelemetry().deleteID(rr.id);
   }
   // eval all duc stuffs
   ({bool res, List<String> failedIds}) r2 =

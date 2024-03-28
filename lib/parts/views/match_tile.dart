@@ -75,18 +75,6 @@ class _MatchTileState extends State<MatchTile> {
                     child: Row(children: <Widget>[
                       Text.rich(TextSpan(children: <InlineSpan>[
                         const TextSpan(
-                            text: "- Starting Position: ",
-                            style: TextStyle(
-                                overflow: TextOverflow.ellipsis,
-                                height: 1.6,
-                                fontWeight: FontWeight.w700)),
-                        TextSpan(
-                            text:
-                                "${widget.match.preliminary.startingPosition.name.capitalizeFirst}\n",
-                            style: const TextStyle(
-                              height: 1.6,
-                            )),
-                        const TextSpan(
                             text: "- Harmonized: ",
                             style: TextStyle(
                                 overflow: TextOverflow.ellipsis,

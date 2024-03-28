@@ -23,8 +23,6 @@ enum MatchType { unset, practice, qualification, playoff }
 
 enum MatchResult { unset, win, loss, tie }
 
-enum MatchStartingPosition { unset, amp, middle, source }
-
 enum EndStatus { unset, on_chain, on_stage, failed }
 
 enum AutoPickup { amp, middle, source, no }

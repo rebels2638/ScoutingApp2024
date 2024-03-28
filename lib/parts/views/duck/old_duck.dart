@@ -254,9 +254,6 @@ class _DataHostingViewState extends State<DataHostingView> {
         double autoPercentGetMovementPoints = 0.0;
         double autoAvgScoredSpeaker = 0.0;
         double autoAvgScoredInAmp = 0.0;
-        double autoPercentStartLeft = 0.0;
-        double autoPercentStartRight = 0.0;
-        double autoPercentStartMiddle = 0.0;
         // TELEOP CALCULATIONS
         double teleopAvgScoredInSpeaker = 0.0;
         double teleopAvgScoredInAmp = 0.0;
@@ -275,15 +272,7 @@ class _DataHostingViewState extends State<DataHostingView> {
           }
           autoAvgScoredSpeaker += d.auto.scoredSpeaker;
           autoAvgScoredInAmp += d.auto.scoredAmp;
-          if (d.preliminary.startingPosition ==
-              MatchStartingPosition.amp) {
-            autoPercentStartLeft++;
-          } else if (d.preliminary.startingPosition ==
-              MatchStartingPosition.source) {
-            autoPercentStartRight++;
-          } else {
-            autoPercentStartMiddle++;
-          }
+
           teleopAvgScoredInSpeaker += d.teleop.scoredSpeaker;
           teleopAvgScoredInAmp += d.teleop.scoredAmp;
           teleopAvgNotesScored +=
@@ -304,9 +293,7 @@ class _DataHostingViewState extends State<DataHostingView> {
         autoPercentGetMovementPoints /= data.length;
         autoAvgScoredSpeaker /= data.length;
         autoAvgScoredInAmp /= data.length;
-        autoPercentStartLeft /= data.length;
-        autoPercentStartRight /= data.length;
-        autoPercentStartMiddle /= data.length;
+
         teleopAvgScoredInSpeaker /= data.length;
         teleopAvgScoredInAmp /= data.length;
         teleopAvgNotesScored /= data.length;
@@ -442,34 +429,6 @@ class _DataHostingViewState extends State<DataHostingView> {
                                                                             ),
                                                                             TextSpan(
                                                                               text: autoAvgScoredInAmp.toStringAsFixed(2),
-                                                                            ),
-                                                                            const TextSpan(
-                                                                              text: "\n% of Pickups AMP Side: ",
-                                                                              style: TextStyle(fontWeight: FontWeight.bold),
-                                                                            ),
-                                                                            const TextSpan(
-                                                                              text: "\n% of Start AMP Side: ",
-                                                                              style: TextStyle(fontWeight: FontWeight.bold),
-                                                                            ),
-                                                                            TextSpan(
-                                                                              text: "${(autoPercentStartLeft * 100).toStringAsFixed(2)}%",
-                                                                              style: TextStyle(color: heat(autoPercentStartLeft), backgroundColor: Colors.black),
-                                                                            ),
-                                                                            const TextSpan(
-                                                                              text: "\n% of Start Stage Side: ",
-                                                                              style: TextStyle(fontWeight: FontWeight.bold),
-                                                                            ),
-                                                                            TextSpan(
-                                                                              text: "${(autoPercentStartRight * 100).toStringAsFixed(2)}%",
-                                                                              style: TextStyle(color: heat(autoPercentStartRight), backgroundColor: Colors.black),
-                                                                            ),
-                                                                            const TextSpan(
-                                                                              text: "\n% of Start Middle: ",
-                                                                              style: TextStyle(fontWeight: FontWeight.bold),
-                                                                            ),
-                                                                            TextSpan(
-                                                                              text: "${(autoPercentStartMiddle * 100).toStringAsFixed(2)}%",
-                                                                              style: TextStyle(color: heat(autoPercentStartMiddle), backgroundColor: Colors.black),
                                                                             ),
                                                                           ],
                                                                           style: const TextStyle(fontSize: 18),
@@ -731,9 +690,6 @@ class _DataHostingViewState extends State<DataHostingView> {
                                     > **% Movement Points** ${(autoPercentGetMovementPoints * 100).toStringAsFixed(2)}%
                                     > **Avg Scored in Speaker** ${autoAvgScoredSpeaker.toStringAsFixed(2)}
                                     > **Avg Scored in Amp** ${autoAvgScoredInAmp.toStringAsFixed(2)}
-                                    > **% of Start Left** ${(autoPercentStartLeft * 100).toStringAsFixed(2)}%
-                                    > **% of Start Right** ${(autoPercentStartRight * 100).toStringAsFixed(2)}%
-                                    > **% of Start Middle** ${(autoPercentStartMiddle * 100).toStringAsFixed(2)}%
                                     ## Tele-Op
                                     > **Avg Scored in Speaker** ${teleopAvgScoredInSpeaker.toStringAsFixed(2)}
                                     > **Avg Scored in AMP** ${teleopAvgScoredInAmp.toStringAsFixed(2)}
@@ -1000,18 +956,6 @@ class _DucMatchTileState extends State<DucMatchTile> {
                     icon: const Icon(Icons.data_exploration_rounded),
                     child: Row(children: <Widget>[
                       Text.rich(TextSpan(children: <InlineSpan>[
-                        const TextSpan(
-                            text: "- Starting Position: ",
-                            style: TextStyle(
-                                overflow: TextOverflow.ellipsis,
-                                height: 1.6,
-                                fontWeight: FontWeight.w700)),
-                        TextSpan(
-                            text:
-                                "${widget.match.preliminary.startingPosition.name.formalize}\n",
-                            style: const TextStyle(
-                              height: 1.6,
-                            )),
                         const TextSpan(
                             text: "- Harmonized: ",
                             style: TextStyle(

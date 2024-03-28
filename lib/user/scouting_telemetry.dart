@@ -39,7 +39,7 @@ class ScoutingTelemetry {
       _storedFinalizedMatches.flush();
     }
     Debug().info(
-        "Finished loading the 'storedFinalizedMatches' box containing ${_storedFinalizedMatches.length} entries. Found ${validateAllEntriesVersion().failedIds.length} entries that had conflicting telemetry versions.");
+        "Finished loading the 'storedFinalizedMatches' box containing ${_storedFinalizedMatches.length} entries. Found ${validateAllEntriesVersion().failedData.length} entries that had conflicting telemetry versions.");
   }
 
   int get length => _storedFinalizedMatches.length;
@@ -65,15 +65,15 @@ class ScoutingTelemetry {
     return false;
   }
 
-  ({bool res, List<String> failedIds}) validateAllEntriesVersion() {
-    List<String> failedIds = <String>[];
+  ({bool res, List<EphemeralScoutingData> failedData}) validateAllEntriesVersion() {
+    List<EphemeralScoutingData> failedShits = <EphemeralScoutingData>[];
     for (int i = 0; i < _storedFinalizedMatches.length; i++) {
       if (_storedFinalizedMatches.getAt(i)!.telemetryVersion !=
           EPHEMERAL_MODELS_VERSION) {
-        failedIds.add(_storedFinalizedMatches.getAt(i)!.id);
+        failedShits.add(_storedFinalizedMatches.getAt(i)!);
       }
     }
-    return (res: failedIds.isEmpty, failedIds: failedIds);
+    return (res: failedShits.isEmpty, failedData: failedShits);
   }
 
   Future<EphemeralScoutingData?> searchFor(String id) async {

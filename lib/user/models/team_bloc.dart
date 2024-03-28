@@ -290,7 +290,6 @@ class PrelimInfo extends ScoutingInfo
   String scouter;
   MatchType matchType;
   TeamAlliance alliance;
-  MatchStartingPosition startingPosition;
 
   PrelimInfo(
       {required this.timeStamp,
@@ -298,8 +297,7 @@ class PrelimInfo extends ScoutingInfo
       required this.matchNumber,
       required this.matchType,
       required this.alliance,
-      String? scouter,
-      required this.startingPosition})
+      String? scouter})
       : scouter = scouter ?? UserTelemetry().currentModel.profileName;
 
   factory PrelimInfo.optional(
@@ -307,17 +305,14 @@ class PrelimInfo extends ScoutingInfo
           int teamNumber = 0,
           int matchNumber = 0,
           MatchType matchType = MatchType.unset,
-          TeamAlliance alliance = TeamAlliance.red,
-          MatchStartingPosition startingPosition =
-              MatchStartingPosition.unset}) =>
+          TeamAlliance alliance = TeamAlliance.red}) =>
       PrelimInfo(
           timeStamp:
               timeStamp ?? DateTime.now().millisecondsSinceEpoch,
           teamNumber: teamNumber,
           matchNumber: matchNumber,
           matchType: matchType,
-          alliance: alliance,
-          startingPosition: startingPosition);
+          alliance: alliance);
 
   @override
   Map<String, dynamic> exportMap() => <String, dynamic>{
@@ -327,7 +322,6 @@ class PrelimInfo extends ScoutingInfo
         "matchType": matchType,
         "alliance": alliance,
         "scouter": scouter,
-        "startingPosition": startingPosition
       };
 
   static PrelimInfo fromCompatibleFormat(String rawData) {
@@ -339,9 +333,7 @@ class PrelimInfo extends ScoutingInfo
         matchNumber: data["match#"],
         scouter: data["scouter"],
         matchType: MatchType.values[data["match"]],
-        alliance: TeamAlliance.values[data["allies"]],
-        startingPosition:
-            MatchStartingPosition.values[data["start"]]);
+        alliance: TeamAlliance.values[data["allies"]]);
   }
 
   @override
@@ -352,8 +344,7 @@ class PrelimInfo extends ScoutingInfo
       "match#": matchNumber,
       "match": matchType.index,
       "allies": alliance.index,
-      "scouter": scouter,
-      "start": startingPosition.index
+      "scouter": scouter
     });
   }
 }
