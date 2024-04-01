@@ -12,6 +12,7 @@ dependencies:
   community_material_icon: ^5.9.55
   confetti: ^0.7.0
   equatable: ^2.0.5
+  file_saver: ^0.2.12
   fl_chart: ^0.67.0
   fluentui_emoji_icon: ^0.0.2
   flutter:

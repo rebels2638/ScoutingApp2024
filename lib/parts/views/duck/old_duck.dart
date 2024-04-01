@@ -1,10 +1,16 @@
+import 'dart:convert';
+
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:file_saver/file_saver.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/blobs/form_blob.dart';
+import 'package:scouting_app_2024/blobs/special_button.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/extern/dynamic_user_capture.dart';
 import 'package:scouting_app_2024/extern/string.dart';
@@ -248,7 +254,152 @@ class _DataHostingViewState extends State<DataHostingView> {
                 ),
               if (!_searched)
                 FilledButton.tonal(
-                    onPressed: () {},
+                    onPressed: () {
+                      Map<int, List<HollisticMatchScoutingData>>
+                          teams = teamsData;
+                      StringBuffer csvBuffer = StringBuffer(
+                          "Team Number,Matches Recorded,Auto % Movement Points,Auto Avg Scored in Speaker,Auto Avg Scored in Amp,Tele-Op Avg Scored in Speaker,Tele-Op Avg Scored in Amp,Tele-Op Avg Notes Scored,Tele-Op Goes Under Stage,Tele-Op Lobs,Endgame Can Climb,Endgame Harmony Attempt Success Rate,Endgame % of Games Scored Trap,Misc Win Likelihoods\n");
+                      teams.forEach((int teamNumber,
+                          List<HollisticMatchScoutingData> data) {
+                        // AUTO CALCULATIONS
+                        double autoPercentGetMovementPoints = 0.0;
+                        double autoAvgScoredSpeaker = 0.0;
+                        double autoAvgScoredInAmp = 0.0;
+                        // TELEOP CALCULATIONS
+                        double teleopAvgScoredInSpeaker = 0.0;
+                        double teleopAvgScoredInAmp = 0.0;
+                        double teleopAvgNotesScored = 0.0;
+                        bool teleopGoesUnderStage = false;
+                        bool teleopLobs = false;
+                        // ENDGAME CALCULATIONS
+                        bool endgameCanClimb = false;
+                        double endgameHarmonyAttemptSuccessRate = 0.0;
+                        double endgamePercentOfGamesScoredTrap = 0.0;
+                        // GENERAL CALCULATIONS
+                        double miscWinLikelihoods = 0.0;
+                        for (HollisticMatchScoutingData d in data) {
+                          if (d.auto.taxi) {
+                            autoPercentGetMovementPoints++;
+                          }
+                          autoAvgScoredSpeaker +=
+                              d.auto.scoredSpeaker;
+                          autoAvgScoredInAmp += d.auto.scoredAmp;
+
+                          teleopAvgScoredInSpeaker +=
+                              d.teleop.scoredSpeaker;
+                          teleopAvgScoredInAmp += d.teleop.scoredAmp;
+                          teleopAvgNotesScored += d.teleop.scoredAmp +
+                              d.teleop.scoredSpeaker;
+                          teleopGoesUnderStage = d.teleop.underStage;
+                          teleopLobs = d.teleop.lobs;
+                          endgameCanClimb = d.endgame.endState ==
+                              EndStatus.on_chain;
+                          endgameHarmonyAttemptSuccessRate +=
+                              d.endgame.harmonyAttempted &&
+                                      d.endgame.harmony == Harmony.yes
+                                  ? 1
+                                  : 0;
+                          endgamePercentOfGamesScoredTrap +=
+                              d.endgame.trapScored == TrapScored.yes
+                                  ? 1
+                                  : 0;
+                          miscWinLikelihoods +=
+                              d.endgame.matchResult == MatchResult.win
+                                  ? 1
+                                  : 0;
+                        }
+                        autoPercentGetMovementPoints /= data.length;
+                        autoAvgScoredSpeaker /= data.length;
+                        autoAvgScoredInAmp /= data.length;
+                        teleopAvgScoredInSpeaker /= data.length;
+                        teleopAvgScoredInAmp /= data.length;
+                        teleopAvgNotesScored /= data.length;
+                        endgameHarmonyAttemptSuccessRate /=
+                            data.length;
+                        endgamePercentOfGamesScoredTrap /=
+                            data.length;
+                        miscWinLikelihoods /= data.length;
+                        csvBuffer.write(
+                            "$teamNumber,${data.length},${autoPercentGetMovementPoints.toStringAsFixed(2)},${autoAvgScoredSpeaker.toStringAsFixed(2)},${autoAvgScoredInAmp.toStringAsFixed(2)},${teleopAvgScoredInSpeaker.toStringAsFixed(2)},${teleopAvgScoredInAmp.toStringAsFixed(2)},${teleopAvgNotesScored.toStringAsFixed(2)},${teleopGoesUnderStage ? "Yes" : "No"},${teleopLobs ? "Yes" : "No"},${endgameCanClimb ? "Yes" : "No"},${(endgameHarmonyAttemptSuccessRate * 100).toStringAsFixed(2)}%,${(endgamePercentOfGamesScoredTrap * 100).toStringAsFixed(2)}%,${(miscWinLikelihoods * 100).toStringAsFixed(2)}%\n");
+                      });
+                      Navigator.of(context).push(MaterialPageRoute<
+                              Widget>(
+                          builder: (BuildContext context) => Scaffold(
+                              body: SingleChildScrollView(
+                                  child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 8, right: 8, top: 14),
+                                child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      SpecialButton.premade2(
+                                          label:
+                                              "Copy as CSV to Clipboard",
+                                          icon: const Icon(
+                                              Icons.copy_all_rounded),
+                                          onPressed: () => Clipboard
+                                              .setData(ClipboardData(
+                                                  text: csvBuffer
+                                                      .toString()))),
+                                      ExpansionTile(
+                                          childrenPadding:
+                                              const EdgeInsets.all(
+                                                  12),
+                                          controlAffinity:
+                                              ListTileControlAffinity
+                                                  .leading,
+                                          title: const Text(
+                                              "CSV Content"),
+                                          children: <Widget>[
+                                            Text(
+                                              csvBuffer.toString(),
+                                              style: const TextStyle(
+                                                  fontFamily:
+                                                      "Monospace",
+                                                  fontSize: 12),
+                                            ),
+                                          ]),
+                                      const SizedBox(height: 20),
+                                      SpecialButton.premade5(
+                                          label: "Export CSV as file",
+                                          icon: const Icon(Icons
+                                              .file_copy_rounded),
+                                          onPressed: () async {
+                                            if (!kIsWeb) {
+                                              if (Platform.isIOS ||
+                                                  Platform
+                                                      .isAndroid) {
+                                                bool status =
+                                                    await Permission
+                                                        .storage
+                                                        .isGranted;
+
+                                                if (!status) {
+                                                  await Permission
+                                                      .storage
+                                                      .request();
+                                                }
+                                              }
+                                            }
+                                            await FileSaver.instance.saveAs(
+                                                file: File(
+                                                    "Argus_DUC_Dump.csv"),
+                                                name:
+                                                    "Argus_DUC_Dump",
+                                                ext: "csv",
+                                                mimeType:
+                                                    MimeType.text,
+                                                bytes: utf8.encode(
+                                                    csvBuffer
+                                                        .toString()));
+                                          })
+                                    ]),
+                              )),
+                              appBar: AppBar(
+                                  title: const Text(
+                                      "Export all DUCs")))));
+                    },
                     child: const Icon(Icons.upload_file_rounded)),
               if (!_searched)
                 FilledButton.tonal(

@@ -1,6 +1,9 @@
+import 'package:fluentui_emoji_icon/fluentui_emoji_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:provider/provider.dart';
+import 'package:scouting_app_2024/blobs/blobs.dart';
+import 'package:scouting_app_2024/blobs/special_button.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/extern/dynamic_user_capture.dart';
 import 'package:scouting_app_2024/parts/bits/duc_bit.dart';
@@ -126,10 +129,11 @@ class QrScannerState extends State<QrScanner> {
                             listen: false)
                         .containsID(data.id)) {
                       Debug().warn("DUC already exists, Ignored...");
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text(
-                                  "This DUC seems to be already recorded...")));
+                      launchInformDialog(context,
+                          message: const Text(
+                              "This DUC seems to be already recorded..."),
+                          title: "Nope...",
+                          icon: const Icon(Icons.warning_rounded));
                       return;
                     }
                     Debug().info(
@@ -137,10 +141,19 @@ class QrScannerState extends State<QrScanner> {
                     Provider.of<DucBaseBit>(context, listen: false)
                         .add(HollisticMatchScoutingData
                             .fromCompatibleFormat(res));
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content:
-                                Text("DUC Detected and Added!")));
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            AlertDialog(
+                                title: const Text("Added DUC!"),
+                                content: Center(
+                                    child: SpecialButton.premade2(
+                                        label: "OK",
+                                        icon: const FluentUiEmojiIcon(
+                                            fl: Fluents.flOkHand,
+                                            w: 40,
+                                            h: 40),
+                                        onPressed: () {}))));
                   } else {
                     Debug().warn("Not DUC detected, Ignored...");
                   }

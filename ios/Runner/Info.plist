@@ -3,7 +3,7 @@
 <plist version="1.0">
 	<dict>
 		<key>CADisableMinimumFrameDurationOnPhone</key>
-		<true/>
+		<true />
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>
@@ -25,11 +25,15 @@
 		<key>CFBundleVersion</key>
 		<string>6.0.2</string>
 		<key>LSRequiresIPhoneOS</key>
-		<true/>
+		<true />
+		<key>LSSupportsOpeningDocumentsInPlace</key>
+		<true />
+		<key>UIFileSharingEnabled</key>
+		<true />
 		<key>UIApplicationSupportsIndirectInputEvents</key>
-		<true/>
+		<true />
 		<key>io.flutter.embedded_views_preview</key>
-		<true/>
+		<true />
 		<key>UILaunchStoryboardName</key>
 		<string>LaunchScreen</string>
 		<key>UIMainStoryboardFile</key>
@@ -50,7 +54,8 @@
 		<key>NSPhotoLibraryAddUsageDescription</key>
 		<string>Scouting App would like to save photos from the app to your gallery</string>
 		<key>NSPhotoLibraryUsageDescription</key>
-		<string>Scouting App would like to access your photo gallery for uploading images to the app</string>
+		<string>Scouting App would like to access your photo gallery for uploading images to the
+			app</string>
 		<key>NSCameraUsageDescription</key>
 		<string>Camera permission is required for QR Scanning.</string>
 	</dict>
