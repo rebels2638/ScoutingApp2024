@@ -25,7 +25,7 @@ enum MatchResult { unset, win, loss, tie }
 
 enum EndStatus { unset, on_chain, on_stage, failed }
 
-enum AutoPickup { amp, middle, source, no }
+enum AutoPickup { amp, midline, source, no }
 
 enum Harmony { unset, yes, no, missed }
 
