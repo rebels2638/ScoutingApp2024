@@ -8,7 +8,7 @@
 Created using the **Flutter** framework with the hopes of improving the overall scouting experience. 
 
 ### Features
-<kbd> <strong>📡 Wireless Data Transfer[^1] </strong></kbd> <kbd><strong> 🧮 Builtin data analysis[^2] (DUC) </strong></kbd> <kbd><strong> 📱 Customizable Interface[^3] </strong></kbd> <kbd><strong> 📝 Local Data Storage[^4] </strong></kbd> <kbd><strong> 🌐 Blue Alliance interface[^5] </strong></kbd>
+<kbd> <strong>📡 Wireless Data Transfer[^1] </strong></kbd> <kbd><strong> 🧮 Builtin data analysis[^2] (DUC) </strong></kbd> <kbd><strong> 📱 Customizable Interface[^3] </strong></kbd> <kbd><strong> 📝 Local Data Storage[^4] </strong></kbd> 
 <kbd> <strong>📈 CSV Exporting </strong></kbd> <kbd> <strong>🗂️ QR Code Exporting[^6] </strong></kbd> <kbd> <strong>🖥️ Cross Platform[^7] </strong></kbd> <kbd> <strong>⚙️ Multi Platform Compatible[^8] </strong></kbd> ... and more
 
 <br/>
