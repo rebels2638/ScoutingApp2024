@@ -1,9 +1,16 @@
-version: 1.0.8
-date: 2024-02-25
+version: 1.0.9
+date: 2024-03-25
 author: Jack Meng (exoad)
-comments: "This is a major patch after the first release that hopes to flush out the app for week 1!"
+comments: "This is a major patch"
 additions:
   - Improved the theme chooser view
+  - Added more functionality to the DUC View
+  - Added sorting functionality to the DUC View
 fixes:
   - More typo fixes
+  - Removed unnecessary fields in the scouting form
+  - Revised the backend data format for storing
+  - User names can now be 4 letters long
 optimize:
+  - Improved scrolling performance
+  - Allowed usage of higher refresh rates on Android

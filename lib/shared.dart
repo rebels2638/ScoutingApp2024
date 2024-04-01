@@ -25,7 +25,7 @@ final String TELEMETRY_SUBDIR_PATH =
     "$APP_CANONICAL_NAME${Platform.pathSeparator}";
 const String APP_CANONICAL_NAME = "Argus"; // be goofy with this :)
 const String REBEL_ROBOTICS_APP_VERSION =
-    "1.0.8"; // [0].[1].[2] for version format
+    "1.0.9"; // [0].[1].[2] for version format
 const String REBEL_ROBOTICS_APP_NAME =
     "2638 Scouting \"$APP_CANONICAL_NAME\"";
 const String REBEL_ROBOTICS_APP_LEGALESE =

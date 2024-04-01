@@ -12,7 +12,7 @@ import 'avatar_representator.dart';
 bool _userNameChecker(String r) {
   return r.isNotEmpty &&
       r.contains(RegExp(
-          r"^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$"));
+          r"^(?=[a-zA-Z0-9._]{4,20}$)(?!.*[_.]{2})[^_.].*[^_.]$"));
 }
 
 class AppSetupView extends StatefulWidget {
@@ -235,16 +235,6 @@ class _FinalHelpfulTipsPage extends StatelessWidget {
                 icon: const Icon(Icons.navigate_next_rounded),
                 onPressed: () => onTapped.call(),
               ),
-              const SizedBox(height: 30),
-              SpecialButton.premade7(
-                  label: "Our Tutorial Video",
-                  icon: const Icon(CommunityMaterialIcons.youtube),
-                  shrinkWrap: false,
-                  onPressed: () async => await launchURLLaunchDialog(
-                      context,
-                      url: ARGUSGUIDE_URL,
-                      message:
-                          "You are about to leave the app to visit our app documentation website. Do you want to continue?")),
               const SizedBox(height: 6),
               const Row(
                   mainAxisAlignment: MainAxisAlignment.center,

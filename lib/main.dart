@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:scouting_app_2024/agent/parts/superagent.dart';
 import 'package:scouting_app_2024/parts/loader.dart';
@@ -18,7 +19,8 @@ import 'package:scouting_app_2024/parts/theme.dart';
 import 'package:scouting_app_2024/shared.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
 
-List<String> failedIds = <String>[]; // this is scuffed ik, dont reassign outside of here
+List<String> failedIds =
+    <String>[]; // this is scuffed ik, dont reassign outside of here
 
 Future<void> _prepareAppLaunch() async {
   Debug().newPhase("DEVICE_ENV");
@@ -106,6 +108,9 @@ void main() async {
     FlutterError.presentError.call(details);
     Debug().warn("${details.summary} ${details.context}");
   };
+  if (Platform.I.isAndroid) {
+    await FlutterDisplayMode.setHighRefreshRate();
+  }
   // I LOVE THE THEN FUNCTION OH MY GOD HOLY SHIT, I LOVE THIS FUNCTION, WE SHOULD MAKE EVERYTHING WITH THIS FUNCTION
   runApp(LoadingAppViewScreen(task: _prepareAppLaunch()));
   if (Platform.I.isWindows) {

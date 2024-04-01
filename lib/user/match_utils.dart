@@ -1,5 +1,6 @@
 import 'package:scouting_app_2024/user/models/team_model.dart';
 
+// there is a lot of repetitive shit here, forget about it
 class MatchUtils {
   static Map<int, List<HollisticMatchScoutingData>> filterByTeam(
       List<HollisticMatchScoutingData> allMatches) {
@@ -16,6 +17,4 @@ class MatchUtils {
     }
     return temp;
   }
-
-  
 }

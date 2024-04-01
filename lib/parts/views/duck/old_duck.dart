@@ -14,6 +14,7 @@ import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
 import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/parts/views/duck/duck_view_navigator.dart';
 import 'package:scouting_app_2024/parts/views/shared_dialogs.dart';
+import 'package:theme_provider/theme_provider.dart';
 import 'dart:io';
 import 'qr_scan_widget.dart';
 import 'package:scouting_app_2024/shared.dart';
@@ -54,6 +55,15 @@ import 'package:scouting_app_2024/user/models/team_model.dart';
   quack quack quack
  */
 
+// mind the fucking weird ass naming scheme
+enum MatchSortMethod {
+  byTeam_Number,
+  byTeleOp_Speaker_Scored,
+  byTeleOp_Amp_Scored,
+  byAuto_Speaker_Scored,
+  byAuto_Amp_Scored,
+}
+
 class DataHostingView extends StatefulWidget
     implements DuckNavigatorViewTrait {
   const DataHostingView({super.key});
@@ -74,10 +84,12 @@ class DataHostingView extends StatefulWidget
 class _DataHostingViewState extends State<DataHostingView> {
   late Map<int, List<HollisticMatchScoutingData>> teamsData;
   late bool _searched;
+  late MatchSortMethod sortMethod;
 
   @override
   void initState() {
     super.initState();
+    sortMethod = MatchSortMethod.byTeam_Number;
     teamsData =
         MatchUtils.filterByTeam(DucTelemetry().allHollisticEntries);
     _searched = false;
@@ -85,6 +97,67 @@ class _DataHostingViewState extends State<DataHostingView> {
 
   @override
   Widget build(BuildContext context) {
+    switch (sortMethod) {
+      case MatchSortMethod.byTeam_Number:
+        teamsData.keys.toList().sort();
+        break;
+      case MatchSortMethod.byAuto_Amp_Scored:
+        Debug().info("sorting duc by {AUTO AMP SCORED}");
+        teamsData.keys.toList().sort((int a, int b) {
+          double aScore = 0.0;
+          double bScore = 0.0;
+          for (HollisticMatchScoutingData d in teamsData[a]!) {
+            aScore += d.auto.scoredAmp;
+          }
+          for (HollisticMatchScoutingData d in teamsData[b]!) {
+            bScore += d.auto.scoredAmp;
+          }
+          return aScore.compareTo(bScore);
+        });
+        break;
+      case MatchSortMethod.byAuto_Speaker_Scored:
+        Debug().info("sorting duc by {AUTO SPEAKER SCORED}");
+        teamsData.keys.toList().sort((int a, int b) {
+          double aScore = 0.0;
+          double bScore = 0.0;
+          for (HollisticMatchScoutingData d in teamsData[a]!) {
+            aScore += d.auto.scoredSpeaker;
+          }
+          for (HollisticMatchScoutingData d in teamsData[b]!) {
+            bScore += d.auto.scoredSpeaker;
+          }
+          return aScore.compareTo(bScore);
+        });
+        break;
+      case MatchSortMethod.byTeleOp_Amp_Scored:
+        Debug().info("sorting duc by {TELEOP AMP SCORED}");
+        teamsData.keys.toList().sort((int a, int b) {
+          double aScore = 0.0;
+          double bScore = 0.0;
+          for (HollisticMatchScoutingData d in teamsData[a]!) {
+            aScore += d.teleop.scoredAmp;
+          }
+          for (HollisticMatchScoutingData d in teamsData[b]!) {
+            bScore += d.teleop.scoredAmp;
+          }
+          return aScore.compareTo(bScore);
+        });
+        break;
+      case MatchSortMethod.byTeleOp_Speaker_Scored:
+        Debug().info("sorting duc by {TELEOP SPEAKER SCORED}");
+        teamsData.keys.toList().sort((int a, int b) {
+          double aScore = 0.0;
+          double bScore = 0.0;
+          for (HollisticMatchScoutingData d in teamsData[a]!) {
+            aScore += d.teleop.scoredSpeaker;
+          }
+          for (HollisticMatchScoutingData d in teamsData[b]!) {
+            bScore += d.teleop.scoredSpeaker;
+          }
+          return aScore.compareTo(bScore);
+        });
+        break;
+    }
     return SingleChildScrollView(
       physics: const AlwaysScrollableScrollPhysics(
           parent: BouncingScrollPhysics()),
@@ -102,14 +175,14 @@ class _DataHostingViewState extends State<DataHostingView> {
                 return Text.rich(
                   TextSpan(children: <InlineSpan>[
                     const TextSpan(
-                        text: "Total Teams Loaded: ",
+                        text: "Total Teams: ",
                         style:
                             TextStyle(fontWeight: FontWeight.bold)),
                     TextSpan(
                       text: teamsData.keys.length.toString(),
                     ),
                     const TextSpan(
-                        text: "\nTotal Matches Loaded: ",
+                        text: "\nTotal Matches: ",
                         style:
                             TextStyle(fontWeight: FontWeight.bold)),
                     TextSpan(
@@ -144,16 +217,6 @@ class _DataHostingViewState extends State<DataHostingView> {
                   ])),
               if (!_searched)
                 FilledButton.tonalIcon(
-                    onPressed: () async =>
-                        await Provider.of<DucBaseBit>(context,
-                                listen: false)
-                            .save()
-                            .then((_) => Debug()
-                                .info("[DUC] Saved! Mrs. Wang!!!")),
-                    icon: const Icon(Icons.save_rounded),
-                    label: const Text("Save")),
-              if (!_searched)
-                FilledButton.tonalIcon(
                     onPressed: () async => await showDialog(
                         context: context,
                         builder: (BuildContext _) =>
@@ -161,57 +224,98 @@ class _DataHostingViewState extends State<DataHostingView> {
                     icon: const Icon(Icons.paste_rounded),
                     label: const Text("Paste DUC")),
               if (!_searched)
-                FilledButton.tonalIcon(
-                    onPressed: () async =>
-                        await launchAssuredConfirmDialog(context,
-                            message:
-                                "Are you sure you want to delete all DUC data? This is irreversible!",
-                            title: "Delete DUC", onConfirm: () {
-                          Provider.of<DucBaseBit>(context,
-                                  listen: false)
-                              .removeAll()
-                              .then((_) => Debug().warn(
-                                  "[DUC] Removed all DUC data..."));
-                        }),
-                    icon: const Icon(Icons.delete_forever_rounded),
-                    label: const Text("Delete All")),
+                FilledButton.tonal(
+                  onPressed: () async => await Provider.of<
+                          DucBaseBit>(context, listen: false)
+                      .save()
+                      .then((_) =>
+                          Debug().info("[DUC] Saved! Mrs. Wang!!!")),
+                  child: const Icon(Icons.save_rounded),
+                ),
               if (!_searched)
-                FilledButton.tonalIcon(
-                    onPressed: () {
-                      teamsData = MatchUtils.filterByTeam(
-                          DucTelemetry().allHollisticEntries);
-                      setState(() {});
-                    },
-                    icon: const Icon(Icons.refresh_rounded),
-                    label: const Text("Refresh")),
+                FilledButton.tonal(
+                  onPressed: () async => await launchAssuredConfirmDialog(
+                      context,
+                      message:
+                          "Are you sure you want to delete all DUC data? This is irreversible!",
+                      title: "Delete DUC", onConfirm: () {
+                    Provider.of<DucBaseBit>(context, listen: false)
+                        .removeAll()
+                        .then((_) => Debug()
+                            .warn("[DUC] Removed all DUC data..."));
+                  }),
+                  child: const Icon(Icons.delete_forever_rounded),
+                ),
+              if (!_searched)
+                FilledButton.tonal(
+                    onPressed: () {},
+                    child: const Icon(Icons.upload_file_rounded)),
+              if (!_searched)
+                FilledButton.tonal(
+                  onPressed: () {
+                    teamsData = MatchUtils.filterByTeam(
+                        DucTelemetry().allHollisticEntries);
+                    setState(() {});
+                  },
+                  child: const Icon(Icons.refresh_rounded),
+                ),
               if (_searched)
-                FilledButton.tonalIcon(
-                    onPressed: () {
-                      teamsData = MatchUtils.filterByTeam(
-                          DucTelemetry().allHollisticEntries);
-                      setState(() => _searched = false);
-                    },
-                    icon: const Icon(Icons.arrow_back_rounded),
-                    label: const Text("Cancel Search")),
-              FilledButton.tonalIcon(
-                  onPressed: () async => await showDialog(
-                      context: context,
-                      builder: (BuildContext context) =>
-                          _SearchTeamsDialog(onSubmit: (String id) {
-                            teamsData.removeWhere(
-                                (int key, _) => key != int.parse(id));
-                            setState(() => _searched = true);
-                          }, onValidate: (String id) {
-                            try {
-                              return teamsData
-                                  .containsKey(int.parse(id));
-                            } catch (e) {
-                              return false;
-                            }
-                          })),
-                  icon: const Icon(Icons.search_rounded),
-                  label: const Text("Search Teams"))
+                FilledButton.tonal(
+                  onPressed: () {
+                    teamsData = MatchUtils.filterByTeam(
+                        DucTelemetry().allHollisticEntries);
+                    setState(() => _searched = false);
+                  },
+                  child: const Icon(Icons.arrow_back_rounded),
+                ),
+              FilledButton.tonal(
+                onPressed: () async => await showDialog(
+                    context: context,
+                    builder: (BuildContext context) =>
+                        _SearchTeamsDialog(onSubmit: (String id) {
+                          if (_searched) {
+                            // just to make sure we dont rerun the checks
+                            teamsData = MatchUtils.filterByTeam(
+                                DucTelemetry().allHollisticEntries);
+                          }
+                          teamsData.removeWhere(
+                              (int key, _) => key != int.parse(id));
+                          setState(() => _searched = true);
+                        }, onValidate: (String id) {
+                          try {
+                            return teamsData
+                                .containsKey(int.parse(id));
+                          } catch (e) {
+                            return false;
+                          }
+                        })),
+                child: const Icon(Icons.search_rounded),
+              )
             ]),
+            if (!_searched)
+              DropdownButton<MatchSortMethod>(
+                  elevation: 12,
+                  icon: const Icon(Icons.sort_rounded),
+                  value: sortMethod,
+                  underline: Container(
+                    height: 2,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(2),
+                        color: ThemeProvider.themeOf(context)
+                            .data
+                            .colorScheme
+                            .primary),
+                  ),
+                  items: MatchSortMethod.values
+                      .map<DropdownMenuItem<MatchSortMethod>>(
+                          (MatchSortMethod e) => DropdownMenuItem<
+                                  MatchSortMethod>(
+                              value: e,
+                              child: Text(
+                                  "Sort by ${e.name.split("by")[1].replaceAll("_", " ")}")))
+                      .toList(),
+                  onChanged: (MatchSortMethod? e) =>
+                      setState(() => sortMethod = e!)),
             const SizedBox(height: 32),
             Column(
               children: _readProviderOfDucs(context, teamsData),
@@ -270,7 +374,6 @@ class _DataHostingViewState extends State<DataHostingView> {
         autoPercentGetMovementPoints /= data.length;
         autoAvgScoredSpeaker /= data.length;
         autoAvgScoredInAmp /= data.length;
-
         teleopAvgScoredInSpeaker /= data.length;
         teleopAvgScoredInAmp /= data.length;
         teleopAvgNotesScored /= data.length;
