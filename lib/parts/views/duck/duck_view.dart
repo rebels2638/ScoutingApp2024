@@ -1,9 +1,7 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2024/blobs/hints_blob.dart';
-import 'package:scouting_app_2024/parts/views/duck/collected_view_trait.dart';
 import 'package:scouting_app_2024/parts/views/duck/duck_view_navigator.dart';
-import 'package:scouting_app_2024/parts/views/duck/tools_view_trait.dart';
 import 'package:scouting_app_2024/parts/views/views.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
 import 'package:scouting_app_2024/user/user_telemetry.dart';
@@ -46,8 +44,10 @@ class DuckView extends StatefulWidget implements AppPageViewExporter {
 
   DuckView({super.key})
       : _views = <DuckNavigatorViewTrait>[
-          const DuckToolsView(),
-          const DuckCollectedDataView(),
+          // fuck this shit i am not motivated bro
+          //const DuckToolsView(),
+          //const DuckCollectedDataView(),
+          const DataHostingView()
         ];
 
   @override
@@ -73,16 +73,10 @@ class DuckView extends StatefulWidget implements AppPageViewExporter {
 class _DuckViewState extends State<DuckView>
     with SingleTickerProviderStateMixin {
   late TabController _controller;
-  bool _addedLegacyItem = false;
 
   @override
   void initState() {
     super.initState();
-    if (!_addedLegacyItem &&
-        UserTelemetry().currentModel.showLegacyItems) {
-      _addedLegacyItem = true;
-      widget._views.add(const DataHostingView());
-    }
     _controller =
         TabController(length: widget._views.length, vsync: this);
   }

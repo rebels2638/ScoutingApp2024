@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:scouting_app_2024/blobs/blobs.dart';
 import 'package:scouting_app_2024/blobs/form_blob.dart';
-import 'package:scouting_app_2024/blobs/hints_blob.dart';
 import 'package:scouting_app_2024/debug.dart';
 import 'package:scouting_app_2024/extern/dynamic_user_capture.dart';
 import 'package:scouting_app_2024/extern/string.dart';
@@ -13,7 +12,6 @@ import 'package:scouting_app_2024/parts/bits/duc_bit.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_canonical.dart';
 import 'package:scouting_app_2024/parts/bits/prefer_compact.dart';
 import 'package:scouting_app_2024/parts/bits/show_console.dart';
-import 'package:scouting_app_2024/parts/bits/show_hints.dart';
 import 'package:scouting_app_2024/parts/views/duck/duck_view_navigator.dart';
 import 'package:scouting_app_2024/parts/views/shared_dialogs.dart';
 import 'dart:io';
@@ -93,30 +91,7 @@ class _DataHostingViewState extends State<DataHostingView> {
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            if (ShowHintsGuideModal.isShowingHints(context))
-              const WarningHintsBlob("Scouting Leaders only",
-                  "This part of the app is to be operated by scouting leaders, it is not recommended for regular users."),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                GestureDetector(
-                    onTap: () async => await launchConfirmDialog(
-                        // :)
-                        context,
-                        title: "exoad's memo",
-                        message: const Text(
-                            "idk, i wanted a duck, so i cut the word down to get 'duc', and then i asked chatgpt an acronym and it came up with 'Dynamic User Capture' so i was like 'ok, lets go with that' LOL ~ exoad"),
-                        showOkLabel: false,
-                        onConfirm: () {}),
-                    child: const Icon(CommunityMaterialIcons.duck,
-                        size: 38)),
-                const SizedBox(width: 12),
-                const Text("DUC",
-                    style: TextStyle(
-                        fontSize: 24, fontWeight: FontWeight.bold)),
-              ],
-            ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 6),
             if (!_searched)
               Builder(builder: (BuildContext context) {
                 int totalMatches = 0;
@@ -145,7 +120,7 @@ class _DataHostingViewState extends State<DataHostingView> {
                 );
               }),
             const SizedBox(height: 14),
-            Wrap(spacing: 14, runSpacing: 14, children: <Widget>[
+            Wrap(spacing: 8, runSpacing: 8, children: <Widget>[
               if (!_searched)
                 if (Platform.isAndroid || Platform.isIOS)
                   FilledButton.tonalIcon(
@@ -169,10 +144,12 @@ class _DataHostingViewState extends State<DataHostingView> {
                   ])),
               if (!_searched)
                 FilledButton.tonalIcon(
-                    onPressed: () async => await Provider.of<
-                            DucBaseBit>(context, listen: false)
-                        .save()
-                        .then((_) => Debug().info("[DUC] Saved! Mrs. Wang!!!")),
+                    onPressed: () async =>
+                        await Provider.of<DucBaseBit>(context,
+                                listen: false)
+                            .save()
+                            .then((_) => Debug()
+                                .info("[DUC] Saved! Mrs. Wang!!!")),
                     icon: const Icon(Icons.save_rounded),
                     label: const Text("Save")),
               if (!_searched)

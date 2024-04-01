@@ -10,7 +10,6 @@ import 'package:scouting_app_2024/parts/bits/show_console.dart';
 import 'package:scouting_app_2024/parts/bits/show_experimental.dart';
 import 'package:scouting_app_2024/parts/bits/show_fps_monitor.dart';
 import 'package:scouting_app_2024/parts/bits/show_hints.dart';
-import 'package:scouting_app_2024/parts/bits/show_legacy_items.dart';
 import 'package:scouting_app_2024/parts/bits/show_scrollbar.dart';
 import 'package:scouting_app_2024/parts/bits/use_alt_layout.dart';
 import 'package:scouting_app_2024/parts/views_delegate.dart';
@@ -366,47 +365,6 @@ class _SettingsViewState extends State<SettingsView> {
                                   UserTelemetry()
                                       .currentModel
                                       .showScrollbar = val;
-                                  UserTelemetry().save();
-                                })),
-                        _SettingsLabeledItem(
-                            icon: Icons.history_rounded,
-                            label: "Show Legacy Items",
-                            hint:
-                                "Certain app features that were once deprecated will be shown again. Use with caution",
-                            child: BasicToggleSwitch(
-                                initialValue: UserTelemetry()
-                                    .currentModel
-                                    .showLegacyItems,
-                                onChanged: (bool val) {
-                                  if (val) {
-                                    launchInformDialog(
-                                      context,
-                                      title: "Warning!",
-                                      message: const Text.rich(
-                                          TextSpan(
-                                              children: <InlineSpan>[
-                                            TextSpan(
-                                                text:
-                                                    "Legacy components are "),
-                                            TextSpan(
-                                                text: "deprecated",
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight
-                                                            .bold)),
-                                            TextSpan(
-                                                text:
-                                                    ". They are not guaranteed to work properly and may be removed in the future!"),
-                                          ])),
-                                    );
-                                  }
-                                  Provider.of<ShowLegacyItemsModal>(
-                                          context,
-                                          listen: false)
-                                      .showingLegacyItems = val;
-                                  UserTelemetry()
-                                      .currentModel
-                                      .showLegacyItems = val;
                                   UserTelemetry().save();
                                 })),
                         _SettingsLabeledItem(
